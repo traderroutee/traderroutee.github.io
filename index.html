@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Hülya — Seni Seviyorum ❤️</title>
+<style>
+  :root{
+    --bg1:#FFDEE9;
+    --bg2:#B5FFFC;
+    --text:#1b1b1b;
+    --accent:#ff3b6b;
+  }
+  html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(120deg,var(--bg1),var(--bg2));
+    overflow:hidden;
+  }
+
+  .card{
+    text-align:center;
+    padding:40px 28px;
+    border-radius:18px;
+    backdrop-filter: blur(6px) saturate(120%);
+    -webkit-backdrop-filter: blur(6px) saturate(120%);
+    background: rgba(255,255,255,0.55);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+    max-width:880px;
+    width:92%;
+  }
+
+  h1{
+    font-size: clamp(28px, 5vw, 56px);
+    margin:0 0 8px 0;
+    color:var(--text);
+    letter-spacing:0.4px;
+  }
+  p.lead{
+    margin:6px 0 18px 0;
+    color:#333;
+    font-size:clamp(14px,2.2vw,18px);
+  }
+
+  .hearts{
+    position:relative;
+    height:220px;
+    pointer-events:none;
+  }
+
+  /* Heart shape using pseudo-element */
+  .heart{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%) scale(0.9);
+    top:60%;
+    width:44px;
+    height:40px;
+    transform-origin:center;
+    filter:drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+    animation: floatUp linear infinite, beat 1.2s infinite ease-in-out;
+    opacity:0.95;
+  }
+  .heart::before,
+  .heart::after{
+    content:"";
+    position:absolute;
+    width:44px;
+    height:40px;
+    background:var(--accent);
+    border-radius:22px 22px 0 0;
+    transform:rotate(-45deg);
+    top:0;
+    left:0;
+  }
+  .heart::after{
+    transform:rotate(45deg);
+    left:auto;
+    right:0;
+  }
+
+  /* multiple hearts positions + speeds */
+  .h1{ left:12%; animation-duration:9s; animation-delay:0s; transform:translateX(-50%) scale(.9); }
+  .h2{ left:28%; animation-duration:12s; animation-delay:1s; transform:translateX(-50%) scale(.7); }
+  .h3{ left:44%; animation-duration:8s; animation-delay:.6s; transform:translateX(-50%) scale(1.05); }
+  .h4{ left:60%; animation-duration:11s; animation-delay:0.2s; transform:translateX(-50%) scale(.8); }
+  .h5{ left:76%; animation-duration:10s; animation-delay:1.4s; transform:translateX(-50%) scale(.95); }
+  .h6{ left:88%; animation-duration:14s; animation-delay:.3s; transform:translateX(-50%) scale(.65); }
+
+  @keyframes floatUp{
+    0%{ transform: translateX(-50%) translateY(10vh) scale(0.9); opacity:0; }
+    10%{ opacity:1; }
+    50%{ transform: translateX(-50%) translateY(-10vh) scale(1); }
+    100%{ transform: translateX(-50%) translateY(-80vh) scale(0.7); opacity:0; }
+  }
+  @keyframes beat{
+    0%,100%{ transform: translateX(-50%) scale(0.95); }
+    40%{ transform: translateX(-50%) scale(1.12); }
+  }
+
+  .footer-note{margin-top:14px;color:#555;font-size:13px}
+
+  /* small screens tweak */
+  @media (max-width:520px){
+    .hearts{height:140px}
+    .card{padding:22px}
+  }
+</style>
+</head>
+<body>
+  <div class="card" role="main" aria-label="Hülya seni seviyorum sayfası">
+    <h1>Hülya, <span style="color:var(--accent)">seni seviyorum</span> ❤️</h1>
+    <p class="lead">Bu satır sadece sana — her kalp seni hatırlatıyor.</p>
+
+    <div class="hearts" aria-hidden="true">
+      <div class="heart h1"></div>
+      <div class="heart h2"></div>
+      <div class="heart h3"></div>
+      <div class="heart h4"></div>
+      <div class="heart h5"></div>
+      <div class="heart h6"></div>
+    </div>
+
+    <div class="footer-note">İstersen metni değiştir, kalp sayısını arttır veya renkleri oyna — kolayca düzenlenir.</div>
+  </div>
+</body>
+</html>
