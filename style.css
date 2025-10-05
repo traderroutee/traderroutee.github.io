@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: #fff;
+  color: #222;
+}
+
+/* ÜST MENÜ */
+.header-top {
+  background: #f3f3f3;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px 0;
+}
+
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.logo img {
+  height: 40px;
+  vertical-align: middle;
+}
+.logo span {
+  font-size: 14px;
+  margin-left: 10px;
+  color: #555;
+}
+
+.navbar a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+}
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-green {
+  background: #00c853;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-outline {
+  border: 1px solid #ccc;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: white;
+}
+
+.btn-purple {
+  background: #7e57c2;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ANA BÖLÜM */
+.info-section {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  padding: 60px 20px;
+  background: #fafafa;
+}
+
+.info-box {
+  width: 30%;
+}
+
+.info-box h2 {
+  font-size: 22px;
+  border-bottom: 2px solid #d32f2f;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.btn-learn {
+  margin-top: 10px;
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+
+/* JOIN SECTION */
+.join-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 60px 40px;
+}
+
+.join-left img {
+  width: 350px;
+  border-radius: 12px;
+}
+
+.join-right {
+  max-width: 500px;
+}
+
+.join-right h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.steps button {
+  margin-right: 8px;
+  background: #1565c0;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  background: #333;
+  color: #fff;
+  padding: 20px;
+  font-size: 14px;
+}
