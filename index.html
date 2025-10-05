@@ -1,306 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trader Route — The Silk Road of E-Commerce</title>
-  <link rel="icon" href="assets/logos.png">
-  <style>
-    :root {
-      --accent: #008b6a;
-      --accent-dark: #006955;
-      --bg: #f7f7f7;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trader Route — Import & Export Network</title>
+<link rel="icon" href="assets/favicon.ico">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap">
+<style>
+  :root {
+    --accent: #008b6a;
+    --accent-dark: #006a51;
+    --bg: #f7f7f7;
+  }
 
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: var(--bg);
-      color: #222;
-    }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: #222;
+  }
 
-    /* HEADER */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 26px;
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 10px 28px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-    .logo {
-      height: 46px;
-    }
+  .logo {
+    height: 52px;
+  }
 
-    nav a {
-      margin: 0 10px;
-      color: #333;
-      font-weight: 600;
-      text-decoration: none;
-    }
+  nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+  }
 
-    nav a:hover {
-      color: var(--accent);
-    }
+  nav a:hover {
+    color: var(--accent);
+  }
 
-    /* HERO SECTION */
-    .hero {
-      position: relative;
-      background: url('assets/worldmap.jpg') center/cover no-repeat;
-      height: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 440px;
+    background: url("assets/worldmap.jpg") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.35);
-    }
+  .categories {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    background: rgba(255,255,255,0.96);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    width: 260px;
+    padding: 12px 0;
+  }
 
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      color: #fff;
-      text-align: center;
-    }
+  .categories h3 {
+    margin: 0 16px 10px;
+    font-size: 15px;
+    color: #333;
+  }
 
-    .hero-content h1 {
-      font-size: 2.4rem;
-      margin-bottom: 10px;
-    }
+  .category-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
 
-    .hero-content p {
-      font-size: 1.1rem;
-      margin: 0;
-    }
+  .category-item:hover {
+    background: #f3f3f3;
+  }
 
-    /* CATEGORIES ON HERO */
+  .category-item img {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+  }
+
+  .category-item span {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .category-count {
+    background: #eee;
+    border-radius: 8px;
+    padding: 2px 6px;
+    font-size: 12px;
+    color: #555;
+  }
+
+  .view-all {
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    background: #000;
+    color: #fff;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    cursor: pointer;
+  }
+
+  .main-content {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 18px;
+  }
+
+  .main-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    padding: 10px 16px;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    background: #fff;
+    color: var(--accent);
+  }
+
+  .btn.active, .btn:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  footer {
+    margin-top: 40px;
+    background: #111;
+    color: #fff;
+    text-align: center;
+    padding: 18px;
+    font-size: 14px;
+  }
+
+  @media(max-width: 768px) {
     .categories {
-      position: absolute;
-      top: 80px;
-      left: 40px;
-      z-index: 3;
-      width: 240px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 10px;
-      padding: 18px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-      backdrop-filter: blur(4px);
+      position: relative;
+      width: 90%;
+      margin: 0 auto;
+      top: auto;
+      left: auto;
     }
-
-    .categories h3 {
-      margin-top: 0;
-      margin-bottom: 14px;
-      color: var(--accent-dark);
-      font-size: 17px;
-      text-align: center;
+    .hero {
+      height: 320px;
     }
-
-    .cat-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      font-size: 14px;
-    }
-
-    .cat-list li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      color: #333;
-    }
-
-    .cat-list li span {
-      background: #f0f0f0;
-      border-radius: 10px;
-      padding: 2px 6px;
-      font-size: 12px;
-    }
-
-    .cat-all {
-      display: block;
-      text-align: center;
-      margin-top: 12px;
-      padding: 8px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    /* REQUESTS SECTION */
-    .requests-box {
-      background: #fff;
-      border-radius: 10px;
-      padding: 18px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
-      max-width: 1000px;
-      margin: 40px auto;
-    }
-
-    .filter-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-      justify-content: center;
-    }
-
-    .filter-buttons .btn {
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      border: 2px solid transparent;
-      cursor: pointer;
-    }
-
-    .btn-all {background: var(--accent); color: #fff;}
-    .btn-buy, .btn-sell {
-      background: #fff;
-      color: var(--accent);
-      border: 2px solid var(--accent);
-    }
-    .btn-free {background: var(--accent); color: #fff;}
-
-    .request-list {
-      display: grid;
-      gap: 14px;
-    }
-
-    .item {
-      background: #fff;
-      padding: 14px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(8,20,40,0.04);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .item h4 {margin: 0 0 5px 0;}
-    .item p {margin: 0; color: #555;}
-    .cta {
-      padding: 8px 12px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      background: #111;
-      color: #fff;
-      padding: 20px;
-      margin-top: 40px;
-    }
-
-    @media(max-width: 880px) {
-      .categories {
-        position: static;
-        width: auto;
-        margin: 20px;
-      }
-      .hero {
-        height: 400px;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
-<body>
 
+<body>
 <header>
-  <a href="index.html"><img src="assets/logos.png" alt="Trader Route" class="logo"></a>
+  <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo" class="logo"></a>
   <nav>
     <a href="index.html">Home</a>
     <a href="companies.html">Companies</a>
     <a href="requests.html">Requests</a>
     <a href="contact.html">Contact</a>
     <a href="pricing.html">Pricing</a>
+    <a href="register.html" style="color: var(--accent); font-weight:700;">Free Request!</a>
   </nav>
 </header>
 
 <section class="hero">
-  <div class="hero-overlay"></div>
   <div class="categories">
     <h3>Categories</h3>
-    <ul class="cat-list">
-      <li>Agricultural Machinery <span>16</span></li>
-      <li>Agriculture Industry <span>175</span></li>
-      <li>Automotive <span>39</span></li>
-      <li>Baby Products <span>11</span></li>
-      <li>Chemical Industry <span>50</span></li>
-      <li>Fashion & Apparel <span>148</span></li>
-      <li>Construction <span>54</span></li>
-      <li>Cosmetics <span>74</span></li>
-      <li>IT & Tech <span>8</span></li>
-    </ul>
-    <a href="#" class="cat-all">All Categories</a>
-  </div>
-  <div class="hero-content">
-    <h1>The Silk Road of E-Commerce</h1>
-    <p>Connecting global buyers and suppliers with trust and transparency.</p>
+    <div class="category-item"><img src="assets/category-icons/agriculture.png"><span>Agricultural Machinery</span><span class="category-count">16</span></div>
+    <div class="category-item"><img src="assets/category-icons/farming.png"><span>Farming Industry</span><span class="category-count">175</span></div>
+    <div class="category-item"><img src="assets/category-icons/automotive.png"><span>Automotive</span><span class="category-count">39</span></div>
+    <div class="category-item"><img src="assets/category-icons/baby.png"><span>Baby Products & Accessories</span><span class="category-count">11</span></div>
+    <div class="category-item"><img src="assets/category-icons/chemical.png"><span>Chemical Industry</span><span class="category-count">50</span></div>
+    <div class="category-item"><img src="assets/category-icons/fashion.png"><span>Fashion & Apparel</span><span class="category-count">148</span></div>
+    <div class="category-item"><img src="assets/category-icons/business.png"><span>Commercial Activities</span><span class="category-count">58</span></div>
+    <div class="category-item"><img src="assets/category-icons/construction.png"><span>Construction Industry</span><span class="category-count">54</span></div>
+    <div class="category-item"><img src="assets/category-icons/cosmetics.png"><span>Cosmetics</span><span class="category-count">74</span></div>
+    <div class="category-item"><img src="assets/category-icons/it.png"><span>IT & Communication</span><span class="category-count">8</span></div>
+    <div class="view-all">View All Categories</div>
   </div>
 </section>
 
-<section class="requests-box">
-  <div class="filter-buttons">
-    <button class="btn btn-all">All Requests</button>
-    <button class="btn btn-buy">Buying Requests</button>
-    <button class="btn btn-sell">Selling Offers</button>
-    <button class="btn btn-free">Free Request!</button>
+<main class="main-content">
+  <div class="main-buttons">
+    <button class="btn active">All Requests</button>
+    <button class="btn">Buying Requests</button>
+    <button class="btn">Selling Offers</button>
+    <button class="btn">Free Request</button>
   </div>
 
-  <div class="request-list">
-    <div class="item">
-      <div>
-        <h4>Buy: 1,000 tons of Wheat</h4>
-        <p>Buyer: Baltic Import — Country: Turkey — Date: 2025-09-01</p>
-      </div>
-      <a class="cta" href="contact.html">Contact Buyer</a>
-    </div>
-
-    <div class="item">
-      <div>
-        <h4>Sell: Organic Honey (500 kg)</h4>
-        <p>Seller: Istanbul Exporters — Country: Turkey — Date: 2025-08-21</p>
-      </div>
-      <a class="cta" href="contact.html">Contact Seller</a>
-    </div>
-
-    <div class="item">
-      <div>
-        <h4>Buy: Textile Fabrics (contract)</h4>
-        <p>Buyer: EuroTrade Ltd — Country: Germany — Date: 2025-07-10</p>
-      </div>
-      <a class="cta" href="contact.html">Contact Buyer</a>
-    </div>
-  </div>
-</section>
+  <p style="text-align:center; color:#555;">Connect with verified buyers and suppliers from all around the world.</p>
+</main>
 
 <footer>
-  © 2025 Trader Route — All Rights Reserved.
+  © 2025 Trader Route — Connecting Global Trade.
 </footer>
-
-<script>
-  document.addEventListener('keydown', function(e){
-    if(e.ctrlKey && e.altKey && e.key.toLowerCase() === 'a'){
-      window.location.href = '/admin/';
-    }
-  });
-</script>
-
 </body>
 </html>
