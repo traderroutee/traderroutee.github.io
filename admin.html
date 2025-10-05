@@ -1,210 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel — Trader Route</title>
-  <link rel="icon" type="image/png" href="assets/logos.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trader Route — Admin Panel</title>
+  <link rel="icon" type="image/png" href="assets/logos.png" />
   <style>
     body {
-      margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #f4f6f8;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
+      margin: 0;
+      background-color: #f6f8fa;
     }
 
-    /* Sidebar */
-    .sidebar {
-      width: 240px;
-      background-color: #008b6a;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      padding: 20px 0;
-    }
-
-    .sidebar h2 {
+    /* --- Login Section --- */
+    .login-box {
+      background: #fff;
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
       text-align: center;
-      margin-bottom: 30px;
+      width: 320px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
     }
 
-    .sidebar a {
-      color: #fff;
-      text-decoration: none;
-      padding: 15px 25px;
+    .login-box.active {
       display: block;
-      transition: background 0.3s ease;
     }
 
-    .sidebar a:hover,
-    .sidebar a.active {
-      background-color: #006e54;
+    .login-box h2 {
+      color: #008b6a;
+      margin-bottom: 25px;
     }
 
-    /* Main Content */
-    .main {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
     }
 
-    .header {
+    .login-box button {
+      width: 100%;
+      background: #008b6a;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    .login-box button:hover {
+      background: #006e54;
+    }
+
+    /* --- Admin Panel --- */
+    header {
+      background-color: #009879;
+      color: white;
+      padding: 15px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
     }
 
-    .header h1 {
-      color: #008b6a;
-      font-size: 24px;
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .logout-btn {
+      background-color: white;
+      color: #009879;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .logout-btn:hover {
+      background-color: #e6e6e6;
+    }
+
+    main {
+      padding: 30px;
+      display: none;
+    }
+
+    main.active {
+      display: block;
+    }
+
+    h2 {
+      color: #009879;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 20px;
       background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      border-radius: 8px;
-      overflow: hidden;
     }
 
-    th, td {
-      padding: 14px 20px;
-      border-bottom: 1px solid #eee;
+    table th,
+    table td {
+      border: 1px solid #ddd;
+      padding: 10px;
       text-align: left;
     }
 
-    th {
-      background-color: #f7f7f7;
-      color: #333;
-    }
-
-    tr:hover {
-      background-color: #f9f9f9;
-    }
-
-    .logout-btn {
-      background-color: #fff;
-      color: #008b6a;
-      padding: 8px 16px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      border: 2px solid #008b6a;
-      transition: all 0.3s ease;
-    }
-
-    .logout-btn:hover {
-      background-color: #008b6a;
-      color: #fff;
+    table th {
+      background-color: #009879;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>Admin Panel</h2>
-    <a href="#" class="active" onclick="showSection('members')">Members</a>
-    <a href="#" onclick="showSection('requests')">Requests</a>
-    <a href="#" onclick="showSection('companies')">Companies</a>
-    <a href="#" onclick="showSection('offers')">Selling Offers</a>
-    <a href="index.html">← Back to Site</a>
+  <!-- 🔐 LOGIN FORM -->
+  <div id="loginBox" class="login-box">
+    <h2>Admin Login</h2>
+    <input type="text" id="username" placeholder="Username" autocomplete="off" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p style="color:#777; font-size:14px; margin-top:15px;">
+      Trader Route Management Access
+    </p>
   </div>
 
-  <!-- Main Content -->
-  <div class="main">
-    <div class="header">
-      <h1 id="section-title">Members</h1>
-      <a href="login.html" class="logout-btn">Log Out</a>
-    </div>
+  <!-- 🔧 ADMIN PANEL -->
+  <header id="adminHeader" style="display:none;">
+    <h1>Trader Route — Admin Panel</h1>
+    <a href="#" class="logout-btn" onclick="logout()">Log Out</a>
+  </header>
 
-    <!-- MEMBERS -->
-    <div id="members" class="section">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Company Name</th>
-            <th>Email</th>
-            <th>Country</th>
-            <th>Join Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>GlobalTrade Ltd.</td><td>info@globaltrade.com</td><td>Turkey</td><td>2025-09-20</td></tr>
-          <tr><td>2</td><td>AsiaLink Exports</td><td>sales@asialink.com</td><td>China</td><td>2025-09-22</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- REQUESTS -->
-    <div id="requests" class="section" style="display:none;">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Request Type</th>
-            <th>Product</th>
-            <th>Country</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>Buying</td><td>Olive Oil</td><td>Spain</td><td>Pending</td></tr>
-          <tr><td>2</td><td>Selling</td><td>Textiles</td><td>Turkey</td><td>Approved</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- COMPANIES -->
-    <div id="companies" class="section" style="display:none;">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Company</th>
-            <th>Category</th>
-            <th>Country</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>EuroTrade Co.</td><td>Import</td><td>Germany</td></tr>
-          <tr><td>2</td><td>ExportWorld</td><td>Export</td><td>India</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- OFFERS -->
-    <div id="offers" class="section" style="display:none;">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Offer Name</th>
-            <th>Company</th>
-            <th>Country</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>Copper Wire Roll</td><td>AsiaLink Exports</td><td>China</td><td>$1200 / ton</td></tr>
-          <tr><td>2</td><td>Fresh Citrus</td><td>MedFruit Ltd.</td><td>Turkey</td><td>$950 / ton</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <main id="adminMain">
+    <h2>Registered Members</h2>
+    <p>All user data will appear here (from register form or manually added list).</p>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Company</th>
+        <th>Country</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Example User</td>
+        <td>example@domain.com</td>
+        <td>Demo Export Ltd.</td>
+        <td>Turkey</td>
+      </tr>
+    </table>
+  </main>
 
   <script>
-    function showSection(sectionId) {
-      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-      document.getElementById(sectionId).style.display = 'block';
-      document.getElementById('section-title').innerText =
-        sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
-      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-      event.target.classList.add('active');
+    // --- Settings ---
+    const ADMIN_USER = "admin";
+    const ADMIN_PASS = "trader2025";
+
+    const loginBox = document.getElementById("loginBox");
+    const adminHeader = document.getElementById("adminHeader");
+    const adminMain = document.getElementById("adminMain");
+
+    // --- Check login status on load ---
+    window.onload = () => {
+      const loggedIn = localStorage.getItem("trader_admin") === "logged_in";
+      if (loggedIn) {
+        showAdminPanel();
+      } else {
+        showLogin();
+      }
+    };
+
+    // --- Login function ---
+    function login() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        localStorage.setItem("trader_admin", "logged_in");
+        showAdminPanel();
+      } else {
+        alert("Invalid username or password!");
+      }
+    }
+
+    // --- Logout ---
+    function logout() {
+      localStorage.removeItem("trader_admin");
+      showLogin();
+    }
+
+    // --- UI control ---
+    function showAdminPanel() {
+      loginBox.classList.remove("active");
+      loginBox.style.display = "none";
+      adminHeader.style.display = "flex";
+      adminMain.classList.add("active");
+    }
+
+    function showLogin() {
+      adminHeader.style.display = "none";
+      adminMain.classList.remove("active");
+      loginBox.classList.add("active");
     }
   </script>
 </body>
