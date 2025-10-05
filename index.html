@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trader Route - Import & Export Platform</title>
-  <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="assets/logo.png" type="image/png">
   <style>
     body {
@@ -26,8 +25,13 @@
       height: 40px;
     }
 
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
     nav a {
-      margin: 0 15px;
       text-decoration: none;
       color: #000;
       font-weight: 500;
@@ -35,6 +39,63 @@
 
     nav a:hover {
       color: #008d62;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f1f1;
+      border-radius: 20px;
+      padding: 5px 10px;
+    }
+
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      padding: 5px;
+      font-size: 14px;
+      width: 150px;
+    }
+
+    .search-box button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: #555;
+    }
+
+    .login-btn {
+      background: #f1f1f1;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .login-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .join-btn {
+      background: #6c63ff;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .join-btn:hover {
+      background: #5a53e6;
     }
 
     .hero {
@@ -176,8 +237,14 @@
       <a href="#">Contact</a>
       <a href="#">Pricing</a>
     </nav>
-    <div>
-      <button style="background:#008d62; color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer;">Free Request</button>
+
+    <div class="header-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <button>🔍</button>
+      </div>
+      <button class="login-btn">Sign In</button>
+      <button class="join-btn">Join Now</button>
     </div>
   </header>
 
