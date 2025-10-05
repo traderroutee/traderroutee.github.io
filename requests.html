@@ -1,73 +1,213 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Trader Route — Global Trade Network</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trader Route — The Silk Road of E-Commerce</title>
 <link rel="icon" href="assets/logos.png">
 <style>
-  :root{
-    --accent:#008b6a;
-    --accent-dark:#007157;
-    --bg:#f7f7f7;
+  :root {
+    --accent: #008b6a;
+    --accent-dark: #006955;
+    --bg: #f7f7f7;
   }
-  body{
-    font-family:Segoe UI,Arial,sans-serif;
-    margin:0;
-    background:var(--bg);
-    color:#222;
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: #222;
   }
-  header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:12px 28px;
-    background:#fff;
-    box-shadow:0 2px 6px rgba(0,0,0,0.06);
-    position:sticky;
-    top:0;
-    z-index:60;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 26px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
-  .logo{height:48px}
-  nav a{
-    margin:0 10px;
-    color:#333;
-    text-decoration:none;
-    font-weight:600;
+
+  .logo {
+    height: 46px;
   }
-  .container{
-    max-width:1100px;
-    margin:26px auto;
-    padding:0 18px;
+
+  nav a {
+    margin: 0 10px;
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
   }
-  h1{margin-bottom:6px}
-  .sub{color:#666;margin-bottom:16px}
-  .list{display:grid;gap:12px}
-  .item{
-    background:#fff;
-    padding:14px;
-    border-radius:10px;
-    box-shadow:0 6px 18px rgba(8,20,40,0.04);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
+
+  nav a:hover {
+    color: var(--accent);
   }
-  .item .left{max-width:78%}
-  .item h3{margin:0 0 6px 0}
-  .item p{margin:0;color:#555}
-  .tags{font-size:13px;color:#666}
-  .cta{
-    padding:8px 12px;
-    border-radius:8px;
-    background:var(--accent);
-    color:#fff;
-    text-decoration:none;
-    font-weight:700;
+
+  .hero {
+    position: relative;
+    background: url('assets/worldmap.jpg') center/cover no-repeat;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  @media(max-width:740px){
-    .item{flex-direction:column;align-items:flex-start}
-    .item .left{max-width:100%}
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+
+  .hero-content p {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .main-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 18px;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+  }
+
+  /* Categories */
+  .categories {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    padding: 18px;
+  }
+
+  .categories h3 {
+    margin-top: 0;
+    margin-bottom: 14px;
+    color: var(--accent-dark);
+  }
+
+  .cat-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .cat-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #333;
+  }
+
+  .cat-list li span {
+    background: #f0f0f0;
+    border-radius: 12px;
+    padding: 3px 8px;
+    font-size: 13px;
+  }
+
+  .cat-all {
+    display: block;
+    text-align: center;
+    margin-top: 12px;
+    padding: 10px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* Requests section */
+  .requests-box {
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+  }
+
+  .filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+
+  .filter-buttons .btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+
+  .btn-all {background: var(--accent); color: #fff;}
+  .btn-buy {background: #fff; color: var(--accent); border: 2px solid var(--accent);}
+  .btn-sell {background: #fff; color: var(--accent); border: 2px solid var(--accent);}
+  .btn-free {background: var(--accent); color: #fff;}
+
+  .request-list {
+    display: grid;
+    gap: 14px;
+  }
+
+  .item {
+    background: #fff;
+    padding: 14px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(8,20,40,0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .item h4 {
+    margin: 0 0 5px 0;
+  }
+
+  .item p {
+    margin: 0;
+    color: #555;
+  }
+
+  .cta {
+    padding: 8px 12px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  footer {
+    text-align: center;
+    background: #111;
+    color: #fff;
+    padding: 20px;
+    margin-top: 40px;
+  }
+
+  @media(max-width: 880px) {
+    .main-container {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 </head>
@@ -79,63 +219,82 @@
     <a href="index.html">Home</a>
     <a href="companies.html">Companies</a>
     <a href="requests.html">Requests</a>
+    <a href="contact.html">Contact</a>
     <a href="pricing.html">Pricing</a>
   </nav>
 </header>
 
-<main class="container">
-  <h1>Welcome to Trader Route</h1>
-  <p class="sub">Connect with global traders, browse offers, and expand your international business network.</p>
-
-  <div class="list">
-    <div class="item">
-      <div class="left">
-        <h3>Buy: 1,000 tons Wheat</h3>
-        <p class="tags">Buyer: Baltic Import — Country: Turkey — Date: 2025-09-01</p>
-        <p>Looking for CIF Istanbul delivery. Preferred packaging: 50kg bags.</p>
-      </div>
-      <div><a class="cta" href="contact.html">Contact Buyer</a></div>
-    </div>
-
-    <div class="item">
-      <div class="left">
-        <h3>Sell: Organic Honey (500 kg)</h3>
-        <p class="tags">Seller: Istanbul Exporters — Country: Turkey — Date: 2025-08-21</p>
-        <p>High quality organic honey. Packaging options available.</p>
-      </div>
-      <div><a class="cta" href="contact.html">Contact Seller</a></div>
-    </div>
-
-    <div class="item">
-      <div class="left">
-        <h3>Buy: Textile Fabrics (contract)</h3>
-        <p class="tags">Buyer: EuroTrade Ltd — Country: Germany — Date: 2025-07-10</p>
-        <p>Looking for long-term supplier of polyester blends.</p>
-      </div>
-      <div><a class="cta" href="contact.html">Contact Buyer</a></div>
-    </div>
-
-    <div class="item">
-      <div class="left">
-        <h3>Free Request: Product Listing Assistance</h3>
-        <p class="tags">Posted by: Trader Route Team — Date: 2025-10-01</p>
-        <p>We can help new members publish their first listing free of charge.</p>
-      </div>
-      <div><a class="cta" href="register.html">Apply</a></div>
-    </div>
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>The Silk Road of E-Commerce</h1>
+    <p>Connecting global buyers and suppliers with trust and transparency.</p>
   </div>
+</section>
+
+<main class="main-container">
+  <aside class="categories">
+    <h3>Categories</h3>
+    <ul class="cat-list">
+      <li>Agricultural Machinery <span>16</span></li>
+      <li>Agriculture Industry <span>175</span></li>
+      <li>Automotive <span>39</span></li>
+      <li>Baby Products & Accessories <span>11</span></li>
+      <li>Chemical Industry <span>50</span></li>
+      <li>Fashion & Apparel <span>148</span></li>
+      <li>Commercial Activities <span>58</span></li>
+      <li>Construction Industry <span>54</span></li>
+      <li>Cosmetics Industry <span>74</span></li>
+      <li>Information Technologies <span>8</span></li>
+    </ul>
+    <a href="#" class="cat-all">All Categories</a>
+  </aside>
+
+  <section class="requests-box">
+    <div class="filter-buttons">
+      <button class="btn btn-all">All Requests</button>
+      <button class="btn btn-buy">Buying Requests</button>
+      <button class="btn btn-sell">Selling Offers</button>
+      <button class="btn btn-free">Free Request!</button>
+    </div>
+
+    <div class="request-list">
+      <div class="item">
+        <div>
+          <h4>Buy: 1,000 tons of Wheat</h4>
+          <p>Buyer: Baltic Import — Country: Turkey — Date: 2025-09-01</p>
+        </div>
+        <a class="cta" href="contact.html">Contact Buyer</a>
+      </div>
+
+      <div class="item">
+        <div>
+          <h4>Sell: Organic Honey (500 kg)</h4>
+          <p>Seller: Istanbul Exporters — Country: Turkey — Date: 2025-08-21</p>
+        </div>
+        <a class="cta" href="contact.html">Contact Seller</a>
+      </div>
+
+      <div class="item">
+        <div>
+          <h4>Buy: Textile Fabrics (contract)</h4>
+          <p>Buyer: EuroTrade Ltd — Country: Germany — Date: 2025-07-10</p>
+        </div>
+        <a class="cta" href="contact.html">Contact Buyer</a>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer style="margin-top:28px;padding:20px;text-align:center;background:#111;color:#fff">
-  © 2025 Trader Route
+<footer>
+  © 2025 Trader Route — All Rights Reserved.
 </footer>
 
-<!-- Hidden admin redirect -->
 <script>
-  // Gizli yönlendirme: CTRL + ALT + A
-  document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.altKey && e.key === 'a') {
-      window.location.href = 'admin/index.html';
+  // Hidden admin shortcut
+  document.addEventListener('keydown', function(e){
+    if(e.ctrlKey && e.altKey && e.key.toLowerCase() === 'a'){
+      window.location.href = '/admin/';
     }
   });
 </script>
