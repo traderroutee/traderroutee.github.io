@@ -69,3 +69,8 @@
 <header class="site-header">
 <div class="container">
 <div class="brand">Trader Route</div>
+</div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>
