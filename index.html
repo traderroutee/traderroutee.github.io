@@ -1,158 +1,158 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trader Route — The Silk Road of E-Commerce</title>
-<link rel="icon" href="assets/logos.png">
-<style>
-  :root {
-    --accent: #008b6a;
-    --accent-dark: #006955;
-    --bg: #f7f7f7;
-  }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trader Route — The Silk Road of E-Commerce</title>
+  <link rel="icon" href="assets/logos.png">
+  <style>
+    :root {
+      --accent: #008b6a;
+      --accent-dark: #006955;
+      --bg: #f7f7f7;
+    }
 
-  body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: var(--bg);
-    color: #222;
-  }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: #222;
+    }
 
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 26px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 26px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-  .logo {
-    height: 46px;
-  }
+    .logo {
+      height: 46px;
+    }
 
-  nav a {
-    margin: 0 10px;
-    color: #333;
-    font-weight: 600;
-    text-decoration: none;
-  }
+    nav a {
+      margin: 0 10px;
+      color: #333;
+      font-weight: 600;
+      text-decoration: none;
+    }
 
-  nav a:hover {
-    color: var(--accent);
-  }
+    nav a:hover {
+      color: var(--accent);
+    }
 
-  .hero {
-    position: relative;
-    background: url('assets/worldmap.jpg') center/cover no-repeat;
-    height: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .hero {
+      position: relative;
+      background: url('assets/worldmap.jpg') center/cover no-repeat;
+      height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.35);
-  }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+    }
 
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    color: #fff;
-    text-align: center;
-  }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      text-align: center;
+    }
 
-  .hero-content h1 {
-    font-size: 2.2rem;
-    margin-bottom: 10px;
-  }
+    .hero-content h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
 
-  .hero-content p {
-    font-size: 1.1rem;
-    margin: 0;
-  }
+    .hero-content p {
+      font-size: 1.1rem;
+      margin: 0;
+    }
 
-  .main-container {
-    max-width: 1000px;
-    margin: 30px auto;
-    padding: 0 18px;
-  }
+    .main-container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
 
-  .requests-box {
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
-  }
+    .requests-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    }
 
-  .filter-buttons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 18px;
-    justify-content: center;
-  }
+    .filter-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      justify-content: center;
+    }
 
-  .filter-buttons .btn {
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    border: 2px solid transparent;
-    cursor: pointer;
-  }
+    .filter-buttons .btn {
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
 
-  .btn-all {background: var(--accent); color: #fff;}
-  .btn-buy {background: #fff; color: var(--accent); border: 2px solid var(--accent);}
-  .btn-sell {background: #fff; color: var(--accent); border: 2px solid var(--accent);}
-  .btn-free {background: var(--accent); color: #fff;}
+    .btn-all {background: var(--accent); color: #fff;}
+    .btn-buy {background: #fff; color: var(--accent); border: 2px solid var(--accent);}
+    .btn-sell {background: #fff; color: var(--accent); border: 2px solid var(--accent);}
+    .btn-free {background: var(--accent); color: #fff;}
 
-  .request-list {
-    display: grid;
-    gap: 14px;
-  }
+    .request-list {
+      display: grid;
+      gap: 14px;
+    }
 
-  .item {
-    background: #fff;
-    padding: 14px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(8,20,40,0.04);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+    .item {
+      background: #fff;
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(8,20,40,0.04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-  .item h4 {
-    margin: 0 0 5px 0;
-  }
+    .item h4 {
+      margin: 0 0 5px 0;
+    }
 
-  .item p {
-    margin: 0;
-    color: #555;
-  }
+    .item p {
+      margin: 0;
+      color: #555;
+    }
 
-  .cta {
-    padding: 8px 12px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-  }
+    .cta {
+      padding: 8px 12px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+    }
 
-  footer {
-    text-align: center;
-    background: #111;
-    color: #fff;
-    padding: 20px;
-    margin-top: 40px;
-  }
-</style>
+    footer {
+      text-align: center;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
 
@@ -196,4 +196,34 @@
       <div class="item">
         <div>
           <h4>Sell: Organic Honey (500 kg)</h4>
-          <p>Seller:
+          <p>Seller: Istanbul Exporters — Country: Turkey — Date: 2025-08-21</p>
+        </div>
+        <a class="cta" href="contact.html">Contact Seller</a>
+      </div>
+
+      <div class="item">
+        <div>
+          <h4>Buy: Textile Fabrics (contract)</h4>
+          <p>Buyer: EuroTrade Ltd — Country: Germany — Date: 2025-07-10</p>
+        </div>
+        <a class="cta" href="contact.html">Contact Buyer</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2025 Trader Route — All Rights Reserved.
+</footer>
+
+<script>
+  // Hidden admin shortcut
+  document.addEventListener('keydown', function(e){
+    if(e.ctrlKey && e.altKey && e.key.toLowerCase() === 'a'){
+      window.location.href = '/admin/';
+    }
+  });
+</script>
+
+</body>
+</html>
