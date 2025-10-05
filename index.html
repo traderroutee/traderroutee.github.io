@@ -29,6 +29,7 @@
 
     .logo-container img {
       height: 42px;
+      cursor: pointer;
     }
 
     .logo-text {
@@ -241,17 +242,17 @@
 <body>
 
   <header>
-    <div class="logo-container">
+    <div class="logo-container" onclick="location.href='index.html'">
       <img src="assets/logos.png" alt="Trader Route Logo">
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
 
     <nav>
-      <a href="#">Home</a>
-      <a href="#">Companies</a>
-      <a href="#">Requests</a>
-      <a href="#">Contact</a>
-      <a href="#">Pricing</a>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
     </nav>
 
     <div class="header-right">
@@ -259,8 +260,8 @@
         <input type="text" placeholder="Search...">
         <button>🔍</button>
       </div>
-      <button class="login-btn">Sign In</button>
-      <button class="join-btn">Join Now</button>
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
     </div>
   </header>
 
