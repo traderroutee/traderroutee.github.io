@@ -1,119 +1,104 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TraderRoute | Yatırımcıların Buluşma Noktası</title>
-  <meta name="description" content="TraderRoute, yatırımcılar için analiz, strateji ve piyasa paylaşım platformudur. Ücretsiz üye olun, tecrübelerinizi paylaşın.">
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
-  <script src="assets/js/main.js" defer></script>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Trader Route — Global Trade Network</title>
+<link rel="icon" href="assets/logos.png">
+<style>
+  :root{
+    --accent:#008b6a;
+    --accent-dark:#007157;
+    --bg:#f7f7f7;
+  }
+  body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:var(--bg);color:#222}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 28px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06);position:sticky;top:0;z-index:60}
+  .logo{height:48px}
+  nav a{margin:0 10px;color:#333;text-decoration:none;font-weight:600}
+  .container{max-width:1100px;margin:26px auto;padding:0 18px}
+  h1{margin-bottom:6px}
+  .sub{color:#666;margin-bottom:16px}
+  .list{display:grid;gap:12px}
+  .item{background:#fff;padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(8,20,40,0.04);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .item .left{max-width:78%}
+  .item h3{margin:0 0 6px 0}
+  .item p{margin:0;color:#555}
+  .tags{font-size:13px;color:#666}
+  .cta{padding:8px 12px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700}
+  @media(max-width:740px){
+    .item{flex-direction:column;align-items:flex-start}
+    .item .left{max-width:100%}
+  }
+</style>
 </head>
-
 <body>
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container">
-      <div class="logo">
-        <a href="index.html">TraderRoute</a>
+
+<header>
+  <a href="index.html"><img src="assets/logos.png" alt="Trader Route" class="logo"></a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html">Requests</a>
+    <a href="pricing.html">Pricing</a>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>Welcome to Trader Route</h1>
+  <p class="sub">Connect with global traders, browse requests, and expand your business network.</p>
+
+  <div class="list">
+    <div class="item">
+      <div class="left">
+        <h3>Buy: 1,000 tons Wheat</h3>
+        <p class="tags">Buyer: Baltic Import — Country: Turkey — Date: 2025-09-01</p>
+        <p>Looking for CIF Istanbul delivery. Preferred packaging: 50kg bags.</p>
       </div>
-      <nav class="nav">
-        <ul>
-          <li><a href="markets.html">Piyasalar</a></li>
-          <li><a href="strategies.html">Stratejiler</a></li>
-          <li><a href="community.html">Topluluk</a></li>
-          <li><a href="contact.html">İletişim</a></li>
-          <li><a href="login.html" class="btn-login">Giriş Yap</a></li>
-          <li><a href="register.html" class="btn-register">Kayıt Ol</a></li>
-        </ul>
-      </nav>
-      <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+      <div><a class="cta" href="contact.html">Contact Buyer</a></div>
     </div>
-  </header>
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <div class="container">
-      <h1>Yatırım Dünyasında Yerinizi Alın</h1>
-      <p>TraderRoute, binlerce yatırımcıyı bir araya getiriyor. Analizlerinizi paylaşın, stratejilerinizi geliştirin.</p>
-      <a href="register.html" class="btn-main">Ücretsiz Katıl</a>
-    </div>
-  </section>
-
-  <!-- MARKET OVERVIEW -->
-  <section class="market-overview">
-    <div class="container">
-      <h2>Piyasa Özeti</h2>
-      <div class="market-cards">
-        <div class="card">
-          <h3>BTC/USD</h3>
-          <p class="price">₿ 64,582</p>
-          <p class="change up">+2.4%</p>
-        </div>
-        <div class="card">
-          <h3>EUR/USD</h3>
-          <p class="price">1.0672</p>
-          <p class="change down">-0.3%</p>
-        </div>
-        <div class="card">
-          <h3>ALTIN</h3>
-          <p class="price">2,330 ₺</p>
-          <p class="change up">+0.6%</p>
-        </div>
+    <div class="item">
+      <div class="left">
+        <h3>Sell: Organic Honey (500 kg)</h3>
+        <p class="tags">Seller: Istanbul Exporters — Country: Turkey — Date: 2025-08-21</p>
+        <p>High quality organic honey. Packaging options available.</p>
       </div>
+      <div><a class="cta" href="contact.html">Contact Seller</a></div>
     </div>
-  </section>
 
-  <!-- ANNOUNCEMENTS -->
-  <section class="announcements">
-    <div class="container">
-      <h2>Duyurular</h2>
-      <ul>
-        <li><strong>Yeni:</strong> TraderRoute 2.0 yayında! Performans ve güvenlik iyileştirmeleri yapıldı.</li>
-        <li><strong>Bilgi:</strong> Üyelik sistemi geliştirildi. Artık profil doğrulaması aktif.</li>
-        <li><strong>Dikkat:</strong> Piyasa yorumları yalnızca bilgilendirme amaçlıdır.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- COMMUNITY -->
-  <section class="community">
-    <div class="container">
-      <h2>Topluluk Gönderileri</h2>
-      <div class="posts">
-        <article class="post">
-          <h3>Teknik Analiz: BTC/USDT Direnç Noktası</h3>
-          <p>Son 4 saatlik grafikte RSI 70 seviyesini zorluyor. Yatırımcılar dikkatli olmalı.</p>
-          <a href="post.html" class="read-more">Devamını Oku</a>
-        </article>
-        <article class="post">
-          <h3>Altın’da Yükselen Trend Devam Ediyor</h3>
-          <p>Makro ekonomik veriler altın fiyatlarını destekliyor gibi görünüyor.</p>
-          <a href="post.html" class="read-more">Devamını Oku</a>
-        </article>
+    <div class="item">
+      <div class="left">
+        <h3>Buy: Textile Fabrics (contract)</h3>
+        <p class="tags">Buyer: EuroTrade Ltd — Country: Germany — Date: 2025-07-10</p>
+        <p>Looking for long-term supplier of polyester blends.</p>
       </div>
+      <div><a class="cta" href="contact.html">Contact Buyer</a></div>
     </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <p>© 2023 TraderRoute. Tüm hakları saklıdır.</p>
-      <ul class="footer-links">
-        <li><a href="privacy.html">Gizlilik Politikası</a></li>
-        <li><a href="terms.html">Kullanım Şartları</a></li>
-      </ul>
+    <div class="item">
+      <div class="left">
+        <h3>Free Request: Product Listing Assistance</h3>
+        <p class="tags">Posted by: Trader Route Team — Date: 2025-10-01</p>
+        <p>We can help new members publish their first listing free of charge.</p>
+      </div>
+      <div><a class="cta" href="register.html">Apply</a></div>
     </div>
-  </footer>
+  </div>
+</main>
 
-  <!-- HIDDEN ADMIN REDIRECT -->
-  <script>
-    document.addEventListener('keydown', (e) => {
-      // Gizli yönlendirme: CTRL + ALT + A
-      if (e.ctrlKey && e.altKey && e.key === 'a') {
-        window.location.href = 'admin/index.html';
-      }
-    });
-  </script>
+<footer style="margin-top:28px;padding:20px;text-align:center;background:#111;color:#fff">
+  © 2025 Trader Route
+</footer>
+
+<!-- Hidden admin redirect -->
+<script>
+  // Gizli yönlendirme: CTRL + ALT + A
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.altKey && e.key === 'a') {
+      window.location.href = 'admin/index.html';
+    }
+  });
+</script>
+
 </body>
 </html>
