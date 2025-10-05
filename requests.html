@@ -79,67 +79,15 @@
   }
 
   .main-container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 30px auto;
     padding: 0 18px;
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 24px;
   }
 
-  /* Categories */
-  .categories {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
-    padding: 18px;
-  }
-
-  .categories h3 {
-    margin-top: 0;
-    margin-bottom: 14px;
-    color: var(--accent-dark);
-  }
-
-  .cat-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .cat-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 15px;
-    color: #333;
-  }
-
-  .cat-list li span {
-    background: #f0f0f0;
-    border-radius: 12px;
-    padding: 3px 8px;
-    font-size: 13px;
-  }
-
-  .cat-all {
-    display: block;
-    text-align: center;
-    margin-top: 12px;
-    padding: 10px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  /* Requests section */
   .requests-box {
     background: #fff;
     border-radius: 10px;
-    padding: 18px;
+    padding: 20px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.05);
   }
 
@@ -148,6 +96,7 @@
     gap: 10px;
     flex-wrap: wrap;
     margin-bottom: 18px;
+    justify-content: center;
   }
 
   .filter-buttons .btn {
@@ -203,12 +152,6 @@
     padding: 20px;
     margin-top: 40px;
   }
-
-  @media(max-width: 880px) {
-    .main-container {
-      grid-template-columns: 1fr;
-    }
-  }
 </style>
 </head>
 <body>
@@ -233,23 +176,6 @@
 </section>
 
 <main class="main-container">
-  <aside class="categories">
-    <h3>Categories</h3>
-    <ul class="cat-list">
-      <li>Agricultural Machinery <span>16</span></li>
-      <li>Agriculture Industry <span>175</span></li>
-      <li>Automotive <span>39</span></li>
-      <li>Baby Products & Accessories <span>11</span></li>
-      <li>Chemical Industry <span>50</span></li>
-      <li>Fashion & Apparel <span>148</span></li>
-      <li>Commercial Activities <span>58</span></li>
-      <li>Construction Industry <span>54</span></li>
-      <li>Cosmetics Industry <span>74</span></li>
-      <li>Information Technologies <span>8</span></li>
-    </ul>
-    <a href="#" class="cat-all">All Categories</a>
-  </aside>
-
   <section class="requests-box">
     <div class="filter-buttons">
       <button class="btn btn-all">All Requests</button>
