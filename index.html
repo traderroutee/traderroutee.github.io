@@ -51,10 +51,11 @@
     .hero {
       position: relative;
       background: url('assets/worldmap.jpg') center/cover no-repeat;
-      height: 420px;
+      height: 500px;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
 
     .hero-overlay {
@@ -71,7 +72,7 @@
     }
 
     .hero-content h1 {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       margin-bottom: 10px;
     }
 
@@ -80,70 +81,71 @@
       margin: 0;
     }
 
-    /* MAIN CONTENT */
-    .main-container {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 0 18px;
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 24px;
-    }
-
-    /* Categories */
+    /* CATEGORIES ON HERO */
     .categories {
-      background: #fff;
+      position: absolute;
+      top: 80px;
+      left: 40px;
+      z-index: 3;
+      width: 240px;
+      background: rgba(255,255,255,0.9);
       border-radius: 10px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
       padding: 18px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      backdrop-filter: blur(4px);
     }
 
     .categories h3 {
       margin-top: 0;
       margin-bottom: 14px;
       color: var(--accent-dark);
+      font-size: 17px;
+      text-align: center;
     }
 
     .cat-list {
       list-style: none;
       margin: 0;
       padding: 0;
+      font-size: 14px;
     }
 
     .cat-list li {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
-      font-size: 15px;
+      margin-bottom: 8px;
       color: #333;
     }
 
     .cat-list li span {
       background: #f0f0f0;
-      border-radius: 12px;
-      padding: 3px 8px;
-      font-size: 13px;
+      border-radius: 10px;
+      padding: 2px 6px;
+      font-size: 12px;
     }
 
     .cat-all {
       display: block;
       text-align: center;
       margin-top: 12px;
-      padding: 10px;
+      padding: 8px;
       background: var(--accent);
       color: #fff;
       border-radius: 8px;
       text-decoration: none;
       font-weight: 600;
+      font-size: 14px;
     }
 
-    /* Requests section */
+    /* REQUESTS SECTION */
     .requests-box {
       background: #fff;
       border-radius: 10px;
       padding: 18px;
       box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      max-width: 1000px;
+      margin: 40px auto;
     }
 
     .filter-buttons {
@@ -163,8 +165,11 @@
     }
 
     .btn-all {background: var(--accent); color: #fff;}
-    .btn-buy {background: #fff; color: var(--accent); border: 2px solid var(--accent);}
-    .btn-sell {background: #fff; color: var(--accent); border: 2px solid var(--accent);}
+    .btn-buy, .btn-sell {
+      background: #fff;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+    }
     .btn-free {background: var(--accent); color: #fff;}
 
     .request-list {
@@ -182,15 +187,8 @@
       align-items: center;
     }
 
-    .item h4 {
-      margin: 0 0 5px 0;
-    }
-
-    .item p {
-      margin: 0;
-      color: #555;
-    }
-
+    .item h4 {margin: 0 0 5px 0;}
+    .item p {margin: 0; color: #555;}
     .cta {
       padding: 8px 12px;
       background: var(--accent);
@@ -210,15 +208,19 @@
     }
 
     @media(max-width: 880px) {
-      .main-container {
-        grid-template-columns: 1fr;
+      .categories {
+        position: static;
+        width: auto;
+        margin: 20px;
+      }
+      .hero {
+        height: 400px;
       }
     }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <a href="index.html"><img src="assets/logos.png" alt="Trader Route" class="logo"></a>
   <nav>
@@ -230,77 +232,69 @@
   </nav>
 </header>
 
-<!-- HERO SECTION -->
 <section class="hero">
   <div class="hero-overlay"></div>
+  <div class="categories">
+    <h3>Categories</h3>
+    <ul class="cat-list">
+      <li>Agricultural Machinery <span>16</span></li>
+      <li>Agriculture Industry <span>175</span></li>
+      <li>Automotive <span>39</span></li>
+      <li>Baby Products <span>11</span></li>
+      <li>Chemical Industry <span>50</span></li>
+      <li>Fashion & Apparel <span>148</span></li>
+      <li>Construction <span>54</span></li>
+      <li>Cosmetics <span>74</span></li>
+      <li>IT & Tech <span>8</span></li>
+    </ul>
+    <a href="#" class="cat-all">All Categories</a>
+  </div>
   <div class="hero-content">
     <h1>The Silk Road of E-Commerce</h1>
     <p>Connecting global buyers and suppliers with trust and transparency.</p>
   </div>
 </section>
 
-<!-- MAIN CONTENT -->
-<main class="main-container">
-  <aside class="categories">
-    <h3>Categories</h3>
-    <ul class="cat-list">
-      <li>Agricultural Machinery <span>16</span></li>
-      <li>Agriculture Industry <span>175</span></li>
-      <li>Automotive <span>39</span></li>
-      <li>Baby Products & Accessories <span>11</span></li>
-      <li>Chemical Industry <span>50</span></li>
-      <li>Fashion & Apparel <span>148</span></li>
-      <li>Commercial Activities <span>58</span></li>
-      <li>Construction Industry <span>54</span></li>
-      <li>Cosmetics Industry <span>74</span></li>
-      <li>Information Technologies <span>8</span></li>
-    </ul>
-    <a href="#" class="cat-all">All Categories</a>
-  </aside>
+<section class="requests-box">
+  <div class="filter-buttons">
+    <button class="btn btn-all">All Requests</button>
+    <button class="btn btn-buy">Buying Requests</button>
+    <button class="btn btn-sell">Selling Offers</button>
+    <button class="btn btn-free">Free Request!</button>
+  </div>
 
-  <section class="requests-box">
-    <div class="filter-buttons">
-      <button class="btn btn-all">All Requests</button>
-      <button class="btn btn-buy">Buying Requests</button>
-      <button class="btn btn-sell">Selling Offers</button>
-      <button class="btn btn-free">Free Request!</button>
+  <div class="request-list">
+    <div class="item">
+      <div>
+        <h4>Buy: 1,000 tons of Wheat</h4>
+        <p>Buyer: Baltic Import — Country: Turkey — Date: 2025-09-01</p>
+      </div>
+      <a class="cta" href="contact.html">Contact Buyer</a>
     </div>
 
-    <div class="request-list">
-      <div class="item">
-        <div>
-          <h4>Buy: 1,000 tons of Wheat</h4>
-          <p>Buyer: Baltic Import — Country: Turkey — Date: 2025-09-01</p>
-        </div>
-        <a class="cta" href="contact.html">Contact Buyer</a>
+    <div class="item">
+      <div>
+        <h4>Sell: Organic Honey (500 kg)</h4>
+        <p>Seller: Istanbul Exporters — Country: Turkey — Date: 2025-08-21</p>
       </div>
-
-      <div class="item">
-        <div>
-          <h4>Sell: Organic Honey (500 kg)</h4>
-          <p>Seller: Istanbul Exporters — Country: Turkey — Date: 2025-08-21</p>
-        </div>
-        <a class="cta" href="contact.html">Contact Seller</a>
-      </div>
-
-      <div class="item">
-        <div>
-          <h4>Buy: Textile Fabrics (contract)</h4>
-          <p>Buyer: EuroTrade Ltd — Country: Germany — Date: 2025-07-10</p>
-        </div>
-        <a class="cta" href="contact.html">Contact Buyer</a>
-      </div>
+      <a class="cta" href="contact.html">Contact Seller</a>
     </div>
-  </section>
-</main>
 
-<!-- FOOTER -->
+    <div class="item">
+      <div>
+        <h4>Buy: Textile Fabrics (contract)</h4>
+        <p>Buyer: EuroTrade Ltd — Country: Germany — Date: 2025-07-10</p>
+      </div>
+      <a class="cta" href="contact.html">Contact Buyer</a>
+    </div>
+  </div>
+</section>
+
 <footer>
   © 2025 Trader Route — All Rights Reserved.
 </footer>
 
 <script>
-  // Hidden admin shortcut
   document.addEventListener('keydown', function(e){
     if(e.ctrlKey && e.altKey && e.key.toLowerCase() === 'a'){
       window.location.href = '/admin/';
