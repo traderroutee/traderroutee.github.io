@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trader Route - Import & Export Platform</title>
-  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="icon" href="assets/logos.png" type="image/png">
   <style>
     body {
       margin: 0;
@@ -21,8 +21,20 @@
       justify-content: space-between;
     }
 
-    header img {
-      height: 40px;
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      height: 42px;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      color: #555;
+      font-weight: 500;
     }
 
     nav {
@@ -229,7 +241,11 @@
 <body>
 
   <header>
-    <img src="assets/logo.png" alt="Trader Route Logo">
+    <div class="logo-container">
+      <img src="assets/logos.png" alt="Trader Route Logo">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
+
     <nav>
       <a href="#">Home</a>
       <a href="#">Companies</a>
