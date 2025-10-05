@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sign In — Trader Route</title>
+<link rel="icon" href="assets/logos.png">
+<style>
+  body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f4f7f8}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+  .box{max-width:420px;margin:60px auto;padding:22px;background:#fff;border-radius:10px;box-shadow:0 8px 30px rgba(2,8,23,0.06)}
+  input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ddd}
+  .btn{background:#008b6a;color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
+  .link{display:block;margin-top:10px;text-align:center}
+  footer{text-align:center;padding:18px;background:#111;color:#eee;margin-top:30px}
+</style>
+</head>
+<body>
+<header>
+  <img src="assets/logos.png" alt="Trader Route" style="height:48px">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="register.html">Join</a>
+  </nav>
+</header>
+
+<div class="box">
+  <h2>Sign In</h2>
+  <form id="loginForm" onsubmit="event.preventDefault();doLogin();">
+    <input id="email" type="email" placeholder="Email" required>
+    <input id="password" type="password" placeholder="Password" required>
+    <button class="btn" type="submit">Sign In</button>
+    <div class="link"><a href="register.html">Create account</a> | <a href="contact.html">Contact support</a></div>
+  </form>
+  <div id="loginMsg" style="margin-top:10px;color:green"></div>
+</div>
+
+<footer>© 2025 Trader Route</footer>
+
+<script>
+  // Demo auth using localStorage
+  function doLogin(){
+    const email=document.getElementById('email').value;
+    const pwd=document.getElementById('password').value;
+    const users = JSON.parse(localStorage.getItem('tr_users')||'[]');
+    const u = users.find(x=>x.email===email && x.password===pwd);
+    if(u){ localStorage.setItem('tr_user', JSON.stringify(u)); document.getElementById('loginMsg').textContent='Signed in successfully.'; setTimeout(()=> location.href='index.html',800); }
+    else{ document.getElementById('loginMsg').textContent='Invalid credentials (demo).'; document.getElementById('loginMsg').style.color='red'; }
+  }
+</script>
+</body>
+</html>
