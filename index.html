@@ -24,9 +24,28 @@
       z-index: 100;
     }
 
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+    }
+
     .logo {
-      height: 55px;
+      height: 70px;
       width: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .slogan {
+      font-size: 18px;
+      color: #008b6a;
+      font-weight: 600;
+      white-space: nowrap;
     }
 
     nav a {
@@ -133,14 +152,17 @@
     }
 
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 28px;
-      }
       header {
         flex-direction: column;
+        gap: 10px;
       }
-      nav {
-        margin-top: 10px;
+
+      .slogan {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 28px;
       }
     }
   </style>
@@ -148,7 +170,10 @@
 <body>
   <!-- Header -->
   <header>
-    <img src="assets/logos.png" alt="Trader Route Logo" class="logo">
+    <a href="index.html" class="logo-container">
+      <img src="assets/logos.png" alt="Trader Route Logo" class="logo">
+      <span class="slogan">The Silk Road of E-commerce</span>
+    </a>
     <nav>
       <a href="companies.html">Companies</a>
       <a href="requests.html">Requests</a>
@@ -161,7 +186,7 @@
 
   <!-- Hero -->
   <div class="hero">
-    <h1>The Silk Road of e-Commerce</h1>
+    <h1>Connecting Global Trade Partners</h1>
   </div>
 
   <!-- Mission / Vision / Why Us -->
@@ -191,3 +216,6 @@
   <!-- Footer -->
   <footer>
     © 2025 Trader Route — All Rights Reserved.
+  </footer>
+</body>
+</html>
