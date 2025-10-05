@@ -1,322 +1,193 @@
-<!doctype html>
-<html lang="tr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="TraderRoute - Trading topluluğu ve kaynakları" />
-  <title>TraderRoute — Ana Sayfa</title>
-
-  <!-- Google Fonts (kullanmak istersen) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trader Route — Import & Export Network</title>
+  <link rel="icon" type="image/png" href="assets/logos.png">
   <style>
-    :root{
-      --accent:#0b6efd;
-      --dark:#0b1220;
-      --muted:#6b7280;
-      --bg:#f7f9fc;
-      --card:#ffffff;
-      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--dark);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f5f5f5;
     }
 
-    /* Header */
-    .header{
-      background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.8));
-      backdrop-filter: blur(6px);
-      position:sticky;
-      top:0;
-      z-index:100;
-      border-bottom:1px solid rgba(15,23,42,0.04);
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 50px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .container{max-width:1100px;margin:0 auto;padding:0 20px;}
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:14px 0;
-    }
-    .brand{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      text-decoration:none;
-      color:var(--dark);
-    }
-    .brand img{height:40px;}
-    .brand h1{font-size:18px;margin:0;font-weight:700;}
-    .nav-links{display:flex;gap:18px;align-items:center;}
-    .nav-links a{color:var(--dark);text-decoration:none;font-weight:600;}
-    .btn{display:inline-block;padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:600;}
-    .btn-primary{background:var(--accent);color:white;}
-    .btn-ghost{background:transparent;border:1px solid rgba(11,110,253,0.08);color:var(--accent);}
 
-    /* Hero */
-    .hero{
-      padding:44px 0 24px 0;
+    .logo {
+      height: 55px;
+      width: auto;
     }
-    .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;}
-    .hero-title{font-size:34px;margin:0 0 12px 0;}
-    .hero-sub{color:var(--muted);margin:0 0 18px 0;}
-    .cta-row{display:flex;gap:12px;align-items:center;margin-top:8px;}
-    .card{
-      background:var(--card);
-      border-radius:12px;
-      box-shadow: 0 6px 20px rgba(11,22,40,0.06);
-      padding:18px;
+
+    nav a {
+      margin: 0 15px;
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
     }
-    .feature-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;}
-    .feature{padding:14px;border-radius:10px;background:#fbfdff;border:1px solid rgba(11,110,253,0.04);text-align:center;}
-    .feature h4{margin:8px 0 0 0;font-size:14px}
-    .small{font-size:13px;color:var(--muted)}
 
-    /* Login/Register card on the right */
-    .auth{
-      width:100%;
+    nav a:hover {
+      color: #008b6a;
     }
-    form .field{margin-bottom:12px;}
-    input[type="text"],input[type="email"],input[type="password"]{
-      width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef8;background:#fbfdff;
+
+    .hero {
+      height: 480px;
+      background: url("assets/ihracat-haritasi.png") no-repeat center center;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      color: white;
     }
-    .muted-note{font-size:13px;color:var(--muted);margin-top:8px}
 
-    /* Sections */
-    .sections{padding:26px 0 60px 0;}
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-    .plans{display:flex;gap:12px;margin-top:14px;}
-    .plan{flex:1;padding:16px;border-radius:12px;border:1px solid rgba(11,110,253,0.06);background:#ffffff}
-    .plan h3{margin:0 0 6px 0;}
-    .plan p{margin:0;color:var(--muted);font-size:14px;}
+    .hero h1 {
+      font-size: 40px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 15px 25px;
+      border-radius: 12px;
+    }
 
-    /* Footer */
-    footer{padding:26px 0;border-top:1px solid rgba(11,22,40,0.04);margin-top:40px;background:transparent;}
-    .footer-grid{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;}
-    .footer-grid .col{min-width:160px;}
-    .copyright{color:var(--muted);font-size:13px;margin-top:14px}
+    .section {
+      padding: 60px 10%;
+      background: white;
+    }
 
-    /* Responsive */
-    @media (max-width:900px){
-      .hero-grid{grid-template-columns:1fr;}
-      .nav-links{display:none;}
-      .mobile-nav{display:flex;gap:10px;}
+    .section h2 {
+      text-align: center;
+      font-size: 32px;
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    .section p {
+      text-align: center;
+      font-size: 18px;
+      color: #555;
+      max-width: 800px;
+      margin: 0 auto 40px auto;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      text-align: center;
+    }
+
+    .feature {
+      max-width: 320px;
+    }
+
+    .feature img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    footer {
+      background: #111;
+      color: #eee;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 14px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: #008b6a;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background-color: #007157;
+    }
+
+    .btn-outline {
+      border: 2px solid #008b6a;
+      color: #008b6a;
+    }
+
+    .btn-outline:hover {
+      background-color: #008b6a;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 28px;
+      }
+      header {
+        flex-direction: column;
+      }
+      nav {
+        margin-top: 10px;
+      }
     }
   </style>
-
 </head>
 <body>
-
-  <!-- HEADER / NAV -->
-  <header class="header">
-    <div class="container">
-      <nav class="nav" role="navigation" aria-label="Ana navigasyon">
-        <a class="brand" href="/">
-          <!-- TODO: Replace src with /assets/logo.png from your repo -->
-          <img src="/assets/logo.png" alt="TraderRoute logo" onerror="this.style.display='none'">
-          <h1>TraderRoute</h1>
-        </a>
-
-        <div style="display:flex;align-items:center;gap:16px">
-          <div class="nav-links" aria-hidden="true">
-            <a href="#hakkinda">Hakkında</a>
-            <a href="#ozellikler">Özellikler</a>
-            <a href="#uyelik">Üyelik</a>
-            <a href="#iletisim">İletişim</a>
-          </div>
-
-          <div class="mobile-nav" style="display:none;">
-            <a class="btn btn-ghost" href="/login">Giriş</a>
-            <a class="btn btn-primary" href="/register">Üye Ol</a>
-          </div>
-
-          <div class="nav-actions" aria-hidden="false" style="display:flex;gap:10px;align-items:center">
-            <a class="btn btn-ghost" href="/login">Giriş</a>
-            <a class="btn btn-primary" href="/register">Üye Ol</a>
-          </div>
-        </div>
-      </nav>
-    </div>
+  <!-- Header -->
+  <header>
+    <img src="assets/logos.png" alt="Trader Route Logo" class="logo">
+    <nav>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="login.html" class="btn-outline">Sign In</a>
+      <a href="register.html" class="btn-primary">Join</a>
+    </nav>
   </header>
 
-  <!-- HERO -->
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="hero-grid">
-          <div>
-            <h2 class="hero-title">TraderRoute — Trading topluluğu & kaynak merkezi</h2>
-            <p class="hero-sub">Eğitim materyalleri, sinyaller, özel analizler ve aktif bir trader topluluğu. Eski halini koruyarak yeniden açıldı — tekrar aramıza hoş geldin!</p>
+  <!-- Hero -->
+  <div class="hero">
+    <h1>The Silk Road of e-Commerce</h1>
+  </div>
 
-            <div class="cta-row">
-              <a class="btn btn-primary" href="/register">Ücretsiz Üye Ol</a>
-              <a class="btn" href="/about" style="border:1px solid rgba(11,110,253,0.08);">Daha Fazla Bilgi</a>
-            </div>
+  <!-- Mission / Vision / Why Us -->
+  <section class="section">
+    <h2>Our Mission</h2>
+    <p>To help import and export clients expand their products into global markets.</p>
 
-            <div class="feature-list" aria-hidden="true">
-              <div class="feature">
-                <strong>5000+</strong>
-                <h4 class="small">Topluluk Üyesi</h4>
-              </div>
-              <div class="feature">
-                <strong>Canlı Sinyaller</strong>
-                <h4 class="small">Gerçek zamanlı</h4>
-              </div>
-              <div class="feature">
-                <strong>Eğitim</strong>
-                <h4 class="small">Temel → İleri</h4>
-              </div>
-            </div>
-          </div>
+    <h2>Our Vision</h2>
+    <p>To build successful trade connections between importers and exporters worldwide.</p>
 
-          <!-- Right column: login / quick join card -->
-          <aside>
-            <div class="card auth">
-              <h3 style="margin:0 0 6px 0">Hızlı Giriş</h3>
-              <p class="small" style="margin:0 0 12px 0">Mevcut üyeler için hızlı giriş, yeni üyeler için kayıt butonu aşağıda.</p>
+    <h2>Why Choose Us?</h2>
+    <p>Our platform connects buyers and suppliers through verified import and export requests. Product listings are free and easy to publish.</p>
+  </section>
 
-              <form id="loginForm" onsubmit="event.preventDefault();fakeLogin();" aria-label="Giriş formu">
-                <div class="field">
-                  <label class="small">E-posta</label>
-                  <input type="email" id="email" placeholder="ornek@ornek.com" required>
-                </div>
-                <div class="field">
-                  <label class="small">Şifre</label>
-                  <input type="password" id="password" placeholder="Şifreniz" required>
-                </div>
-
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px;">
-                  <button class="btn btn-primary" type="submit">Giriş Yap</button>
-                  <a href="/forgot" class="small" style="margin-left:auto;color:var(--muted)">Şifremi unuttum</a>
-                </div>
-                <p class="muted-note">Henüz üye değil misin? <a href="/register">Hemen üye ol</a></p>
-              </form>
-
-              <hr style="border:none;border-top:1px solid rgba(11,22,40,0.04);margin:12px 0">
-
-              <div>
-                <p style="margin:0;font-weight:600">Topluluk istatistikleri</p>
-                <p class="small" style="margin:8px 0 0 0">Aktif üyeler: <strong id="statMembers">5000</strong></p>
-                <p class="small" style="margin:6px 0 0 0">Günlük sinyaller: <strong>2-6</strong></p>
-              </div>
-            </div>
-
-            <div style="height:12px"></div>
-
-            <div class="card small">
-              <strong>Önemli duyuru</strong>
-              <p class="small" style="margin-top:8px">Eski veriler arşivde korunmuştur. Kayıtları geri yüklemek için admin paneli üzerinden CSV yükleyebilirsin.</p>
-            </div>
-          </aside>
-        </div>
+  <!-- Join Section -->
+  <section class="section" style="background-color: #f0f8ff;">
+    <h2>Join Trader Route</h2>
+    <div class="features">
+      <div class="feature">
+        <img src="assets/trader_route_step1.jpeg" alt="Trader Route Import and Export Website">
+        <p>Connecting your business to the global trade network with reliability and trust.</p>
+        <a href="register.html" class="btn btn-primary">Join Now</a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- FEATURES / ABOUT -->
-    <section id="ozellikler" class="sections">
-      <div class="container">
-        <h3>Özelliklerimiz</h3>
-        <div class="grid-2" style="margin-top:12px">
-          <div class="card">
-            <h4>Günlük Sinyaller & Analizler</h4>
-            <p class="small">Deneyimli trader'lar tarafından sağlanan sinyaller, teknik analizler ve piyasa yorumları.</p>
-            <ul style="margin-top:10px">
-              <li class="small">Forex, Kripto, Hisse</li>
-              <li class="small">Risk yönetimi önerileri</li>
-              <li class="small">Geri test edilmiş stratejiler</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h4>Üyelik & Dashboard</h4>
-            <p class="small">Kişiselleştirilmiş dashboard, geçmiş sinyaller arşivi ve premium kanallar.</p>
-            <div style="margin-top:10px" class="plans">
-              <div class="plan">
-                <h3>Temel</h3>
-                <p class="small">Ücretsiz içerik, topluluk sohbeti</p>
-              </div>
-              <div class="plan">
-                <h3>Premium</h3>
-                <p class="small">Canlı sinyaller, özel eğitimler</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MEMBERSHIP / CTA -->
-    <section id="uyelik" class="sections">
-      <div class="container">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;">
-          <div>
-            <h3>Üyelik planları</h3>
-            <p class="small">Eski halinin aynısı — aynı fiyat ve paket isimleriyle (istersen bunları kolayca güncelleyebilirsin).</p>
-          </div>
-          <div style="display:flex;gap:10px;">
-            <a class="btn btn-primary" href="/register">Şimdi Katıl</a>
-            <a class="btn" href="/pricing">Planları Gör</a>
-          </div>
-        </div>
-
-        <div style="margin-top:14px" class="grid-2">
-          <div class="card">
-            <h4>Topluluk</h4>
-            <p class="small">Etkinlikler, eğitim oturumları ve mentor programları.</p>
-          </div>
-          <div class="card">
-            <h4>Geri Yükleme</h4>
-            <p class="small">Eski kullanıcı verilerini CSV ile yüklemek için yönetici paneli hazır.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT / FOOTER -->
-    <footer>
-      <div class="container">
-        <div class="footer-grid">
-          <div class="col">
-            <h4>TraderRoute</h4>
-            <p class="small">Trading topluluğunuz — eğitim, sinyaller ve analizler.</p>
-            <p class="copyright">© <span id="year"></span> TraderRoute</p>
-          </div>
-          <div class="col">
-            <h4>Hızlı Linkler</h4>
-            <p><a href="/about">Hakkında</a></p>
-            <p><a href="/terms">Kullanım Şartları</a></p>
-            <p><a href="/privacy">Gizlilik</a></p>
-          </div>
-          <div class="col" id="iletisim">
-            <h4>İletişim</h4>
-            <p class="small">mail@traderroute.com</p>
-            <p class="small">Sosyal medya bağlantıları</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <script>
-    // Küçük yardımcı JS: sahte giriş, tarih, istatistik artırımı
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    function fakeLogin(){
-      const email = document.getElementById('email').value;
-      if(!email) return alert('E-posta giriniz.');
-      // Bu demo: gerçek auth yerine sadece sample mesaj.
-      alert('Demo Giriş: ' + email + '\\nGerçek giriş entegrasyonu için backend bağlantısı gerekli.');
-    }
-
-    // Eğer arşivden geri yükleme sırasında üye sayısı farklıysa bu değeri değiştir:
-    // document.getElementById('statMembers').textContent = '5000';
-  </script>
-
-</body>
-</html>
+  <!-- Footer -->
+  <footer>
+    © 2025 Trader Route — All Rights Reserved.
