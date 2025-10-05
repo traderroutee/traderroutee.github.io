@@ -151,6 +151,19 @@
       color: #fff;
     }
 
+    .requests-buttons {
+      text-align: center;
+      margin-top: 50px;
+      margin-bottom: 30px;
+    }
+
+    .requests-buttons .btn {
+      margin: 8px;
+      font-size: 16px;
+      padding: 10px 22px;
+      border-radius: 8px;
+    }
+
     @media (max-width: 768px) {
       header {
         flex-direction: column;
@@ -186,8 +199,16 @@
 
   <!-- Hero -->
   <div class="hero">
-    <h1>Connecting Global Trade Partners</h3>
+    <h1>Connecting Global Trade Partners</h1>
   </div>
+
+  <!-- Request Buttons Section -->
+  <section class="requests-buttons">
+    <a href="requests.html" class="btn btn-primary">All Requests</a>
+    <a href="requests.html?type=buying" class="btn btn-outline">Buying Requests</a>
+    <a href="requests.html?type=selling" class="btn btn-outline">Selling Offers</a>
+    <a href="requests.html?type=free" class="btn btn-primary">Free Request!</a>
+  </section>
 
   <!-- Mission / Vision / Why Us -->
   <section class="section">
