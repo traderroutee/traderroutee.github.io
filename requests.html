@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Requests — Trader Route</title>
+<link rel="icon" href="assets/logos.png">
+<style>
+  body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f7f7f7;color:#222}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06);position:sticky;top:0}
+  .container{max-width:1100px;margin:30px auto;padding:0 20px}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  .btn{padding:8px 14px;border-radius:8px;background:#008b6a;color:#fff;text-decoration:none}
+  .list{display:flex;flex-direction:column;gap:12px}
+  .item{background:#fff;padding:14px;border-radius:8px;box-shadow:0 6px 18px rgba(8,20,40,0.04)}
+  footer{text-align:center;padding:18px;background:#111;color:#eee;margin-top:30px}
+</style>
+</head>
+<body>
+<header>
+  <img src="assets/logos.png" alt="Trader Route" style="height:48px">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html">Requests</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h1>Import & Export Requests</h1>
+  <p>Browse buying requests and selling offers from verified members.</p>
+
+  <div class="filters">
+    <button class="btn" onclick="showAll()">All</button>
+    <button class="btn" onclick="filterType('buy')">Buying Requests</button>
+    <button class="btn" onclick="filterType('sell')">Selling Offers</button>
+    <a href="register.html" class="btn" style="background:#005f46">Post a Request</a>
+  </div>
+
+  <div id="requestsList" class="list">
+    <div class="item" data-type="buy"><strong>Buy:</strong> 1000 tons Wheat — Turkey — <small>2025-09-01</small></div>
+    <div class="item" data-type="sell"><strong>Sell:</strong> Steel rods 20mm — China — <small>2025-08-21</small></div>
+    <div class="item" data-type="buy"><strong>Buy:</strong> Cotton fabrics — USA — <small>2025-07-15</small></div>
+  </div>
+</div>
+
+<footer>© 2025 Trader Route</footer>
+
+<script>
+  function filterType(type){
+    document.querySelectorAll('#requestsList .item').forEach(i=>{
+      i.style.display = i.dataset.type === type ? 'block' : 'none';
+    });
+  }
+  function showAll(){
+    document.querySelectorAll('#requestsList .item').forEach(i=>i.style.display='block');
+  }
+</script>
+</body>
+</html>
