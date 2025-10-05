@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Companies — Trader Route</title>
+<link rel="icon" href="assets/logos.png">
+<style>
+  body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f5f5f5;color:#222}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06);position:sticky;top:0;z-index:50}
+  .logo{height:48px}
+  nav a{margin:0 12px;color:#333;text-decoration:none;font-weight:600}
+  .container{max-width:1100px;margin:28px auto;padding:0 20px}
+  .search-row{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+  .search-row input{flex:1;padding:10px;border-radius:8px;border:1px solid #ddd}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+  .card{background:#fff;padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(8,20,40,0.04)}
+  .card h3{margin:0 0 6px 0}
+  footer{text-align:center;padding:18px;background:#111;color:#eee;margin-top:40px}
+  @media(max-width:640px){header{padding:10px 16px}}
+</style>
+</head>
+<body>
+<header>
+  <img src="assets/logos.png" alt="Trader Route" class="logo">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html">Requests</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html">Sign In</a>
+    <a href="register.html" style="color:#fff;background:#008b6a;padding:8px 12px;border-radius:6px;text-decoration:none">Join</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h1>Companies</h1>
+  <p>Find verified companies, suppliers and distributors. Use search and filters below.</p>
+
+  <div class="search-row">
+    <input id="companySearch" placeholder="Search companies by name, country or product...">
+    <select id="countryFilter">
+      <option value="">All countries</option>
+      <option>Turkey</option><option>China</option><option>USA</option><option>Germany</option>
+    </select>
+    <button onclick="filterCompanies()">Search</button>
+  </div>
+
+  <div id="companiesGrid" class="grid">
+    <!-- sample cards -->
+    <div class="card"><h3>Global Textiles Co.</h3><p>Country: Turkey</p><p>Products: Fabrics, Yarn</p></div>
+    <div class="card"><h3>Oceanic Metals Ltd.</h3><p>Country: China</p><p>Products: Steel, Alloys</p></div>
+    <div class="card"><h3>Northwind Exports</h3><p>Country: USA</p><p>Products: Agricultural products</p></div>
+    <div class="card"><h3>Euro Components GmbH</h3><p>Country: Germany</p><p>Products: Electronic components</p></div>
+  </div>
+</div>
+
+<footer>© 2025 Trader Route — All rights reserved.</footer>
+
+<script>
+  function filterCompanies(){
+    const q=document.getElementById('companySearch').value.toLowerCase();
+    const country=document.getElementById('countryFilter').value;
+    const cards=document.querySelectorAll('#companiesGrid .card');
+    cards.forEach(c=>{
+      const text=c.textContent.toLowerCase();
+      const matchesQ = q === '' || text.includes(q);
+      const matchesCountry = country === '' || text.includes(country.toLowerCase());
+      c.style.display = (matchesQ && matchesCountry) ? 'block' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
