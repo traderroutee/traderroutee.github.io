@@ -1,174 +1,229 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trader Route — Import & Export Network</title>
-  <link rel="icon" type="image/png" href="assets/logos.png">
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #f5f5f5;
-      display: flex;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trader Route — The Silk Road of E-Commerce</title>
+<link rel="icon" href="assets/logos.png">
+<style>
+  :root {
+    --accent: #008b6a;
+    --accent-dark: #006955;
+    --bg: #f7f7f7;
+  }
 
-    /* Sidebar */
-    .sidebar {
-      width: 250px;
-      background: #fff;
-      border-right: 1px solid #ddd;
-      padding: 20px;
-      height: 100vh;
-      position: sticky;
-      top: 0;
-    }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: #222;
+  }
 
-    .sidebar h3 {
-      font-size: 20px;
-      color: #008b6a;
-      margin-bottom: 15px;
-    }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 26px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-    .category-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+  .logo {
+    height: 46px;
+  }
 
-    .category-list li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 5px;
-      border-bottom: 1px solid #eee;
-      font-size: 15px;
-    }
+  nav a {
+    margin: 0 10px;
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+  }
 
-    .category-list a {
-      text-decoration: none;
-      color: #333;
-    }
+  nav a:hover {
+    color: var(--accent);
+  }
 
-    .category-list a:hover {
-      color: #008b6a;
-    }
+  .hero {
+    position: relative;
+    background: url('assets/worldmap.jpg') center/cover no-repeat;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .count {
-      background: #eee;
-      border-radius: 10px;
-      padding: 2px 8px;
-      font-size: 12px;
-    }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+  }
 
-    .all-cat-btn {
-      display: block;
-      text-align: center;
-      margin-top: 15px;
-      padding: 8px 10px;
-      background-color: #008b6a;
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-    }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-align: center;
+  }
 
-    .all-cat-btn:hover {
-      background-color: #007157;
-    }
+  .hero-content h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
 
-    /* Main Content */
-    .main-content {
-      flex-grow: 1;
-    }
+  .hero-content p {
+    font-size: 1.1rem;
+    margin: 0;
+  }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
+  .main-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 18px;
+  }
 
-    .logo {
-      height: 60px;
-    }
+  .requests-box {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+  }
 
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-    }
+  .filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    justify-content: center;
+  }
 
-    nav a:hover {
-      color: #008b6a;
-    }
+  .filter-buttons .btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
 
-    .hero {
-      background: url("assets/ihracat-haritasi.png") no-repeat center center;
-      background-size: cover;
-      height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 36px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
+  .btn-all {background: var(--accent); color: #fff;}
+  .btn-buy {background: #fff; color: var(--accent); border: 2px solid var(--accent);}
+  .btn-sell {background: #fff; color: var(--accent); border: 2px solid var(--accent);}
+  .btn-free {background: var(--accent); color: #fff;}
 
-    footer {
-      text-align: center;
-      background: #111;
-      color: #eee;
-      padding: 15px 10px;
-      font-size: 14px;
-    }
-  </style>
+  .request-list {
+    display: grid;
+    gap: 14px;
+  }
+
+  .item {
+    background: #fff;
+    padding: 14px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(8,20,40,0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .item h4 {
+    margin: 0 0 5px 0;
+  }
+
+  .item p {
+    margin: 0;
+    color: #555;
+  }
+
+  .cta {
+    padding: 8px 12px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  footer {
+    text-align: center;
+    background: #111;
+    color: #fff;
+    padding: 20px;
+    margin-top: 40px;
+  }
+</style>
 </head>
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h3>Categories</h3>
-    <ul class="category-list">
-      <li><a href="requests.html">Agricultural Machinery</a> <span class="count">24</span></li>
-      <li><a href="requests.html">Textile & Fashion</a> <span class="count">39</span></li>
-      <li><a href="requests.html">Construction Materials</a> <span class="count">31</span></li>
-      <li><a href="requests.html">Food Industry</a> <span class="count">45</span></li>
-      <li><a href="requests.html">Automotive</a> <span class="count">18</span></li>
-      <li><a href="requests.html">Packaging</a> <span class="count">22</span></li>
-      <li><a href="requests.html">Chemicals</a> <span class="count">19</span></li>
-      <li><a href="requests.html">Plastics</a> <span class="count">12</span></li>
-      <li><a href="requests.html">Furniture</a> <span class="count">28</span></li>
-      <li><a href="requests.html">Electronics</a> <span class="count">34</span></li>
-    </ul>
-    <a href="requests.html" class="all-cat-btn">All Categories</a>
+<header>
+  <a href="index.html"><img src="assets/logos.png" alt="Trader Route" class="logo"></a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html">Requests</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html">Pricing</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>The Silk Road of E-Commerce</h1>
+    <p>Connecting global buyers and suppliers with trust and transparency.</p>
   </div>
+</section>
 
-  <!-- Main content -->
-  <div class="main-content">
-    <header>
-      <img src="assets/logos.png" alt="Trader Route Logo" class="logo">
-      <nav>
-        <a href="companies.html">Companies</a>
-        <a href="requests.html">Requests</a>
-        <a href="contact.html">Contact</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="login.html">Sign In</a>
-        <a href="register.html">Join</a>
-      </nav>
-    </header>
-
-    <div class="hero">
-      <h1>Connecting Global Trade Partners</h1>
+<main class="main-container">
+  <section class="requests-box">
+    <div class="filter-buttons">
+      <button class="btn btn-all">All Requests</button>
+      <button class="btn btn-buy">Buying Requests</button>
+      <button class="btn btn-sell">Selling Offers</button>
+      <button class="btn btn-free">Free Request!</button>
     </div>
 
-    <footer>
-      © 2025 Trader Route — All Rights Reserved.
-    </footer>
-  </div>
+    <div class="request-list">
+      <div class="item">
+        <div>
+          <h4>Buy: 1,000 tons of Wheat</h4>
+          <p>Buyer: Baltic Import — Country: Turkey — Date: 2025-09-01</p>
+        </div>
+        <a class="cta" href="contact.html">Contact Buyer</a>
+      </div>
+
+      <div class="item">
+        <div>
+          <h4>Sell: Organic Honey (500 kg)</h4>
+          <p>Seller: Istanbul Exporters — Country: Turkey — Date: 2025-08-21</p>
+        </div>
+        <a class="cta" href="contact.html">Contact Seller</a>
+      </div>
+
+      <div class="item">
+        <div>
+          <h4>Buy: Textile Fabrics (contract)</h4>
+          <p>Buyer: EuroTrade Ltd — Country: Germany — Date: 2025-07-10</p>
+        </div>
+        <a class="cta" href="contact.html">Contact Buyer</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2025 Trader Route — All Rights Reserved.
+</footer>
+
+<script>
+  // Hidden admin shortcut
+  document.addEventListener('keydown', function(e){
+    if(e.ctrlKey && e.altKey && e.key.toLowerCase() === 'a'){
+      window.location.href = '/admin/';
+    }
+  });
+</script>
 
 </body>
 </html>
