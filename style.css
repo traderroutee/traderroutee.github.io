@@ -5,7 +5,7 @@ body {
   color: #222;
 }
 
-/* ÜST MENÜ */
+/* TOP BAR */
 .header-top {
   background: #f3f3f3;
   text-align: center;
@@ -24,19 +24,22 @@ body {
 
 .logo img {
   height: 40px;
-  vertical-align: middle;
 }
 .logo span {
   font-size: 14px;
-  margin-left: 10px;
-  color: #555;
+  margin-left: 8px;
+  color: #666;
 }
 
 .navbar a {
-  margin: 0 10px;
+  margin: 0 12px;
   text-decoration: none;
   color: #222;
   font-weight: 500;
+  transition: color 0.3s;
+}
+.navbar a:hover {
+  color: #00bfa5;
 }
 
 .header-buttons {
@@ -45,32 +48,93 @@ body {
   gap: 8px;
 }
 
+.header-buttons input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
 .btn-green {
   background: #00c853;
-  color: #fff;
+  color: white;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
 }
-
 .btn-outline {
   border: 1px solid #ccc;
   padding: 8px 14px;
   border-radius: 6px;
   background: white;
+  cursor: pointer;
 }
-
 .btn-purple {
   background: #7e57c2;
-  color: #fff;
+  color: white;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
 }
 
-/* ANA BÖLÜM */
+/* HERO SECTION */
+.hero {
+  position: relative;
+  height: 450px;
+  overflow: hidden;
+}
+.hero-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+}
+.categories {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  padding: 20px;
+  width: 280px;
+}
+.categories h3 {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+.categories ul {
+  list-style: none;
+  margin: 10px 0;
+  padding: 0;
+}
+.categories li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #f2f2f2;
+  font-size: 15px;
+}
+.categories li span {
+  background: #e0e0e0;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+.btn-all {
+  margin-top: 10px;
+  width: 100%;
+  background: #000;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* INFO SECTION */
 .info-section {
   display: flex;
   justify-content: space-around;
@@ -82,14 +146,12 @@ body {
 .info-box {
   width: 30%;
 }
-
 .info-box h2 {
   font-size: 22px;
   border-bottom: 2px solid #d32f2f;
   display: inline-block;
   padding-bottom: 4px;
 }
-
 .btn-learn {
   margin-top: 10px;
   background: #f44336;
@@ -97,37 +159,7 @@ body {
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
-}
-
-/* JOIN SECTION */
-.join-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 60px 40px;
-}
-
-.join-left img {
-  width: 350px;
-  border-radius: 12px;
-}
-
-.join-right {
-  max-width: 500px;
-}
-
-.join-right h2 {
-  font-size: 26px;
-  margin-bottom: 10px;
-}
-
-.steps button {
-  margin-right: 8px;
-  background: #1565c0;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
+  cursor: pointer;
 }
 
 /* FOOTER */
