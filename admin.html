@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — Trader Route</title>
+  <link rel="icon" type="image/png" href="assets/logos.png">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f4f6f8;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background-color: #008b6a;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      padding: 15px 25px;
+      display: block;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #006e54;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      color: #008b6a;
+      font-size: 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 20px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f7f7f7;
+      color: #333;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .logout-btn {
+      background-color: #fff;
+      color: #008b6a;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 2px solid #008b6a;
+      transition: all 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: #008b6a;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="#" class="active" onclick="showSection('members')">Members</a>
+    <a href="#" onclick="showSection('requests')">Requests</a>
+    <a href="#" onclick="showSection('companies')">Companies</a>
+    <a href="#" onclick="showSection('offers')">Selling Offers</a>
+    <a href="index.html">← Back to Site</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <div class="header">
+      <h1 id="section-title">Members</h1>
+      <a href="login.html" class="logout-btn">Log Out</a>
+    </div>
+
+    <!-- MEMBERS -->
+    <div id="members" class="section">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company Name</th>
+            <th>Email</th>
+            <th>Country</th>
+            <th>Join Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>GlobalTrade Ltd.</td><td>info@globaltrade.com</td><td>Turkey</td><td>2025-09-20</td></tr>
+          <tr><td>2</td><td>AsiaLink Exports</td><td>sales@asialink.com</td><td>China</td><td>2025-09-22</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- REQUESTS -->
+    <div id="requests" class="section" style="display:none;">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Request Type</th>
+            <th>Product</th>
+            <th>Country</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Buying</td><td>Olive Oil</td><td>Spain</td><td>Pending</td></tr>
+          <tr><td>2</td><td>Selling</td><td>Textiles</td><td>Turkey</td><td>Approved</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- COMPANIES -->
+    <div id="companies" class="section" style="display:none;">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company</th>
+            <th>Category</th>
+            <th>Country</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>EuroTrade Co.</td><td>Import</td><td>Germany</td></tr>
+          <tr><td>2</td><td>ExportWorld</td><td>Export</td><td>India</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- OFFERS -->
+    <div id="offers" class="section" style="display:none;">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Offer Name</th>
+            <th>Company</th>
+            <th>Country</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Copper Wire Roll</td><td>AsiaLink Exports</td><td>China</td><td>$1200 / ton</td></tr>
+          <tr><td>2</td><td>Fresh Citrus</td><td>MedFruit Ltd.</td><td>Turkey</td><td>$950 / ton</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+      document.getElementById(sectionId).style.display = 'block';
+      document.getElementById('section-title').innerText =
+        sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
