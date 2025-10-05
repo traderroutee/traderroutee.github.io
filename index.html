@@ -5,181 +5,158 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trader Route — Import & Export Network</title>
 <link rel="icon" href="assets/favicon.ico">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap">
 <style>
-  :root {
-    --accent: #008b6a;
-    --accent-dark: #006a51;
-    --bg: #f7f7f7;
-  }
+:root{
+  --accent:#008b6a;
+  --accent-dark:#006a51;
+}
+body{
+  margin:0;
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#fff;
+  color:#222;
+}
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#fff;
+  padding:12px 28px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.06);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.logo{height:52px}
+nav a{
+  margin:0 10px;
+  text-decoration:none;
+  color:#333;
+  font-weight:600;
+}
+nav a:hover{color:var(--accent)}
 
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: var(--bg);
-    color: #222;
-  }
+/* HERO SECTION */
+.hero{
+  position:relative;
+  width:100%;
+  height:480px;
+  background:url("assets/worldmap.jpg") center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    padding: 10px 28px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
+/* CATEGORY BOX */
+.categories{
+  position:absolute;
+  top:40px;
+  left:40px;
+  width:260px;
+  background:rgba(255,255,255,0.95);
+  border-radius:10px;
+  box-shadow:0 8px 18px rgba(0,0,0,0.1);
+  padding:12px 0;
+}
+.categories h3{
+  margin:0 16px 10px;
+  font-size:15px;
+  color:#333;
+}
+.category-item{
+  display:flex;
+  align-items:center;
+  padding:8px 16px;
+  cursor:pointer;
+  transition:background .2s;
+}
+.category-item:hover{background:#f3f3f3}
+.category-item img{
+  width:18px;
+  height:18px;
+  margin-right:10px;
+}
+.category-item span{flex:1;font-size:14px;color:#333}
+.category-count{
+  background:#eee;
+  border-radius:8px;
+  padding:2px 6px;
+  font-size:12px;
+  color:#555;
+}
+.view-all{
+  text-align:center;
+  margin-top:10px;
+  padding:10px;
+  background:#000;
+  color:#fff;
+  border-bottom-left-radius:10px;
+  border-bottom-right-radius:10px;
+  cursor:pointer;
+}
 
-  .logo {
-    height: 52px;
-  }
+/* BUTTONS SECTION */
+.main-content{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 18px;
+  text-align:center;
+}
+.main-buttons{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.btn{
+  padding:10px 18px;
+  border:2px solid var(--accent);
+  border-radius:8px;
+  background:#fff;
+  color:var(--accent);
+  font-weight:700;
+  cursor:pointer;
+}
+.btn:hover,.btn.active{
+  background:var(--accent);
+  color:#fff;
+}
 
-  nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #333;
-    font-weight: 600;
-  }
+/* FOOTER */
+footer{
+  margin-top:40px;
+  background:#111;
+  color:#fff;
+  text-align:center;
+  padding:18px;
+  font-size:14px;
+}
 
-  nav a:hover {
-    color: var(--accent);
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero{height:320px}
+  .categories{
+    position:relative;
+    top:auto;
+    left:auto;
+    width:90%;
+    margin:0 auto;
   }
-
-  .hero {
-    position: relative;
-    width: 100%;
-    height: 440px;
-    background: url("assets/worldmap.jpg") center/cover no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .categories {
-    position: absolute;
-    top: 20px;
-    left: 40px;
-    background: rgba(255,255,255,0.96);
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    width: 260px;
-    padding: 12px 0;
-  }
-
-  .categories h3 {
-    margin: 0 16px 10px;
-    font-size: 15px;
-    color: #333;
-  }
-
-  .category-item {
-    display: flex;
-    align-items: center;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .category-item:hover {
-    background: #f3f3f3;
-  }
-
-  .category-item img {
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-  }
-
-  .category-item span {
-    flex: 1;
-    font-size: 14px;
-    color: #333;
-  }
-
-  .category-count {
-    background: #eee;
-    border-radius: 8px;
-    padding: 2px 6px;
-    font-size: 12px;
-    color: #555;
-  }
-
-  .view-all {
-    text-align: center;
-    margin-top: 10px;
-    padding: 10px;
-    background: #000;
-    color: #fff;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    cursor: pointer;
-  }
-
-  .main-content {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 18px;
-  }
-
-  .main-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-
-  .btn {
-    padding: 10px 16px;
-    border: 2px solid var(--accent);
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    background: #fff;
-    color: var(--accent);
-  }
-
-  .btn.active, .btn:hover {
-    background: var(--accent);
-    color: #fff;
-  }
-
-  footer {
-    margin-top: 40px;
-    background: #111;
-    color: #fff;
-    text-align: center;
-    padding: 18px;
-    font-size: 14px;
-  }
-
-  @media(max-width: 768px) {
-    .categories {
-      position: relative;
-      width: 90%;
-      margin: 0 auto;
-      top: auto;
-      left: auto;
-    }
-    .hero {
-      height: 320px;
-    }
-  }
+}
 </style>
 </head>
-
 <body>
+
 <header>
-  <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo" class="logo"></a>
+  <a href="index.html"><img src="assets/logos.png" alt="Trader Route" class="logo"></a>
   <nav>
     <a href="index.html">Home</a>
     <a href="companies.html">Companies</a>
     <a href="requests.html">Requests</a>
     <a href="contact.html">Contact</a>
     <a href="pricing.html">Pricing</a>
-    <a href="register.html" style="color: var(--accent); font-weight:700;">Free Request!</a>
+    <a href="register.html" style="color:var(--accent);font-weight:700;">Free Request!</a>
   </nav>
 </header>
 
@@ -189,7 +166,7 @@
     <div class="category-item"><img src="assets/category-icons/agriculture.png"><span>Agricultural Machinery</span><span class="category-count">16</span></div>
     <div class="category-item"><img src="assets/category-icons/farming.png"><span>Farming Industry</span><span class="category-count">175</span></div>
     <div class="category-item"><img src="assets/category-icons/automotive.png"><span>Automotive</span><span class="category-count">39</span></div>
-    <div class="category-item"><img src="assets/category-icons/baby.png"><span>Baby Products & Accessories</span><span class="category-count">11</span></div>
+    <div class="category-item"><img src="assets/category-icons/baby.png"><span>Baby Products</span><span class="category-count">11</span></div>
     <div class="category-item"><img src="assets/category-icons/chemical.png"><span>Chemical Industry</span><span class="category-count">50</span></div>
     <div class="category-item"><img src="assets/category-icons/fashion.png"><span>Fashion & Apparel</span><span class="category-count">148</span></div>
     <div class="category-item"><img src="assets/category-icons/business.png"><span>Commercial Activities</span><span class="category-count">58</span></div>
@@ -207,12 +184,12 @@
     <button class="btn">Selling Offers</button>
     <button class="btn">Free Request</button>
   </div>
-
-  <p style="text-align:center; color:#555;">Connect with verified buyers and suppliers from all around the world.</p>
+  <p>Connect with verified buyers and suppliers from around the world.</p>
 </main>
 
 <footer>
   © 2025 Trader Route — Connecting Global Trade.
 </footer>
+
 </body>
 </html>
