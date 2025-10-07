@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trader Route - Import & Export Platform</title>
+  <title>Free Request - Trader Route</title>
   <link rel="icon" href="assets/logos.png" type="image/png">
   <style>
     body {
       margin: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f8f9fa;
+      color: #333;
     }
 
     header {
@@ -54,173 +55,64 @@
       color: #008d62;
     }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      background: #f1f1f1;
-      border-radius: 20px;
-      padding: 5px 10px;
-    }
-
-    .search-box input {
-      border: none;
-      background: none;
-      outline: none;
-      padding: 5px;
-      font-size: 14px;
-      width: 150px;
-    }
-
-    .search-box button {
-      border: none;
-      background: none;
-      cursor: pointer;
-      color: #555;
-    }
-
-    .login-btn {
-      background: #f1f1f1;
-      border: none;
-      padding: 7px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    .login-btn:hover {
-      background: #e0e0e0;
-    }
-
-    .join-btn {
-      background: #6c63ff;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    .join-btn:hover {
-      background: #5a53e6;
-    }
-
-    .hero {
-      position: relative;
-      height: 500px;
-      background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
-      display: flex;
-      align-items: flex-start;
-      justify-content: left;
-      padding-top: 80px;
-      padding-left: 40px;
-    }
-
-    .categories {
+    .form-container {
+      max-width: 700px;
+      margin: 60px auto;
       background: #fff;
+      padding: 40px;
       border-radius: 10px;
-      padding: 15px;
-      width: 240px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .categories h3 {
-      margin-top: 0;
-      margin-bottom: 15px;
-      font-size: 16px;
+    h2 {
+      text-align: center;
+      color: #008d62;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
       font-weight: 600;
     }
 
-    .category-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
       font-size: 14px;
-      margin: 6px 0;
-      color: #444;
+      font-family: inherit;
     }
 
-    .category-item:hover {
-      color: #008d62;
+    textarea {
+      resize: vertical;
+      min-height: 100px;
     }
 
-    .category-button {
-      background: #000;
+    .radio-group {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .submit-btn {
+      background: #008d62;
       color: #fff;
       border: none;
-      width: 100%;
-      padding: 8px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    /* --- BUTTON SECTION --- */
-    .requests-buttons {
-      text-align: center;
-      background: #fff;
-      padding: 25px 10px;
-      border-top: 1px solid #ddd;
-    }
-
-    .requests-buttons button {
-      background-color: #fff;
-      border: 1.5px solid #008d62;
-      color: #008d62;
-      font-weight: 600;
-      padding: 10px 18px;
+      padding: 12px 25px;
       border-radius: 6px;
-      margin: 8px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
+      display: block;
+      margin: 0 auto;
       transition: all 0.3s ease;
     }
 
-    .requests-buttons button:hover {
-      background-color: #008d62;
-      color: #fff;
-    }
-
-    .requests-buttons .primary {
-      background-color: #008d62;
-      color: #fff;
-    }
-
-    .main-section {
-      background: #fff;
-      padding: 60px 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 40px;
-    }
-
-    .main-section img {
-      width: 300px;
-      border-radius: 10px;
-    }
-
-    .main-section h2 {
-      font-size: 24px;
-      margin-bottom: 15px;
-      color: #000;
-    }
-
-    .main-section p {
-      color: #333;
-      line-height: 1.6;
-      font-size: 15px;
-    }
-
-    .subscribe-section {
-      background: #f1f1f1;
-      text-align: center;
-      padding: 50px 20px;
+    .submit-btn:hover {
+      background: #00714f;
     }
 
     footer {
@@ -231,16 +123,6 @@
       font-size: 14px;
       color: #333;
       border-top: 1px solid #ddd;
-    }
-
-    footer div {
-      width: 200px;
-    }
-
-    footer h4 {
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: #000;
     }
 
     .footer-bottom {
@@ -267,62 +149,32 @@
       <a href="contact.html">Contact</a>
       <a href="pricing.html">Pricing</a>
     </nav>
-
-    <div class="header-right">
-      <div class="search-box">
-        <input type="text" placeholder="Search...">
-        <button>🔍</button>
-      </div>
-      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
-    </div>
   </header>
 
-  <section class="hero">
-    <div class="categories">
-      <h3>Categories</h3>
-      <div class="category-item">Agricultural Machinery <span>16</span></div>
-      <div class="category-item">Agriculture Industry <span>175</span></div>
-      <div class="category-item">Automotive <span>39</span></div>
-      <div class="category-item">Baby Products & Accessories <span>11</span></div>
-      <div class="category-item">Chemical Industry <span>50</span></div>
-      <div class="category-item">Clothing & Fashion <span>148</span></div>
-      <div class="category-item">Commercial Activities <span>58</span></div>
-      <div class="category-item">Construction Industry <span>54</span></div>
-      <div class="category-item">Cosmetics <span>74</span></div>
-      <div class="category-item">IT & Communication <span>8</span></div>
-      <button class="category-button">View All Categories</button>
-    </div>
-  </section>
+  <div class="form-container">
+    <h2>Submit Your Free Request</h2>
+    <form id="requestForm">
+      <label>Request Type:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="type" value="buyer" required> Buyer (Looking to Buy)</label>
+        <label><input type="radio" name="type" value="seller" required> Seller (Looking to Sell)</label>
+      </div>
 
-  <!-- REQUEST BUTTONS -->
-  <section class="requests-buttons">
-    <button class="primary" onclick="location.href='requests.html'">All Requests</button>
-    <button onclick="location.href='requests.html?type=buyer'">Purchase Requests</button>
-    <button onclick="location.href='requests.html?type=seller'">Sales Offers</button>
-    <button onclick="location.href='free-request.html'">Free Request!</button>
-  </section>
+      <label for="title">Title:</label>
+      <input type="text" id="title" placeholder="Example: Need high-quality fabric supplier" required>
 
-  <section class="main-section">
-    <img src="assets/trader_route_step1.jpeg" alt="Trader Route">
-    <div>
-      <h2>Join Trader Route</h2>
-      <p>
-        As a company, our primary goal has always been to achieve success in global trade.  
-        Traders wondering “How can I find buyers for my products?” will find the answer here.  
-        Trader Route connects reliable importers and exporters around the world.  
-        Being part of this network is our greatest pride and a mark of trust and credibility.
-      </p>
-      <button style="background:#008d62; color:#fff; border:none; padding:8px 14px; border-radius:5px; cursor:pointer;">Join Now</button>
-    </div>
-  </section>
+      <label for="company">Company Name:</label>
+      <input type="text" id="company" placeholder="Your Company Name" required>
 
-  <section class="subscribe-section">
-    <h3>Stay updated with the latest industry trends and news!</h3>
-    <input type="email" placeholder="Enter your email address">
-    <button>Subscribe</button>
-    <p style="margin-top:10px; font-size:13px; color:#555;">Your email address will not be shared with third parties.</p>
-  </section>
+      <label for="country">Country:</label>
+      <input type="text" id="country" placeholder="Example: Turkey" required>
+
+      <label for="details">Description:</label>
+      <textarea id="details" placeholder="Write your request details here..." required></textarea>
+
+      <button type="submit" class="submit-btn">Submit Request</button>
+    </form>
+  </div>
 
   <footer>
     <div>
@@ -352,5 +204,25 @@
     © 2025 Trader Route — Connecting Global Trade.
   </div>
 
+  <script>
+    document.getElementById("requestForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const type = document.querySelector('input[name="type"]:checked').value;
+      const title = document.getElementById("title").value;
+      const company = document.getElementById("company").value;
+      const country = document.getElementById("country").value;
+      const details = document.getElementById("details").value;
+
+      const newRequest = { type, title, company, country, details };
+
+      // LocalStorage: Save new requests temporarily
+      const requests = JSON.parse(localStorage.getItem("requests") || "[]");
+      requests.push(newRequest);
+      localStorage.setItem("requests", JSON.stringify(requests));
+
+      alert("✅ Your request has been successfully submitted!");
+      window.location.href = "requests.html";
+    });
+  </script>
 </body>
 </html>
