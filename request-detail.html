@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trader Route | Request Detail</title>
+  <link rel="icon" href="assets/logos.png" type="image/png">
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background: #fff;
+      padding: 10px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .logo-container { display: flex; align-items: center; gap: 10px; }
+    .logo-container img { height: 40px; }
+    .logo-text { font-size: 14px; color: #555; font-weight: 500; }
+    .back-link {
+      text-decoration: none;
+      color: #008d62;
+      margin-left: 40px;
+      display: inline-block;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #008d62;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .meta {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+    p {
+      line-height: 1.6;
+    }
+    .contact-btn {
+      display: inline-block;
+      margin-top: 25px;
+      background: #008d62;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .contact-btn:hover {
+      background: #007050;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
+  </header>
+
+  <a href="requests.html" class="back-link">← Back to All Requests</a>
+
+  <div class="container" id="requestDetail">
+    <h1>Loading...</h1>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const requests = JSON.parse(localStorage.getItem('requests')) || [];
+    const container = document.getElementById('requestDetail');
+    const req = requests[id];
+
+    if (!req) {
+      container.innerHTML = "<p>Request not found or deleted.</p>";
+    } else {
+      container.innerHTML = `
+        <h1>${req.title}</h1>
+        <div class="meta">
+          <b>Posted by:</b> ${req.name} | 
+          <b>Type:</b> ${req.type === 'buyer' ? 'Buyer Request' : 'Seller Offer'} |
+          <b>Category:</b> ${req.category} |
+          <b>Country:</b> ${req.country} |
+          <b>Date:</b> ${req.date}
+        </div>
+        <p>${req.desc}</p>
+        <a href="mailto:${req.email || 'info@traderroute.com'}" class="contact-btn">
+          Contact ${req.type === 'buyer' ? 'Buyer' : 'Seller'}
+        </a>
+      `;
+    }
+  </script>
+
+</body>
+</html>
