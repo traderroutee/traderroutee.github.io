@@ -1,12 +1,15 @@
-/* ===== BASE STYLE ===== */
+/* =============================
+   TRADER ROUTE - STYLE.CSS (FULL RESPONSIVE)
+   ============================= */
+
+/* GENEL YAPI */
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8f9fa;
-  color: #222;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 header {
   background: #fff;
   padding: 10px 40px;
@@ -106,25 +109,26 @@ nav a:hover {
   background: #5a53e6;
 }
 
-/* ===== HERO SECTION ===== */
+/* HERO BÖLÜMÜ */
 .hero {
   position: relative;
   height: 500px;
   background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
   display: flex;
   align-items: flex-start;
-  justify-content: left;
-  padding-top: 80px;
-  padding-left: 40px;
+  justify-content: center;
+  padding-top: 40px;
 }
 
-/* ===== CATEGORY BOX ===== */
 .categories {
   background: #fff;
   border-radius: 10px;
   padding: 15px;
   width: 240px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  position: absolute;
+  left: 5%;
+  top: 20%;
 }
 
 .categories h3 {
@@ -158,29 +162,35 @@ nav a:hover {
   margin-top: 10px;
 }
 
-/* ===== REQUEST BUTTONS ===== */
-.requests-buttons {
+/* BUTON ALANI */
+.request-buttons {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
-  margin: 20px 0;
+  gap: 10px;
 }
 
-.requests-buttons button {
+.request-buttons button {
   background: #008d62;
   color: #fff;
   border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s;
 }
 
-.requests-buttons button:hover {
-  background: #00694d;
+.request-buttons button:hover {
+  background: #006c4a;
 }
 
-/* ===== MAIN SECTION ===== */
+/* ANA KISIM */
 .main-section {
   background: #fff;
   padding: 60px 40px;
@@ -207,11 +217,36 @@ nav a:hover {
   font-size: 15px;
 }
 
-/* ===== FOOTER ===== */
+/* ABONE OL BÖLÜMÜ */
+.subscribe-section {
+  background: #f1f1f1;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.subscribe-section input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.subscribe-section button {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* FOOTER */
 footer {
   background: #fff;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   padding: 40px;
   font-size: 14px;
   color: #333;
@@ -236,76 +271,102 @@ footer h4 {
   font-size: 13px;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 991px) {
+/* =============================
+   MOBİL GÖRÜNÜM (TABLET + TELEFON)
+   ============================= */
+
+@media (max-width: 1024px) {
+  .hero {
+    background-size: contain;
+    height: 400px;
+  }
+
+  .categories {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 20px auto;
+  }
+
+  .request-buttons {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 768px) {
   header {
+    padding: 10px 20px;
     flex-direction: column;
     align-items: flex-start;
-    padding: 15px 20px;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
   }
 
   nav {
     flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .requests-buttons {
-    flex-wrap: wrap;
     gap: 10px;
-  }
-
-  .requests-buttons button {
-    width: 45%;
+    justify-content: center;
+    width: 100%;
   }
 
   .hero {
-    flex-direction: column;
-    align-items: center;
-    height: auto;
-    padding: 30px 10px;
+    height: 350px;
   }
 
-  .categories {
-    width: 80%;
-    margin: 0 auto;
+  .request-buttons {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
-  .main-section {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .main-section img {
-    width: 90%;
-  }
-
-  footer {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-  }
-
-  footer div {
-    width: 100%;
+  .request-buttons button {
+    flex: 1 1 45%;
+    min-width: 140px;
   }
 }
 
-@media (max-width: 600px) {
-  .requests-buttons {
-    flex-direction: column;
-    align-items: center;
+@media (max-width: 480px) {
+  .hero {
+    height: 300px;
+    background-size: contain;
   }
 
-  .requests-buttons button {
+  .categories {
     width: 90%;
   }
 
   .search-box input {
-    width: 120px;
+    display: none;
   }
 
-  nav a {
-    font-size: 14px;
+  .search-box button {
+    font-size: 18px;
+  }
+
+  .request-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .request-buttons button {
+    width: 80%;
+  }
+
+  footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  footer div {
+    width: 100%;
+    margin-bottom: 20px;
   }
 }
