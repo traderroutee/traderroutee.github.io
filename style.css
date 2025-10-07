@@ -1,242 +1,311 @@
+/* ===== BASE STYLE ===== */
 body {
   margin: 0;
-  font-family: "Inter", sans-serif;
-  background: #fff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
   color: #222;
 }
 
-/* TOP BAR */
-.header-top {
-  background: #f3f3f3;
-  text-align: center;
-  font-size: 14px;
-  padding: 5px 0;
-}
-
-.header-main {
+/* ===== HEADER ===== */
+header {
+  background: #fff;
+  padding: 10px 40px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 40px;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  flex-wrap: wrap;
 }
 
-.logo img {
-  height: 40px;
-}
-.logo span {
-  font-size: 14px;
-  margin-left: 8px;
-  color: #666;
-}
-
-.navbar a {
-  margin: 0 12px;
-  text-decoration: none;
-  color: #222;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-.navbar a:hover {
-  color: #00bfa5;
-}
-
-.header-buttons {
+.logo-container {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-.header-buttons input {
-  padding: 6px 10px;
-  border: 1px solid #ccc;
+.logo-container img {
+  height: 42px;
+}
+
+.logo-text {
+  font-size: 15px;
+  color: #555;
+  font-weight: 500;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: #008d62;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f1f1f1;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+.search-box input {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 5px;
+  font-size: 14px;
+  width: 150px;
+}
+
+.search-box button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #555;
+}
+
+.login-btn {
+  background: #f1f1f1;
+  border: none;
+  padding: 7px 14px;
   border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
 }
 
-.btn-green {
-  background: #00c853;
+.login-btn:hover {
+  background: #e0e0e0;
+}
+
+.join-btn {
+  background: #6c63ff;
   color: white;
   border: none;
-  padding: 8px 14px;
+  padding: 8px 15px;
   border-radius: 6px;
   cursor: pointer;
-}
-.btn-outline {
-  border: 1px solid #ccc;
-  padding: 8px 14px;
-  border-radius: 6px;
-  background: white;
-  cursor: pointer;
-}
-.btn-purple {
-  background: #7e57c2;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
+  font-weight: 500;
 }
 
-/* HERO SECTION */
+.join-btn:hover {
+  background: #5a53e6;
+}
+
+/* ===== HERO SECTION ===== */
 .hero {
   position: relative;
-  height: 450px;
-  overflow: hidden;
+  height: 500px;
+  background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
+  display: flex;
+  align-items: flex-start;
+  justify-content: left;
+  padding-top: 80px;
+  padding-left: 40px;
 }
-.hero-bg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.8);
-}
+
+/* ===== CATEGORY BOX ===== */
 .categories {
-  position: absolute;
-  top: 40px;
-  left: 60px;
-  background: white;
+  background: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  padding: 20px;
-  width: 280px;
+  padding: 15px;
+  width: 240px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
+
 .categories h3 {
   margin-top: 0;
-  font-size: 18px;
-  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: 600;
 }
-.categories ul {
-  list-style: none;
-  margin: 10px 0;
-  padding: 0;
-}
-.categories li {
+
+.category-item {
   display: flex;
   justify-content: space-between;
-  padding: 6px 0;
-  border-bottom: 1px solid #f2f2f2;
+  align-items: center;
+  font-size: 14px;
+  margin: 6px 0;
+  color: #444;
+}
+
+.category-item:hover {
+  color: #008d62;
+}
+
+.category-button {
+  background: #000;
+  color: #fff;
+  border: none;
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* ===== REQUEST BUTTONS ===== */
+.requests-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.requests-buttons button {
+  background: #008d62;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.requests-buttons button:hover {
+  background: #00694d;
+}
+
+/* ===== MAIN SECTION ===== */
+.main-section {
+  background: #fff;
+  padding: 60px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.main-section img {
+  width: 300px;
+  border-radius: 10px;
+}
+
+.main-section h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.main-section p {
+  color: #333;
+  line-height: 1.6;
   font-size: 15px;
 }
-.categories li span {
-  background: #e0e0e0;
-  border-radius: 10px;
-  padding: 2px 8px;
-  font-size: 12px;
-}
-.btn-all {
-  margin-top: 10px;
-  width: 100%;
-  background: #000;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-}
 
-/* INFO SECTION */
-.info-section {
+/* ===== FOOTER ===== */
+footer {
+  background: #fff;
   display: flex;
   justify-content: space-around;
-  text-align: center;
-  padding: 60px 20px;
-  background: #fafafa;
-}
-
-.info-box {
-  width: 30%;
-}
-.info-box h2 {
-  font-size: 22px;
-  border-bottom: 2px solid #d32f2f;
-  display: inline-block;
-  padding-bottom: 4px;
-}
-.btn-learn {
-  margin-top: 10px;
-  background: #f44336;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* FOOTER */
-.footer {
-  text-align: center;
-  background: #333;
-  color: #fff;
-  padding: 20px;
+  padding: 40px;
   font-size: 14px;
+  color: #333;
+  border-top: 1px solid #ddd;
 }
 
-/* RESPONSIVE DESIGN */
+footer div {
+  width: 200px;
+}
+
+footer h4 {
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: #000;
+}
+
+.footer-bottom {
+  text-align: center;
+  background: #000;
+  color: #fff;
+  padding: 10px;
+  font-size: 13px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 991px) {
-  .header-main {
+  header {
     flex-direction: column;
     align-items: flex-start;
     padding: 15px 20px;
   }
 
-  .navbar {
+  nav {
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
+    justify-content: center;
   }
 
-  .categories {
-    position: static;
-    width: 90%;
-    margin: 20px auto;
+  .requests-buttons {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .requests-buttons button {
+    width: 45%;
   }
 
   .hero {
+    flex-direction: column;
+    align-items: center;
     height: auto;
+    padding: 30px 10px;
   }
 
-  .info-section {
+  .categories {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .main-section {
     flex-direction: column;
-    gap: 30px;
+    text-align: center;
   }
 
-  .info-box {
-    width: 100%;
+  .main-section img {
+    width: 90%;
   }
 
-  .header-buttons {
+  footer {
     flex-direction: column;
-    gap: 6px;
-    width: 100%;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
   }
 
-  .header-buttons input {
+  footer div {
     width: 100%;
   }
 }
 
 @media (max-width: 600px) {
-  .hero {
-    height: 320px;
+  .requests-buttons {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .categories {
-    padding: 15px;
-    width: 100%;
+  .requests-buttons button {
+    width: 90%;
   }
 
-  .navbar a {
-    margin: 0 8px;
+  .search-box input {
+    width: 120px;
+  }
+
+  nav a {
     font-size: 14px;
-  }
-
-  .btn-green, .btn-outline, .btn-purple {
-    padding: 6px 10px;
-    font-size: 13px;
-  }
-
-  .info-section {
-    padding: 40px 10px;
   }
 }
