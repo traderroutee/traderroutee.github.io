@@ -53,7 +53,7 @@
 
     /* DASHBOARD */
     #dashboard {
-      display: flex;
+      display: none;
       height: 100vh;
     }
     .sidebar {
@@ -61,6 +61,9 @@
       background: #fff;
       border-right: 1px solid #ddd;
       padding: 20px;
+      float: left;
+      height: 100%;
+      box-sizing: border-box;
     }
     .sidebar img { height: 40px; margin-bottom: 10px; }
     .sidebar h3 { color: #008b6a; font-size: 18px; margin-bottom: 20px; }
@@ -75,9 +78,8 @@
     .sidebar a:hover, .sidebar a.active { background: #008b6a; color: #fff; }
 
     .main {
-      flex: 1;
+      margin-left: 220px;
       padding: 30px;
-      overflow-y: auto;
     }
     .header {
       display: flex;
@@ -109,6 +111,7 @@
 
     /* EDIT SECTION */
     #edit-section {
+      display: none;
       background: #fff;
       padding: 30px;
       border-radius: 10px;
@@ -148,7 +151,7 @@
 </div>
 
 <!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
+<div id="dashboard">
   <div class="sidebar">
     <img src="../assets/logos.png" alt="">
     <h3>Trader Route</h3>
@@ -177,7 +180,7 @@
 </div>
 
 <!-- EDIT FORM -->
-<div id="edit-section" class="hidden">
+<div id="edit-section">
   <h3>Edit Request</h3>
   <input type="text" id="edit-title" placeholder="Title">
   <input type="text" id="edit-company" placeholder="Company Name">
@@ -200,7 +203,6 @@
   const loginBtn = document.getElementById("loginBtn");
   const loginError = document.getElementById("loginError");
 
-  // Default data
   let requests = JSON.parse(localStorage.getItem("requests")) || [
     {title:"Buy 500kg Honey",type:"buying",company:"Istanbul Imports",date:"2025-10-01",status:"Pending"},
     {title:"Sell Wheat 1000 Tons",type:"selling",company:"Anadolu Export",date:"2025-09-20",status:"Approved"},
@@ -229,32 +231,29 @@
     localStorage.setItem("requests", JSON.stringify(requests));
   }
 
-  // Login
   loginBtn.addEventListener("click",()=>{
     const user = document.getElementById("username").value.trim();
     const pass = document.getElementById("password").value.trim();
     if(user==="admin" && pass==="trader2025"){
-      loginScreen.classList.add("hidden");
-      dashboard.classList.remove("hidden");
+      loginScreen.style.display = "none";
+      dashboard.style.display = "block";
       renderTable();
     } else {
       loginError.textContent = "Invalid username or password!";
     }
   });
 
-  // Sidebar filters
   document.getElementById("show-all").onclick=()=>{renderTable("all");setActive("show-all");}
   document.getElementById("show-buying").onclick=()=>{renderTable("buying");setActive("show-buying");}
   document.getElementById("show-selling").onclick=()=>{renderTable("selling");setActive("show-selling");}
   document.getElementById("show-free").onclick=()=>{renderTable("free");setActive("show-free");}
   function setActive(id){document.querySelectorAll(".sidebar a").forEach(a=>a.classList.remove("active"));document.getElementById(id).classList.add("active");}
 
-  // CRUD
   function editRequest(i){
     editIndex=i;
     const r=requests[i];
-    dashboard.classList.add("hidden");
-    editSection.classList.remove("hidden");
+    dashboard.style.display="none";
+    editSection.style.display="block";
     document.getElementById("edit-title").value=r.title;
     document.getElementById("edit-company").value=r.company;
     document.getElementById("edit-date").value=r.date;
@@ -263,9 +262,9 @@
   }
   document.getElementById("saveEditBtn").onclick=()=>{
     requests[editIndex]={title:editTitle.value,type:editType.value,company:editCompany.value,date:editDate.value,desc:editDesc.value,status:"Pending"};
-    editSection.classList.add("hidden");dashboard.classList.remove("hidden");renderTable();
+    editSection.style.display="none";dashboard.style.display="block";renderTable();
   };
-  document.getElementById("cancelEditBtn").onclick=()=>{editSection.classList.add("hidden");dashboard.classList.remove("hidden");};
+  document.getElementById("cancelEditBtn").onclick=()=>{editSection.style.display="none";dashboard.style.display="block";};
   function approveRequest(i){requests[i].status="Approved";renderTable();}
   function deleteRequest(i){requests.splice(i,1);renderTable();}
   document.getElementById("newRequestBtn").onclick=()=>{requests.push({title:"New Request",type:"buying",company:"New Co",date:new Date().toISOString().split("T")[0],status:"Pending"});renderTable();}
