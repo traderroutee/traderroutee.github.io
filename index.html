@@ -119,6 +119,7 @@
       justify-content: left;
       padding-top: 80px;
       padding-left: 40px;
+      flex-direction: column;
     }
 
     .categories {
@@ -149,27 +150,6 @@
       color: #008d62;
     }
 
-    .filter-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .filter-buttons button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      background: #008d62;
-      color: white;
-      transition: 0.3s;
-    }
-
-    .filter-buttons button:hover {
-      background: #006d4c;
-    }
-
     .category-button {
       background: #000;
       color: #fff;
@@ -179,6 +159,32 @@
       border-radius: 5px;
       cursor: pointer;
       margin-top: 10px;
+    }
+
+    /* ✅ DÜZELTME: Buton hizalama */
+    .request-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .request-buttons button {
+      background-color: #008d62;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .request-buttons button:hover {
+      background-color: #006e4b;
     }
 
     .main-section {
@@ -262,7 +268,7 @@
 <body>
 
   <header>
-    <div class="logo-container" onclick="location.href='index.html'" style="cursor:pointer;">
+    <div class="logo-container">
       <img src="assets/logos.png" alt="Trader Route Logo">
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
@@ -280,8 +286,8 @@
         <input type="text" placeholder="Search...">
         <button>🔍</button>
       </div>
-      <button class="login-btn">Sign In</button>
-      <button class="join-btn">Join Now</button>
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
     </div>
   </header>
 
@@ -291,18 +297,22 @@
       <div class="category-item">Agricultural Machinery <span>16</span></div>
       <div class="category-item">Agriculture Industry <span>175</span></div>
       <div class="category-item">Automotive <span>39</span></div>
+      <div class="category-item">Baby Products & Accessories <span>11</span></div>
       <div class="category-item">Chemical Industry <span>50</span></div>
       <div class="category-item">Clothing & Fashion <span>148</span></div>
+      <div class="category-item">Commercial Activities <span>58</span></div>
       <div class="category-item">Construction Industry <span>54</span></div>
       <div class="category-item">Cosmetics <span>74</span></div>
       <div class="category-item">IT & Communication <span>8</span></div>
+      <button class="category-button">View All Categories</button>
+    </div>
 
-      <div class="filter-buttons">
-        <button onclick="location.href='requests.html'">All Requests</button>
-        <button onclick="location.href='requests.html?filter=buyer'">Purchase Requests</button>
-        <button onclick="location.href='requests.html?filter=seller'">Sales Offers</button>
-        <button onclick="location.href='request-form.html'">Free Request!</button>
-      </div>
+    <!-- ✅ Yeni eklenen düzeltilmiş buton grubu -->
+    <div class="request-buttons">
+      <button onclick="location.href='requests.html'">All Requests</button>
+      <button onclick="location.href='requests.html?type=buyer'">Buy Requests</button>
+      <button onclick="location.href='requests.html?type=seller'">Sell Offers</button>
+      <button onclick="location.href='request-form.html'">Free Request!</button>
     </div>
   </section>
 
@@ -310,8 +320,12 @@
     <img src="assets/trader_route_step1.jpeg" alt="Trader Route">
     <div>
       <h2>Join Trader Route</h2>
-      <p>As a company, our primary goal has always been to achieve success in global trade.  
-      Trader Route connects reliable importers and exporters around the world.</p>
+      <p>
+        As a company, our primary goal has always been to achieve success in global trade.  
+        Traders wondering “How can I find buyers for my products?” will find the answer here.  
+        Trader Route connects reliable importers and exporters around the world.  
+        Being part of this network is our greatest pride and a mark of trust and credibility.
+      </p>
       <button style="background:#008d62; color:#fff; border:none; padding:8px 14px; border-radius:5px; cursor:pointer;">Join Now</button>
     </div>
   </section>
