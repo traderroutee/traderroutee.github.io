@@ -13,7 +13,6 @@
     }
     .hidden { display: none; }
 
-    /* LOGIN SCREEN */
     #login-screen {
       display: flex;
       justify-content: center;
@@ -51,11 +50,7 @@
     .login-box button:hover { background: #006b52; }
     .error-msg { color: red; font-size: 13px; }
 
-    /* DASHBOARD */
-    #dashboard {
-      display: none;
-      height: 100vh;
-    }
+    #dashboard { display: none; height: 100vh; }
     .sidebar {
       width: 220px;
       background: #fff;
@@ -81,22 +76,10 @@
       margin-left: 220px;
       padding: 30px;
     }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .header { display: flex; justify-content: space-between; align-items: center; }
     .header h2 { color: #008b6a; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border-bottom: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border-bottom: 1px solid #ddd; padding: 10px; text-align: left; }
     th { background: #fafafa; }
     .action-btn {
       padding: 6px 10px;
@@ -109,7 +92,6 @@
     .delete { background: #d9534f; color: #fff; }
     .edit { background: #5bc0de; color: #fff; }
 
-    /* EDIT SECTION */
     #edit-section {
       display: none;
       background: #fff;
@@ -137,8 +119,6 @@
   </style>
 </head>
 <body>
-
-<!-- LOGIN SCREEN -->
 <div id="login-screen">
   <div class="login-box">
     <img src="../assets/logos.png" alt="Trader Route Logo">
@@ -150,7 +130,6 @@
   </div>
 </div>
 
-<!-- DASHBOARD -->
 <div id="dashboard">
   <div class="sidebar">
     <img src="../assets/logos.png" alt="">
@@ -179,7 +158,6 @@
   </div>
 </div>
 
-<!-- EDIT FORM -->
 <div id="edit-section">
   <h3>Edit Request</h3>
   <input type="text" id="edit-title" placeholder="Title">
@@ -196,6 +174,7 @@
 </div>
 
 <script>
+window.onload = function() {
   const loginScreen = document.getElementById("login-screen");
   const dashboard = document.getElementById("dashboard");
   const editSection = document.getElementById("edit-section");
@@ -249,7 +228,7 @@
   document.getElementById("show-free").onclick=()=>{renderTable("free");setActive("show-free");}
   function setActive(id){document.querySelectorAll(".sidebar a").forEach(a=>a.classList.remove("active"));document.getElementById(id).classList.add("active");}
 
-  function editRequest(i){
+  window.editRequest=function(i){
     editIndex=i;
     const r=requests[i];
     dashboard.style.display="none";
@@ -265,10 +244,11 @@
     editSection.style.display="none";dashboard.style.display="block";renderTable();
   };
   document.getElementById("cancelEditBtn").onclick=()=>{editSection.style.display="none";dashboard.style.display="block";};
-  function approveRequest(i){requests[i].status="Approved";renderTable();}
-  function deleteRequest(i){requests.splice(i,1);renderTable();}
+  window.approveRequest=function(i){requests[i].status="Approved";renderTable();}
+  window.deleteRequest=function(i){requests.splice(i,1);renderTable();}
   document.getElementById("newRequestBtn").onclick=()=>{requests.push({title:"New Request",type:"buying",company:"New Co",date:new Date().toISOString().split("T")[0],status:"Pending"});renderTable();}
   document.getElementById("logout").onclick=()=>{location.reload();}
+};
 </script>
 </body>
 </html>
