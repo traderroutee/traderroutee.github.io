@@ -3,87 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Requests - Trader Route</title>
+<title>Trader Route | Requests</title>
 <link rel="icon" href="assets/logos.png" type="image/png">
 <style>
-  body {font-family: Arial, sans-serif; background:#f4f4f4; margin:0;}
-  header {background:#fff; padding:15px 40px; box-shadow:0 2px 8px rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center;}
-  .logo-container{display:flex;align-items:center;gap:10px;}
-  .logo-container img{height:42px;}
-  main{max-width:900px;margin:40px auto;padding:0 20px;}
-  .filters{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-  .filters button{padding:8px 16px;border:none;border-radius:5px;cursor:pointer;font-weight:600;}
-  .filters button.active{background:#008d62;color:#fff;}
-  .search-box{margin-bottom:20px;}
-  .search-box input, .category-select{padding:10px;border-radius:5px;border:1px solid #ccc;width:calc(50% - 10px);margin-right:10px;}
-  .item{background:#fff;padding:15px;border-radius:8px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-  .item h3{margin:0 0 8px 0;}
-  .tags{font-size:14px;color:#666;margin-bottom:5px;}
-  .empty{text-align:center;color:#555;margin-top:40px;}
+body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background:#f8f9fa; margin:0; }
+header { background:#fff; padding:15px 40px; box-shadow:0 2px 8px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:space-between; }
+.container { max-width:900px; margin:40px auto; background:#fff; padding:30px; border-radius:10px; }
+.request-item { background:#f8f8f8; padding:15px; border-radius:8px; margin-bottom:15px; }
+.request-item a { text-decoration:none; color:#008d62; font-weight:600; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo-container">
-    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
-    <span>The Silk Road of E-Commerce</span>
+    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo" height="40"></a>
   </div>
 </header>
 
-<main>
-  <h2>Trade Requests</h2>
-
-  <div class="filters">
-    <button id="allBtn" class="active" onclick="filterRequests('all')">All Requests</button>
-    <button id="buyBtn" onclick="filterRequests('buyer')">Buying Requests</button>
-    <button id="sellBtn" onclick="filterRequests('seller')">Selling Offers</button>
-  </div>
-
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search by title or description...">
-    <select id="categoryFilter" class="category-select">
-      <option value="all">All Categories</option>
-      <option value="Agriculture">Agriculture</option>
-      <option value="Construction">Construction</option>
-      <option value="Textile">Textile</option>
-      <option value="Automotive">Automotive</option>
-      <option value="Cosmetics">Cosmetics</option>
-      <option value="Chemicals">Chemicals</option>
-    </select>
-  </div>
-
-  <div id="list"></div>
-  <div class="empty" id="empty" style="display:none;">No requests found.</div>
-</main>
-
-<script>
-let allRequests = JSON.parse(localStorage.getItem("requests") || "[]");
-let listDiv = document.getElementById("list");
-
-function render(type="all"){
-  listDiv.innerHTML="";
-  let filtered = allRequests.filter(r=>r.approved);
-  if(type!=="all"){filtered = filtered.filter(r=>r.type===type);}
-
-  const search = document.getElementById("searchInput").value.toLowerCase();
-  const cat = document.getElementById("categoryFilter").value;
-  if(search){filtered = filtered.filter(r=>r.title.toLowerCase().includes(search) || r.desc.toLowerCase().includes(search));}
-  if(cat!=="all"){filtered = filtered.filter(r=>r.category===cat);}
-
-  if(filtered.length===0){document.getElementById("empty").style.display="block"; return;}
-  document.getElementById("empty").style.display="none";
-
-  filtered.forEach(r=>{
-    listDiv.innerHTML += `
-      <div class="item">
-        <h3>${r.title}</h3>
-        <p class="tags"><b>${r.type==="buyer"?"Buyer":"Seller"}:</b> ${r.name} — <b>Country:</b> ${r.country} — <b>Category:</b> ${r.category} — <b>Date:</b> ${r.date}</p>
-        <p>${r.desc}</p>
-      </div>`;
-  });
-}
-<div id="requestsList"></div>
+<div class="container">
+  <h2>All Requests</h2>
+  <div id="requestsList"></div>
+</div>
 
 <script>
 const allRequests = JSON.parse(localStorage.getItem('requests')) || [];
@@ -98,29 +39,13 @@ if (filtered.length === 0) {
   list.innerHTML = "<p>No requests available.</p>";
 } else {
   list.innerHTML = filtered.map((r, index) => `
-    <div style="background:#fff;padding:15px;margin:10px;border-radius:5px;">
-      <a href="request-detail.html?id=${index}" style="font-weight:600;color:#008d62;text-decoration:none;">
-        ${r.title}
-      </a>
-      <p style="margin:5px 0;color:#555;">${r.desc.slice(0,100)}...</p>
-      <small>${r.country} | ${r.category} | ${r.date}</small>
+    <div class="request-item">
+      <a href="request-detail.html?id=${index}">${r.title}</a>
+      <p>${r.desc.slice(0,100)}...</p>
+      <small>${r.category} | ${r.country} | ${r.date}</small>
     </div>
   `).join('');
 }
 </script>
-
-function filterRequests(type){
-  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
-  if(type==="all") document.getElementById("allBtn").classList.add("active");
-  if(type==="buyer") document.getElementById("buyBtn").classList.add("active");
-  if(type==="seller") document.getElementById("sellBtn").classList.add("active");
-  render(type);
-}
-
-document.getElementById("searchInput").addEventListener("input", ()=>render());
-document.getElementById("categoryFilter").addEventListener("change", ()=>render());
-render();
-</script>
-
 </body>
 </html>
