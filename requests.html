@@ -1,183 +1,179 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trader Route | Requests</title>
-<link rel="icon" href="assets/logos.png" type="image/png">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Requests — Trader Route</title>
+<link rel="icon" href="assets/logos.png">
 <style>
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background:#f8f9fa;
-  margin:0;
-}
-header {
-  background:#fff;
-  padding:15px 40px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.logo-container {
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.logo-container img {
-  height:40px;
-}
-nav {
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
-nav a {
-  text-decoration:none;
-  color:#000;
-  font-weight:500;
-}
-nav a:hover {
-  color:#008d62;
-}
-.container {
-  max-width:900px;
-  margin:40px auto;
-  background:#fff;
-  padding:30px;
-  border-radius:10px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
-}
-h2 {
-  color:#008d62;
-  margin-bottom:20px;
-  text-align:center;
-}
-.filter-buttons {
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
-}
-.filter-buttons button {
-  background:#fff;
-  border:2px solid #008d62;
-  color:#008d62;
-  padding:8px 16px;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:600;
-  transition:0.3s;
-}
-.filter-buttons button:hover,
-.filter-buttons button.active {
-  background:#008d62;
-  color:#fff;
-}
-.request-item {
-  background:#f9f9f9;
-  padding:15px;
-  border-radius:8px;
-  margin-bottom:15px;
-  border-left:4px solid #008d62;
-  box-shadow:0 2px 6px rgba(0,0,0,0.05);
-}
-.request-item a {
-  text-decoration:none;
-  color:#008d62;
-  font-weight:600;
-  font-size:16px;
-}
-.request-item a:hover { text-decoration:underline; }
-.request-item p { margin:5px 0; color:#555; }
-small { color:#777; }
+  :root{
+    --accent:#008b6a;
+    --accent-dark:#007157;
+    --bg:#f7f7f7;
+  }
+  body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:var(--bg);color:#222}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 28px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06);position:sticky;top:0;z-index:60}
+  .logo{height:48px}
+  nav a{margin:0 10px;color:#333;text-decoration:none;font-weight:600}
+  .container{max-width:1100px;margin:26px auto;padding:0 18px}
+  h1{margin-bottom:6px}
+  .sub{color:#666;margin-bottom:16px}
 
-.back-home {
-  display:block;
-  text-align:center;
-  margin-top:30px;
-  color:#008d62;
-  font-weight:600;
-  text-decoration:none;
-}
-.back-home:hover { text-decoration:underline; }
+  /* Filter buttons */
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 26px 0;justify-content:center}
+  .filters .btn{padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;cursor:pointer;border:2px solid transparent}
+  .btn-all{background:var(--accent);color:#fff}
+  .btn-buy{background:#fff;color:var(--accent);border:2px solid var(--accent)}
+  .btn-sell{background:#fff;color:var(--accent);border:2px solid var(--accent)}
+  .btn-free{background:var(--accent);color:#fff}
+  .filters .active{box-shadow:0 8px 18px rgba(0,0,0,0.06);transform:translateY(-2px)}
 
-@media (max-width:700px) {
-  .container { padding:20px; }
-  header { flex-direction:column; gap:10px; }
-}
+  /* list */
+  .list{display:grid;gap:12px}
+  .item{background:#fff;padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(8,20,40,0.04);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .item .left{max-width:78%}
+  .item h3{margin:0 0 6px 0}
+  .item p{margin:0;color:#555}
+  .tags{font-size:13px;color:#666}
+  .cta{padding:8px 12px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700}
+
+  /* empty */
+  .empty{padding:28px;text-align:center;color:#666;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(8,20,40,0.04)}
+
+  footer{margin-top:28px;padding:20px;text-align:center;background:#111;color:#fff}
+
+  @media(max-width:740px){
+    .item{flex-direction:column;align-items:flex-start}
+    .item .left{max-width:100%}
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-container">
-    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
-    <span style="font-size:14px;color:#555;">The Silk Road of E-Commerce</span>
-  </div>
+  <a href="index.html"><img src="assets/logos.png" alt="Trader Route" class="logo"></a>
   <nav>
     <a href="index.html">Home</a>
     <a href="companies.html">Companies</a>
-    <a href="requests.html" style="color:#008d62;font-weight:700;">Requests</a>
+    <a href="requests.html" style="color:var(--accent);">Requests</a>
     <a href="contact.html">Contact</a>
     <a href="pricing.html">Pricing</a>
   </nav>
 </header>
 
-<div class="container">
-  <h2>All Requests</h2>
-  
-  <div class="filter-buttons">
-    <button onclick="filterRequests('all')" id="btnAll" class="active">All</button>
-    <button onclick="filterRequests('buyer')" id="btnBuy">Buy Requests</button>
-    <button onclick="filterRequests('seller')" id="btnSell">Sell Offers</button>
+<main class="container">
+  <h1>Requests</h1>
+  <p class="sub">Browse buying requests, selling offers and free requests from verified members.</p>
+
+  <!-- Filter buttons -->
+  <div class="filters" id="filters">
+    <button class="btn btn-all" data-type="all" id="btn-all">All Requests</button>
+    <button class="btn btn-buy" data-type="buying" id="btn-buy">Buy Requests</button>
+    <button class="btn btn-sell" data-type="selling" id="btn-sell">Sell Offers</button>
+    <button class="btn btn-free" onclick="location.href='request-form.html'">Free Request!</button>
   </div>
 
-  <div id="requestsList"></div>
-  <a href="index.html" class="back-home">← Back to Home</a>
-</div>
+  <!-- counts -->
+  <div style="margin-bottom:10px;color:#444">Showing <strong id="count">0</strong> results</div>
+
+  <!-- List -->
+  <div id="requestsList" class="list">
+    <div class="item" data-type="buying">
+      <div class="left">
+        <h3>Buy: 1,000 tons Wheat</h3>
+        <p class="tags">Buyer: Baltic Import — Country: Turkey — Date: 2025-09-01</p>
+        <p>Looking for CIF Istanbul delivery. Preferred packaging: 50kg bags.</p>
+      </div>
+      <div><a class="cta" href="contact.html">Contact Buyer</a></div>
+    </div>
+
+    <div class="item" data-type="selling">
+      <div class="left">
+        <h3>Sell: Organic Honey (500 kg)</h3>
+        <p class="tags">Seller: Istanbul Exporters — Country: Turkey — Date: 2025-08-21</p>
+        <p>High quality organic honey. Packaging options available.</p>
+      </div>
+      <div><a class="cta" href="contact.html">Contact Seller</a></div>
+    </div>
+
+    <div class="item" data-type="buying">
+      <div class="left">
+        <h3>Buy: Textile Fabrics (contract)</h3>
+        <p class="tags">Buyer: EuroTrade Ltd — Country: Germany — Date: 2025-07-10</p>
+        <p>Looking for long-term supplier of polyester blends.</p>
+      </div>
+      <div><a class="cta" href="contact.html">Contact Buyer</a></div>
+    </div>
+
+    <div class="item" data-type="selling">
+      <div class="left">
+        <h3>Sell: Olive Oil (1000 L)</h3>
+        <p class="tags">Seller: Mediterranean Co. — Country: Italy — Date: 2025-08-01</p>
+        <p>Premium extra virgin olive oil, ready for export.</p>
+      </div>
+      <div><a class="cta" href="contact.html">Contact Seller</a></div>
+    </div>
+  </div>
+
+  <div id="emptyMsg" class="empty" style="display:none">No results found for this filter.</div>
+</main>
+
+<footer>© 2025 Trader Route</footer>
 
 <script>
-let allRequests = JSON.parse(localStorage.getItem('requests')) || [];
-const list = document.getElementById('requestsList');
-const btns = {
-  all: document.getElementById('btnAll'),
-  buyer: document.getElementById('btnBuy'),
-  seller: document.getElementById('btnSell')
-};
-
-function renderRequests(type='all') {
-  Object.values(btns).forEach(b=>b.classList.remove('active'));
-  btns[type].classList.add('active');
-  
-  let filtered = allRequests.filter(r => r.approved);
-  if (type === 'buyer') filtered = filtered.filter(r => r.type === 'buyer');
-  if (type === 'seller') filtered = filtered.filter(r => r.type === 'seller');
-
-  if (filtered.length === 0) {
-    list.innerHTML = "<p>No requests available.</p>";
-  } else {
-    list.innerHTML = filtered.map((r, index) => `
-      <div class="request-item">
-        <a href="request-detail.html?id=${index}">${r.title}</a>
-        <p>${r.desc.slice(0,120)}...</p>
-        <small>${r.category} | ${r.country} | ${r.date}</small>
-      </div>
-    `).join('');
+  function getRequestedType(){
+    const params = new URLSearchParams(window.location.search);
+    if(params.has('type')) return params.get('type');
+    const h = window.location.hash.replace('#','');
+    return h || 'all';
   }
-}
 
-function filterRequests(type) {
-  localStorage.setItem('filterType', type);
-  renderRequests(type);
-}
+  function setActiveButton(type){
+    document.querySelectorAll('#filters .btn').forEach(b=>b.classList.remove('active'));
+    const btn = document.querySelector('#filters .btn[data-type="'+type+'"]');
+    if(btn) btn.classList.add('active');
+  }
 
-window.onload = () => {
-  const type = localStorage.getItem('filterType') || 'all';
-  renderRequests(type);
-};
+  function filterList(type){
+    const items = document.querySelectorAll('#requestsList .item');
+    let shown = 0;
+    items.forEach(it=>{
+      const t = it.dataset.type;
+      if(type==='all' || t===type){
+        it.style.display = 'flex';
+        shown++;
+      } else {
+        it.style.display = 'none';
+      }
+    });
+    document.getElementById('count').textContent = shown;
+    document.getElementById('emptyMsg').style.display = shown ? 'none' : 'block';
+  }
+
+  document.getElementById('filters').addEventListener('click', function(e){
+    const btn = e.target.closest('.btn');
+    if(!btn) return;
+    const type = btn.dataset.type || 'all';
+    const newUrl = window.location.pathname + '?type=' + encodeURIComponent(type);
+    history.pushState({type:type}, '', newUrl);
+    setActiveButton(type);
+    filterList(type);
+  });
+
+  window.addEventListener('load', function(){
+    let type = getRequestedType();
+    if(type === 'selling' || type === 'sell') type = 'selling';
+    if(type === 'buy' || type === 'purchase' || type === 'buying') type = 'buying';
+    if(type !== 'all' && type !== 'buying' && type !== 'selling') type = 'all';
+    setActiveButton(type);
+    filterList(type);
+  });
+
+  window.addEventListener('popstate', function(e){
+    let type = (e.state && e.state.type) ? e.state.type : getRequestedType();
+    setActiveButton(type);
+    filterList(type);
+  });
 </script>
-
 </body>
 </html>
