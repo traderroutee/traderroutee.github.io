@@ -3,43 +3,273 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Login - Trader Route</title>
+  <title>Trader Route Admin Panel</title>
   <link rel="icon" href="../assets/logos.png" type="image/png" />
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    .hidden { display: none; }
+
+    /* LOGIN SCREEN */
+    #login-screen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #fff;
+    }
+    .login-box {
+      background: #f9f9f9;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 320px;
+    }
+    .login-box img { height: 60px; margin-bottom: 15px; }
+    .login-box h2 { margin-bottom: 15px; color: #333; }
+    .login-box input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      background: #008b6a;
+      border: none;
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .login-box button:hover { background: #006b52; }
+    .error-msg { color: red; font-size: 13px; }
+
+    /* DASHBOARD */
+    #dashboard {
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 220px;
+      background: #fff;
+      border-right: 1px solid #ddd;
+      padding: 20px;
+    }
+    .sidebar img { height: 40px; margin-bottom: 10px; }
+    .sidebar h3 { color: #008b6a; font-size: 18px; margin-bottom: 20px; }
+    .sidebar a {
+      display: block;
+      text-decoration: none;
+      color: #333;
+      padding: 8px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+    .sidebar a:hover, .sidebar a.active { background: #008b6a; color: #fff; }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h2 { color: #008b6a; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    th { background: #fafafa; }
+    .action-btn {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .approve { background: #008b6a; color: #fff; }
+    .delete { background: #d9534f; color: #fff; }
+    .edit { background: #5bc0de; color: #fff; }
+
+    /* EDIT SECTION */
+    #edit-section {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    #edit-section input, #edit-section textarea, #edit-section select {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    #edit-section button {
+      background: #008b6a;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-<body class="admin-login-body">
+<body>
 
-  <div class="login-container">
-    <div class="login-box">
-      <img src="../assets/logos.png" alt="Trader Route Logo" class="admin-logo" />
-      <h2>Trader Route Admin Panel</h2>
-      <p class="subtext">Please log in to continue</p>
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-box">
+    <img src="../assets/logos.png" alt="Trader Route Logo">
+    <h2>Admin Panel</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
+    <p class="error-msg" id="loginError"></p>
+  </div>
+</div>
 
-      <form id="loginForm">
-        <input type="text" id="username" placeholder="Username" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <button type="submit" class="login-btn">Login</button>
-      </form>
-
-      <p id="error-msg" class="error-msg"></p>
-    </div>
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+  <div class="sidebar">
+    <img src="../assets/logos.png" alt="">
+    <h3>Trader Route</h3>
+    <a href="#" id="show-all" class="active">All Requests</a>
+    <a href="#" id="show-buying">Buying Requests</a>
+    <a href="#" id="show-selling">Selling Offers</a>
+    <a href="#" id="show-free">Free Requests</a>
+    <a href="#" id="logout">Logout</a>
   </div>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+  <div class="main">
+    <div class="header">
+      <h2>Welcome, Admin</h2>
+      <button id="newRequestBtn" class="action-btn edit">+ New Request</button>
+    </div>
 
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const errorMsg = document.getElementById("error-msg");
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th><th>Type</th><th>Company</th><th>Date</th><th>Status</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="requestsTable"></tbody>
+    </table>
+  </div>
+</div>
 
-      if (username === "admin" && password === "trader2025") {
-        localStorage.setItem("adminLoggedIn", "true");
-        window.location.href = "dashboard.html";
-      } else {
-        errorMsg.textContent = "Invalid username or password!";
-      }
+<!-- EDIT FORM -->
+<div id="edit-section" class="hidden">
+  <h3>Edit Request</h3>
+  <input type="text" id="edit-title" placeholder="Title">
+  <input type="text" id="edit-company" placeholder="Company Name">
+  <input type="date" id="edit-date">
+  <select id="edit-type">
+    <option value="buying">Buying Request</option>
+    <option value="selling">Selling Offer</option>
+    <option value="free">Free Request</option>
+  </select>
+  <textarea id="edit-desc" placeholder="Description"></textarea>
+  <button id="saveEditBtn">Save</button>
+  <button id="cancelEditBtn" style="background:#d9534f;">Cancel</button>
+</div>
+
+<script>
+  const loginScreen = document.getElementById("login-screen");
+  const dashboard = document.getElementById("dashboard");
+  const editSection = document.getElementById("edit-section");
+  const requestsTable = document.getElementById("requestsTable");
+  const loginBtn = document.getElementById("loginBtn");
+  const loginError = document.getElementById("loginError");
+
+  // Default data
+  let requests = JSON.parse(localStorage.getItem("requests")) || [
+    {title:"Buy 500kg Honey",type:"buying",company:"Istanbul Imports",date:"2025-10-01",status:"Pending"},
+    {title:"Sell Wheat 1000 Tons",type:"selling",company:"Anadolu Export",date:"2025-09-20",status:"Approved"},
+    {title:"Free Request: Listing Help",type:"free",company:"TraderRoute",date:"2025-10-02",status:"Approved"}
+  ];
+  let editIndex = null;
+
+  function renderTable(filter="all"){
+    requestsTable.innerHTML = "";
+    let filtered = requests.filter(r => filter==="all" ? true : r.type===filter);
+    filtered.forEach((r,i)=>{
+      requestsTable.innerHTML += `
+        <tr>
+          <td>${r.title}</td>
+          <td>${r.type}</td>
+          <td>${r.company}</td>
+          <td>${r.date}</td>
+          <td>${r.status}</td>
+          <td>
+            <button class="action-btn edit" onclick="editRequest(${i})">Edit</button>
+            <button class="action-btn approve" onclick="approveRequest(${i})">Approve</button>
+            <button class="action-btn delete" onclick="deleteRequest(${i})">Delete</button>
+          </td>
+        </tr>`;
     });
-  </script>
+    localStorage.setItem("requests", JSON.stringify(requests));
+  }
+
+  // Login
+  loginBtn.addEventListener("click",()=>{
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+    if(user==="admin" && pass==="trader2025"){
+      loginScreen.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+      renderTable();
+    } else {
+      loginError.textContent = "Invalid username or password!";
+    }
+  });
+
+  // Sidebar filters
+  document.getElementById("show-all").onclick=()=>{renderTable("all");setActive("show-all");}
+  document.getElementById("show-buying").onclick=()=>{renderTable("buying");setActive("show-buying");}
+  document.getElementById("show-selling").onclick=()=>{renderTable("selling");setActive("show-selling");}
+  document.getElementById("show-free").onclick=()=>{renderTable("free");setActive("show-free");}
+  function setActive(id){document.querySelectorAll(".sidebar a").forEach(a=>a.classList.remove("active"));document.getElementById(id).classList.add("active");}
+
+  // CRUD
+  function editRequest(i){
+    editIndex=i;
+    const r=requests[i];
+    dashboard.classList.add("hidden");
+    editSection.classList.remove("hidden");
+    document.getElementById("edit-title").value=r.title;
+    document.getElementById("edit-company").value=r.company;
+    document.getElementById("edit-date").value=r.date;
+    document.getElementById("edit-type").value=r.type;
+    document.getElementById("edit-desc").value=r.desc||"";
+  }
+  document.getElementById("saveEditBtn").onclick=()=>{
+    requests[editIndex]={title:editTitle.value,type:editType.value,company:editCompany.value,date:editDate.value,desc:editDesc.value,status:"Pending"};
+    editSection.classList.add("hidden");dashboard.classList.remove("hidden");renderTable();
+  };
+  document.getElementById("cancelEditBtn").onclick=()=>{editSection.classList.add("hidden");dashboard.classList.remove("hidden");};
+  function approveRequest(i){requests[i].status="Approved";renderTable();}
+  function deleteRequest(i){requests.splice(i,1);renderTable();}
+  document.getElementById("newRequestBtn").onclick=()=>{requests.push({title:"New Request",type:"buying",company:"New Co",date:new Date().toISOString().split("T")[0],status:"Pending"});renderTable();}
+  document.getElementById("logout").onclick=()=>{location.reload();}
+</script>
 </body>
 </html>
