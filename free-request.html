@@ -40,6 +40,16 @@
     <option value="Italy">Italy</option>
   </select>
 
+  <label>Category</label>
+  <select id="category">
+    <option value="Agriculture">Agriculture</option>
+    <option value="Construction">Construction</option>
+    <option value="Textile">Textile</option>
+    <option value="Automotive">Automotive</option>
+    <option value="Cosmetics">Cosmetics</option>
+    <option value="Chemicals">Chemicals</option>
+  </select>
+
   <label>Request Title</label>
   <input type="text" id="title" placeholder="Example: Buy 1000 tons wheat" required>
 
@@ -63,11 +73,12 @@ function submitRequest(){
   let desc = document.getElementById("desc").value.trim();
   let type = document.getElementById("type").value;
   let country = document.getElementById("country").value;
+  let category = document.getElementById("category").value;
   if(!name || !title){alert("Please fill all fields."); return;}
 
-  let date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+  let date = new Date().toISOString().split('T')[0];
   let requests = JSON.parse(localStorage.getItem("requests") || "[]");
-  requests.push({name, title, desc, type, country, date, approved:false});
+  requests.push({name, title, desc, type, country, category, date, approved:false});
   localStorage.setItem("requests", JSON.stringify(requests));
 
   document.getElementById("msg").style.display="block";
