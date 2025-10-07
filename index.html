@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trader Route - Import & Export Platform</title>
+  <title>Requests - Trader Route</title>
   <link rel="icon" href="assets/logos.png" type="image/png">
   <style>
     body {
@@ -25,17 +25,11 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
 
-    .logo-container img {
-      height: 42px;
-    }
-
-    .logo-text {
-      font-size: 15px;
-      color: #555;
-      font-weight: 500;
-    }
+    .logo-container img { height: 42px; }
+    .logo-text { font-size: 15px; color: #555; font-weight: 500; }
 
     nav {
       display: flex;
@@ -49,76 +43,13 @@
       font-weight: 500;
     }
 
-    nav a:hover {
-      color: #008d62;
-    }
+    nav a:hover { color: #008d62; }
 
-    .header-right {
+    .page-layout {
       display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      background: #f1f1f1;
-      border-radius: 20px;
-      padding: 5px 10px;
-    }
-
-    .search-box input {
-      border: none;
-      background: none;
-      outline: none;
-      padding: 5px;
-      font-size: 14px;
-      width: 150px;
-    }
-
-    .search-box button {
-      border: none;
-      background: none;
-      cursor: pointer;
-      color: #555;
-    }
-
-    .login-btn {
-      background: #f1f1f1;
-      border: none;
-      padding: 7px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    .login-btn:hover {
-      background: #e0e0e0;
-    }
-
-    .join-btn {
-      background: #6c63ff;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    .join-btn:hover {
-      background: #5a53e6;
-    }
-
-    .hero {
-      position: relative;
-      height: 500px;
-      background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
-      display: flex;
-      align-items: flex-start;
-      justify-content: left;
-      padding-top: 80px;
-      padding-left: 40px;
+      justify-content: space-between;
+      padding: 40px;
+      gap: 30px;
     }
 
     .categories {
@@ -127,15 +58,10 @@
       padding: 15px;
       width: 240px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      height: fit-content;
     }
 
-    .categories h3 {
-      margin-top: 0;
-      margin-bottom: 15px;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
+    .categories h3 { margin-top: 0; margin-bottom: 15px; font-size: 16px; font-weight: 600; }
     .category-item {
       display: flex;
       justify-content: space-between;
@@ -144,11 +70,7 @@
       margin: 6px 0;
       color: #444;
     }
-
-    .category-item:hover {
-      color: #008d62;
-    }
-
+    .category-item:hover { color: #008d62; }
     .category-button {
       background: #000;
       color: #fff;
@@ -160,90 +82,62 @@
       margin-top: 10px;
     }
 
-    /* Request buttons section */
-    .requests-buttons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      padding: 30px 0;
-      background: #f8f9fa;
+    .requests-area {
+      flex: 1;
     }
 
-    .req-btn {
+    .filter-buttons {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .filter-buttons button {
       border: 2px solid #008d62;
       color: #008d62;
       background: #fff;
       padding: 10px 18px;
       border-radius: 6px;
+      margin: 5px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
-    .req-btn:hover {
+    .filter-buttons button:hover,
+    .filter-buttons button.active {
       background: #008d62;
       color: #fff;
     }
 
-    .req-btn.free {
-      background: #008d62;
-      color: #fff;
-      border: 2px solid #008d62;
-    }
-
-    .req-btn.free:hover {
-      background: #006c4e;
-    }
-
-    .main-section {
+    .request-card {
       background: #fff;
-      padding: 60px 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 40px;
-    }
-
-    .main-section img {
-      width: 300px;
       border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      border-left: 6px solid transparent;
+      transition: transform 0.3s ease;
     }
 
-    .main-section h2 {
-      font-size: 24px;
-      margin-bottom: 15px;
-      color: #000;
-    }
+    .request-card:hover { transform: translateY(-4px); }
+    .type-buyer { border-left-color: #007bff; }
+    .type-seller { border-left-color: #ff9800; }
 
-    .main-section p {
-      color: #333;
-      line-height: 1.6;
-      font-size: 15px;
-    }
-
-    .subscribe-section {
-      background: #f1f1f1;
-      text-align: center;
-      padding: 50px 20px;
-    }
-
-    .subscribe-section input {
-      padding: 10px;
-      width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-right: 10px;
-    }
-
-    .subscribe-section button {
-      background: #000;
+    .request-type {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
       color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
+      margin-bottom: 10px;
     }
+
+    .buyer { background: #007bff; }
+    .seller { background: #ff9800; }
+
+    .request-card h3 { margin: 8px 0; font-size: 18px; }
+    .request-card p { font-size: 14px; color: #555; margin: 4px 0; }
 
     footer {
       background: #fff;
@@ -253,16 +147,6 @@
       font-size: 14px;
       color: #333;
       border-top: 1px solid #ddd;
-    }
-
-    footer div {
-      width: 200px;
-    }
-
-    footer h4 {
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: #000;
     }
 
     .footer-bottom {
@@ -277,74 +161,62 @@
 <body>
 
   <header>
-    <div class="logo-container">
-      <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
+    <div class="logo-container" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo">
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
 
     <nav>
       <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
-      <a href="requests.html">Requests</a>
+      <a href="requests.html" style="color:#008d62;">Requests</a>
       <a href="contact.html">Contact</a>
       <a href="pricing.html">Pricing</a>
     </nav>
-
-    <div class="header-right">
-      <div class="search-box">
-        <input type="text" placeholder="Search...">
-        <button>🔍</button>
-      </div>
-      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
-    </div>
   </header>
 
-  <section class="hero">
+  <div class="page-layout">
     <div class="categories">
       <h3>Categories</h3>
       <div class="category-item">Agricultural Machinery <span>16</span></div>
       <div class="category-item">Agriculture Industry <span>175</span></div>
       <div class="category-item">Automotive <span>39</span></div>
-      <div class="category-item">Baby Products & Accessories <span>11</span></div>
       <div class="category-item">Chemical Industry <span>50</span></div>
       <div class="category-item">Clothing & Fashion <span>148</span></div>
-      <div class="category-item">Commercial Activities <span>58</span></div>
       <div class="category-item">Construction Industry <span>54</span></div>
       <div class="category-item">Cosmetics <span>74</span></div>
       <div class="category-item">IT & Communication <span>8</span></div>
-      <button class="category-button">View All Categories</button>
+      <button class="category-button">View All</button>
     </div>
-  </section>
 
-  <!-- Request buttons section -->
-  <section class="requests-buttons">
-    <button class="req-btn" onclick="location.href='requests.html'">All Requests</button>
-    <button class="req-btn" onclick="location.href='requests.html?type=buyer'">Buying Requests</button>
-    <button class="req-btn" onclick="location.href='requests.html?type=seller'">Selling Offers</button>
-    <button class="req-btn free" onclick="location.href='requests.html?type=free'">Free Request!</button>
-  </section>
+    <div class="requests-area">
+      <div class="filter-buttons">
+        <button onclick="filterRequests('all')" class="active">All Requests</button>
+        <button onclick="filterRequests('buyer')">Buying Requests</button>
+        <button onclick="filterRequests('seller')">Selling Offers</button>
+        <button onclick="location.href='free-request.html'">+ Free Request!</button>
+      </div>
 
-  <section class="main-section">
-    <img src="assets/trader_route_step1.jpeg" alt="Trader Route">
-    <div>
-      <h2>Join Trader Route</h2>
-      <p>
-        As a company, our primary goal has always been to achieve success in global trade.  
-        Traders wondering “How can I find buyers for my products?” will find the answer here.  
-        Trader Route connects reliable importers and exporters around the world.  
-        Being part of this network is our greatest pride and a mark of trust and credibility.
-      </p>
-      <button style="background:#008d62; color:#fff; border:none; padding:8px 14px; border-radius:5px; cursor:pointer;">Join Now</button>
+      <div id="requestsList">
+        <!-- Static examples -->
+        <div class="request-card type-buyer">
+          <span class="request-type buyer">Buyer</span>
+          <h3>Looking to Buy Textile Fabrics</h3>
+          <p><strong>Company:</strong> Global Textiles Ltd.</p>
+          <p><strong>Country:</strong> Turkey</p>
+          <p>We are looking for high-quality cotton fabrics for export to Europe.</p>
+        </div>
+
+        <div class="request-card type-seller">
+          <span class="request-type seller">Seller</span>
+          <h3>Offering Organic Olive Oil</h3>
+          <p><strong>Company:</strong> Aegean Exports Co.</p>
+          <p><strong>Country:</strong> Turkey</p>
+          <p>We produce premium organic olive oil ready for international export.</p>
+        </div>
+      </div>
     </div>
-  </section>
-
-  <section class="subscribe-section">
-    <h3>Stay updated with the latest industry trends and news!</h3>
-    <input type="email" placeholder="Enter your email address">
-    <button>Subscribe</button>
-    <p style="margin-top:10px; font-size:13px; color:#555;">Your email address will not be shared with third parties.</p>
-  </section>
+  </div>
 
   <footer>
     <div>
@@ -374,5 +246,47 @@
     © 2025 Trader Route — Connecting Global Trade.
   </div>
 
+  <script>
+    function loadRequests() {
+      const list = document.getElementById("requestsList");
+      const stored = JSON.parse(localStorage.getItem("requests") || "[]");
+      stored.forEach(req => {
+        const div = document.createElement("div");
+        div.className = "request-card type-" + req.type;
+        div.innerHTML = `
+          <span class="request-type ${req.type === 'buyer' ? 'buyer' : 'seller'}">
+            ${req.type === 'buyer' ? 'Buyer' : 'Seller'}
+          </span>
+          <h3>${req.title}</h3>
+          <p><strong>Company:</strong> ${req.company}</p>
+          <p><strong>Country:</strong> ${req.country}</p>
+          <p>${req.details}</p>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function filterRequests(type) {
+      const cards = document.querySelectorAll(".request-card");
+      document.querySelectorAll(".filter-buttons button").forEach(btn => btn.classList.remove("active"));
+      if (type === 'all') {
+        cards.forEach(c => c.style.display = 'block');
+        document.querySelectorAll(".filter-buttons button")[0].classList.add("active");
+      } else {
+        cards.forEach(c => {
+          c.style.display = c.classList.contains("type-" + type) ? "block" : "none";
+        });
+        const index = type === 'buyer' ? 1 : 2;
+        document.querySelectorAll(".filter-buttons button")[index].classList.add("active");
+      }
+    }
+
+    window.onload = function() {
+      loadRequests();
+      const params = new URLSearchParams(window.location.search);
+      const t = params.get("type");
+      if (t) filterRequests(t);
+    };
+  </script>
 </body>
 </html>
