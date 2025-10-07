@@ -1,221 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trader Route — Admin Panel</title>
-  <link rel="icon" type="image/png" href="assets/logos.png" />
-  <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      margin: 0;
-      background-color: #f6f8fa;
-    }
-
-    /* --- Login Section --- */
-    .login-box {
-      background: #fff;
-      padding: 40px 50px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      width: 320px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: none;
-    }
-
-    .login-box.active {
-      display: block;
-    }
-
-    .login-box h2 {
-      color: #008b6a;
-      margin-bottom: 25px;
-    }
-
-    .login-box input {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-    }
-
-    .login-box button {
-      width: 100%;
-      background: #008b6a;
-      color: #fff;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: 0.3s;
-    }
-
-    .login-box button:hover {
-      background: #006e54;
-    }
-
-    /* --- Admin Panel --- */
-    header {
-      background-color: #009879;
-      color: white;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 22px;
-    }
-
-    .logout-btn {
-      background-color: white;
-      color: #009879;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-      text-decoration: none;
-    }
-
-    .logout-btn:hover {
-      background-color: #e6e6e6;
-    }
-
-    main {
-      padding: 30px;
-      display: none;
-    }
-
-    main.active {
-      display: block;
-    }
-
-    h2 {
-      color: #009879;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background: #fff;
-    }
-
-    table th,
-    table td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
-
-    table th {
-      background-color: #009879;
-      color: white;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Trader Route</title>
+<link rel="icon" href="assets/logos.png" type="image/png">
+<style>
+  body {font-family:Arial,sans-serif;background:#f4f4f4;margin:0;}
+  header{background:#fff;padding:15px 40px;box-shadow:0 2px 8px rgba(0,0,0,0.1);display:flex;justify-content:space-between;align-items:center;}
+  .container{max-width:900px;margin:40px auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);}
+  input{padding:8px;width:100%;margin:10px 0;}
+  button{padding:8px 16px;margin:5px;border:none;border-radius:5px;cursor:pointer;}
+  .approve{background:#008d62;color:#fff;}
+  .delete{background:#ff4d4d;color:#fff;}
+</style>
 </head>
 <body>
-  <!-- 🔐 LOGIN FORM -->
-  <div id="loginBox" class="login-box">
-    <h2>Admin Login</h2>
-    <input type="text" id="username" placeholder="Username" autocomplete="off" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="login()">Login</button>
-    <p style="color:#777; font-size:14px; margin-top:15px;">
-      Trader Route Management Access
-    </p>
-  </div>
 
-  <!-- 🔧 ADMIN PANEL -->
-  <header id="adminHeader" style="display:none;">
-    <h1>Trader Route — Admin Panel</h1>
-    <a href="#" class="logout-btn" onclick="logout()">Log Out</a>
-  </header>
+<header>
+  <h2>Admin Panel</h2>
+</header>
 
-  <main id="adminMain">
-    <h2>Registered Members</h2>
-    <p>All user data will appear here (from register form or manually added list).</p>
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Company</th>
-        <th>Country</th>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Example User</td>
-        <td>example@domain.com</td>
-        <td>Demo Export Ltd.</td>
-        <td>Turkey</td>
-      </tr>
-    </table>
-  </main>
+<div class="container" id="loginDiv">
+  <h3>Admin Login</h3>
+  <input type="text" id="user" placeholder="Username">
+  <input type="password" id="pass" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <p id="error" style="color:red;display:none;">Incorrect credentials</p>
+</div>
 
-  <script>
-    // --- Settings ---
-    const ADMIN_USER = "admin";
-    const ADMIN_PASS = "trader2025";
+<div class="container" id="adminDiv" style="display:none;">
+  <h3>Pending Requests</h3>
+  <div id="pendingList"></div>
+</div>
 
-    const loginBox = document.getElementById("loginBox");
-    const adminHeader = document.getElementById("adminHeader");
-    const adminMain = document.getElementById("adminMain");
+<script>
+function login(){
+  const u=document.getElementById("user").value;
+  const p=document.getElementById("pass").value;
+  if(u==="admin" && p==="trader2025"){
+    document.getElementById("loginDiv").style.display="none";
+    document.getElementById("adminDiv").style.display="block";
+    loadRequests();
+  } else {
+    document.getElementById("error").style.display="block";
+  }
+}
 
-    // --- Check login status on load ---
-    window.onload = () => {
-      const loggedIn = localStorage.getItem("trader_admin") === "logged_in";
-      if (loggedIn) {
-        showAdminPanel();
-      } else {
-        showLogin();
-      }
-    };
+function loadRequests(){
+  let reqs = JSON.parse(localStorage.getItem("requests") || "[]");
+  let pending = reqs.filter(r=>!r.approved);
+  const list=document.getElementById("pendingList");
+  list.innerHTML="";
+  if(pending.length===0){list.innerHTML="<p>No pending requests.</p>"; return;}
+  pending.forEach((r,i)=>{
+    list.innerHTML += `
+      <div style='border-bottom:1px solid #ddd;padding:10px 0;'>
+        <h4>${r.title}</h4>
+        <p><b>${r.type}</b> - ${r.name}</p>
+        <p>${r.desc}</p>
+        <button class='approve' onclick='approve(${i})'>Approve</button>
+        <button class='delete' onclick='del(${i})'>Delete</button>
+      </div>`;
+  });
+}
 
-    // --- Login function ---
-    function login() {
-      const user = document.getElementById("username").value.trim();
-      const pass = document.getElementById("password").value.trim();
+function approve(i){
+  let reqs = JSON.parse(localStorage.getItem("requests") || "[]");
+  let pending = reqs.filter(r=>!r.approved);
+  let item = pending[i];
+  let index = reqs.findIndex(r=>r.title===item.title && !r.approved);
+  reqs[index].approved = true;
+  localStorage.setItem("requests", JSON.stringify(reqs));
+  loadRequests();
+}
 
-      if (user === ADMIN_USER && pass === ADMIN_PASS) {
-        localStorage.setItem("trader_admin", "logged_in");
-        showAdminPanel();
-      } else {
-        alert("Invalid username or password!");
-      }
-    }
+function del(i){
+  let reqs = JSON.parse(localStorage.getItem("requests") || "[]");
+  let pending = reqs.filter(r=>!r.approved);
+  let item = pending[i];
+  reqs = reqs.filter(r=>r.title!==item.title);
+  localStorage.setItem("requests", JSON.stringify(reqs));
+  loadRequests();
+}
+</script>
 
-    // --- Logout ---
-    function logout() {
-      localStorage.removeItem("trader_admin");
-      showLogin();
-    }
-
-    // --- UI control ---
-    function showAdminPanel() {
-      loginBox.classList.remove("active");
-      loginBox.style.display = "none";
-      adminHeader.style.display = "flex";
-      adminMain.classList.add("active");
-    }
-
-    function showLogin() {
-      adminHeader.style.display = "none";
-      adminMain.classList.remove("active");
-      loginBox.classList.add("active");
-    }
-  </script>
 </body>
 </html>
