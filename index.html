@@ -119,7 +119,6 @@
       justify-content: left;
       padding-top: 80px;
       padding-left: 40px;
-      flex-direction: column;
     }
 
     .categories {
@@ -161,29 +160,41 @@
       margin-top: 10px;
     }
 
-    /* Yeni konum için buton alanı */
-    .middle-buttons {
+    /* İstek Butonları Alanı */
+    .request-buttons {
       display: flex;
       justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin: 30px auto;
       flex-wrap: wrap;
+      gap: 12px;
+      margin: 30px auto;
+      padding: 10px 20px;
     }
 
-    .middle-buttons button {
+    .request-buttons button {
       background-color: #008d62;
       color: #fff;
       border: none;
-      padding: 10px 18px;
+      padding: 12px 20px;
       border-radius: 6px;
+      font-weight: 600;
       cursor: pointer;
-      font-weight: 500;
-      transition: background 0.3s ease;
+      transition: background 0.3s;
+      min-width: 180px;
     }
 
-    .middle-buttons button:hover {
+    .request-buttons button:hover {
       background-color: #006e4b;
+    }
+
+    @media (max-width: 768px) {
+      .request-buttons {
+        flex-direction: row;
+        justify-content: center;
+      }
+      .request-buttons button {
+        flex: 1 1 40%;
+        min-width: 140px;
+      }
     }
 
     .main-section {
@@ -296,19 +307,15 @@
       <div class="category-item">Agricultural Machinery <span>16</span></div>
       <div class="category-item">Agriculture Industry <span>175</span></div>
       <div class="category-item">Automotive <span>39</span></div>
-      <div class="category-item">Baby Products & Accessories <span>11</span></div>
-      <div class="category-item">Chemical Industry <span>50</span></div>
       <div class="category-item">Clothing & Fashion <span>148</span></div>
-      <div class="category-item">Commercial Activities <span>58</span></div>
       <div class="category-item">Construction Industry <span>54</span></div>
       <div class="category-item">Cosmetics <span>74</span></div>
-      <div class="category-item">IT & Communication <span>8</span></div>
       <button class="category-button">View All Categories</button>
     </div>
   </section>
 
-  <!-- 🔹 Butonlar maviyle işaretlenen bölgeye taşındı -->
-  <div class="middle-buttons">
+  <!-- Yeni Butonlar Alanı -->
+  <div class="request-buttons">
     <button onclick="location.href='requests.html'">All Requests</button>
     <button onclick="location.href='requests.html?type=buyer'">Buy Requests</button>
     <button onclick="location.href='requests.html?type=seller'">Sell Offers</button>
@@ -320,22 +327,48 @@
     <div>
       <h2>Join Trader Route</h2>
       <p>
-        As a company, our primary goal has always been to achieve success in global trade.
-        Traders wondering “How can I find buyers for my products?” will find the answer here.
-        Trader Route connects reliable importers and exporters around the world.
+        As a company, our primary goal has always been to achieve success in global trade.  
+        Trader Route connects reliable importers and exporters around the world.  
+        Being part of this network is our greatest pride and a mark of trust and credibility.
       </p>
       <button style="background:#008d62; color:#fff; border:none; padding:8px 14px; border-radius:5px; cursor:pointer;">Join Now</button>
     </div>
   </section>
 
+  <section class="subscribe-section">
+    <h3>Stay updated with the latest industry trends and news!</h3>
+    <input type="email" placeholder="Enter your email address">
+    <button>Subscribe</button>
+    <p style="margin-top:10px; font-size:13px; color:#555;">Your email address will not be shared with third parties.</p>
+  </section>
+
   <footer>
-    <div><h4>Corporate</h4><p>Export Success Stories</p><p>About Us</p></div>
-    <div><h4>Our Services</h4><p>Free Registration</p><p>Contact Buyers</p></div>
-    <div><h4>Quick Links</h4><p>Company Index</p><p>Buyer Directory</p></div>
+    <div>
+      <h4>Corporate</h4>
+      <p>Export Success Stories</p>
+      <p>Company Profiles</p>
+      <p>About Us</p>
+      <p>Mission & Vision</p>
+    </div>
+    <div>
+      <h4>Our Services</h4>
+      <p>Free Registration</p>
+      <p>Post Free Offers</p>
+      <p>Contact Buyers</p>
+      <p>Membership Packages</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <p>Company Index</p>
+      <p>Buyer Directory</p>
+      <p>My Dashboard</p>
+      <p>Terms & Conditions</p>
+    </div>
   </footer>
 
   <div class="footer-bottom">
     © 2025 Trader Route — Connecting Global Trade.
   </div>
+
 </body>
 </html>
