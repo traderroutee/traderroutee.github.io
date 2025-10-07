@@ -3,273 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trader Route Admin Panel</title>
-  <link rel="icon" href="../assets/logos.png" type="image/png" />
+  <title>Admin Panel - Trader Route</title>
+  <link rel="icon" href="../assets/logos.png" type="image/png">
   <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #f4f4f4;
-    }
-    .hidden { display: none; }
-
-    /* LOGIN SCREEN */
-    #login-screen {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #fff;
-    }
-    .login-box {
-      background: #f9f9f9;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-      text-align: center;
-      width: 320px;
-    }
-    .login-box img { height: 60px; margin-bottom: 15px; }
-    .login-box h2 { margin-bottom: 15px; color: #333; }
-    .login-box input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .login-box button {
-      width: 100%;
-      padding: 10px;
-      background: #008b6a;
-      border: none;
-      color: #fff;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .login-box button:hover { background: #006b52; }
-    .error-msg { color: red; font-size: 13px; }
-
-    /* DASHBOARD */
-    #dashboard {
-      display: flex;
-      height: 100vh;
-    }
-    .sidebar {
-      width: 220px;
-      background: #fff;
-      border-right: 1px solid #ddd;
-      padding: 20px;
-    }
-    .sidebar img { height: 40px; margin-bottom: 10px; }
-    .sidebar h3 { color: #008b6a; font-size: 18px; margin-bottom: 20px; }
-    .sidebar a {
-      display: block;
-      text-decoration: none;
-      color: #333;
-      padding: 8px;
-      border-radius: 6px;
-      margin-bottom: 8px;
-    }
-    .sidebar a:hover, .sidebar a.active { background: #008b6a; color: #fff; }
-
-    .main {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .header h2 { color: #008b6a; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border-bottom: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
-    th { background: #fafafa; }
-    .action-btn {
-      padding: 6px 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
-    }
-    .approve { background: #008b6a; color: #fff; }
-    .delete { background: #d9534f; color: #fff; }
-    .edit { background: #5bc0de; color: #fff; }
-
-    /* EDIT SECTION */
-    #edit-section {
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      max-width: 600px;
-      margin: 20px auto;
-    }
-    #edit-section input, #edit-section textarea, #edit-section select {
-      width: 100%;
-      margin-bottom: 15px;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-    #edit-section button {
-      background: #008b6a;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+    body { margin: 0; font-family: Arial, sans-serif; background: #f8f9fa; }
+    .login-container, .dashboard { max-width: 800px; margin: 80px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .admin-logo { height: 60px; display: block; margin: 0 auto 15px; }
+    .login-container h2 { text-align: center; color: #006633; }
+    .login-container input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+    .login-container button { width: 100%; padding: 10px; background: #006633; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    .login-container button:hover { background: #004d26; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+    th { background: #006633; color: white; }
+    tr:nth-child(even) { background: #f2f2f2; }
+    .logout { background: red; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; float: right; }
   </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
-<div id="login-screen">
-  <div class="login-box">
-    <img src="../assets/logos.png" alt="Trader Route Logo">
-    <h2>Admin Panel</h2>
+  <div class="login-container" id="loginPage">
+    <img src="../assets/logos.png" alt="Trader Route Logo" class="admin-logo" />
+    <h2>Admin Login</h2>
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
     <button id="loginBtn">Login</button>
-    <p class="error-msg" id="loginError"></p>
-  </div>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
-  <div class="sidebar">
-    <img src="../assets/logos.png" alt="">
-    <h3>Trader Route</h3>
-    <a href="#" id="show-all" class="active">All Requests</a>
-    <a href="#" id="show-buying">Buying Requests</a>
-    <a href="#" id="show-selling">Selling Offers</a>
-    <a href="#" id="show-free">Free Requests</a>
-    <a href="#" id="logout">Logout</a>
+    <p id="errorMsg" style="color:red;"></p>
   </div>
 
-  <div class="main">
-    <div class="header">
-      <h2>Welcome, Admin</h2>
-      <button id="newRequestBtn" class="action-btn edit">+ New Request</button>
-    </div>
-
-    <table>
+  <div class="dashboard" id="dashboardPage" style="display:none;">
+    <h2>Trader Route Admin Panel</h2>
+    <button class="logout" onclick="logout()">Logout</button>
+    <table id="requestsTable">
       <thead>
         <tr>
-          <th>Title</th><th>Type</th><th>Company</th><th>Date</th><th>Status</th><th>Actions</th>
+          <th>#</th>
+          <th>Type</th>
+          <th>Title</th>
+          <th>Company</th>
+          <th>Date</th>
+          <th>Action</th>
         </tr>
       </thead>
-      <tbody id="requestsTable"></tbody>
+      <tbody></tbody>
     </table>
   </div>
-</div>
 
-<!-- EDIT FORM -->
-<div id="edit-section" class="hidden">
-  <h3>Edit Request</h3>
-  <input type="text" id="edit-title" placeholder="Title">
-  <input type="text" id="edit-company" placeholder="Company Name">
-  <input type="date" id="edit-date">
-  <select id="edit-type">
-    <option value="buying">Buying Request</option>
-    <option value="selling">Selling Offer</option>
-    <option value="free">Free Request</option>
-  </select>
-  <textarea id="edit-desc" placeholder="Description"></textarea>
-  <button id="saveEditBtn">Save</button>
-  <button id="cancelEditBtn" style="background:#d9534f;">Cancel</button>
-</div>
+  <script>
+    const loginPage = document.getElementById("loginPage");
+    const dashboardPage = document.getElementById("dashboardPage");
 
-<script>
-  const loginScreen = document.getElementById("login-screen");
-  const dashboard = document.getElementById("dashboard");
-  const editSection = document.getElementById("edit-section");
-  const requestsTable = document.getElementById("requestsTable");
-  const loginBtn = document.getElementById("loginBtn");
-  const loginError = document.getElementById("loginError");
+    document.getElementById("loginBtn").addEventListener("click", function() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
 
-  // Default data
-  let requests = JSON.parse(localStorage.getItem("requests")) || [
-    {title:"Buy 500kg Honey",type:"buying",company:"Istanbul Imports",date:"2025-10-01",status:"Pending"},
-    {title:"Sell Wheat 1000 Tons",type:"selling",company:"Anadolu Export",date:"2025-09-20",status:"Approved"},
-    {title:"Free Request: Listing Help",type:"free",company:"TraderRoute",date:"2025-10-02",status:"Approved"}
-  ];
-  let editIndex = null;
-
-  function renderTable(filter="all"){
-    requestsTable.innerHTML = "";
-    let filtered = requests.filter(r => filter==="all" ? true : r.type===filter);
-    filtered.forEach((r,i)=>{
-      requestsTable.innerHTML += `
-        <tr>
-          <td>${r.title}</td>
-          <td>${r.type}</td>
-          <td>${r.company}</td>
-          <td>${r.date}</td>
-          <td>${r.status}</td>
-          <td>
-            <button class="action-btn edit" onclick="editRequest(${i})">Edit</button>
-            <button class="action-btn approve" onclick="approveRequest(${i})">Approve</button>
-            <button class="action-btn delete" onclick="deleteRequest(${i})">Delete</button>
-          </td>
-        </tr>`;
+      if (user === "admin" && pass === "trader2025") {
+        localStorage.setItem("adminLoggedIn", "true");
+        showDashboard();
+      } else {
+        document.getElementById("errorMsg").textContent = "Invalid username or password!";
+      }
     });
-    localStorage.setItem("requests", JSON.stringify(requests));
-  }
 
-  // Login
-  loginBtn.addEventListener("click",()=>{
-    const user = document.getElementById("username").value.trim();
-    const pass = document.getElementById("password").value.trim();
-    if(user==="admin" && pass==="trader2025"){
-      loginScreen.classList.add("hidden");
-      dashboard.classList.remove("hidden");
-      renderTable();
-    } else {
-      loginError.textContent = "Invalid username or password!";
+    function showDashboard() {
+      loginPage.style.display = "none";
+      dashboardPage.style.display = "block";
+      loadRequests();
     }
-  });
 
-  // Sidebar filters
-  document.getElementById("show-all").onclick=()=>{renderTable("all");setActive("show-all");}
-  document.getElementById("show-buying").onclick=()=>{renderTable("buying");setActive("show-buying");}
-  document.getElementById("show-selling").onclick=()=>{renderTable("selling");setActive("show-selling");}
-  document.getElementById("show-free").onclick=()=>{renderTable("free");setActive("show-free");}
-  function setActive(id){document.querySelectorAll(".sidebar a").forEach(a=>a.classList.remove("active"));document.getElementById(id).classList.add("active");}
+    function logout() {
+      localStorage.removeItem("adminLoggedIn");
+      location.reload();
+    }
 
-  // CRUD
-  function editRequest(i){
-    editIndex=i;
-    const r=requests[i];
-    dashboard.classList.add("hidden");
-    editSection.classList.remove("hidden");
-    document.getElementById("edit-title").value=r.title;
-    document.getElementById("edit-company").value=r.company;
-    document.getElementById("edit-date").value=r.date;
-    document.getElementById("edit-type").value=r.type;
-    document.getElementById("edit-desc").value=r.desc||"";
-  }
-  document.getElementById("saveEditBtn").onclick=()=>{
-    requests[editIndex]={title:editTitle.value,type:editType.value,company:editCompany.value,date:editDate.value,desc:editDesc.value,status:"Pending"};
-    editSection.classList.add("hidden");dashboard.classList.remove("hidden");renderTable();
-  };
-  document.getElementById("cancelEditBtn").onclick=()=>{editSection.classList.add("hidden");dashboard.classList.remove("hidden");};
-  function approveRequest(i){requests[i].status="Approved";renderTable();}
-  function deleteRequest(i){requests.splice(i,1);renderTable();}
-  document.getElementById("newRequestBtn").onclick=()=>{requests.push({title:"New Request",type:"buying",company:"New Co",date:new Date().toISOString().split("T")[0],status:"Pending"});renderTable();}
-  document.getElementById("logout").onclick=()=>{location.reload();}
-</script>
+    function loadRequests() {
+      const tableBody = document.querySelector("#requestsTable tbody");
+      tableBody.innerHTML = "";
+
+      const requests = JSON.parse(localStorage.getItem("requests")) || [];
+
+      requests.forEach((req, i) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${req.type === "buyer" ? "Purchase Request" : "Sales Offer"}</td>
+          <td>${req.title}</td>
+          <td>${req.company}</td>
+          <td>${req.date}</td>
+          <td><button onclick="deleteRequest(${i})">🗑️ Delete</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function deleteRequest(i) {
+      const requests = JSON.parse(localStorage.getItem("requests")) || [];
+      requests.splice(i, 1);
+      localStorage.setItem("requests", JSON.stringify(requests));
+      loadRequests();
+    }
+
+    if (localStorage.getItem("adminLoggedIn") === "true") {
+      showDashboard();
+    }
+  </script>
 </body>
 </html>
