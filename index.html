@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trader Route - Import & Export Platform</title>
-  <link rel="icon" href="assets/logos.png" type="image/png">
+  <link rel="icon" href="assets/logos.png" type="image/png" />
   <style>
     body {
       margin: 0;
@@ -12,6 +12,7 @@
       background-color: #f8f9fa;
     }
 
+    /* HEADER */
     header {
       background: #fff;
       padding: 10px 40px;
@@ -19,12 +20,16 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .logo-container {
       display: flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
 
     .logo-container img {
@@ -110,15 +115,17 @@
       background: #5a53e6;
     }
 
+    /* HERO SECTION */
     .hero {
       position: relative;
       height: 500px;
       background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
       display: flex;
       align-items: flex-start;
-      justify-content: left;
-      padding-top: 80px;
-      padding-left: 40px;
+      justify-content: space-between;
+      padding: 60px 40px;
+      flex-wrap: wrap;
+      gap: 40px;
     }
 
     .categories {
@@ -127,11 +134,11 @@
       padding: 15px;
       width: 240px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      flex-shrink: 0;
     }
 
     .categories h3 {
-      margin-top: 0;
-      margin-bottom: 15px;
+      margin: 0 0 15px;
       font-size: 16px;
       font-weight: 600;
     }
@@ -160,43 +167,47 @@
       margin-top: 10px;
     }
 
-    /* İstek Butonları Alanı */
-    .request-buttons {
+    /* REQUEST BUTTONS */
+    .requests-buttons {
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 12px;
-      margin: 30px auto;
-      padding: 10px 20px;
+      background: rgba(255,255,255,0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      align-self: flex-start;
+      min-width: 220px;
     }
 
-    .request-buttons button {
-      background-color: #008d62;
+    .requests-buttons a {
+      background: #008d62;
       color: #fff;
-      border: none;
-      padding: 12px 20px;
+      padding: 10px 18px;
       border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
-      min-width: 180px;
+      text-decoration: none;
+      font-weight: 500;
+      text-align: center;
+      transition: 0.3s;
     }
 
-    .request-buttons button:hover {
-      background-color: #006e4b;
+    .requests-buttons a:hover {
+      background: #006b4a;
     }
 
     @media (max-width: 768px) {
-      .request-buttons {
-        flex-direction: row;
-        justify-content: center;
+      .hero {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding: 40px 20px;
       }
-      .request-buttons button {
-        flex: 1 1 40%;
-        min-width: 140px;
+      .categories, .requests-buttons {
+        width: 100%;
       }
     }
 
+    /* MAIN SECTION */
     .main-section {
       background: #fff;
       padding: 60px 40px;
@@ -204,6 +215,7 @@
       justify-content: center;
       align-items: center;
       gap: 40px;
+      flex-wrap: wrap;
     }
 
     .main-section img {
@@ -223,29 +235,7 @@
       font-size: 15px;
     }
 
-    .subscribe-section {
-      background: #f1f1f1;
-      text-align: center;
-      padding: 50px 20px;
-    }
-
-    .subscribe-section input {
-      padding: 10px;
-      width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-right: 10px;
-    }
-
-    .subscribe-section button {
-      background: #000;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
+    /* FOOTER */
     footer {
       background: #fff;
       display: flex;
@@ -254,6 +244,7 @@
       font-size: 14px;
       color: #333;
       border-top: 1px solid #ddd;
+      flex-wrap: wrap;
     }
 
     footer div {
@@ -277,9 +268,10 @@
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
-    <div class="logo-container">
-      <img src="assets/logos.png" alt="Trader Route Logo">
+    <div class="logo-container" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo" />
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
 
@@ -293,14 +285,15 @@
 
     <div class="header-right">
       <div class="search-box">
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Search..." />
         <button>🔍</button>
       </div>
-      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+      <button class="login-btn">Sign In</button>
+      <button class="join-btn">Join Now</button>
     </div>
   </header>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="categories">
       <h3>Categories</h3>
@@ -308,28 +301,50 @@
       <div class="category-item">Agriculture Industry <span>175</span></div>
       <div class="category-item">Automotive <span>39</span></div>
       <div class="category-item">Clothing & Fashion <span>148</span></div>
-      <div class="category-item">Construction Industry <span>54</span></div>
-      <div class="category-item">Cosmetics <span>74</span></div>
       <button class="category-button">View All Categories</button>
+    </div>
+
+    <div class="requests-buttons">
+      <a href="requests.html">All Requests</a>
+      <a href="requests.html?type=buyer">Purchase Requests</a>
+      <a href="requests.html?type=seller">Sales Offers</a>
+      <a href="request-form.html">Free Request!</a>
     </div>
   </section>
 
-  <div class="request-buttons">
-    <button onclick="location.href='requests.html'">All Requests</button>
-    <button onclick="location.href='requests.html?type=buyer'">Buy Requests</button>
-    <button onclick="location.href='requests.html?type=seller'">Sell Offers</button>
-    <button onclick="location.href='request-form.html'">Free Request!</button>
-  </div>
-
+  <!-- MAIN SECTION -->
   <section class="main-section">
-    <img src="assets/trader_route_step1.jpeg" alt="Trader Route">
+    <img src="assets/trader_route_step1.jpeg" alt="Trader Route" />
     <div>
       <h2>Join Trader Route</h2>
       <p>
-        As a company, our primary goal has always been to achieve success in global trade.  
-        Trader Route connects reliable importers and exporters around the world.  
-        Being part of this network is our greatest pride and a mark of trust and credibility.
+        Find trusted buyers and sellers worldwide.  
+        Join our network today and grow your business globally.
       </p>
-      <button style="background:#008d62; color:#fff; border:none; padding:8px 14px; border-radius:5px; cursor:pointer;">Join Now</button>
+      <button style="background:#008d62;color:#fff;border:none;padding:8px 14px;border-radius:5px;cursor:pointer;">Join Now</button>
     </div>
   </section>
+
+  <footer>
+    <div>
+      <h4>Corporate</h4>
+      <p>Export Success</p>
+      <p>About Us</p>
+    </div>
+    <div>
+      <h4>Services</h4>
+      <p>Free Registration</p>
+      <p>Post Offers</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <p>Company Index</p>
+      <p>Buyer Directory</p>
+    </div>
+  </footer>
+
+  <div class="footer-bottom">
+    © 2025 Trader Route — Connecting Global Trade.
+  </div>
+</body>
+</html>
