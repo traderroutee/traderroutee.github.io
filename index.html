@@ -160,16 +160,16 @@
       margin-top: 10px;
     }
 
-    /* 🎯 İstek Butonları */
+    /* 🎯 İstek Butonları (Yeni Konum - Haritanın Altı) */
     .requests-buttons {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
       display: flex;
+      justify-content: center;
+      align-items: center;
       gap: 15px;
-      background: rgba(255, 255, 255, 0.9);
+      margin: 25px auto;
       padding: 10px 20px;
+      width: fit-content;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
@@ -308,15 +308,15 @@
       <div class="category-item">IT & Communication <span>8</span></div>
       <button class="category-button">View All Categories</button>
     </div>
-
-    <!-- 🎯 Yeni Butonlar -->
-    <div class="requests-buttons">
-      <a href="requests.html">All Requests</a>
-      <a href="requests.html?type=buy">Buy Requests</a>
-      <a href="requests.html?type=sell">Sell Offers</a>
-      <a href="request-form.html">Post Free Request</a>
-    </div>
   </section>
+
+  <!-- 🎯 Yeni Konumlandırılmış İstek Butonları -->
+  <div class="requests-buttons">
+    <a href="requests.html">All Requests</a>
+    <a href="requests.html?type=buy">Buy Requests</a>
+    <a href="requests.html?type=sell">Sell Offers</a>
+    <a href="request-form.html">Post Free Request</a>
+  </div>
 
   <section class="main-section">
     <img src="assets/trader_route_step1.jpeg" alt="Trader Route">
