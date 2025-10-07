@@ -19,9 +19,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 10;
     }
 
     .logo-container {
@@ -60,13 +57,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-
-    .language-select {
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 4px;
-      font-size: 13px;
     }
 
     .search-box {
@@ -159,6 +149,27 @@
       color: #008d62;
     }
 
+    .filter-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .filter-buttons button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      background: #008d62;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .filter-buttons button:hover {
+      background: #006d4c;
+    }
+
     .category-button {
       background: #000;
       color: #fff;
@@ -168,56 +179,6 @@
       border-radius: 5px;
       cursor: pointer;
       margin-top: 10px;
-    }
-
-    .requests-bar {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 40px 0;
-      flex-wrap: wrap;
-    }
-
-    .requests-bar button {
-      background: #fff;
-      border: 2px solid #008d62;
-      color: #008d62;
-      padding: 10px 18px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-
-    .requests-bar button:hover {
-      background: #008d62;
-      color: #fff;
-    }
-
-    .stats-section {
-      background: #fff;
-      padding: 40px;
-      text-align: center;
-    }
-
-    .stats-container {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-
-    .stat-box {
-      background: #f1f1f1;
-      padding: 20px;
-      border-radius: 10px;
-      width: 200px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    .stat-box h3 {
-      color: #008d62;
-      margin-bottom: 5px;
     }
 
     .main-section {
@@ -232,6 +193,18 @@
     .main-section img {
       width: 300px;
       border-radius: 10px;
+    }
+
+    .main-section h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #000;
+    }
+
+    .main-section p {
+      color: #333;
+      line-height: 1.6;
+      font-size: 15px;
     }
 
     .subscribe-section {
@@ -289,30 +262,26 @@
 <body>
 
   <header>
-    <div class="logo-container">
-      <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
+    <div class="logo-container" onclick="location.href='index.html'" style="cursor:pointer;">
+      <img src="assets/logos.png" alt="Trader Route Logo">
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
 
     <nav>
-      <a href="index.html" data-en="Home" data-tr="Ana Sayfa">Home</a>
-      <a href="companies.html" data-en="Companies" data-tr="Şirketler">Companies</a>
-      <a href="requests.html" data-en="Requests" data-tr="İstekler">Requests</a>
-      <a href="contact.html" data-en="Contact" data-tr="İletişim">Contact</a>
-      <a href="pricing.html" data-en="Pricing" data-tr="Fiyatlandırma">Pricing</a>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
     </nav>
 
     <div class="header-right">
-      <select class="language-select" id="langSelect">
-        <option value="en">EN</option>
-        <option value="tr">TR</option>
-      </select>
       <div class="search-box">
         <input type="text" placeholder="Search...">
         <button>🔍</button>
       </div>
-      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+      <button class="login-btn">Sign In</button>
+      <button class="join-btn">Join Now</button>
     </div>
   </header>
 
@@ -323,23 +292,17 @@
       <div class="category-item">Agriculture Industry <span>175</span></div>
       <div class="category-item">Automotive <span>39</span></div>
       <div class="category-item">Chemical Industry <span>50</span></div>
-      <button class="category-button">View All Categories</button>
-    </div>
-  </section>
+      <div class="category-item">Clothing & Fashion <span>148</span></div>
+      <div class="category-item">Construction Industry <span>54</span></div>
+      <div class="category-item">Cosmetics <span>74</span></div>
+      <div class="category-item">IT & Communication <span>8</span></div>
 
-  <section class="requests-bar">
-    <button onclick="showRequests('all')">All Requests</button>
-    <button onclick="showRequests('buyer')">Purchase Requests</button>
-    <button onclick="showRequests('seller')">Sales Offers</button>
-    <button onclick="location.href='free-request.html'">Free Request!</button>
-  </section>
-
-  <section class="stats-section">
-    <h2>Platform Statistics</h2>
-    <div class="stats-container">
-      <div class="stat-box"><h3 id="totalReq">0</h3><p>Total Requests</p></div>
-      <div class="stat-box"><h3 id="approvedReq">0</h3><p>Approved Requests</p></div>
-      <div class="stat-box"><h3 id="members">0</h3><p>Registered Members</p></div>
+      <div class="filter-buttons">
+        <button onclick="location.href='requests.html'">All Requests</button>
+        <button onclick="location.href='requests.html?filter=buyer'">Purchase Requests</button>
+        <button onclick="location.href='requests.html?filter=seller'">Sales Offers</button>
+        <button onclick="location.href='request-form.html'">Free Request!</button>
+      </div>
     </div>
   </section>
 
@@ -347,8 +310,9 @@
     <img src="assets/trader_route_step1.jpeg" alt="Trader Route">
     <div>
       <h2>Join Trader Route</h2>
-      <p>Join thousands of trusted exporters and importers around the world.</p>
-      <button style="background:#008d62;color:#fff;border:none;padding:8px 14px;border-radius:5px;cursor:pointer;">Join Now</button>
+      <p>As a company, our primary goal has always been to achieve success in global trade.  
+      Trader Route connects reliable importers and exporters around the world.</p>
+      <button style="background:#008d62; color:#fff; border:none; padding:8px 14px; border-radius:5px; cursor:pointer;">Join Now</button>
     </div>
   </section>
 
@@ -365,33 +329,27 @@
       <p>Export Success Stories</p>
       <p>Company Profiles</p>
       <p>About Us</p>
+      <p>Mission & Vision</p>
     </div>
     <div>
       <h4>Our Services</h4>
       <p>Free Registration</p>
+      <p>Post Free Offers</p>
       <p>Contact Buyers</p>
+      <p>Membership Packages</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <p>Company Index</p>
+      <p>Buyer Directory</p>
+      <p>My Dashboard</p>
+      <p>Terms & Conditions</p>
     </div>
   </footer>
 
-  <div class="footer-bottom">© 2025 Trader Route — Connecting Global Trade.</div>
-
-  <script>
-    function showRequests(type){localStorage.setItem('filterType',type);window.location.href="requests.html";}
-
-    // Stats
-    const reqs = JSON.parse(localStorage.getItem('requests'))||[];
-    document.getElementById('totalReq').textContent=reqs.length;
-    document.getElementById('approvedReq').textContent=reqs.filter(r=>r.approved).length;
-    document.getElementById('members').textContent=5000;
-
-    // Language switch
-    document.getElementById('langSelect').addEventListener('change',function(){
-      const lang=this.value;
-      document.querySelectorAll('[data-en]').forEach(el=>{
-        el.textContent=el.getAttribute(`data-${lang}`);
-      });
-    });
-  </script>
+  <div class="footer-bottom">
+    © 2025 Trader Route — Connecting Global Trade.
+  </div>
 
 </body>
 </html>
