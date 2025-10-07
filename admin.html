@@ -1,91 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel - Trader Route</title>
-<link rel="icon" href="assets/logos.png" type="image/png">
-<style>
-  body {font-family:Arial,sans-serif;background:#f4f4f4;margin:0;}
-  header{background:#fff;padding:15px 40px;box-shadow:0 2px 8px rgba(0,0,0,0.1);display:flex;justify-content:space-between;align-items:center;}
-  .container{max-width:900px;margin:40px auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);}
-  input{padding:8px;width:100%;margin:10px 0;}
-  button{padding:8px 16px;margin:5px;border:none;border-radius:5px;cursor:pointer;}
-  .approve{background:#008d62;color:#fff;}
-  .delete{background:#ff4d4d;color:#fff;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login - Trader Route</title>
+  <link rel="icon" href="../assets/logos.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="admin-login-body">
 
-<header>
-  <h2>Admin Panel</h2>
-</header>
+  <div class="login-container">
+    <div class="login-box">
+      <img src="../assets/logos.png" alt="Trader Route Logo" class="admin-logo" />
+      <h2>Trader Route Admin Panel</h2>
+      <p class="subtext">Please log in to continue</p>
 
-<div class="container" id="loginDiv">
-  <h3>Admin Login</h3>
-  <input type="text" id="user" placeholder="Username">
-  <input type="password" id="pass" placeholder="Password">
-  <button onclick="login()">Login</button>
-  <p id="error" style="color:red;display:none;">Incorrect credentials</p>
-</div>
+      <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button type="submit" class="login-btn">Login</button>
+      </form>
 
-<div class="container" id="adminDiv" style="display:none;">
-  <h3>Pending Requests</h3>
-  <div id="pendingList"></div>
-</div>
+      <p id="error-msg" class="error-msg"></p>
+    </div>
+  </div>
 
-<script>
-function login(){
-  const u=document.getElementById("user").value;
-  const p=document.getElementById("pass").value;
-  if(u==="admin" && p==="trader2025"){
-    document.getElementById("loginDiv").style.display="none";
-    document.getElementById("adminDiv").style.display="block";
-    loadRequests();
-  } else {
-    document.getElementById("error").style.display="block";
-  }
-}
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-function loadRequests(){
-  let reqs = JSON.parse(localStorage.getItem("requests") || "[]");
-  let pending = reqs.filter(r=>!r.approved);
-  const list=document.getElementById("pendingList");
-  list.innerHTML="";
-  if(pending.length===0){list.innerHTML="<p>No pending requests.</p>"; return;}
-  pending.forEach((r,i)=>{
-    list.innerHTML += `
-      <div style='border-bottom:1px solid #ddd;padding:10px 0;'>
-        <h4>${r.title}</h4>
-        <p><b>${r.type}</b> — ${r.name} — ${r.country}</p>
-        <p><b>Category:</b> ${r.category}</p>
-        <p>${r.desc}</p>
-        <small><b>Date:</b> ${r.date}</small><br>
-        <button class='approve' onclick='approve(${i})'>Approve</button>
-        <button class='delete' onclick='del(${i})'>Delete</button>
-      </div>`;
-  });
-}
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("error-msg");
 
-function approve(i){
-  let reqs = JSON.parse(localStorage.getItem("requests") || "[]");
-  let pending = reqs.filter(r=>!r.approved);
-  let item = pending[i];
-  let index = reqs.findIndex(r=>r.title===item.title && !r.approved);
-  reqs[index].approved = true;
-  localStorage.setItem("requests", JSON.stringify(reqs));
-  loadRequests();
-}
-
-function del(i){
-  let reqs = JSON.parse(localStorage.getItem("requests") || "[]");
-  let pending = reqs.filter(r=>!r.approved);
-  let item = pending[i];
-  reqs = reqs.filter(r=>r.title!==item.title);
-  localStorage.setItem("requests", JSON.stringify(reqs));
-  loadRequests();
-}
-</script>
-
+      if (username === "admin" && password === "trader2025") {
+        localStorage.setItem("adminLoggedIn", "true");
+        window.location.href = "dashboard.html";
+      } else {
+        errorMsg.textContent = "Invalid username or password!";
+      }
+    });
+  </script>
 </body>
 </html>
