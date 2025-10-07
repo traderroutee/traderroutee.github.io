@@ -170,3 +170,73 @@ body {
   padding: 20px;
   font-size: 14px;
 }
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 991px) {
+  .header-main {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 20px;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .categories {
+    position: static;
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  .hero {
+    height: auto;
+  }
+
+  .info-section {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .info-box {
+    width: 100%;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .header-buttons input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    height: 320px;
+  }
+
+  .categories {
+    padding: 15px;
+    width: 100%;
+  }
+
+  .navbar a {
+    margin: 0 8px;
+    font-size: 14px;
+  }
+
+  .btn-green, .btn-outline, .btn-purple {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .info-section {
+    padding: 40px 10px;
+  }
+}
