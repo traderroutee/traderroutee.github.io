@@ -16,6 +16,7 @@
   .filters button.active{background:#008d62;color:#fff;}
   .item{background:#fff;padding:15px;border-radius:8px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
   .item h3{margin:0 0 8px 0;}
+  .tags{font-size:14px;color:#666;margin-bottom:5px;}
   .empty{text-align:center;color:#555;margin-top:40px;}
 </style>
 </head>
@@ -42,21 +43,24 @@
 <script>
 let allRequests = JSON.parse(localStorage.getItem("requests") || "[]");
 let listDiv = document.getElementById("list");
+
 function render(type="all"){
   listDiv.innerHTML="";
   let filtered = allRequests.filter(r=>r.approved);
   if(type!=="all"){filtered = filtered.filter(r=>r.type===type);}
   if(filtered.length===0){document.getElementById("empty").style.display="block"; return;}
   document.getElementById("empty").style.display="none";
+
   filtered.forEach(r=>{
     listDiv.innerHTML += `
       <div class="item">
         <h3>${r.title}</h3>
-        <p><b>${r.type==="buyer"?"Buyer":"Seller"}:</b> ${r.name}</p>
+        <p class="tags"><b>${r.type==="buyer"?"Buyer":"Seller"}:</b> ${r.name} — <b>Country:</b> ${r.country} — <b>Date:</b> ${r.date}</p>
         <p>${r.desc}</p>
       </div>`;
   });
 }
+
 function filterRequests(type){
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
   if(type==="all") document.getElementById("allBtn").classList.add("active");
