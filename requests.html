@@ -83,6 +83,31 @@ function render(type="all"){
       </div>`;
   });
 }
+<div id="requestsList"></div>
+
+<script>
+const allRequests = JSON.parse(localStorage.getItem('requests')) || [];
+const list = document.getElementById('requestsList');
+const filter = localStorage.getItem('filterType') || 'all';
+
+let filtered = allRequests.filter(r => r.approved);
+if (filter === 'buyer') filtered = filtered.filter(r => r.type === 'buyer');
+if (filter === 'seller') filtered = filtered.filter(r => r.type === 'seller');
+
+if (filtered.length === 0) {
+  list.innerHTML = "<p>No requests available.</p>";
+} else {
+  list.innerHTML = filtered.map((r, index) => `
+    <div style="background:#fff;padding:15px;margin:10px;border-radius:5px;">
+      <a href="request-detail.html?id=${index}" style="font-weight:600;color:#008d62;text-decoration:none;">
+        ${r.title}
+      </a>
+      <p style="margin:5px 0;color:#555;">${r.desc.slice(0,100)}...</p>
+      <small>${r.country} | ${r.category} | ${r.date}</small>
+    </div>
+  `).join('');
+}
+</script>
 
 function filterRequests(type){
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
