@@ -3,90 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Request - Trader Route</title>
+<title>Free Request | Trader Route</title>
 <link rel="icon" href="assets/logos.png" type="image/png">
 <style>
-  body {font-family: Arial, sans-serif; margin:0; background:#f9f9f9;}
-  header {background:#fff; padding:15px 40px; box-shadow:0 2px 8px rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center;}
-  .logo-container{display:flex;align-items:center;gap:10px;}
-  .logo-container img{height:42px;}
-  .form-container {max-width:600px; margin:40px auto; background:#fff; padding:30px; border-radius:8px; box-shadow:0 3px 10px rgba(0,0,0,0.1);}
-  input, textarea, select {width:100%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:5px;}
-  button {background:#008d62; color:#fff; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;}
-  button:hover {background:#00724e;}
+body { font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif; background:#f8f9fa; margin:0; }
+.container { max-width:600px; margin:50px auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+input, textarea, select { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:6px; }
+button { background:#008d62; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:500; }
+button:hover { background:#007250; }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo-container">
-    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
-    <span>The Silk Road of E-Commerce</span>
-  </div>
-</header>
-
-<div class="form-container">
-  <h2>Post a Free Request</h2>
-  <label>Your Name</label>
-  <input type="text" id="name" placeholder="Enter your name" required>
-  
-  <label>Country</label>
-  <select id="country">
-    <option value="Turkey">Turkey</option>
-    <option value="Germany">Germany</option>
-    <option value="USA">USA</option>
-    <option value="UK">United Kingdom</option>
-    <option value="France">France</option>
-    <option value="Italy">Italy</option>
-  </select>
-
-  <label>Category</label>
-  <select id="category">
-    <option value="Agriculture">Agriculture</option>
-    <option value="Construction">Construction</option>
-    <option value="Textile">Textile</option>
-    <option value="Automotive">Automotive</option>
-    <option value="Cosmetics">Cosmetics</option>
-    <option value="Chemicals">Chemicals</option>
-  </select>
-
-  <label>Request Title</label>
-  <input type="text" id="title" placeholder="Example: Buy 1000 tons wheat" required>
-
-  <label>Description</label>
-  <textarea id="desc" placeholder="Describe your request..."></textarea>
-
-  <label>Are you a Buyer or Seller?</label>
-  <select id="type">
-    <option value="buyer">Buyer</option>
-    <option value="seller">Seller</option>
-  </select>
-
-  <button onclick="submitRequest()">Submit Request</button>
-  <p id="msg" style="color:green;display:none;">Your request has been sent for admin approval!</p>
+<div class="container">
+  <h2>Create a Free Request</h2>
+  <form id="requestForm">
+    <input type="text" id="title" placeholder="Title" required>
+    <textarea id="desc" placeholder="Description" required></textarea>
+    <input type="text" id="category" placeholder="Category" required>
+    <input type="text" id="country" placeholder="Country" required>
+    <select id="type">
+      <option value="buyer">Buyer Request</option>
+      <option value="seller">Seller Offer</option>
+    </select>
+    <button type="submit">Submit Request</button>
+  </form>
 </div>
 
 <script>
-function submitRequest(){
-  let name = document.getElementById("name").value.trim();
-  let title = document.getElementById("title").value.trim();
-  let desc = document.getElementById("desc").value.trim();
-  let type = document.getElementById("type").value;
-  let country = document.getElementById("country").value;
-  let category = document.getElementById("category").value;
-  if(!name || !title){alert("Please fill all fields."); return;}
-
-  let date = new Date().toISOString().split('T')[0];
-  let requests = JSON.parse(localStorage.getItem("requests") || "[]");
-  requests.push({name, title, desc, type, country, category, date, approved:false});
-  localStorage.setItem("requests", JSON.stringify(requests));
-
-  document.getElementById("msg").style.display="block";
-  document.getElementById("name").value="";
-  document.getElementById("title").value="";
-  document.getElementById("desc").value="";
-}
+document.getElementById('requestForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const reqs = JSON.parse(localStorage.getItem('requests')) || [];
+  reqs.push({
+    title: title.value,
+    desc: desc.value,
+    category: category.value,
+    country: country.value,
+    type: type.value,
+    approved: true,
+    date: new Date().toLocaleDateString()
+  });
+  localStorage.setItem('requests', JSON.stringify(reqs));
+  alert("Request submitted successfully!");
+  window.location.href = "requests.html";
+});
 </script>
-
 </body>
 </html>
