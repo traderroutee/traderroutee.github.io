@@ -6,182 +6,65 @@
 <title>Requests - Trader Route</title>
 <link rel="icon" href="assets/logos.png" type="image/png">
 <style>
-body {
-  margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
-}
-header {
-  background: #fff;
-  padding: 10px 40px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.logo-container img { height: 42px; }
-.logo-text { font-size: 15px; color: #555; font-weight: 500; }
-nav { display: flex; align-items: center; gap: 15px; }
-nav a { text-decoration: none; color: #000; font-weight: 500; }
-nav a:hover { color: #008d62; }
-
-.page-layout { display: flex; justify-content: space-between; padding: 40px; gap: 30px; }
-
-.categories {
-  background: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  width: 240px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  height: fit-content;
-}
-.categories h3 { margin: 0 0 15px; font-size: 16px; font-weight: 600; }
-.category-item { display: flex; justify-content: space-between; margin: 6px 0; color: #444; font-size: 14px; }
-.category-item:hover { color: #008d62; }
-
-.requests-area { flex: 1; }
-
-.filter-buttons {
-  text-align: center;
-  margin-bottom: 30px;
-}
-.filter-buttons button {
-  border: 2px solid #008d62;
-  color: #008d62;
-  background: #fff;
-  padding: 10px 18px;
-  border-radius: 6px;
-  margin: 5px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.filter-buttons button:hover, .filter-buttons button.active {
-  background: #008d62;
-  color: #fff;
-}
-
-.request-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  border-left: 6px solid transparent;
-  transition: transform 0.3s ease;
-}
-.request-card:hover { transform: translateY(-3px); }
-.type-buyer { border-left-color: #007bff; }
-.type-seller { border-left-color: #ff9800; }
-
-.request-type {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #fff;
-  margin-bottom: 10px;
-}
-.buyer { background: #007bff; }
-.seller { background: #ff9800; }
-
-footer {
-  background: #fff;
-  display: flex;
-  justify-content: space-around;
-  padding: 40px;
-  font-size: 14px;
-  color: #333;
-  border-top: 1px solid #ddd;
-}
-.footer-bottom {
-  text-align: center;
-  background: #000;
-  color: #fff;
-  padding: 10px;
-  font-size: 13px;
-}
+  body {font-family: Arial, sans-serif; background:#f4f4f4; margin:0;}
+  header {background:#fff; padding:15px 40px; box-shadow:0 2px 8px rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center;}
+  .logo-container{display:flex;align-items:center;gap:10px;}
+  .logo-container img{height:42px;}
+  main{max-width:900px;margin:40px auto;padding:0 20px;}
+  .filters{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+  .filters button{padding:8px 16px;border:none;border-radius:5px;cursor:pointer;font-weight:600;}
+  .filters button.active{background:#008d62;color:#fff;}
+  .item{background:#fff;padding:15px;border-radius:8px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+  .item h3{margin:0 0 8px 0;}
+  .empty{text-align:center;color:#555;margin-top:40px;}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-container" onclick="location.href='index.html'">
-    <img src="assets/logos.png" alt="Trader Route Logo">
-    <span class="logo-text">The Silk Road of E-Commerce</span>
+  <div class="logo-container">
+    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
+    <span>The Silk Road of E-Commerce</span>
   </div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="companies.html">Companies</a>
-    <a href="requests.html" style="color:#008d62;">Requests</a>
-    <a href="contact.html">Contact</a>
-    <a href="pricing.html">Pricing</a>
-  </nav>
 </header>
 
-<div class="page-layout">
-  <div class="categories">
-    <h3>Categories</h3>
-    <div class="category-item">Agricultural Machinery <span>16</span></div>
-    <div class="category-item">Construction Industry <span>54</span></div>
-    <div class="category-item">Cosmetics <span>74</span></div>
-    <div class="category-item">Textile & Fashion <span>148</span></div>
-    <div class="category-item">IT & Communication <span>8</span></div>
-    <button class="category-button" onclick="location.href='free-request.html'">+ Add Request</button>
+<main>
+  <h2>Trade Requests</h2>
+  <div class="filters">
+    <button id="allBtn" class="active" onclick="filterRequests('all')">All Requests</button>
+    <button id="buyBtn" onclick="filterRequests('buyer')">Buying Requests</button>
+    <button id="sellBtn" onclick="filterRequests('seller')">Selling Offers</button>
   </div>
-
-  <div class="requests-area">
-    <div class="filter-buttons">
-      <button onclick="filterRequests('all')" class="active">All Requests</button>
-      <button onclick="filterRequests('buyer')">Buying Requests</button>
-      <button onclick="filterRequests('seller')">Selling Offers</button>
-      <button onclick="location.href='free-request.html'">+ Free Request!</button>
-    </div>
-
-    <div id="requestsList"></div>
-  </div>
-</div>
-
-<footer>
-  <div><h4>Corporate</h4><p>About Us</p><p>Mission & Vision</p></div>
-  <div><h4>Our Services</h4><p>Free Registration</p><p>Membership Packages</p></div>
-  <div><h4>Quick Links</h4><p>Company Index</p><p>Buyer Directory</p></div>
-</footer>
-
-<div class="footer-bottom">© 2025 Trader Route — Connecting Global Trade.</div>
+  <div id="list"></div>
+  <div class="empty" id="empty" style="display:none;">No requests found.</div>
+</main>
 
 <script>
-function loadRequests() {
-  const stored = JSON.parse(localStorage.getItem("requests") || "[]");
-  const list = document.getElementById("requestsList");
-  list.innerHTML = "";
-  stored.forEach(r => {
-    const div = document.createElement("div");
-    div.className = "request-card type-" + r.type;
-    div.innerHTML = `
-      <span class="request-type ${r.type === 'buyer' ? 'buyer' : 'seller'}">${r.type === 'buyer' ? 'Buyer' : 'Seller'}</span>
-      <h3>${r.title}</h3>
-      <p><strong>Company:</strong> ${r.company}</p>
-      <p><strong>Country:</strong> ${r.country}</p>
-      <p>${r.details}</p>
-    `;
-    list.appendChild(div);
+let allRequests = JSON.parse(localStorage.getItem("requests") || "[]");
+let listDiv = document.getElementById("list");
+function render(type="all"){
+  listDiv.innerHTML="";
+  let filtered = allRequests.filter(r=>r.approved);
+  if(type!=="all"){filtered = filtered.filter(r=>r.type===type);}
+  if(filtered.length===0){document.getElementById("empty").style.display="block"; return;}
+  document.getElementById("empty").style.display="none";
+  filtered.forEach(r=>{
+    listDiv.innerHTML += `
+      <div class="item">
+        <h3>${r.title}</h3>
+        <p><b>${r.type==="buyer"?"Buyer":"Seller"}:</b> ${r.name}</p>
+        <p>${r.desc}</p>
+      </div>`;
   });
 }
-
-function filterRequests(type) {
-  document.querySelectorAll(".filter-buttons button").forEach(btn => btn.classList.remove("active"));
-  const index = type === "buyer" ? 1 : type === "seller" ? 2 : 0;
-  document.querySelectorAll(".filter-buttons button")[index].classList.add("active");
-  const cards = document.querySelectorAll(".request-card");
-  cards.forEach(c => {
-    c.style.display = type === "all" ? "block" : (c.classList.contains("type-" + type) ? "block" : "none");
-  });
+function filterRequests(type){
+  document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+  if(type==="all") document.getElementById("allBtn").classList.add("active");
+  if(type==="buyer") document.getElementById("buyBtn").classList.add("active");
+  if(type==="seller") document.getElementById("sellBtn").classList.add("active");
+  render(type);
 }
-
-window.onload = () => { loadRequests(); const t = new URLSearchParams(location.search).get("type") || "all"; filterRequests(t); };
+render();
 </script>
 
 </body>
