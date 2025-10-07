@@ -29,15 +29,29 @@
   <h2>Post a Free Request</h2>
   <label>Your Name</label>
   <input type="text" id="name" placeholder="Enter your name" required>
+  
+  <label>Country</label>
+  <select id="country">
+    <option value="Turkey">Turkey</option>
+    <option value="Germany">Germany</option>
+    <option value="USA">USA</option>
+    <option value="UK">United Kingdom</option>
+    <option value="France">France</option>
+    <option value="Italy">Italy</option>
+  </select>
+
   <label>Request Title</label>
   <input type="text" id="title" placeholder="Example: Buy 1000 tons wheat" required>
+
   <label>Description</label>
   <textarea id="desc" placeholder="Describe your request..."></textarea>
+
   <label>Are you a Buyer or Seller?</label>
   <select id="type">
     <option value="buyer">Buyer</option>
     <option value="seller">Seller</option>
   </select>
+
   <button onclick="submitRequest()">Submit Request</button>
   <p id="msg" style="color:green;display:none;">Your request has been sent for admin approval!</p>
 </div>
@@ -48,11 +62,14 @@ function submitRequest(){
   let title = document.getElementById("title").value.trim();
   let desc = document.getElementById("desc").value.trim();
   let type = document.getElementById("type").value;
+  let country = document.getElementById("country").value;
   if(!name || !title){alert("Please fill all fields."); return;}
 
+  let date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
   let requests = JSON.parse(localStorage.getItem("requests") || "[]");
-  requests.push({name, title, desc, type, approved:false});
+  requests.push({name, title, desc, type, country, date, approved:false});
   localStorage.setItem("requests", JSON.stringify(requests));
+
   document.getElementById("msg").style.display="block";
   document.getElementById("name").value="";
   document.getElementById("title").value="";
