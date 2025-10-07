@@ -6,46 +6,178 @@
 <title>Trader Route | Requests</title>
 <link rel="icon" href="assets/logos.png" type="image/png">
 <style>
-body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background:#f8f9fa; margin:0; }
-header { background:#fff; padding:15px 40px; box-shadow:0 2px 8px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:space-between; }
-.container { max-width:900px; margin:40px auto; background:#fff; padding:30px; border-radius:10px; }
-.request-item { background:#f8f8f8; padding:15px; border-radius:8px; margin-bottom:15px; }
-.request-item a { text-decoration:none; color:#008d62; font-weight:600; }
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background:#f8f9fa;
+  margin:0;
+}
+header {
+  background:#fff;
+  padding:15px 40px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo-container {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.logo-container img {
+  height:40px;
+}
+nav {
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+nav a {
+  text-decoration:none;
+  color:#000;
+  font-weight:500;
+}
+nav a:hover {
+  color:#008d62;
+}
+.container {
+  max-width:900px;
+  margin:40px auto;
+  background:#fff;
+  padding:30px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+h2 {
+  color:#008d62;
+  margin-bottom:20px;
+  text-align:center;
+}
+.filter-buttons {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+.filter-buttons button {
+  background:#fff;
+  border:2px solid #008d62;
+  color:#008d62;
+  padding:8px 16px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+}
+.filter-buttons button:hover,
+.filter-buttons button.active {
+  background:#008d62;
+  color:#fff;
+}
+.request-item {
+  background:#f9f9f9;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:15px;
+  border-left:4px solid #008d62;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+.request-item a {
+  text-decoration:none;
+  color:#008d62;
+  font-weight:600;
+  font-size:16px;
+}
+.request-item a:hover { text-decoration:underline; }
+.request-item p { margin:5px 0; color:#555; }
+small { color:#777; }
+
+.back-home {
+  display:block;
+  text-align:center;
+  margin-top:30px;
+  color:#008d62;
+  font-weight:600;
+  text-decoration:none;
+}
+.back-home:hover { text-decoration:underline; }
+
+@media (max-width:700px) {
+  .container { padding:20px; }
+  header { flex-direction:column; gap:10px; }
+}
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo-container">
-    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo" height="40"></a>
+    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
+    <span style="font-size:14px;color:#555;">The Silk Road of E-Commerce</span>
   </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html" style="color:#008d62;font-weight:700;">Requests</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html">Pricing</a>
+  </nav>
 </header>
 
 <div class="container">
   <h2>All Requests</h2>
+  
+  <div class="filter-buttons">
+    <button onclick="filterRequests('all')" id="btnAll" class="active">All</button>
+    <button onclick="filterRequests('buyer')" id="btnBuy">Buy Requests</button>
+    <button onclick="filterRequests('seller')" id="btnSell">Sell Offers</button>
+  </div>
+
   <div id="requestsList"></div>
+  <a href="index.html" class="back-home">← Back to Home</a>
 </div>
 
 <script>
-const allRequests = JSON.parse(localStorage.getItem('requests')) || [];
+let allRequests = JSON.parse(localStorage.getItem('requests')) || [];
 const list = document.getElementById('requestsList');
-const filter = localStorage.getItem('filterType') || 'all';
+const btns = {
+  all: document.getElementById('btnAll'),
+  buyer: document.getElementById('btnBuy'),
+  seller: document.getElementById('btnSell')
+};
 
-let filtered = allRequests.filter(r => r.approved);
-if (filter === 'buyer') filtered = filtered.filter(r => r.type === 'buyer');
-if (filter === 'seller') filtered = filtered.filter(r => r.type === 'seller');
+function renderRequests(type='all') {
+  Object.values(btns).forEach(b=>b.classList.remove('active'));
+  btns[type].classList.add('active');
+  
+  let filtered = allRequests.filter(r => r.approved);
+  if (type === 'buyer') filtered = filtered.filter(r => r.type === 'buyer');
+  if (type === 'seller') filtered = filtered.filter(r => r.type === 'seller');
 
-if (filtered.length === 0) {
-  list.innerHTML = "<p>No requests available.</p>";
-} else {
-  list.innerHTML = filtered.map((r, index) => `
-    <div class="request-item">
-      <a href="request-detail.html?id=${index}">${r.title}</a>
-      <p>${r.desc.slice(0,100)}...</p>
-      <small>${r.category} | ${r.country} | ${r.date}</small>
-    </div>
-  `).join('');
+  if (filtered.length === 0) {
+    list.innerHTML = "<p>No requests available.</p>";
+  } else {
+    list.innerHTML = filtered.map((r, index) => `
+      <div class="request-item">
+        <a href="request-detail.html?id=${index}">${r.title}</a>
+        <p>${r.desc.slice(0,120)}...</p>
+        <small>${r.category} | ${r.country} | ${r.date}</small>
+      </div>
+    `).join('');
+  }
 }
+
+function filterRequests(type) {
+  localStorage.setItem('filterType', type);
+  renderRequests(type);
+}
+
+window.onload = () => {
+  const type = localStorage.getItem('filterType') || 'all';
+  renderRequests(type);
+};
 </script>
+
 </body>
 </html>
