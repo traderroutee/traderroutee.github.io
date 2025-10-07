@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Request - Trader Route</title>
+<link rel="icon" href="assets/logos.png" type="image/png">
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+header {
+  background: #fff;
+  padding: 10px 40px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.logo-container img { height: 42px; }
+.logo-text { font-size: 15px; color: #555; font-weight: 500; }
+form {
+  background: #fff;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+form h2 { color: #008d62; margin-bottom: 20px; text-align: center; }
+label { display: block; margin-top: 15px; font-weight: 500; }
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+button {
+  background: #008d62;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 20px;
+  width: 100%;
+}
+button:hover { background: #006b4d; }
+.success {
+  background: #d4edda;
+  color: #155724;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-container" onclick="location.href='index.html'">
+    <img src="assets/logos.png" alt="Trader Route Logo">
+    <span class="logo-text">The Silk Road of E-Commerce</span>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="requests.html">Requests</a>
+  </nav>
+</header>
+
+<form id="requestForm">
+  <h2>Submit a Free Request</h2>
+  <label for="type">Request Type:</label>
+  <select id="type" required>
+    <option value="">Select Type</option>
+    <option value="buyer">Buying Request</option>
+    <option value="seller">Selling Offer</option>
+  </select>
+
+  <label for="title">Request Title:</label>
+  <input type="text" id="title" placeholder="Example: Need 1000 tons of Wheat" required>
+
+  <label for="company">Company Name:</label>
+  <input type="text" id="company" placeholder="Your Company Name" required>
+
+  <label for="country">Country:</label>
+  <input type="text" id="country" placeholder="e.g. Turkey" required>
+
+  <label for="details">Details:</label>
+  <textarea id="details" rows="5" placeholder="Enter details about your request..." required></textarea>
+
+  <button type="submit">Submit Request</button>
+  <div id="successMsg" class="success" style="display:none;">Your request has been submitted successfully!</div>
+</form>
+
+<script>
+document.getElementById("requestForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const req = {
+    type: document.getElementById("type").value,
+    title: document.getElementById("title").value,
+    company: document.getElementById("company").value,
+    country: document.getElementById("country").value,
+    details: document.getElementById("details").value
+  };
+  const stored = JSON.parse(localStorage.getItem("requests") || "[]");
+  stored.push(req);
+  localStorage.setItem("requests", JSON.stringify(stored));
+  document.getElementById("successMsg").style.display = "block";
+  setTimeout(()=>{ location.href = "requests.html"; },1500);
+});
+</script>
+
+</body>
+</html>
