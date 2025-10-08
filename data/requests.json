@@ -1,26 +1,18 @@
 [
   {
-    "type": "buying",
-    "title": "Buy: 5,000 Tons of Wheat",
-    "category": "Agriculture",
-    "country": "Turkey",
-    "offers": 12,
-    "date": "2025-10-06"
-  },
-  {
     "type": "selling",
     "title": "Sell: Organic Olive Oil",
     "category": "Food Industry",
     "country": "Italy",
-    "offers": 7,
-    "date": "2025-10-03"
+    "email": "seller@traderroute.com",
+    "description": "High quality organic olive oil ready for export."
   },
   {
     "type": "buying",
-    "title": "Buy: Construction Materials",
-    "category": "Construction",
-    "country": "Germany",
-    "offers": 9,
-    "date": "2025-09-27"
+    "title": "Buy: Cotton Fabrics",
+    "category": "Clothing & Fashion",
+    "country": "Turkey",
+    "email": "buyer@traderroute.com",
+    "description": "Looking for certified cotton fabric suppliers for clothing production."
   }
 ]
