@@ -367,5 +367,44 @@
     © 2025 Trader Route — Connecting Global Trade.
   </div>
 
+  <header>
+  <div class="logo-container" onclick="window.location.href='index.html'">
+    <img src="assets/logos.png" alt="Trader Route Logo">
+    <span class="logo-text">The Silk Road of E-Commerce</span>
+  </div>
+
+  <!-- Hamburger Button (mobile only) -->
+  <div class="menu-toggle" id="mobile-menu">
+    ☰
+  </div>
+
+  <nav class="nav-menu">
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html">Requests</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html">Pricing</a>
+  </nav>
+
+  <div class="header-right">
+    <div class="search-box">
+      <input type="text" placeholder="Search...">
+      <button>🔍</button>
+    </div>
+    <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+    <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+  </div>
+</header>
+
+<!-- Menü için küçük JavaScript -->
+<script>
+  const mobileMenu = document.getElementById('mobile-menu');
+  const navMenu = document.querySelector('.nav-menu');
+
+  mobileMenu.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+</script>
+
 </body>
 </html>
