@@ -1,23 +1,21 @@
 /* =============================
-   TRADER ROUTE - STYLE.CSS (FULL RESPONSIVE)
+   BASE STYLES
    ============================= */
 
-/* GENEL YAPI */
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8f9fa;
 }
 
-/* HEADER */
 header {
   background: #fff;
   padding: 10px 40px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .logo-container {
@@ -109,15 +107,19 @@ nav a:hover {
   background: #5a53e6;
 }
 
-/* HERO BÖLÜMÜ */
+/* =============================
+   HERO SECTION
+   ============================= */
+
 .hero {
   position: relative;
   height: 500px;
-  background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
+  background: url("assets/ihracat-haritasi.png") center/cover no-repeat;
   display: flex;
   align-items: flex-start;
-  justify-content: center;
-  padding-top: 40px;
+  justify-content: flex-start;
+  padding-top: 80px;
+  padding-left: 40px;
 }
 
 .categories {
@@ -125,10 +127,7 @@ nav a:hover {
   border-radius: 10px;
   padding: 15px;
   width: 240px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  position: absolute;
-  left: 5%;
-  top: 20%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .categories h3 {
@@ -162,35 +161,43 @@ nav a:hover {
   margin-top: 10px;
 }
 
-/* BUTON ALANI */
+/* =============================
+   REQUEST BUTTONS SECTION
+   ============================= */
+
 .request-buttons {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
+  margin: 40px auto;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 900px;
 }
 
 .request-buttons button {
   background: #008d62;
-  color: #fff;
+  color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
+  padding: 12px 22px;
+  border-radius: 8px;
   font-weight: 500;
+  cursor: pointer;
   transition: 0.3s;
+  flex: 1;
+  min-width: 180px;
+  white-space: nowrap;
 }
 
 .request-buttons button:hover {
-  background: #006c4a;
+  background: #006c4d;
 }
 
-/* ANA KISIM */
+/* =============================
+   MAIN SECTION
+   ============================= */
+
 .main-section {
   background: #fff;
   padding: 60px 40px;
@@ -217,7 +224,10 @@ nav a:hover {
   font-size: 15px;
 }
 
-/* ABONE OL BÖLÜMÜ */
+/* =============================
+   SUBSCRIBE SECTION
+   ============================= */
+
 .subscribe-section {
   background: #f1f1f1;
   text-align: center;
@@ -241,12 +251,14 @@ nav a:hover {
   cursor: pointer;
 }
 
-/* FOOTER */
+/* =============================
+   FOOTER
+   ============================= */
+
 footer {
   background: #fff;
   display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
   padding: 40px;
   font-size: 14px;
   color: #333;
@@ -272,101 +284,131 @@ footer h4 {
 }
 
 /* =============================
-   MOBİL GÖRÜNÜM (TABLET + TELEFON)
+   RESPONSIVE FIXES (KEEP LAYOUT)
    ============================= */
 
 @media (max-width: 1024px) {
+  header {
+    padding: 10px 20px;
+  }
+
   .hero {
-    background-size: contain;
     height: 400px;
+    padding-left: 20px;
   }
 
   .categories {
-    position: relative;
-    top: auto;
-    left: auto;
-    margin: 20px auto;
+    width: 35%;
   }
 
   .request-buttons {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    transform: none;
-    margin: 20px auto;
+    gap: 8px;
+  }
+
+  .request-buttons button {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .main-section {
+    padding: 40px 20px;
+    gap: 20px;
+  }
+
+  .main-section img {
+    width: 240px;
   }
 }
 
 @media (max-width: 768px) {
   header {
-    padding: 10px 20px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .header-right {
-    width: 100%;
+    padding: 8px 16px;
+    flex-wrap: wrap;
     justify-content: space-between;
   }
 
-  nav {
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    width: 100%;
+  .logo-container img {
+    height: 36px;
+  }
+
+  .logo-text {
+    font-size: 13px;
+  }
+
+  nav a {
+    font-size: 13px;
+  }
+
+  .search-box input {
+    width: 90px;
   }
 
   .hero {
     height: 350px;
-  }
-
-  .request-buttons {
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .request-buttons button {
-    flex: 1 1 45%;
-    min-width: 140px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero {
-    height: 300px;
-    background-size: contain;
+    padding-top: 60px;
   }
 
   .categories {
-    width: 90%;
-  }
-
-  .search-box input {
-    display: none;
-  }
-
-  .search-box button {
-    font-size: 18px;
+    width: 50%;
   }
 
   .request-buttons {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    flex-wrap: nowrap;
+    gap: 6px;
+    justify-content: space-around;
   }
 
   .request-buttons button {
-    width: 80%;
+    flex: 1 1 25%;
+    min-width: 70px;
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .main-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .main-section img {
+    width: 200px;
   }
 
   footer {
     flex-direction: column;
     text-align: center;
+    gap: 15px;
+    padding: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 320px;
   }
 
-  footer div {
-    width: 100%;
-    margin-bottom: 20px;
+  .categories {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .request-buttons {
+    flex-wrap: nowrap;
+    gap: 5px;
+    padding: 0 10px;
+  }
+
+  .request-buttons button {
+    flex: 1;
+    font-size: 11px;
+    padding: 7px 5px;
+  }
+
+  .main-section img {
+    width: 160px;
+  }
+
+  footer {
+    padding: 20px;
   }
 }
