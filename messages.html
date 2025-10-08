@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Messages — Trader Route</title>
+<link rel="icon" href="assets/logos.png" type="image/png">
+<style>
+body{font-family:"Segoe UI",sans-serif;background:#f8f9fa;margin:0;padding:20px;}
+.container{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:10px;box-shadow:0 3px 10px rgba(0,0,0,0.1);}
+.message-card{border-bottom:1px solid #eee;padding:15px 0;}
+small{color:#777;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Your Messages</h2>
+  <div id="messageList"></div>
+</div>
+
+<script>
+async function loadMessages(){
+  const email = prompt("Enter your email:");
+  const res = await fetch("data/messages.json");
+  const data = await res.json();
+  const myMsgs = data.filter(m => m.to===email || m.from===email);
+  const list = document.getElementById("messageList");
+  if(myMsgs.length===0){
+    list.innerHTML="<p>No messages yet.</p>";
+  }else{
+    list.innerHTML = myMsgs.map(m=>`
+      <div class="message-card">
+        <small>${new Date(m.date).toLocaleString()}</small>
+        <p><b>From:</b> ${m.from}</p>
+        <p><b>To:</b> ${m.to}</p>
+        <p><b>About:</b> ${m.requestTitle}</p>
+        <p>${m.text}</p>
+      </div>`).join('');
+  }
+}
+loadMessages();
+</script>
+</body>
+</html>
