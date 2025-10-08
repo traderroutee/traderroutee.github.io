@@ -412,3 +412,48 @@ footer h4 {
     padding: 20px;
   }
 }
+
+/* =============================
+   HAMBURGER MENU STYLES
+   ============================= */
+
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #000;
+}
+
+/* Mobil görünüm */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  nav.nav-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    padding: 15px 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  nav.nav-menu a {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+  }
+
+  nav.nav-menu.active {
+    display: flex;
+  }
+
+  .header-right {
+    display: none;
+  }
+}
