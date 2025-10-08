@@ -1,179 +1,250 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Requests — Trader Route</title>
-<link rel="icon" href="assets/logos.png">
-<style>
-  :root{
-    --accent:#008b6a;
-    --accent-dark:#007157;
-    --bg:#f7f7f7;
-  }
-  body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:var(--bg);color:#222}
-  header{display:flex;align-items:center;justify-content:space-between;padding:12px 28px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06);position:sticky;top:0;z-index:60}
-  .logo{height:48px}
-  nav a{margin:0 10px;color:#333;text-decoration:none;font-weight:600}
-  .container{max-width:1100px;margin:26px auto;padding:0 18px}
-  h1{margin-bottom:6px}
-  .sub{color:#666;margin-bottom:16px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requests — Trader Route</title>
+  <link rel="icon" href="assets/logos.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+    }
 
-  /* Filter buttons */
-  .filters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 26px 0;justify-content:center}
-  .filters .btn{padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;cursor:pointer;border:2px solid transparent}
-  .btn-all{background:var(--accent);color:#fff}
-  .btn-buy{background:#fff;color:var(--accent);border:2px solid var(--accent)}
-  .btn-sell{background:#fff;color:var(--accent);border:2px solid var(--accent)}
-  .btn-free{background:var(--accent);color:#fff}
-  .filters .active{box-shadow:0 8px 18px rgba(0,0,0,0.06);transform:translateY(-2px)}
+    header {
+      background: #fff;
+      padding: 10px 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  /* list */
-  .list{display:grid;gap:12px}
-  .item{background:#fff;padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(8,20,40,0.04);display:flex;justify-content:space-between;align-items:center;gap:12px}
-  .item .left{max-width:78%}
-  .item h3{margin:0 0 6px 0}
-  .item p{margin:0;color:#555}
-  .tags{font-size:13px;color:#666}
-  .cta{padding:8px 12px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700}
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-container img {
+      height: 42px;
+    }
+    .logo-text {
+      font-size: 15px;
+      color: #555;
+      font-weight: 500;
+    }
 
-  /* empty */
-  .empty{padding:28px;text-align:center;color:#666;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(8,20,40,0.04)}
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #000;
+      font-weight: 500;
+    }
+    nav a:hover {
+      color: #008d62;
+    }
 
-  footer{margin-top:28px;padding:20px;text-align:center;background:#111;color:#fff}
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+      gap: 25px;
+    }
 
-  @media(max-width:740px){
-    .item{flex-direction:column;align-items:flex-start}
-    .item .left{max-width:100%}
-  }
-</style>
+    /* Sol Menü */
+    .filter-sidebar {
+      width: 230px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      flex-shrink: 0;
+    }
+    .filter-sidebar h3 {
+      margin-top: 0;
+      font-size: 16px;
+      color: #008d62;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #008d62;
+      padding-bottom: 5px;
+    }
+    .filter-sidebar button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 12px;
+      border: none;
+      background: #008d62;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .filter-sidebar button:hover {
+      background: #006b4a;
+    }
+    .filter-sidebar button.active {
+      background: #004d33;
+    }
+
+    /* İlan Listesi */
+    .requests-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .request-item {
+      background: #fff;
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .request-info h3 {
+      margin: 0 0 8px 0;
+      color: #000;
+    }
+    .request-info p {
+      margin: 4px 0;
+      color: #555;
+      font-size: 14px;
+    }
+    .request-meta {
+      text-align: right;
+      font-weight: 600;
+      color: #333;
+    }
+    .request-meta span {
+      display: block;
+      font-size: 13px;
+      color: #666;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .filter-sidebar {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+      .filter-sidebar button {
+        width: 45%;
+        margin-bottom: 8px;
+      }
+      .request-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .request-meta {
+        text-align: left;
+        margin-top: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <header>
-  <a href="index.html"><img src="assets/logos.png" alt="Trader Route" class="logo"></a>
+  <div class="logo-container">
+    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
+    <span class="logo-text">The Silk Road of E-Commerce</span>
+  </div>
+
   <nav>
     <a href="index.html">Home</a>
     <a href="companies.html">Companies</a>
-    <a href="requests.html" style="color:var(--accent);">Requests</a>
+    <a href="requests.html">Requests</a>
     <a href="contact.html">Contact</a>
     <a href="pricing.html">Pricing</a>
   </nav>
 </header>
 
 <main class="container">
-  <h1>Requests</h1>
-  <p class="sub">Browse buying requests, selling offers and free requests from verified members.</p>
+  <!-- Sol Menü -->
+  <aside class="filter-sidebar">
+    <h3>Filter Requests</h3>
+    <button id="btn-all" class="active">All Requests</button>
+    <button id="btn-buy">Buying Requests</button>
+    <button id="btn-sell">Selling Offers</button>
+    <button id="btn-free" onclick="window.location.href='request-form.html'">Free Request!</button>
+  </aside>
 
-  <!-- Filter buttons -->
-  <div class="filters" id="filters">
-    <button class="btn btn-all" data-type="all" id="btn-all">All Requests</button>
-    <button class="btn btn-buy" data-type="buying" id="btn-buy">Buy Requests</button>
-    <button class="btn btn-sell" data-type="selling" id="btn-sell">Sell Offers</button>
-    <button class="btn btn-free" onclick="location.href='request-form.html'">Free Request!</button>
-  </div>
-
-  <!-- counts -->
-  <div style="margin-bottom:10px;color:#444">Showing <strong id="count">0</strong> results</div>
-
-  <!-- List -->
-  <div id="requestsList" class="list">
-    <div class="item" data-type="buying">
-      <div class="left">
-        <h3>Buy: 1,000 tons Wheat</h3>
-        <p class="tags">Buyer: Baltic Import — Country: Turkey — Date: 2025-09-01</p>
-        <p>Looking for CIF Istanbul delivery. Preferred packaging: 50kg bags.</p>
+  <!-- Liste -->
+  <section class="requests-list" id="requestsList">
+    <div class="request-item" data-type="buying">
+      <div class="request-info">
+        <h3>Buy: 5,000 Tons of Wheat</h3>
+        <p>Category: Agriculture</p>
+        <p>Country: Turkey</p>
       </div>
-      <div><a class="cta" href="contact.html">Contact Buyer</a></div>
+      <div class="request-meta">
+        12 Offers
+        <span>Date: Oct 6, 2025</span>
+      </div>
     </div>
 
-    <div class="item" data-type="selling">
-      <div class="left">
-        <h3>Sell: Organic Honey (500 kg)</h3>
-        <p class="tags">Seller: Istanbul Exporters — Country: Turkey — Date: 2025-08-21</p>
-        <p>High quality organic honey. Packaging options available.</p>
+    <div class="request-item" data-type="selling">
+      <div class="request-info">
+        <h3>Sell: Organic Olive Oil</h3>
+        <p>Category: Food Industry</p>
+        <p>Country: Italy</p>
       </div>
-      <div><a class="cta" href="contact.html">Contact Seller</a></div>
+      <div class="request-meta">
+        7 Requests
+        <span>Date: Oct 3, 2025</span>
+      </div>
     </div>
 
-    <div class="item" data-type="buying">
-      <div class="left">
-        <h3>Buy: Textile Fabrics (contract)</h3>
-        <p class="tags">Buyer: EuroTrade Ltd — Country: Germany — Date: 2025-07-10</p>
-        <p>Looking for long-term supplier of polyester blends.</p>
+    <div class="request-item" data-type="buying">
+      <div class="request-info">
+        <h3>Buy: Construction Materials</h3>
+        <p>Category: Construction</p>
+        <p>Country: Germany</p>
       </div>
-      <div><a class="cta" href="contact.html">Contact Buyer</a></div>
-    </div>
-
-    <div class="item" data-type="selling">
-      <div class="left">
-        <h3>Sell: Olive Oil (1000 L)</h3>
-        <p class="tags">Seller: Mediterranean Co. — Country: Italy — Date: 2025-08-01</p>
-        <p>Premium extra virgin olive oil, ready for export.</p>
+      <div class="request-meta">
+        9 Offers
+        <span>Date: Sep 27, 2025</span>
       </div>
-      <div><a class="cta" href="contact.html">Contact Seller</a></div>
     </div>
-  </div>
-
-  <div id="emptyMsg" class="empty" style="display:none">No results found for this filter.</div>
+  </section>
 </main>
 
-<footer>© 2025 Trader Route</footer>
+<footer style="background:#000;color:#fff;text-align:center;padding:15px;margin-top:40px;">
+  © 2025 Trader Route — Connecting Global Trade
+</footer>
 
 <script>
-  function getRequestedType(){
-    const params = new URLSearchParams(window.location.search);
-    if(params.has('type')) return params.get('type');
-    const h = window.location.hash.replace('#','');
-    return h || 'all';
-  }
+  const buttons = document.querySelectorAll('.filter-sidebar button');
+  const items = document.querySelectorAll('.request-item');
 
-  function setActiveButton(type){
-    document.querySelectorAll('#filters .btn').forEach(b=>b.classList.remove('active'));
-    const btn = document.querySelector('#filters .btn[data-type="'+type+'"]');
-    if(btn) btn.classList.add('active');
-  }
-
-  function filterList(type){
-    const items = document.querySelectorAll('#requestsList .item');
-    let shown = 0;
-    items.forEach(it=>{
-      const t = it.dataset.type;
-      if(type==='all' || t===type){
-        it.style.display = 'flex';
-        shown++;
-      } else {
-        it.style.display = 'none';
-      }
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.id === 'btn-free') return;
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const type = btn.id === 'btn-all' ? 'all' : (btn.id === 'btn-buy' ? 'buying' : 'selling');
+      items.forEach(item => {
+        item.style.display = (type === 'all' || item.dataset.type === type) ? 'flex' : 'none';
+      });
     });
-    document.getElementById('count').textContent = shown;
-    document.getElementById('emptyMsg').style.display = shown ? 'none' : 'block';
-  }
-
-  document.getElementById('filters').addEventListener('click', function(e){
-    const btn = e.target.closest('.btn');
-    if(!btn) return;
-    const type = btn.dataset.type || 'all';
-    const newUrl = window.location.pathname + '?type=' + encodeURIComponent(type);
-    history.pushState({type:type}, '', newUrl);
-    setActiveButton(type);
-    filterList(type);
-  });
-
-  window.addEventListener('load', function(){
-    let type = getRequestedType();
-    if(type === 'selling' || type === 'sell') type = 'selling';
-    if(type === 'buy' || type === 'purchase' || type === 'buying') type = 'buying';
-    if(type !== 'all' && type !== 'buying' && type !== 'selling') type = 'all';
-    setActiveButton(type);
-    filterList(type);
-  });
-
-  window.addEventListener('popstate', function(e){
-    let type = (e.state && e.state.type) ? e.state.type : getRequestedType();
-    setActiveButton(type);
-    filterList(type);
   });
 </script>
+
 </body>
 </html>
