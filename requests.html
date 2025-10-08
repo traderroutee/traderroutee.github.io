@@ -27,9 +27,11 @@
       align-items: center;
       gap: 10px;
     }
+
     .logo-container img {
       height: 42px;
     }
+
     .logo-text {
       font-size: 15px;
       color: #555;
@@ -41,24 +43,27 @@
       align-items: center;
       gap: 15px;
     }
+
     nav a {
       text-decoration: none;
       color: #000;
       font-weight: 500;
     }
+
     nav a:hover {
       color: #008d62;
     }
 
+    /* Page Layout */
     .container {
       display: flex;
       max-width: 1200px;
-      margin: 30px auto;
+      margin: 40px auto;
       padding: 0 20px;
       gap: 25px;
     }
 
-    /* Sol Menü */
+    /* Sidebar */
     .filter-sidebar {
       width: 230px;
       background: #fff;
@@ -67,14 +72,15 @@
       padding: 20px;
       flex-shrink: 0;
     }
+
     .filter-sidebar h3 {
-      margin-top: 0;
       font-size: 16px;
       color: #008d62;
       margin-bottom: 15px;
       border-bottom: 2px solid #008d62;
       padding-bottom: 5px;
     }
+
     .filter-sidebar button {
       display: block;
       width: 100%;
@@ -86,22 +92,25 @@
       border-radius: 6px;
       cursor: pointer;
       font-weight: 500;
-      transition: 0.3s;
+      transition: background 0.3s;
     }
+
     .filter-sidebar button:hover {
       background: #006b4a;
     }
+
     .filter-sidebar button.active {
       background: #004d33;
     }
 
-    /* İlan Listesi */
+    /* Requests */
     .requests-list {
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
+
     .request-item {
       background: #fff;
       border-radius: 10px;
@@ -111,21 +120,30 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
+      transition: transform 0.2s ease;
     }
+
+    .request-item:hover {
+      transform: translateY(-3px);
+    }
+
     .request-info h3 {
       margin: 0 0 8px 0;
       color: #000;
     }
+
     .request-info p {
       margin: 4px 0;
       color: #555;
       font-size: 14px;
     }
+
     .request-meta {
       text-align: right;
       font-weight: 600;
       color: #333;
     }
+
     .request-meta span {
       display: block;
       font-size: 13px;
@@ -137,20 +155,24 @@
       .container {
         flex-direction: column;
       }
+
       .filter-sidebar {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
       }
+
       .filter-sidebar button {
         width: 45%;
         margin-bottom: 8px;
       }
+
       .request-item {
         flex-direction: column;
         align-items: flex-start;
       }
+
       .request-meta {
         text-align: left;
         margin-top: 10px;
@@ -160,91 +182,102 @@
 </head>
 <body>
 
-<header>
-  <div class="logo-container">
-    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
-    <span class="logo-text">The Silk Road of E-Commerce</span>
-  </div>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="companies.html">Companies</a>
-    <a href="requests.html">Requests</a>
-    <a href="contact.html">Contact</a>
-    <a href="pricing.html">Pricing</a>
-  </nav>
-</header>
-
-<main class="container">
-  <!-- Sol Menü -->
-  <aside class="filter-sidebar">
-    <h3>Filter Requests</h3>
-    <button id="btn-all" class="active">All Requests</button>
-    <button id="btn-buy">Buying Requests</button>
-    <button id="btn-sell">Selling Offers</button>
-    <button id="btn-free" onclick="window.location.href='request-form.html'">Free Request!</button>
-  </aside>
-
-  <!-- Liste -->
-  <section class="requests-list" id="requestsList">
-    <div class="request-item" data-type="buying">
-      <div class="request-info">
-        <h3>Buy: 5,000 Tons of Wheat</h3>
-        <p>Category: Agriculture</p>
-        <p>Country: Turkey</p>
-      </div>
-      <div class="request-meta">
-        12 Offers
-        <span>Date: Oct 6, 2025</span>
-      </div>
+  <!-- Header -->
+  <header>
+    <div class="logo-container" onclick="window.location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
 
-    <div class="request-item" data-type="selling">
-      <div class="request-info">
-        <h3>Sell: Organic Olive Oil</h3>
-        <p>Category: Food Industry</p>
-        <p>Country: Italy</p>
-      </div>
-      <div class="request-meta">
-        7 Requests
-        <span>Date: Oct 3, 2025</span>
-      </div>
-    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html" class="active">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+  </header>
 
-    <div class="request-item" data-type="buying">
-      <div class="request-info">
-        <h3>Buy: Construction Materials</h3>
-        <p>Category: Construction</p>
-        <p>Country: Germany</p>
+  <!-- Main -->
+  <main class="container">
+    <!-- Sidebar -->
+    <aside class="filter-sidebar">
+      <h3>Filter Requests</h3>
+      <button id="btn-all" class="active">All Requests (32)</button>
+      <button id="btn-buy">Buying Requests (12)</button>
+      <button id="btn-sell">Selling Offers (16)</button>
+      <button id="btn-free" onclick="window.location.href='request-form.html'">Free Request!</button>
+
+      <hr style="margin:15px 0; border:0; border-top:1px solid #ddd;">
+      <h3>By Country</h3>
+      <p>🇹🇷 Turkey (8)</p>
+      <p>🇩🇪 Germany (6)</p>
+      <p>🇮🇹 Italy (4)</p>
+      <p>🇺🇸 USA (5)</p>
+      <p>🇫🇷 France (3)</p>
+    </aside>
+
+    <!-- Requests List -->
+    <section class="requests-list" id="requestsList">
+      <div class="request-item" data-type="buying">
+        <div class="request-info">
+          <h3>Buy: 5,000 Tons of Wheat</h3>
+          <p>Category: Agriculture</p>
+          <p>Country: Turkey</p>
+        </div>
+        <div class="request-meta">
+          12 Offers
+          <span>Date: Oct 6, 2025</span>
+        </div>
       </div>
-      <div class="request-meta">
-        9 Offers
-        <span>Date: Sep 27, 2025</span>
+
+      <div class="request-item" data-type="selling">
+        <div class="request-info">
+          <h3>Sell: Organic Olive Oil</h3>
+          <p>Category: Food Industry</p>
+          <p>Country: Italy</p>
+        </div>
+        <div class="request-meta">
+          7 Requests
+          <span>Date: Oct 3, 2025</span>
+        </div>
       </div>
-    </div>
-  </section>
-</main>
 
-<footer style="background:#000;color:#fff;text-align:center;padding:15px;margin-top:40px;">
-  © 2025 Trader Route — Connecting Global Trade
-</footer>
+      <div class="request-item" data-type="buying">
+        <div class="request-info">
+          <h3>Buy: Construction Materials</h3>
+          <p>Category: Construction</p>
+          <p>Country: Germany</p>
+        </div>
+        <div class="request-meta">
+          9 Offers
+          <span>Date: Sep 27, 2025</span>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<script>
-  const buttons = document.querySelectorAll('.filter-sidebar button');
-  const items = document.querySelectorAll('.request-item');
+  <!-- Footer -->
+  <footer style="background:#000;color:#fff;text-align:center;padding:15px;margin-top:40px;">
+    © 2025 Trader Route — Connecting Global Trade
+  </footer>
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (btn.id === 'btn-free') return;
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const type = btn.id === 'btn-all' ? 'all' : (btn.id === 'btn-buy' ? 'buying' : 'selling');
-      items.forEach(item => {
-        item.style.display = (type === 'all' || item.dataset.type === type) ? 'flex' : 'none';
+  <script>
+    const buttons = document.querySelectorAll('.filter-sidebar button');
+    const items = document.querySelectorAll('.request-item');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.id === 'btn-free') return;
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const type = btn.id === 'btn-all' ? 'all' : (btn.id === 'btn-buy' ? 'buying' : 'selling');
+        items.forEach(item => {
+          item.style.display = (type === 'all' || item.dataset.type === type) ? 'flex' : 'none';
+        });
       });
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>
