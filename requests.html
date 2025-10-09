@@ -23,10 +23,7 @@
       padding: 12px 20px;
       border-bottom: 1px solid #ddd;
     }
-    header img {
-      height: 52px;
-      cursor: pointer;
-    }
+    header img { height: 52px; cursor: pointer; }
 
     .tabs {
       display: flex;
@@ -46,10 +43,7 @@
       cursor: pointer;
       transition: 0.2s;
     }
-    .tabs button.active {
-      background: #007bff;
-      color: white;
-    }
+    .tabs button.active { background: #007bff; color: white; }
 
     .container {
       max-width: 1200px;
@@ -69,17 +63,14 @@
       flex-direction: column;
       overflow: hidden;
     }
-
     .sidebar h4 {
       font-size: 19px;
       font-weight: 700;
       color: #111;
       margin-bottom: 10px;
-      letter-spacing: 0.5px;
     }
 
-    .category-search,
-    .country-search {
+    .category-search, .country-search {
       width: 100%;
       padding: 8px;
       border: 1px solid #ccc;
@@ -88,8 +79,7 @@
       font-size: 14px;
     }
 
-    .category-list,
-    .country-list {
+    .category-list, .country-list {
       list-style: none;
       padding-left: 0;
       margin: 0;
@@ -98,14 +88,8 @@
       scrollbar-color: #ccc transparent;
       flex: 1;
     }
-
-    .category-list li,
-    .country-list li {
-      margin-bottom: 6px;
-    }
-
-    .category-list a,
-    .country-list a {
+    .category-list li, .country-list li { margin-bottom: 6px; }
+    .category-list a, .country-list a {
       text-decoration: none;
       color: #333;
       display: flex;
@@ -114,38 +98,15 @@
       font-size: 14px;
       gap: 6px;
     }
-
-    .category-list a:hover,
-    .country-list a:hover {
-      color: #007bff;
-    }
-
-    .count {
-      color: #888;
-      font-size: 13px;
-    }
+    .category-list a:hover, .country-list a:hover { color: #007bff; }
+    .count { color: #888; font-size: 13px; }
 
     .flag {
-      width: 18px;
-      height: 12px;
+      width: 18px; height: 12px;
       border: 1px solid #ccc;
       border-radius: 2px;
       margin-right: 6px;
-    }
-
-    .clear-filters {
-      background: #f8f9fa;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 7px 10px;
-      margin-top: 10px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .clear-filters:hover {
-      background: #eaeaea;
+      object-fit: cover;
     }
 
     .content {
@@ -155,10 +116,7 @@
       padding: 25px;
     }
 
-    .search-bar {
-      margin-bottom: 20px;
-    }
-
+    .search-bar { margin-bottom: 20px; }
     #searchInput {
       width: 100%;
       max-width: 400px;
@@ -177,19 +135,9 @@
       transition: all 0.2s ease-in-out;
       cursor: pointer;
     }
-
-    .request-card:hover {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .request-card h5 {
-      margin: 0 0 5px;
-      font-size: 17px;
-    }
-
-    .request-card small {
-      color: #666;
-    }
+    .request-card:hover { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+    .request-card h5 { margin: 0 0 5px; font-size: 17px; }
+    .request-card small { color: #666; }
 
     #showMoreRequests {
       background: #007bff;
@@ -202,20 +150,11 @@
       margin: 20px auto;
       display: block;
     }
-
-    #showMoreRequests:hover {
-      background: #0056b3;
-    }
+    #showMoreRequests:hover { background: #0056b3; }
 
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        height: auto;
-        max-height: none;
-      }
+      .container { flex-direction: column; }
+      .sidebar { width: 100%; height: auto; max-height: none; }
     }
   </style>
 </head>
@@ -239,8 +178,6 @@
       <h4>Countries</h4>
       <input type="text" class="country-search" id="countrySearch" placeholder="Search country..." />
       <ul class="country-list" id="countryList"></ul>
-
-      <button class="clear-filters" id="clearFilters">Clear Filters</button>
     </div>
 
     <div class="content">
@@ -265,27 +202,27 @@
       "Telecommunications","Textiles & Leather Products","Tools","Toys & Hobbies","Transportation"
     ];
 
+    // Country list with ISO codes
     const allCountries = [
-      { name: "Turkey", flag: "🇹🇷" },
-      { name: "United States", flag: "🇺🇸" },
-      { name: "Germany", flag: "🇩🇪" },
-      { name: "France", flag: "🇫🇷" },
-      { name: "Italy", flag: "🇮🇹" },
-      { name: "Spain", flag: "🇪🇸" },
-      { name: "United Kingdom", flag: "🇬🇧" },
-      { name: "China", flag: "🇨🇳" },
-      { name: "Japan", flag: "🇯🇵" },
-      { name: "India", flag: "🇮🇳" },
-      { name: "Brazil", flag: "🇧🇷" },
-      { name: "Russia", flag: "🇷🇺" },
-      { name: "Canada", flag: "🇨🇦" },
-      { name: "Australia", flag: "🇦🇺" },
-      { name: "Netherlands", flag: "🇳🇱" },
-      { name: "Switzerland", flag: "🇨🇭" },
-      { name: "Sweden", flag: "🇸🇪" },
-      { name: "Mexico", flag: "🇲🇽" },
-      { name: "South Korea", flag: "🇰🇷" },
-      { name: "Poland", flag: "🇵🇱" }
+      { code:"tr", name:"Turkey" },{ code:"us", name:"United States" },{ code:"de", name:"Germany" },
+      { code:"fr", name:"France" },{ code:"it", name:"Italy" },{ code:"es", name:"Spain" },
+      { code:"gb", name:"United Kingdom" },{ code:"cn", name:"China" },{ code:"jp", name:"Japan" },
+      { code:"in", name:"India" },{ code:"br", name:"Brazil" },{ code:"ru", name:"Russia" },
+      { code:"ca", name:"Canada" },{ code:"au", name:"Australia" },{ code:"nl", name:"Netherlands" },
+      { code:"ch", name:"Switzerland" },{ code:"se", name:"Sweden" },{ code:"mx", name:"Mexico" },
+      { code:"kr", name:"South Korea" },{ code:"pl", name:"Poland" },{ code:"ua", name:"Ukraine" },
+      { code:"ar", name:"Argentina" },{ code:"sa", name:"Saudi Arabia" },{ code:"ae", name:"UAE" },
+      { code:"eg", name:"Egypt" },{ code:"ma", name:"Morocco" },{ code:"id", name:"Indonesia" },
+      { code:"th", name:"Thailand" },{ code:"my", name:"Malaysia" },{ code:"ng", name:"Nigeria" },
+      { code:"ke", name:"Kenya" },{ code:"gr", name:"Greece" },{ code:"pt", name:"Portugal" },
+      { code:"cz", name:"Czech Republic" },{ code:"hu", name:"Hungary" },{ code:"no", name:"Norway" },
+      { code:"fi", name:"Finland" },{ code:"be", name:"Belgium" },{ code:"dk", name:"Denmark" },
+      { code:"at", name:"Austria" },{ code:"ro", name:"Romania" },{ code:"bg", name:"Bulgaria" },
+      { code:"rs", name:"Serbia" },{ code:"hr", name:"Croatia" },{ code:"sk", name:"Slovakia" },
+      { code:"si", name:"Slovenia" },{ code:"lt", name:"Lithuania" },{ code:"lv", name:"Latvia" },
+      { code:"ee", name:"Estonia" },{ code:"ie", name:"Ireland" },{ code:"is", name:"Iceland" },
+      { code:"cl", name:"Chile" },{ code:"co", name:"Colombia" },{ code:"pe", name:"Peru" },
+      { code:"za", name:"South Africa" },{ code:"sg", name:"Singapore" }
     ];
 
     const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
@@ -296,11 +233,9 @@
     const countryList = document.getElementById("countryList");
     const categorySearch = document.getElementById("categorySearch");
     const countrySearch = document.getElementById("countrySearch");
-    const clearFilters = document.getElementById("clearFilters");
 
     let visibleRequests = 15;
     let visibleCategories = 15;
-    let visibleCountries = 10;
     let activeTab = "all";
     let selectedCategory = null;
     let selectedCountry = null;
@@ -321,7 +256,6 @@
         categoryList.appendChild(li);
       });
 
-      // Scroll event - load more
       categoryList.onscroll = () => {
         if (categoryList.scrollTop + categoryList.clientHeight >= categoryList.scrollHeight) {
           visibleCategories += 10;
@@ -336,36 +270,21 @@
       const filtered = allCountries.filter(c => c.name.toLowerCase().includes(searchTerm));
       countryList.innerHTML = "";
 
-      filtered.slice(0, visibleCountries).forEach(c => {
+      filtered.forEach(c => {
         const count = requests.filter(r => r.country === c.name).length;
         const li = document.createElement("li");
-        li.innerHTML = `<a href="#">${c.flag} ${c.name}<span class="count">(${count})</span></a>`;
+        li.innerHTML =
+          `<a href="#">
+            <img class="flag" src="assets/flags/${c.code}.png" alt="${c.name} flag">
+            ${c.name}<span class="count">(${count})</span>
+          </a>`;
         li.addEventListener("click", () => {
           selectedCountry = c.name;
           renderRequests();
         });
         countryList.appendChild(li);
       });
-
-      // Scroll event
-      countryList.onscroll = () => {
-        if (countryList.scrollTop + countryList.clientHeight >= countryList.scrollHeight) {
-          visibleCountries += 10;
-          renderCountries();
-        }
-      };
     }
-
-    clearFilters.addEventListener("click", () => {
-      selectedCategory = null;
-      selectedCountry = null;
-      searchInput.value = "";
-      categorySearch.value = "";
-      countrySearch.value = "";
-      visibleCategories = 15;
-      visibleCountries = 10;
-      renderRequests();
-    });
 
     function renderRequests() {
       const allReq = getRequests();
@@ -396,7 +315,6 @@
       visibleRequests += 10;
       renderRequests();
     });
-
     searchInput.addEventListener("input", renderRequests);
 
     ["tabAll", "tabBuy", "tabSell"].forEach(id => {
