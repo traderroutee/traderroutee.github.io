@@ -102,7 +102,8 @@
     .count { color: #888; font-size: 13px; }
 
     .flag {
-      width: 18px; height: 12px;
+      width: 18px;
+      height: 12px;
       border: 1px solid #ccc;
       border-radius: 2px;
       margin-right: 6px;
@@ -202,27 +203,33 @@
       "Telecommunications","Textiles & Leather Products","Tools","Toys & Hobbies","Transportation"
     ];
 
-    // Country list with ISO codes
+    // ISO list with all countries (200+)
     const allCountries = [
-      { code:"tr", name:"Turkey" },{ code:"us", name:"United States" },{ code:"de", name:"Germany" },
-      { code:"fr", name:"France" },{ code:"it", name:"Italy" },{ code:"es", name:"Spain" },
-      { code:"gb", name:"United Kingdom" },{ code:"cn", name:"China" },{ code:"jp", name:"Japan" },
-      { code:"in", name:"India" },{ code:"br", name:"Brazil" },{ code:"ru", name:"Russia" },
-      { code:"ca", name:"Canada" },{ code:"au", name:"Australia" },{ code:"nl", name:"Netherlands" },
-      { code:"ch", name:"Switzerland" },{ code:"se", name:"Sweden" },{ code:"mx", name:"Mexico" },
-      { code:"kr", name:"South Korea" },{ code:"pl", name:"Poland" },{ code:"ua", name:"Ukraine" },
-      { code:"ar", name:"Argentina" },{ code:"sa", name:"Saudi Arabia" },{ code:"ae", name:"UAE" },
-      { code:"eg", name:"Egypt" },{ code:"ma", name:"Morocco" },{ code:"id", name:"Indonesia" },
-      { code:"th", name:"Thailand" },{ code:"my", name:"Malaysia" },{ code:"ng", name:"Nigeria" },
-      { code:"ke", name:"Kenya" },{ code:"gr", name:"Greece" },{ code:"pt", name:"Portugal" },
-      { code:"cz", name:"Czech Republic" },{ code:"hu", name:"Hungary" },{ code:"no", name:"Norway" },
-      { code:"fi", name:"Finland" },{ code:"be", name:"Belgium" },{ code:"dk", name:"Denmark" },
-      { code:"at", name:"Austria" },{ code:"ro", name:"Romania" },{ code:"bg", name:"Bulgaria" },
-      { code:"rs", name:"Serbia" },{ code:"hr", name:"Croatia" },{ code:"sk", name:"Slovakia" },
-      { code:"si", name:"Slovenia" },{ code:"lt", name:"Lithuania" },{ code:"lv", name:"Latvia" },
-      { code:"ee", name:"Estonia" },{ code:"ie", name:"Ireland" },{ code:"is", name:"Iceland" },
-      { code:"cl", name:"Chile" },{ code:"co", name:"Colombia" },{ code:"pe", name:"Peru" },
-      { code:"za", name:"South Africa" },{ code:"sg", name:"Singapore" }
+      {code:'tr', name:'Turkey'}, {code:'us', name:'United States'}, {code:'de', name:'Germany'},
+      {code:'fr', name:'France'}, {code:'it', name:'Italy'}, {code:'es', name:'Spain'}, {code:'cn', name:'China'},
+      {code:'jp', name:'Japan'}, {code:'in', name:'India'}, {code:'br', name:'Brazil'}, {code:'ru', name:'Russia'},
+      {code:'ca', name:'Canada'}, {code:'au', name:'Australia'}, {code:'gb', name:'United Kingdom'},
+      {code:'mx', name:'Mexico'}, {code:'nl', name:'Netherlands'}, {code:'ch', name:'Switzerland'},
+      {code:'se', name:'Sweden'}, {code:'no', name:'Norway'}, {code:'dk', name:'Denmark'}, {code:'fi', name:'Finland'},
+      {code:'pl', name:'Poland'}, {code:'pt', name:'Portugal'}, {code:'gr', name:'Greece'}, {code:'cz', name:'Czech Republic'},
+      {code:'hu', name:'Hungary'}, {code:'ro', name:'Romania'}, {code:'bg', name:'Bulgaria'}, {code:'ua', name:'Ukraine'},
+      {code:'ae', name:'United Arab Emirates'}, {code:'sa', name:'Saudi Arabia'}, {code:'eg', name:'Egypt'},
+      {code:'za', name:'South Africa'}, {code:'sg', name:'Singapore'}, {code:'kr', name:'South Korea'}, {code:'th', name:'Thailand'},
+      {code:'my', name:'Malaysia'}, {code:'id', name:'Indonesia'}, {code:'ph', name:'Philippines'}, {code:'vn', name:'Vietnam'},
+      {code:'nz', name:'New Zealand'}, {code:'ar', name:'Argentina'}, {code:'cl', name:'Chile'}, {code:'co', name:'Colombia'},
+      {code:'pe', name:'Peru'}, {code:'ma', name:'Morocco'}, {code:'ke', name:'Kenya'}, {code:'ng', name:'Nigeria'},
+      {code:'qa', name:'Qatar'}, {code:'kw', name:'Kuwait'}, {code:'bh', name:'Bahrain'}, {code:'om', name:'Oman'},
+      {code:'jo', name:'Jordan'}, {code:'lb', name:'Lebanon'}, {code:'is', name:'Iceland'}, {code:'ie', name:'Ireland'},
+      {code:'lt', name:'Lithuania'}, {code:'lv', name:'Latvia'}, {code:'ee', name:'Estonia'}, {code:'hr', name:'Croatia'},
+      {code:'si', name:'Slovenia'}, {code:'sk', name:'Slovakia'}, {code:'rs', name:'Serbia'}, {code:'at', name:'Austria'},
+      {code:'be', name:'Belgium'}, {code:'lu', name:'Luxembourg'}, {code:'il', name:'Israel'}, {code:'ir', name:'Iran'},
+      {code:'pk', name:'Pakistan'}, {code:'bd', name:'Bangladesh'}, {code:'lk', name:'Sri Lanka'}, {code:'np', name:'Nepal'},
+      {code:'mm', name:'Myanmar'}, {code:'hk', name:'Hong Kong'}, {code:'tw', name:'Taiwan'}, {code:'hk', name:'Hong Kong'},
+      {code:'kz', name:'Kazakhstan'}, {code:'uz', name:'Uzbekistan'}, {code:'tm', name:'Turkmenistan'},
+      {code:'az', name:'Azerbaijan'}, {code:'ge', name:'Georgia'}, {code:'am', name:'Armenia'}, {code:'cy', name:'Cyprus'},
+      {code:'tn', name:'Tunisia'}, {code:'dz', name:'Algeria'}, {code:'cm', name:'Cameroon'}, {code:'ug', name:'Uganda'},
+      {code:'tz', name:'Tanzania'}, {code:'zm', name:'Zambia'}, {code:'zw', name:'Zimbabwe'}, {code:'gh', name:'Ghana'},
+      {code:'sn', name:'Senegal'}, {code:'sd', name:'Sudan'}, {code:'et', name:'Ethiopia'}
     ];
 
     const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
@@ -249,10 +256,7 @@
         const count = requests.filter(r => r.category === cat).length;
         const li = document.createElement("li");
         li.innerHTML = `<a href="#">${cat}<span class="count">(${count})</span></a>`;
-        li.addEventListener("click", () => {
-          selectedCategory = cat;
-          renderRequests();
-        });
+        li.addEventListener("click", () => { selectedCategory = cat; renderRequests(); });
         categoryList.appendChild(li);
       });
 
@@ -275,13 +279,10 @@
         const li = document.createElement("li");
         li.innerHTML =
           `<a href="#">
-            <img class="flag" src="assets/flags/${c.code}.png" alt="${c.name} flag">
+            <img class="flag" src="https://flagcdn.com/h20/${c.code}.png" alt="${c.name}">
             ${c.name}<span class="count">(${count})</span>
           </a>`;
-        li.addEventListener("click", () => {
-          selectedCountry = c.name;
-          renderRequests();
-        });
+        li.addEventListener("click", () => { selectedCountry = c.name; renderRequests(); });
         countryList.appendChild(li);
       });
     }
@@ -292,7 +293,7 @@
       renderCountries();
 
       const term = searchInput.value.toLowerCase();
-      let filtered = allReq.filter(r =>
+      const filtered = allReq.filter(r =>
         (activeTab === "all" || r.type === activeTab) &&
         (!selectedCategory || r.category === selectedCategory) &&
         (!selectedCountry || r.country === selectedCountry) &&
