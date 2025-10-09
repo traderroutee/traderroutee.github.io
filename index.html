@@ -1,61 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trader Route - Import & Export Platform</title>
+  <link rel="icon" href="assets/logos.png" type="image/png">
   <title>TraderRoute - Global Trade Platform</title>
 
   <link rel="icon" href="assets/logo.png" />
   <link rel="stylesheet" href="style.css" />
 
-  <style>
-    body {
+<style>
+body {
       font-family: "Inter", "Segoe UI", Arial, sans-serif;
-      margin: 0;
+margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
       background-color: #f5f6f8;
       color: #222;
-    }
+}
 
-    header {
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+header {
+background: #fff;
+      padding: 10px 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+display: flex;
+align-items: center;
+justify-content: space-between;
       padding: 12px 30px;
       border-bottom: 1px solid #ddd;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
+    .logo-container img {
+      height: 42px;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     header img {
       height: 50px;
-    }
+}
 
-    nav a {
-      text-decoration: none;
+nav a {
+text-decoration: none;
+      color: #000;
+      font-weight: 500;
       color: #333;
       font-weight: 600;
       margin: 0 15px;
       transition: 0.3s;
-    }
+}
 
-    nav a:hover {
+nav a:hover {
+      color: #008d62;
       color: #007bff;
-    }
+}
 
+    .header-right {
     /* Hero Section */
     .hero {
       position: relative;
       background: url("assets/ihracat-haritasi.png") center/cover no-repeat;
       height: 520px;
-      display: flex;
+display: flex;
       flex-direction: column;
-      align-items: center;
+align-items: center;
+      gap: 10px;
       justify-content: center;
       color: #fff;
       text-align: center;
       padding: 0 20px;
-    }
+}
 
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f1f1;
+      border-radius: 20px;
+      padding: 5px 10px;
     .hero::after {
       content: "";
       position: absolute;
@@ -64,26 +101,47 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.45);
-    }
+}
 
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      padding: 5px;
+      font-size: 14px;
+      width: 150px;
     .hero-content {
       position: relative;
       z-index: 1;
       max-width: 800px;
-    }
+}
 
+    .search-box button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: #555;
     .hero h1 {
       font-size: 42px;
       font-weight: 800;
       margin-bottom: 15px;
       line-height: 1.2;
-    }
+}
 
+    .login-btn {
+      background: #f1f1f1;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
     .hero p {
       font-size: 18px;
       margin-bottom: 25px;
-    }
+}
 
+    .login-btn:hover {
+      background: #e0e0e0;
     .hero-buttons a {
       display: inline-block;
       padding: 12px 28px;
@@ -92,28 +150,57 @@
       font-weight: 600;
       text-decoration: none;
       transition: 0.3s;
-    }
+}
 
+    .join-btn {
+      background: #6c63ff;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
     .btn-primary {
       background: #007bff;
       color: #fff;
-    }
+}
 
+    .join-btn:hover {
+      background: #5a53e6;
     .btn-primary:hover {
       background: #005ec4;
-    }
+}
 
+    .hero {
+      position: relative;
+      height: 500px;
+      background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
+      display: flex;
+      align-items: flex-start;
+      justify-content: left;
+      padding-top: 80px;
+      padding-left: 40px;
     .btn-outline {
       background: transparent;
       border: 2px solid #fff;
       color: #fff;
-    }
+}
 
+    .categories {
     .btn-outline:hover {
-      background: #fff;
+background: #fff;
+      border-radius: 10px;
+      padding: 15px;
+      width: 240px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       color: #007bff;
-    }
+}
 
+    .categories h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 16px;
+      font-weight: 600;
     /* Categories Section */
     .categories {
       max-width: 1200px;
@@ -133,86 +220,158 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 18px;
-    }
+}
 
+    .category-item {
     .category-card {
       background: #fff;
       padding: 14px;
       border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+display: flex;
+justify-content: space-between;
+align-items: center;
+      font-size: 14px;
+      margin: 6px 0;
+      color: #444;
       transition: 0.25s;
       cursor: pointer;
-    }
+}
 
+    .category-item:hover {
+      color: #008d62;
     .category-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       color: #007bff;
-    }
+}
 
+    .category-button {
+      background: #000;
+      color: #fff;
+      border: none;
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
     .category-card span {
       color: #888;
       font-size: 13px;
-    }
+}
 
+    /* 🎯 İstek Butonları (Yeni Konum - Haritanın Altı) */
+    .requests-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin: 25px auto;
+      padding: 10px 20px;
+      width: fit-content;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     .view-all {
       text-align: center;
       margin-top: 25px;
-    }
+}
 
+    .requests-buttons a {
+      background: #008d62;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 6px;
     .view-all a {
-      text-decoration: none;
+text-decoration: none;
+      font-weight: 500;
+      text-align: center;
+      transition: 0.3s;
       color: #007bff;
       font-weight: 600;
-    }
+}
 
+    .requests-buttons a:hover {
+      background: #006b4a;
     .view-all a:hover {
       text-decoration: underline;
-    }
+}
 
+    .main-section {
+      background: #fff;
+      padding: 60px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
     /* Latest Requests */
     .latest {
       max-width: 1200px;
       margin: 60px auto;
       padding: 0 20px;
-    }
+}
 
+    .main-section img {
+      width: 300px;
+      border-radius: 10px;
     .latest h2 {
       font-size: 28px;
       font-weight: 700;
       text-align: center;
       margin-bottom: 25px;
       color: #111;
-    }
+}
 
+    .main-section h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #000;
     .request-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
-    }
+}
 
+    .main-section p {
+      color: #333;
+      line-height: 1.6;
+      font-size: 15px;
     .request-card {
       background: #fff;
       border-radius: 10px;
       padding: 16px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
       transition: 0.25s;
-    }
+}
 
+    .subscribe-section {
+      background: #f1f1f1;
+      text-align: center;
+      padding: 50px 20px;
     .request-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+}
 
+    .subscribe-section input {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
     .request-card h4 {
       margin: 0 0 8px;
       font-size: 16px;
       color: #007bff;
-    }
+}
 
+    .subscribe-section button {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
     .request-card p {
       font-size: 14px;
       margin: 0 0 6px;
@@ -220,50 +379,98 @@
 
     .request-card small {
       color: #777;
-    }
+}
 
     /* Footer */
-    footer {
+footer {
       text-align: center;
       padding: 20px;
-      background: #fff;
-      border-top: 1px solid #ddd;
+background: #fff;
+      display: flex;
+      justify-content: space-around;
+      padding: 40px;
+      font-size: 14px;
+      color: #333;
+border-top: 1px solid #ddd;
       color: #555;
       margin-top: 50px;
-    }
+}
 
+    footer div {
+      width: 200px;
     footer img {
       height: 40px;
       display: block;
       margin: 0 auto 10px;
-    }
+}
 
+    footer h4 {
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: #000;
+    }
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 32px;
       }
 
+    .footer-bottom {
+      text-align: center;
+      background: #000;
+      color: #fff;
+      padding: 10px;
+      font-size: 13px;
       .hero p {
         font-size: 16px;
       }
-    }
-  </style>
+}
+</style>
 </head>
+<body>
 
 <body>
-  <header>
+<header>
+    <div class="logo-container">
+      <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
+
     <a href="index.html"><img src="assets/logos.png" alt="TraderRoute Logo" /></a>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="requests.html">Requests</a>
+<nav>
+<a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+<a href="requests.html">Requests</a>
       <a href="register.html">Register</a>
       <a href="login.html">Login</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+<a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+</nav>
+
+    <div class="header-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <button>🔍</button>
+      </div>
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+    </div>
+</header>
 
   <!-- Hero Section -->
-  <section class="hero">
+<section class="hero">
+    <div class="categories">
+      <h3>Categories</h3>
+      <div class="category-item">Agricultural Machinery <span>16</span></div>
+      <div class="category-item">Agriculture Industry <span>175</span></div>
+      <div class="category-item">Automotive <span>39</span></div>
+      <div class="category-item">Baby Products & Accessories <span>11</span></div>
+      <div class="category-item">Chemical Industry <span>50</span></div>
+      <div class="category-item">Clothing & Fashion <span>148</span></div>
+      <div class="category-item">Commercial Activities <span>58</span></div>
+      <div class="category-item">Construction Industry <span>54</span></div>
+      <div class="category-item">Cosmetics <span>74</span></div>
+      <div class="category-item">IT & Communication <span>8</span></div>
+      <button class="category-button">View All Categories</button>
     <div class="hero-content">
       <h1>Connect the World of Import & Export</h1>
       <p>Discover global trade opportunities, find buyers and suppliers worldwide.</p>
@@ -271,27 +478,116 @@
         <a href="requests.html" class="btn-primary">View All Requests</a>
         <a href="request-form.html" class="btn-outline">Post a Request</a>
       </div>
-    </div>
-  </section>
+</div>
+</section>
 
+  <!-- 🎯 Yeni Konumlandırılmış İstek Butonları -->
+  <div class="requests-buttons">
+    <a href="requests.html">All Requests</a>
+    <a href="requests.html?type=buy">Buy Requests</a>
+    <a href="requests.html?type=sell">Sell Offers</a>
+    <a href="request-form.html">Post Free Request</a>
+  </div>
+
+  <section class="main-section">
+    <img src="assets/trader_route_step1.jpeg" alt="Trader Route">
+    <div>
+      <h2>Join Trader Route</h2>
+      <p>
+        As a company, our primary goal has always been to achieve success in global trade.  
+        Traders wondering “How can I find buyers for my products?” will find the answer here.  
+        Trader Route connects reliable importers and exporters around the world.  
+        Being part of this network is our greatest pride and a mark of trust and credibility.
+      </p>
+      <button style="background:#008d62; color:#fff; border:none; padding:8px 14px; border-radius:5px; cursor:pointer;">Join Now</button>
+    </div>
   <!-- Categories -->
   <section class="categories">
     <h2>Explore Categories</h2>
     <div class="category-grid" id="categoryGrid"></div>
     <div class="view-all"><a href="requests.html">View All Categories →</a></div>
-  </section>
+</section>
 
+  <section class="subscribe-section">
+    <h3>Stay updated with the latest industry trends and news!</h3>
+    <input type="email" placeholder="Enter your email address">
+    <button>Subscribe</button>
+    <p style="margin-top:10px; font-size:13px; color:#555;">Your email address will not be shared with third parties.</p>
   <!-- Latest Requests -->
   <section class="latest">
     <h2>Latest Trade Requests</h2>
     <div class="request-grid" id="latestRequests"></div>
-  </section>
+</section>
 
   <!-- Footer -->
-  <footer>
+<footer>
+    <div>
+      <h4>Corporate</h4>
+      <p>Export Success Stories</p>
+      <p>Company Profiles</p>
+      <p>About Us</p>
+      <p>Mission & Vision</p>
+    </div>
+    <div>
+      <h4>Our Services</h4>
+      <p>Free Registration</p>
+      <p>Post Free Offers</p>
+      <p>Contact Buyers</p>
+      <p>Membership Packages</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <p>Company Index</p>
+      <p>Buyer Directory</p>
+      <p>My Dashboard</p>
+      <p>Terms & Conditions</p>
+    </div>
     <img src="assets/logos.png" alt="TraderRoute Logo" />
     <p>© 2025 TraderRoute. All rights reserved.</p>
-  </footer>
+</footer>
+
+  <div class="footer-bottom">
+    © 2025 Trader Route — Connecting Global Trade.
+  </div>
+
+  <header>
+  <div class="logo-container" onclick="window.location.href='index.html'">
+    <img src="assets/logos.png" alt="Trader Route Logo">
+    <span class="logo-text">The Silk Road of E-Commerce</span>
+  </div>
+
+  <!-- Hamburger Button (mobile only) -->
+  <div class="menu-toggle" id="mobile-menu">
+    ☰
+  </div>
+
+  <nav class="nav-menu">
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html">Requests</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html">Pricing</a>
+  </nav>
+
+  <div class="header-right">
+    <div class="search-box">
+      <input type="text" placeholder="Search...">
+      <button>🔍</button>
+    </div>
+    <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+    <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+  </div>
+</header>
+
+<!-- Menü için küçük JavaScript -->
+<script>
+  const mobileMenu = document.getElementById('mobile-menu');
+  const navMenu = document.querySelector('.nav-menu');
+
+  mobileMenu.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+</script>
 
   <script>
     const categories = [
