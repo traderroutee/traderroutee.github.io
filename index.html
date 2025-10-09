@@ -4,319 +4,112 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trader Route - Import & Export Platform</title>
+
   <link rel="icon" href="assets/logos.png" type="image/png">
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    body {
-      margin: 0;
-      font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f9fa;
+    /* ---- Base (mevcut görünümü koruyor) ---- */
+    body{margin:0;font-family:"Inter","Segoe UI",Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa}
+    header{background:#fff;padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:space-between}
+    .logo-container{display:flex;align-items:center;gap:10px}
+    .logo-container img{height:42px}
+    .logo-text{font-size:15px;color:#555;font-weight:500}
+    nav{display:flex;align-items:center;gap:15px}
+    nav a{text-decoration:none;color:#000;font-weight:500;transition:.3s}
+    nav a:hover{color:#007bff}
+    .header-right{display:flex;align-items:center;gap:10px}
+    .search-box{display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px}
+    .search-box input{border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px}
+    .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:500;transition:.3s}
+    .login-btn{background:#f1f1f1;padding:7px 14px}
+    .login-btn:hover{background:#e0e0e0}
+    .join-btn{background:#007bff;color:#fff;padding:8px 15px}
+    .join-btn:hover{background:#005ec4}
+
+    /* ---- HERO ---- */
+    .hero{
+      position:relative;
+      height:500px;
+      background:url('assets/ihracat-haritasi.png') center/cover no-repeat;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1
+    }
+    /* İç düzen: solda kutu, ortada başlık */
+    .hero-inner{
+      position:relative; z-index:2;
+      height:100%;
+      display:flex;
+      align-items:center;      /* dikey ortalama */
+      justify-content:center;  /* başlık ortada */
+      padding:0 40px;
+      gap:80px;
     }
 
-    header {
-      background: #fff;
-      padding: 10px 40px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* ---- SOL KATEGORİ KUTUSU (yeni sınıf) ---- */
+    .hero-categories{
+      width:240px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 4px 12px rgba(0,0,0,.2);
+      padding:15px;
+      /* solda sabitle */
+      position:absolute !important;
+      left:40px !important;
+      top:50% !important;
+      transform:translateY(-50%) !important;
+      z-index:3 !important;
+      text-align:left;
     }
-
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .hero-categories h3{font-size:16px;font-weight:700;margin:0 0 10px}
+    .hero-categories .category-item{
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:14px;margin:5px 0;color:#333;cursor:pointer;transition:.2s
     }
-
-    .logo-container img {
-      height: 42px;
+    .hero-categories .category-item:hover{color:#007bff}
+    .hero-categories .category-item span{font-size:12px;color:#888}
+    .hero-categories .category-button{
+      width:100%;margin-top:8px;background:#007bff;color:#fff;border:none;padding:8px;border-radius:6px;font-weight:600;cursor:pointer
     }
+    .hero-categories .category-button:hover{background:#005ec4}
 
-    .logo-text {
-      font-size: 15px;
-      color: #555;
-      font-weight: 500;
+    /* ---- BAŞLIK (ortada) ---- */
+    .hero-title{
+      color:#fff;text-align:center;max-width:800px;text-shadow:0 3px 10px rgba(0,0,0,.5)
     }
+    .hero-title h1{margin:0;font-size:44px;font-weight:800}
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 15px;
+    /* ---- Alt butonlar (mevcut) ---- */
+    .middle-buttons{text-align:center;margin:40px 0}
+    .middle-buttons button{background:#007bff;color:#fff;border:none;padding:10px 18px;border-radius:25px;margin:5px;cursor:pointer;font-weight:600;transition:.3s}
+    .middle-buttons button:hover{background:#005ec4}
+
+    /* ---- Join bölümü ve footer (mevcut) ---- */
+    .main-section{background:#fff;padding:60px 40px;display:flex;justify-content:center;align-items:center;gap:40px;border-radius:10px;max-width:1100px;margin:40px auto;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    .main-section img{width:300px;border-radius:10px}
+    .main-section h2{font-size:24px;margin:0 0 10px;color:#000}
+    .main-section p{color:#333;line-height:1.6;font-size:15px}
+    .main-section button{background:#007bff;border:none;color:#fff;padding:8px 16px;border-radius:5px;font-weight:600;cursor:pointer}
+    .main-section button:hover{background:#005ec4}
+    footer{background:#fff;display:flex;justify-content:space-around;padding:40px;font-size:14px;color:#333;border-top:1px solid #ddd}
+    footer div{width:200px}
+    footer h4{font-size:15px;margin-bottom:10px;color:#000}
+    .footer-bottom{text-align:center;background:#000;color:#fff;padding:10px;font-size:13px}
+
+    /* ---- Mobil ---- */
+    @media (max-width: 900px){
+      .hero-inner{justify-content:center;gap:20px;padding:0 16px}
+      .hero-title h1{font-size:28px}
+      .hero-categories{position:static !important;transform:none !important;width:90%;margin:0 auto}
+      .main-section{flex-direction:column;text-align:center}
     }
-
-    nav a {
-      text-decoration: none;
-      color: #000;
-      font-weight: 500;
-      transition: color .3s;
-    }
-
-    nav a:hover {
-      color: #007bff;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      background: #f1f1f1;
-      border-radius: 20px;
-      padding: 5px 10px;
-    }
-
-    .search-box input {
-      border: none;
-      background: none;
-      outline: none;
-      padding: 5px;
-      font-size: 14px;
-      width: 150px;
-    }
-
-    .login-btn, .join-btn {
-      border: none;
-      cursor: pointer;
-      border-radius: 6px;
-      font-weight: 500;
-      transition: .3s;
-    }
-
-    .login-btn {
-      background: #f1f1f1;
-      padding: 7px 14px;
-    }
-
-    .login-btn:hover {
-      background: #e0e0e0;
-    }
-
-    .join-btn {
-      background: #007bff;
-      color: white;
-      padding: 8px 15px;
-    }
-
-    .join-btn:hover {
-      background: #005ec4;
-    }
-
-    /* HERO SECTION */
-    .hero {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 80px;
-      height: 500px;
-      background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      z-index: 1;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 600px;
-      color: #fff;
-      text-align: left;
-    }
-
-    .hero-content h1 {
-      font-size: 44px;
-      font-weight: 800;
-      margin: 0;
-      text-shadow: 0 3px 10px rgba(0,0,0,0.5);
-    }
-
-    /* CATEGORIES */
-    .categories {
-      position: relative;
-      z-index: 2;
-      background: #fff;
-      border-radius: 10px;
-      padding: 15px;
-      width: 240px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      text-align: left;
-    }
-
-    .categories h3 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .category-item {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      margin: 5px 0;
-      color: #333;
-      cursor: pointer;
-      transition: .3s;
-    }
-
-    .category-item:hover {
-      color: #007bff;
-    }
-
-    .category-item span {
-      font-size: 12px;
-      color: #888;
-    }
-
-    .category-button {
-      width: 100%;
-      background: #007bff;
-      border: none;
-      color: #fff;
-      padding: 8px;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-
-    .category-button:hover {
-      background: #005ec4;
-    }
-
-    .middle-buttons {
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    .middle-buttons button {
-      background: #007bff;
-      color: #fff;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 25px;
-      margin: 5px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: .3s;
-    }
-
-    .middle-buttons button:hover {
-      background: #005ec4;
-    }
-
-    .main-section {
-      background: #fff;
-      padding: 60px 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 40px;
-      border-radius: 10px;
-      max-width: 1100px;
-      margin: 40px auto;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    .main-section img {
-      width: 300px;
-      border-radius: 10px;
-    }
-
-    .main-section h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      color: #000;
-    }
-
-    .main-section p {
-      color: #333;
-      line-height: 1.6;
-      font-size: 15px;
-    }
-
-    .main-section button {
-      background: #007bff;
-      border: none;
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 5px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .main-section button:hover {
-      background: #005ec4;
-    }
-
-    footer {
-      background: #fff;
-      display: flex;
-      justify-content: space-around;
-      padding: 40px;
-      font-size: 14px;
-      color: #333;
-      border-top: 1px solid #ddd;
-    }
-
-    footer div {
-      width: 200px;
-    }
-
-    footer h4 {
-      font-size: 15px;
-      margin-bottom: 10px;
-      color: #000;
-    }
-
-    .footer-bottom {
-      text-align: center;
-      background: #000;
-      color: #fff;
-      padding: 10px;
-      font-size: 13px;
-    }
-
-    @media (max-width: 900px) {
-      .hero {
-        flex-direction: column;
-        justify-content: center;
-        gap: 20px;
-        text-align: center;
-      }
-      .categories {
-        width: 90%;
-      }
-      .hero-content h1 {
-        font-size: 28px;
-        text-align: center;
-      }
-    }
-    /* === FIX: Move Category Box to Left Side === */
-.hero {
-  justify-content: flex-start !important;
-  align-items: center !important;
-  padding-left: 80px !important;
-}
-
-.categories {
-  margin-left: 0 !important;
-}
   </style>
 </head>
-
 <body>
 
+  <!-- Header -->
   <header>
     <div class="logo-container">
       <img src="assets/logos.png" alt="Trader Route Logo">
@@ -343,40 +136,51 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="categories">
-      <h3>Categories</h3>
-      <div id="categoryList"></div>
-      <button class="category-button" onclick="location.href='requests.html'">View All Categories</button>
-    </div>
+    <div class="hero-inner">
+      <!-- Sol kategori kutusu -->
+      <div class="hero-categories" id="heroCategories">
+        <h3>Categories</h3>
+        <div id="categoryList"></div>
+        <button class="category-button" onclick="location.href='requests.html'">View All Categories</button>
+      </div>
 
-    <div class="hero-content">
-      <h1>Connect the World of Import & Export</h1>
+      <!-- Ortadaki başlık -->
+      <div class="hero-title">
+        <h1>Connect the World of Import & Export</h1>
+      </div>
     </div>
   </section>
 
+  <!-- Alt butonlar (mevcut) -->
+  <div class="middle-buttons">
+    <button onclick="location.href='requests.html'">All Requests</button>
+    <button onclick="location.href='requests.html?type=buy'">Buy Requests</button>
+    <button onclick="location.href='requests.html?type=sell'">Sell Offers</button>
+    <button onclick="location.href='request-form.html'">Post Free Request</button>
+  </div>
+
+  <!-- Join -->
   <section class="main-section">
     <img src="assets/trader_route_step1.jpeg" alt="Trader Route">
     <div>
       <h2>Join Trader Route</h2>
       <p>
         As a company, our primary goal has always been to achieve success in global trade.
-        Find buyers for your products and reach new markets with Trader Route —  
-        the global trade connection platform.
+        Find buyers for your products and reach new markets with Trader Route — the global trade connection platform.
       </p>
       <button onclick="location.href='register.html'">Join Now</button>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer>
     <div><h4>Corporate</h4><p>Export Success Stories</p><p>About Us</p></div>
     <div><h4>Our Services</h4><p>Free Registration</p><p>Contact Buyers</p></div>
     <div><h4>Quick Links</h4><p>Company Index</p><p>Buyer Directory</p></div>
   </footer>
+  <div class="footer-bottom">© 2025 Trader Route — Connecting Global Trade.</div>
 
-  <div class="footer-bottom">
-    © 2025 Trader Route — Connecting Global Trade.
-  </div>
-
+  <!-- Kategorileri doldurma -->
   <script>
     const categories = [
       "Agricultural Machinery","Agriculture Industry","Automotive","Baby Products and Accessories",
@@ -392,12 +196,17 @@
       "Stationery, Schools and Offices","Textile Products","Tourism","White Goods – Home Appliances"
     ];
 
+    const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
+    const reqs = getRequests();
     const list = document.getElementById("categoryList");
+
     categories.slice(0, 10).forEach(cat => {
-      const div = document.createElement("div");
-      div.className = "category-item";
-      div.innerHTML = `<span>${cat}</span><span>(0)</span>`;
-      list.appendChild(div);
+      const count = reqs.filter(r => r.category === cat).length || 0;
+      const row = document.createElement("div");
+      row.className = "category-item";
+      row.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
+      row.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
+      list.appendChild(row);
     });
   </script>
 </body>
