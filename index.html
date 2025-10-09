@@ -3,82 +3,268 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trader Route - Import and Export Platform</title>
+  <title>TraderRoute - Global Trade Platform</title>
 
   <link rel="icon" href="assets/logo.png" />
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    /* --- Hero Overlay --- */
-    .hero-overlay {
-      position: absolute;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
+    body {
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 30px;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    header img {
+      height: 50px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      margin: 0 15px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #007bff;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      background: url("assets/ihracat-haritasi.png") center/cover no-repeat;
+      height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       color: #fff;
-      z-index: 10;
-      width: 90%;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
       max-width: 800px;
     }
-    .hero-overlay h1 {
+
+    .hero h1 {
       font-size: 42px;
       font-weight: 800;
-      margin-bottom: 10px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      margin-bottom: 15px;
+      line-height: 1.2;
     }
-    .hero-overlay p {
+
+    .hero p {
       font-size: 18px;
-      margin-bottom: 20px;
-      color: #e8e8e8;
-      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+      margin-bottom: 25px;
     }
+
     .hero-buttons a {
       display: inline-block;
-      margin: 0 8px;
-      padding: 12px 25px;
+      padding: 12px 28px;
+      margin: 0 10px;
       border-radius: 30px;
       font-weight: 600;
       text-decoration: none;
       transition: 0.3s;
     }
-    .btn-primary { background: #007bff; color: #fff; }
-    .btn-primary:hover { background: #005ec4; }
-    .btn-outline { border: 2px solid #fff; color: #fff; }
-    .btn-outline:hover { background: #fff; color: #007bff; }
 
-    /* Category integration */
-    .cat-box { cursor: pointer; }
-    .cat-count { color: #888; font-size: 13px; margin-left: 5px; }
+    .btn-primary {
+      background: #007bff;
+      color: #fff;
+    }
 
-    /* Footer cleanup */
-    footer nav, footer .login-links { display: none !important; }
+    .btn-primary:hover {
+      background: #005ec4;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+    }
+
+    .btn-outline:hover {
+      background: #fff;
+      color: #007bff;
+    }
+
+    /* Categories Section */
+    .categories {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .categories h2 {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 25px;
+      color: #111;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .category-card {
+      background: #fff;
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.25s;
+      cursor: pointer;
+    }
+
+    .category-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      color: #007bff;
+    }
+
+    .category-card span {
+      color: #888;
+      font-size: 13px;
+    }
+
+    .view-all {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .view-all a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 600;
+    }
+
+    .view-all a:hover {
+      text-decoration: underline;
+    }
+
+    /* Latest Requests */
+    .latest {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .latest h2 {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 25px;
+      color: #111;
+    }
+
+    .request-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .request-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: 0.25s;
+    }
+
+    .request-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .request-card h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: #007bff;
+    }
+
+    .request-card p {
+      font-size: 14px;
+      margin: 0 0 6px;
+    }
+
+    .request-card small {
+      color: #777;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      color: #555;
+      margin-top: 50px;
+    }
+
+    footer img {
+      height: 40px;
+      display: block;
+      margin: 0 auto 10px;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <!-- HEADER -->
   <header>
-    <div class="container">
-      <div class="logo">
-        <a href="index.html">
-          <img src="assets/logos.png" alt="Trader Route Logo" style="height:50px;">
-        </a>
-      </div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="requests.html">Requests</a>
-        <a href="register.html">Register</a>
-        <a href="login.html">Login</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
+    <a href="index.html"><img src="assets/logos.png" alt="TraderRoute Logo" /></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="requests.html">Requests</a>
+      <a href="register.html">Register</a>
+      <a href="login.html">Login</a>
+      <a href="contact.html">Contact</a>
+    </nav>
   </header>
 
-  <!-- EXISTING BANNER / MAP IMAGE -->
-  <section class="hero" style="position:relative;">
-    <img src="assets/ihracat-haritasi.png" alt="Global Trade Map" style="width:100%; display:block;">
-    <div class="hero-overlay">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
       <h1>Connect the World of Import & Export</h1>
       <p>Discover global trade opportunities, find buyers and suppliers worldwide.</p>
       <div class="hero-buttons">
@@ -88,22 +274,26 @@
     </div>
   </section>
 
-  <!-- EXISTING CONTENT -->
-  <main>
-    <section class="categories" style="max-width:1200px; margin:40px auto; padding:0 20px;">
-      <h2 style="text-align:center; font-size:28px; font-weight:800; margin-bottom:20px;">Explore Categories</h2>
-      <div id="categoryGrid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px;"></div>
-    </section>
-  </main>
+  <!-- Categories -->
+  <section class="categories">
+    <h2>Explore Categories</h2>
+    <div class="category-grid" id="categoryGrid"></div>
+    <div class="view-all"><a href="requests.html">View All Categories →</a></div>
+  </section>
 
-  <!-- FOOTER -->
-  <footer style="background:#fff; border-top:1px solid #ddd; padding:20px; text-align:center;">
-    <img src="assets/logos.png" alt="Trader Route Logo" style="height:40px; display:block; margin:0 auto 10px;">
-    <p>© 2025 Trader Route. All rights reserved.</p>
+  <!-- Latest Requests -->
+  <section class="latest">
+    <h2>Latest Trade Requests</h2>
+    <div class="request-grid" id="latestRequests"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <img src="assets/logos.png" alt="TraderRoute Logo" />
+    <p>© 2025 TraderRoute. All rights reserved.</p>
   </footer>
 
   <script>
-    // category data & localStorage integration
     const categories = [
       "Agricultural Machinery","Agriculture Industry","Automotive","Baby Products and Accessories",
       "Chemical Industry","Clothing - Fashion","Commercial Activities","Construction and Building Industry",
@@ -119,20 +309,40 @@
     ];
 
     const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
-    const reqs = getRequests();
-    const grid = document.getElementById("categoryGrid");
 
-    categories.forEach(cat => {
-      const count = reqs.filter(r => r.category === cat).length;
-      const div = document.createElement("div");
-      div.className = "cat-box";
-      div.style = "background:#fff; padding:14px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.05); display:flex; justify-content:space-between; align-items:center; transition:0.2s;";
-      div.innerHTML = `<span>${cat}</span><span class='cat-count'>(${count})</span>`;
-      div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
-      div.onmouseover = () => div.style.transform = "translateY(-3px)";
-      div.onmouseout = () => div.style.transform = "translateY(0)";
-      grid.appendChild(div);
-    });
+    // Categories render
+    const categoryGrid = document.getElementById("categoryGrid");
+    function renderCategories() {
+      const requests = getRequests();
+      categoryGrid.innerHTML = "";
+      categories.slice(0, 12).forEach(cat => {
+        const count = requests.filter(r => r.category === cat).length;
+        const div = document.createElement("div");
+        div.className = "category-card";
+        div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
+        div.addEventListener("click", () => {
+          window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
+        });
+        categoryGrid.appendChild(div);
+      });
+    }
+
+    // Latest requests render
+    const latestGrid = document.getElementById("latestRequests");
+    function renderLatest() {
+      const allReq = getRequests();
+      const latest = allReq.slice(-6).reverse();
+      latestGrid.innerHTML = "";
+      latest.forEach(r => {
+        const card = document.createElement("div");
+        card.className = "request-card";
+        card.innerHTML = `<h4>${r.title}</h4><p>${r.category}</p><small>${r.country}</small>`;
+        latestGrid.appendChild(card);
+      });
+    }
+
+    renderCategories();
+    renderLatest();
   </script>
 </body>
 </html>
