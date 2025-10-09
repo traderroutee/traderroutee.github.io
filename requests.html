@@ -390,5 +390,38 @@
 
     renderRequests();
   </script>
+  <script>
+  // Tüm ilanları localStorage'dan çek
+  const allRequests = JSON.parse(localStorage.getItem("requests") || "[]");
+
+  // URL'den kategori parametresini oku
+  const params = new URLSearchParams(window.location.search);
+  const selectedCategory = params.get("category");
+
+  // Eğer kategori seçilmişse filtre uygula
+  let filteredRequests = allRequests;
+  if (selectedCategory) {
+    filteredRequests = allRequests.filter(req => req.category === selectedCategory);
+  }
+
+  // Sayfadaki container'a yazdır (örnek: id="requestList")
+  const container = document.getElementById("requestList");
+  container.innerHTML = "";
+
+  if (filteredRequests.length === 0) {
+    container.innerHTML = `<p style="text-align:center; color:#555;">${selectedCategory ? `"${selectedCategory}" kategorisinde ilan bulunamadı.` : "Henüz ilan yok."}</p>`;
+  } else {
+    filteredRequests.forEach(req => {
+      const div = document.createElement("div");
+      div.className = "request-card";
+      div.innerHTML = `
+        <h3>${req.title}</h3>
+        <p>${req.description}</p>
+        <small><b>Kategori:</b> ${req.category}</small>
+      `;
+      container.appendChild(div);
+    });
+  }
+</script>
 </body>
 </html>
