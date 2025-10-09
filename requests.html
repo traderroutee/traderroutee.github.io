@@ -71,25 +71,21 @@
       margin-bottom: 10px;
       color: #222;
     }
-    .category-list,
-    .country-list {
+    .category-list, .country-list {
       list-style: none;
       padding-left: 0;
       margin: 0 0 15px 0;
     }
-    .category-list li,
-    .country-list li {
+    .category-list li, .country-list li {
       margin-bottom: 8px;
     }
-    .category-list a,
-    .country-list a {
+    .category-list a, .country-list a {
       text-decoration: none;
       color: #333;
       display: flex;
       justify-content: space-between;
     }
-    .category-list a:hover,
-    .country-list a:hover {
+    .category-list a:hover, .country-list a:hover {
       color: #007bff;
     }
     .count {
@@ -119,6 +115,19 @@
     }
     #showMoreCountries:hover {
       background-color: #0056b3;
+    }
+
+    .clear-filters {
+      background: #f8f9fa;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .clear-filters:hover {
+      background: #eaeaea;
     }
 
     /* SAĞ TARAF */
@@ -214,6 +223,8 @@
       <input type="text" class="country-search" id="countrySearch" placeholder="Search country..." />
       <ul class="country-list" id="countryList"></ul>
       <button id="showMoreCountries">Show more countries</button>
+
+      <button class="clear-filters" id="clearFilters">Clear Filters</button>
     </div>
 
     <!-- SAĞ TARAF -->
@@ -227,50 +238,53 @@
   </div>
 
   <script>
-    // --- VERİLER ---
+    // === VERİLER ===
     const categories = [
-      "Agriculture", "Apparel", "Automobiles & Motorcycles", "Beauty & Personal Care",
-      "Business Services", "Chemicals", "Computer Hardware & Software", "Construction & Real Estate",
-      "Consumer Electronics", "Electrical Equipment & Supplies", "Electronic Components & Supplies",
-      "Energy", "Environment", "Fashion Accessories", "Food & Beverage", "Furniture",
-      "Gifts & Crafts", "Hardware", "Health & Medical", "Home & Garden", "Home Appliances",
-      "Lights & Lighting", "Luggage, Bags & Cases", "Machinery", "Measurement & Analysis Instruments",
-      "Minerals & Metallurgy", "Office & School Supplies", "Packaging & Printing", "Rubber & Plastics",
-      "Security & Protection", "Service Equipment", "Shoes & Accessories", "Sports & Entertainment",
-      "Telecommunications", "Textiles & Leather Products", "Tools", "Toys & Hobbies", "Transportation"
+      "Agriculture","Apparel","Automobiles & Motorcycles","Beauty & Personal Care",
+      "Business Services","Chemicals","Computer Hardware & Software","Construction & Real Estate",
+      "Consumer Electronics","Electrical Equipment & Supplies","Electronic Components & Supplies",
+      "Energy","Environment","Fashion Accessories","Food & Beverage","Furniture",
+      "Gifts & Crafts","Hardware","Health & Medical","Home & Garden","Home Appliances",
+      "Lights & Lighting","Luggage, Bags & Cases","Machinery","Measurement & Analysis Instruments",
+      "Minerals & Metallurgy","Office & School Supplies","Packaging & Printing","Rubber & Plastics",
+      "Security & Protection","Service Equipment","Shoes & Accessories","Sports & Entertainment",
+      "Telecommunications","Textiles & Leather Products","Tools","Toys & Hobbies","Transportation"
     ];
 
     const allCountries = [
-      "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
-      "Bangladesh", "Belgium", "Brazil", "Bulgaria", "Canada", "China", "Colombia", "Czech Republic", "Denmark", "Egypt",
-      "Finland", "France", "Germany", "Greece", "Hungary", "India", "Indonesia", "Iran", "Iraq", "Ireland",
-      "Israel", "Italy", "Japan", "Kenya", "Kuwait", "Lebanon", "Lithuania", "Malaysia", "Mexico", "Morocco",
-      "Netherlands", "Nigeria", "Norway", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania",
-      "Russia", "Saudi Arabia", "Singapore", "South Africa", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland",
-      "Thailand", "Turkey", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Vietnam", "Zambia", "Zimbabwe"
+      "Afghanistan","Albania","Algeria","Argentina","Australia","Austria","Bangladesh","Belgium","Brazil","Bulgaria",
+      "Canada","Chile","China","Colombia","Czech Republic","Denmark","Egypt","Finland","France","Germany",
+      "Greece","Hungary","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Japan",
+      "Kenya","Kuwait","Lebanon","Malaysia","Mexico","Morocco","Netherlands","Nigeria","Norway","Pakistan",
+      "Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Saudi Arabia","Singapore","South Africa",
+      "South Korea","Spain","Sweden","Switzerland","Thailand","Turkey","Ukraine","United Arab Emirates","United Kingdom","United States"
     ];
 
     const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
 
-    // --- ELEMENTLER ---
+    // === ELEMENTLER ===
     const requestContainer = document.getElementById("requestItems");
     const searchInput = document.getElementById("searchInput");
     const categoryList = document.getElementById("categoryList");
+    const countryList = document.getElementById("countryList");
+    const clearFilters = document.getElementById("clearFilters");
+
     const tabs = {
       all: document.getElementById("tabAll"),
       buy: document.getElementById("tabBuy"),
-      sell: document.getElementById("tabSell"),
+      sell: document.getElementById("tabSell")
     };
 
     let visibleRequests = 15;
     let activeTab = "all";
     let selectedCategory = null;
+    let selectedCountry = null;
 
-    // --- KATEGORİLER ---
+    // === KATEGORİLER ===
     function renderCategories(requests) {
       categoryList.innerHTML = "";
-      categories.slice(0, 15).forEach((cat) => {
-        const count = requests.filter((r) => r.category === cat).length;
+      categories.slice(0, 15).forEach(cat => {
+        const count = requests.filter(r => r.category === cat).length;
         const li = document.createElement("li");
         li.innerHTML = `<a href="#">${cat}<span class="count">(${count})</span></a>`;
         li.addEventListener("click", () => {
@@ -282,24 +296,25 @@
       });
     }
 
-    // --- ÜLKELER ---
+    // === ÜLKELER ===
     let visibleCountryCount = 10;
-    const countryList = document.getElementById("countryList");
     const showMoreCountries = document.getElementById("showMoreCountries");
     const countrySearch = document.getElementById("countrySearch");
 
     function renderCountries() {
       countryList.innerHTML = "";
-      const filtered = allCountries.filter((c) =>
-        c.toLowerCase().includes(countrySearch.value.toLowerCase())
-      );
-      filtered.slice(0, visibleCountryCount).forEach((c) => {
+      const filtered = allCountries.filter(c => c.toLowerCase().includes(countrySearch.value.toLowerCase()));
+      filtered.slice(0, visibleCountryCount).forEach(c => {
         const li = document.createElement("li");
         li.innerHTML = `<a href="#">${c}</a>`;
+        li.addEventListener("click", () => {
+          selectedCountry = c;
+          visibleRequests = 15;
+          renderRequests();
+        });
         countryList.appendChild(li);
       });
-      showMoreCountries.style.display =
-        filtered.length > visibleCountryCount ? "block" : "none";
+      showMoreCountries.style.display = filtered.length > visibleCountryCount ? "block" : "none";
     }
 
     countrySearch.addEventListener("input", () => {
@@ -310,24 +325,31 @@
       visibleCountryCount += 10;
       renderCountries();
     });
-    renderCountries();
 
-    // --- İLANLAR ---
+    // === FİLTRELERİ TEMİZLE ===
+    clearFilters.addEventListener("click", () => {
+      selectedCategory = null;
+      selectedCountry = null;
+      visibleRequests = 15;
+      renderRequests();
+    });
+
+    // === İLANLAR ===
     function renderRequests() {
       const allReq = getRequests();
       renderCategories(allReq);
+      renderCountries();
 
       const searchTerm = searchInput.value.toLowerCase();
-      let filtered = allReq.filter(
-        (r) =>
-          (activeTab === "all" || r.type === activeTab) &&
-          (!selectedCategory || r.category === selectedCategory) &&
-          (r.title.toLowerCase().includes(searchTerm) ||
-            r.description.toLowerCase().includes(searchTerm))
+      let filtered = allReq.filter(r =>
+        (activeTab === "all" || r.type === activeTab) &&
+        (!selectedCategory || r.category === selectedCategory) &&
+        (!selectedCountry || r.country === selectedCountry) &&
+        (r.title.toLowerCase().includes(searchTerm) || r.description.toLowerCase().includes(searchTerm))
       );
 
       requestContainer.innerHTML = "";
-      filtered.slice(0, visibleRequests).forEach((r) => {
+      filtered.slice(0, visibleRequests).forEach(r => {
         const div = document.createElement("div");
         div.className = "request-card";
         div.innerHTML = `
@@ -345,12 +367,10 @@
         filtered.length > visibleRequests ? "block" : "none";
     }
 
-    document
-      .getElementById("showMoreRequests")
-      .addEventListener("click", () => {
-        visibleRequests += 10;
-        renderRequests();
-      });
+    document.getElementById("showMoreRequests").addEventListener("click", () => {
+      visibleRequests += 10;
+      renderRequests();
+    });
 
     searchInput.addEventListener("input", () => {
       visibleRequests = 15;
@@ -359,7 +379,7 @@
 
     Object.entries(tabs).forEach(([key, btn]) => {
       btn.addEventListener("click", () => {
-        Object.values(tabs).forEach((b) => b.classList.remove("active"));
+        Object.values(tabs).forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         activeTab = key;
         visibleRequests = 15;
