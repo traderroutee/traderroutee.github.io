@@ -10,7 +10,7 @@
   header{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
   .box{max-width:520px;margin:50px auto;padding:22px;background:#fff;border-radius:10px;box-shadow:0 8px 30px rgba(2,8,23,0.06)}
   label{display:block;margin-top:8px;font-weight:600;color:#333}
-  input{width:100%;padding:10px;margin-top:4px;border-radius:8px;border:1px solid #ccc;font-size:15px}
+  input, select{width:100%;padding:10px;margin-top:4px;border-radius:8px;border:1px solid #ccc;font-size:15px}
   .btn{background:#008b6a;color:#fff;padding:12px 18px;border-radius:8px;border:none;cursor:pointer;font-weight:600;font-size:15px;margin-top:10px;width:100%}
   .btn:hover{background:#006c51}
   footer{text-align:center;padding:18px;background:#111;color:#eee;margin-top:30px;font-size:14px}
@@ -37,6 +37,30 @@
     <label for="company">Company Name (optional)</label>
     <input id="company" type="text" placeholder="Your company">
 
+    <label for="country">Country</label>
+    <select id="country" required>
+      <option value="">Select your country</option>
+      <option value="Turkey">Turkey</option>
+      <option value="United States">United States</option>
+      <option value="Germany">Germany</option>
+      <option value="France">France</option>
+      <option value="Italy">Italy</option>
+      <option value="Spain">Spain</option>
+      <option value="China">China</option>
+      <option value="India">India</option>
+      <option value="United Kingdom">United Kingdom</option>
+      <option value="Russia">Russia</option>
+      <option value="Canada">Canada</option>
+      <option value="Brazil">Brazil</option>
+      <option value="Japan">Japan</option>
+      <option value="United Arab Emirates">United Arab Emirates</option>
+      <option value="Saudi Arabia">Saudi Arabia</option>
+      <option value="South Korea">South Korea</option>
+      <option value="Egypt">Egypt</option>
+      <option value="South Africa">South Africa</option>
+      <option value="Other">Other</option>
+    </select>
+
     <label for="password">Password</label>
     <input id="password" type="password" placeholder="Password" required>
 
@@ -52,10 +76,11 @@ function doRegister(){
   const name=document.getElementById('name').value.trim();
   const email=document.getElementById('email').value.trim();
   const company=document.getElementById('company').value.trim();
+  const country=document.getElementById('country').value;
   const password=document.getElementById('password').value;
   const msg=document.getElementById('regMsg');
 
-  if(!name||!email||!password){
+  if(!name||!email||!password||!country){
     msg.textContent='Please fill required fields.'; msg.style.color='red'; return;
   }
 
@@ -64,7 +89,7 @@ function doRegister(){
     msg.textContent='This email is already registered.'; msg.style.color='red'; return;
   }
 
-  const user={name,email,company,password,created:new Date().toISOString()};
+  const user={name,email,company,country,password,created:new Date().toISOString()};
   users.push(user);
   localStorage.setItem('tr_users', JSON.stringify(users));
   localStorage.setItem('tr_user', JSON.stringify(user));
