@@ -141,14 +141,19 @@
       text-shadow: 0 3px 10px rgba(0,0,0,0.5);
     }
 
+    /* CATEGORY BOX ON LEFT */
     .categories {
+      position: absolute;
+      top: 50%;
+      left: 60px;
+      transform: translateY(-50%);
       background: #fff;
       border-radius: 10px;
       padding: 15px;
       width: 240px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      position: relative;
       z-index: 3;
+      text-align: left;
     }
 
     .categories h3 {
@@ -289,11 +294,14 @@
     }
 
     @media (max-width: 900px) {
-      .main-section {
-        flex-direction: column;
-        text-align: center;
+      .categories {
+        position: static;
+        transform: none;
+        margin: 20px auto;
       }
-      .categories { width: 100%; }
+      .hero-content h1 {
+        font-size: 28px;
+      }
     }
   </style>
 </head>
@@ -324,19 +332,16 @@
     </div>
   </header>
 
-  <!-- HERO (CENTERED TEXT, NO BUTTONS BELOW) -->
+  <!-- HERO -->
   <section class="hero">
-    <div class="hero-content">
-      <h1>Connect the World of Import & Export</h1>
-    </div>
-  </section>
-
-  <!-- Categories (left list) -->
-  <section style="display:flex; justify-content:center; margin-top:-120px; position:relative; z-index:3;">
     <div class="categories">
       <h3>Categories</h3>
       <div id="categoryList"></div>
       <button class="category-button" onclick="location.href='requests.html'">View All Categories</button>
+    </div>
+
+    <div class="hero-content">
+      <h1>Connect the World of Import & Export</h1>
     </div>
   </section>
 
