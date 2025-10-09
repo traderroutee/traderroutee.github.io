@@ -147,8 +147,7 @@
       padding: 15px;
       width: 240px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      position: relative;
-      z-index: 3;
+      z-index: 4;
     }
 
     .categories h3 {
@@ -296,28 +295,20 @@
       .categories { width: 100%; }
     }
 
-    /* 🔧 PART 3: KATEGORİLER SOLDA VE DİKEY ORTADA */
+    /* ✅ PART 3.1 FINAL: KATEGORİLER SOLA VE DİKEY ORTALI */
     .hero {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       position: relative;
     }
 
-    .hero-content {
-      flex: 1;
-      text-align: center;
-    }
-
     .hero + section {
-      position: absolute;
-      left: 5%;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 4;
+      position: absolute !important;
+      top: 50% !important;
+      left: 8% !important;
+      transform: translateY(-50%) !important;
+      z-index: 5 !important;
       margin-top: 0 !important;
-      display: flex;
-      justify-content: flex-start;
+      display: flex !important;
+      justify-content: flex-start !important;
     }
 
     .hero + section .categories {
@@ -328,16 +319,11 @@
     }
 
     @media (max-width: 900px) {
-      .hero {
-        flex-direction: column;
-        align-items: center;
-      }
-
       .hero + section {
-        position: static;
-        transform: none;
+        position: static !important;
+        transform: none !important;
         margin-top: -100px !important;
-        justify-content: center;
+        justify-content: center !important;
       }
 
       .hero + section .categories {
@@ -381,7 +367,7 @@
   </section>
 
   <!-- KATEGORİLER (SOLDA) -->
-  <section style="display:flex; justify-content:center; margin-top:-120px; position:relative; z-index:3;">
+  <section>
     <div class="categories">
       <h3>Categories</h3>
       <div id="categoryList"></div>
