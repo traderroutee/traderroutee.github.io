@@ -6,8 +6,25 @@
   <title>Trader Route - Requests</title>
   <link rel="stylesheet" href="stil.css">
   <style>
-    .container { max-width: 1200px; margin: 40px auto; display: flex; gap: 20px; }
-    .sidebar { width: 280px; background: #f8f9fa; padding: 20px; border-radius: 10px; }
+    body { font-family: Arial, sans-serif; background: #f5f6f8; margin: 0; }
+    header {
+      display: flex; align-items: center; justify-content: center;
+      background: #fff; padding: 15px 0; border-bottom: 1px solid #ddd;
+    }
+    header img { height: 55px; }
+
+    .tabs {
+      display: flex; justify-content: center; background: #fff;
+      border-bottom: 1px solid #ddd; gap: 10px; padding: 10px 0;
+    }
+    .tabs button {
+      background: none; border: none; font-weight: 600; font-size: 16px;
+      padding: 8px 20px; border-radius: 25px; cursor: pointer; transition: 0.2s;
+    }
+    .tabs button.active { background: #007bff; color: white; }
+
+    .container { max-width: 1200px; margin: 30px auto; display: flex; gap: 20px; padding: 0 15px; }
+    .sidebar { width: 280px; background: #fff; padding: 20px; border-radius: 10px; }
     .sidebar h4 { margin-bottom: 15px; color: #222; }
     .category-list, .country-list { list-style: none; padding-left: 0; margin: 0; }
     .category-list li, .country-list li { margin-bottom: 8px; }
@@ -16,7 +33,20 @@
     }
     .category-list a:hover, .country-list a:hover { color: #007bff; }
     .count { color: #888; font-size: 0.9em; }
-    .content { flex: 1; }
+
+    .country-search { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 10px; }
+    #showMoreCountries {
+      display: block; width: 100%; padding: 8px; border: none; background-color: #007bff;
+      color: white; border-radius: 6px; margin-top: 10px; cursor: pointer; font-size: 14px;
+    }
+    #showMoreCountries:hover { background-color: #0056b3; }
+
+    .content { flex: 1; background: #fff; border-radius: 10px; padding: 20px; }
+    .search-bar { margin-bottom: 20px; display: flex; justify-content: space-between; }
+    #searchInput {
+      width: 100%; max-width: 400px; padding: 10px; border-radius: 6px; border: 1px solid #ccc;
+    }
+
     .request-card {
       border: 1px solid #e3e3e3; border-radius: 8px;
       padding: 15px; margin-bottom: 15px; background: #fff;
@@ -24,24 +54,34 @@
     }
     .request-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
     .request-card h5 { margin: 0 0 5px; }
-    #countrySearch {
-      width: 100%; padding: 8px; border: 1px solid #ccc;
-      border-radius: 6px; margin-bottom: 10px;
+    .request-card small { color: #666; }
+
+    #showMoreRequests {
+      background: #007bff; color: #fff; border: none; border-radius: 6px;
+      padding: 10px 15px; cursor: pointer; font-weight: 600; margin: 20px auto; display: block;
     }
-    #showMoreCountries {
-      display: block; width: 100%; padding: 8px;
-      border: none; background-color: #007bff;
-      color: white; border-radius: 6px; margin-top: 10px;
-      cursor: pointer; font-size: 14px;
-    }
-    #showMoreCountries:hover { background-color: #0056b3; }
+    #showMoreRequests:hover { background: #0056b3; }
+
     @media(max-width: 768px) {
       .container { flex-direction: column; }
       .sidebar { width: 100%; }
+      .tabs { flex-wrap: wrap; }
     }
   </style>
 </head>
 <body>
+
+  <!-- LOGO -->
+  <header>
+    <img src="varlıklar/logo.png" alt="Trader Route Logo">
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="active" id="tabAll">All Requests</button>
+    <button id="tabBuy">Buy Requests</button>
+    <button id="tabSell">Sell Requests</button>
+  </div>
 
   <div class="container">
     <!-- SOL KISIM -->
@@ -50,20 +90,23 @@
       <ul class="category-list" id="categoryList"></ul>
 
       <h4>Countries</h4>
-      <input type="text" id="countrySearch" placeholder="Search country...">
+      <input type="text" class="country-search" id="countrySearch" placeholder="Search country...">
       <ul class="country-list" id="countryList"></ul>
       <button id="showMoreCountries">Show more countries</button>
     </div>
 
     <!-- SAĞ KISIM -->
     <div class="content">
-      <h3>All Requests</h3>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search requests...">
+      </div>
       <div id="requestItems"></div>
+      <button id="showMoreRequests">Show more requests</button>
     </div>
   </div>
 
   <script>
-    // --- KATEGORİLER ---
+    // --- Data ---
     const categories = [
       "Agriculture","Apparel","Automobiles & Motorcycles","Beauty & Personal Care",
       "Business Services","Chemicals","Computer Hardware & Software","Construction & Real Estate",
@@ -80,78 +123,102 @@
       "Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Armenia","Australia","Austria","Azerbaijan",
       "Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
       "Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada",
-      "Cape Verde","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica","Croatia",
-      "Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador",
-      "Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia",
-      "Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti",
-      "Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy",
-      "Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia",
-      "Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia",
-      "Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco",
-      "Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand",
-      "Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Palestine",
-      "Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia",
-      "Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia",
-      "Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","Spain",
-      "Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand",
-      "Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates",
-      "United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+      "Chile","China","Colombia","Croatia","Czech Republic","Denmark","Dominican Republic","Egypt","Finland","France",
+      "Germany","Greece","Hungary","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Japan","Kenya",
+      "Kuwait","Latvia","Lebanon","Lithuania","Luxembourg","Malaysia","Malta","Mexico","Morocco","Netherlands",
+      "New Zealand","Nigeria","Norway","Pakistan","Peru","Philippines","Poland","Portugal","Qatar","Romania",
+      "Russia","Saudi Arabia","Singapore","South Africa","South Korea","Spain","Sri Lanka","Sweden","Switzerland",
+      "Thailand","Turkey","Ukraine","United Arab Emirates","United Kingdom","United States","Vietnam","Zambia","Zimbabwe"
     ];
 
-    const requestCounts = {};
-    categories.forEach(cat => requestCounts[cat] = Math.floor(Math.random() * 30) + 1);
+    // --- Fake requests (for demo) ---
+    const requests = [];
+    for (let i = 1; i <= 50; i++) {
+      const type = i % 2 === 0 ? "buy" : "sell";
+      requests.push({
+        id: i,
+        title: type === "buy" ? `Buying ${categories[i % categories.length]}` : `Selling ${categories[i % categories.length]}`,
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere.",
+        type,
+        category: categories[i % categories.length],
+        country: allCountries[i % allCountries.length]
+      });
+    }
 
-    // Kategorileri göster
+    // --- Populate categories ---
     const catList = document.getElementById('categoryList');
     categories.forEach(cat => {
+      const count = requests.filter(r => r.category === cat).length;
       const li = document.createElement('li');
-      li.innerHTML = `<a href="#">${cat}<span class="count">(${requestCounts[cat]})</span></a>`;
+      li.innerHTML = `<a href="#">${cat}<span class="count">(${count})</span></a>`;
       catList.appendChild(li);
     });
 
-    // Ülkeler
-    let visibleCount = 10;
+    // --- Populate countries (with show more + search) ---
+    let visibleCountryCount = 10;
     const countryList = document.getElementById('countryList');
-    const showMoreBtn = document.getElementById('showMoreCountries');
-    const searchInput = document.getElementById('countrySearch');
+    const showMoreCountries = document.getElementById('showMoreCountries');
+    const countrySearch = document.getElementById('countrySearch');
 
     function renderCountries() {
       countryList.innerHTML = "";
-      const filtered = allCountries.filter(c =>
-        c.toLowerCase().includes(searchInput.value.toLowerCase())
-      );
-      filtered.slice(0, visibleCount).forEach(c => {
+      const filtered = allCountries.filter(c => c.toLowerCase().includes(countrySearch.value.toLowerCase()));
+      filtered.slice(0, visibleCountryCount).forEach(c => {
         const li = document.createElement('li');
         li.innerHTML = `<a href="#">${c}</a>`;
         countryList.appendChild(li);
       });
-      showMoreBtn.style.display = filtered.length > visibleCount ? "block" : "none";
+      showMoreCountries.style.display = filtered.length > visibleCountryCount ? "block" : "none";
     }
 
-    searchInput.addEventListener('input', () => {
-      visibleCount = 10;
-      renderCountries();
-    });
-
-    showMoreBtn.addEventListener('click', () => {
-      visibleCount += 10;
-      renderCountries();
-    });
-
+    countrySearch.addEventListener('input', () => { visibleCountryCount = 10; renderCountries(); });
+    showMoreCountries.addEventListener('click', () => { visibleCountryCount += 10; renderCountries(); });
     renderCountries();
 
-    // Sağdaki örnek ilanlar
-    const requestItems = document.getElementById('requestItems');
-    for (let i = 1; i <= 8; i++) {
-      const div = document.createElement('div');
-      div.className = 'request-card';
-      div.innerHTML = `
-        <h5>Request ${i}</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <small>Category: ${categories[Math.floor(Math.random()*categories.length)]}</small>
-      `;
-      requestItems.appendChild(div);
+    // --- Render requests ---
+    const requestContainer = document.getElementById('requestItems');
+    const showMoreRequests = document.getElementById('showMoreRequests');
+    const searchInput = document.getElementById('searchInput');
+    const tabs = { all: document.getElementById('tabAll'), buy: document.getElementById('tabBuy'), sell: document.getElementById('tabSell') };
+    let visibleRequests = 15;
+    let activeTab = "all";
+
+    function renderRequests() {
+      requestContainer.innerHTML = "";
+      const searchTerm = searchInput.value.toLowerCase();
+      let filtered = requests.filter(r =>
+        (activeTab === "all" || r.type === activeTab) &&
+        (r.title.toLowerCase().includes(searchTerm) || r.description.toLowerCase().includes(searchTerm))
+      );
+
+      filtered.slice(0, visibleRequests).forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'request-card';
+        div.innerHTML = `
+          <h5>${r.title}</h5>
+          <p>${r.description}</p>
+          <small>${r.country} · ${r.category}</small>
+        `;
+        requestContainer.appendChild(div);
+      });
+
+      showMoreRequests.style.display = filtered.length > visibleRequests ? "block" : "none";
     }
+
+    showMoreRequests.addEventListener('click', () => { visibleRequests += 10; renderRequests(); });
+    searchInput.addEventListener('input', () => { visibleRequests = 15; renderRequests(); });
+
+    Object.entries(tabs).forEach(([key, btn]) => {
+      btn.addEventListener('click', () => {
+        Object.values(tabs).forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeTab = key;
+        visibleRequests = 15;
+        renderRequests();
+      });
+    });
+
+    renderRequests();
   </script>
 </body>
 </html>
