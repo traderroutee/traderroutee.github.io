@@ -5,60 +5,248 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trader Route - Requests</title>
 
-  <!-- Correct paths -->
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="assets/logo.png" />
 
   <style>
-    body{font-family:Arial,sans-serif;background:#f5f6f8;margin:0}
-    header{display:flex;align-items:center;background:#fff;padding:10px 20px;border-bottom:1px solid #ddd}
-    header img{height:50px;cursor:pointer}
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f5f6f8;
+      margin: 0;
+      color: #222;
+    }
 
-    .tabs{display:flex;justify-content:center;background:#fff;border-bottom:1px solid #ddd;gap:10px;padding:10px 0}
-    .tabs button{background:none;border:none;font-weight:600;font-size:16px;padding:8px 20px;border-radius:25px;cursor:pointer;transition:.2s}
-    .tabs button.active{background:#007bff;color:#fff}
+    /* LOGO */
+    header {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 12px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    header img {
+      height: 52px;
+      cursor: pointer;
+    }
 
-    .container{max-width:1200px;margin:30px auto;display:flex;gap:20px;padding:0 15px}
-    .sidebar{width:280px;background:#fff;padding:20px;border-radius:10px;overflow-y:auto;max-height:80vh}
-    .sidebar h4{margin-bottom:10px;color:#222}
-    .category-list,.country-list{list-style:none;padding-left:0;margin:0 0 15px 0}
-    .category-list li,.country-list li{margin-bottom:8px}
-    .category-list a,.country-list a{display:flex;justify-content:space-between;text-decoration:none;color:#333}
-    .category-list a:hover,.country-list a:hover{color:#007bff}
-    .count{color:#888;font-size:.9em}
+    /* TABS */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      gap: 10px;
+      padding: 12px 0;
+    }
+    .tabs button {
+      background: none;
+      border: none;
+      font-weight: 600;
+      font-size: 17px;
+      padding: 10px 22px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tabs button.active {
+      background: #007bff;
+      color: white;
+    }
 
-    .country-search{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;margin-bottom:10px}
-    #showMoreCountries{display:block;width:100%;padding:8px;border:none;background:#007bff;color:#fff;border-radius:6px;margin-top:10px;cursor:pointer;font-size:14px}
-    #showMoreCountries:hover{background:#0056b3}
-    .clear-filters{background:#f8f9fa;border:1px solid #ccc;border-radius:6px;padding:6px 10px;margin-top:10px;cursor:pointer;font-size:13px}
-    .clear-filters:hover{background:#eaeaea}
+    /* ANA YAPI */
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      display: flex;
+      gap: 20px;
+      padding: 0 15px;
+    }
 
-    .content{flex:1;background:#fff;border-radius:10px;padding:20px}
-    .search-bar{margin-bottom:20px}
-    #searchInput{width:100%;max-width:400px;padding:10px;border-radius:6px;border:1px solid #ccc}
+    /* SOL PANEL */
+    .sidebar {
+      width: 280px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      height: 80vh;
+      overflow: hidden;
+    }
 
-    .request-card{border:1px solid #e3e3e3;border-radius:8px;padding:15px;margin-bottom:15px;background:#fff;transition:.2s;cursor:pointer}
-    .request-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.1)}
-    .request-card h5{margin:0 0 5px}
-    .request-card small{color:#666}
+    .sidebar h4 {
+      margin-bottom: 10px;
+      color: #111;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
 
-    #showMoreRequests{background:#007bff;color:#fff;border:none;border-radius:6px;padding:10px 15px;cursor:pointer;font-weight:600;margin:20px auto;display:block}
-    #showMoreRequests:hover{background:#0056b3}
+    .category-search,
+    .country-search {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
 
-    @media(max-width:768px){
-      .container{flex-direction:column}
-      .sidebar{width:100%;max-height:none}
-      .tabs{flex-wrap:wrap}
+    .category-list,
+    .country-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      overflow-y: auto;
+      flex: 1;
+      scrollbar-width: thin;
+      scrollbar-color: #ccc transparent;
+    }
+
+    .category-list {
+      max-height: 250px;
+    }
+
+    .country-list {
+      max-height: 200px;
+    }
+
+    .category-list li,
+    .country-list li {
+      margin-bottom: 6px;
+    }
+
+    .category-list a,
+    .country-list a {
+      text-decoration: none;
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+    .category-list a:hover,
+    .country-list a:hover {
+      color: #007bff;
+    }
+    .count {
+      color: #888;
+      font-size: 13px;
+    }
+
+    #showMoreCountries {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      border: none;
+      background: #007bff;
+      color: #fff;
+      border-radius: 6px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    #showMoreCountries:hover {
+      background: #0056b3;
+    }
+
+    .clear-filters {
+      background: #f8f9fa;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 7px 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .clear-filters:hover {
+      background: #eaeaea;
+    }
+
+    /* SAĞ TARAF */
+    .content {
+      flex: 1;
+      background: #fff;
+      border-radius: 10px;
+      padding: 25px;
+    }
+
+    .search-bar {
+      margin-bottom: 20px;
+    }
+
+    #searchInput {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .request-card {
+      border: 1px solid #e3e3e3;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background: #fff;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .request-card:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .request-card h5 {
+      margin: 0 0 5px;
+      font-size: 17px;
+    }
+
+    .request-card small {
+      color: #666;
+    }
+
+    #showMoreRequests {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: 600;
+      margin: 20px auto;
+      display: block;
+    }
+
+    #showMoreRequests:hover {
+      background: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        max-height: none;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Logo (left) -->
+  <!-- LOGO -->
   <header>
-    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
+    <a href="index.html">
+      <img src="assets/logos.png" alt="Trader Route Logo" />
+    </a>
   </header>
 
-  <!-- Tabs -->
+  <!-- TABS -->
   <div class="tabs">
     <button class="active" id="tabAll">All Requests</button>
     <button id="tabBuy">Buy Requests</button>
@@ -66,32 +254,31 @@
   </div>
 
   <div class="container">
-    <!-- Left: filters -->
-    <aside class="sidebar">
+    <!-- SOL PANEL -->
+    <div class="sidebar">
       <h4>Categories</h4>
-      <ul id="categoryList" class="category-list"></ul>
+      <input type="text" class="category-search" id="categorySearch" placeholder="Search category..." />
+      <ul class="category-list" id="categoryList"></ul>
 
       <h4>Countries</h4>
-      <input id="countrySearch" class="country-search" placeholder="Search country..." />
-      <ul id="countryList" class="country-list"></ul>
+      <input type="text" class="country-search" id="countrySearch" placeholder="Search country..." />
+      <ul class="country-list" id="countryList"></ul>
       <button id="showMoreCountries">Show more countries</button>
+      <button class="clear-filters" id="clearFilters">Clear Filters</button>
+    </div>
 
-      <button id="clearFilters" class="clear-filters">Clear Filters</button>
-    </aside>
-
-    <!-- Right: results -->
-    <main class="content">
+    <!-- SAĞ TARAF -->
+    <div class="content">
       <div class="search-bar">
-        <input id="searchInput" placeholder="Search requests..." />
+        <input type="text" id="searchInput" placeholder="Search requests..." />
       </div>
       <div id="requestItems"></div>
       <button id="showMoreRequests">Show more requests</button>
-    </main>
+    </div>
   </div>
 
   <script>
-    /* ---------- Data ---------- */
-    var categories = [
+    const categories = [
       "Agriculture","Apparel","Automobiles & Motorcycles","Beauty & Personal Care",
       "Business Services","Chemicals","Computer Hardware & Software","Construction & Real Estate",
       "Consumer Electronics","Electrical Equipment & Supplies","Electronic Components & Supplies",
@@ -103,7 +290,7 @@
       "Telecommunications","Textiles & Leather Products","Tools","Toys & Hobbies","Transportation"
     ];
 
-    var allCountries = [
+    const allCountries = [
       "Afghanistan","Albania","Algeria","Argentina","Australia","Austria","Bangladesh","Belgium","Brazil","Bulgaria",
       "Canada","Chile","China","Colombia","Czech Republic","Denmark","Egypt","Finland","France","Germany",
       "Greece","Hungary","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Japan",
@@ -112,180 +299,116 @@
       "South Korea","Spain","Sri Lanka","Sweden","Switzerland","Thailand","Turkey","Ukraine","United Arab Emirates","United Kingdom","United States"
     ];
 
-    function getRequests(){
-      try { return JSON.parse(localStorage.getItem("requests") || "[]"); }
-      catch(e){ return []; }
-    }
+    const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
 
-    /* ---------- Elements ---------- */
-    var requestContainer = document.getElementById("requestItems");
-    var searchInput = document.getElementById("searchInput");
-    var categoryList = document.getElementById("categoryList");
-    var countryList = document.getElementById("countryList");
-    var clearFilters = document.getElementById("clearFilters");
-    var showMoreCountriesBtn = document.getElementById("showMoreCountries");
-    var countrySearch = document.getElementById("countrySearch");
+    const requestContainer = document.getElementById("requestItems");
+    const searchInput = document.getElementById("searchInput");
+    const categoryList = document.getElementById("categoryList");
+    const countryList = document.getElementById("countryList");
+    const categorySearch = document.getElementById("categorySearch");
+    const countrySearch = document.getElementById("countrySearch");
+    const clearFilters = document.getElementById("clearFilters");
 
-    var tabs = {
-      all: document.getElementById("tabAll"),
-      buy: document.getElementById("tabBuy"),
-      sell: document.getElementById("tabSell")
-    };
+    let visibleRequests = 15;
+    let visibleCategories = 15;
+    let visibleCountries = 10;
+    let activeTab = "all";
+    let selectedCategory = null;
+    let selectedCountry = null;
 
-    /* ---------- State ---------- */
-    var visibleRequests = 15;
-    var activeTab = "all";
-    var selectedCategory = null;
-    var selectedCountry = null;
-    var visibleCountryCount = 10;
-
-    /* ---------- Renderers ---------- */
-    function renderCategories(requests){
+    function renderCategories(requests) {
+      const searchTerm = categorySearch.value.toLowerCase();
+      const filtered = categories.filter(c => c.toLowerCase().includes(searchTerm));
       categoryList.innerHTML = "";
-      // counts map
-      var counts = {};
-      for (var i=0;i<categories.length;i++){ counts[categories[i]] = 0; }
-      for (var j=0;j<requests.length;j++){
-        var c = requests[j].category;
-        if (counts.hasOwnProperty(c)) counts[c] += 1;
-      }
-      // always show all categories (with 0)
-      for (var k=0;k<categories.length;k++){
-        var cat = categories[k];
-        var li = document.createElement("li");
-        li.innerHTML = '<a href="#">'+cat+'<span class="count">('+counts[cat]+')</span></a>';
-        (function(catName){
-          li.addEventListener("click", function(){
-            selectedCategory = catName;
-            visibleRequests = 15;
-            renderRequests();
-          });
-        })(cat);
+      filtered.slice(0, visibleCategories).forEach(cat => {
+        const count = requests.filter(r => r.category === cat).length;
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="#">${cat}<span class="count">(${count})</span></a>`;
+        li.addEventListener("click", () => {
+          selectedCategory = cat;
+          renderRequests();
+        });
         categoryList.appendChild(li);
-      }
+      });
     }
 
-    function renderCountries(){
+    function renderCountries() {
+      const requests = getRequests();
+      const searchTerm = countrySearch.value.toLowerCase();
+      const filtered = allCountries.filter(c => c.toLowerCase().includes(searchTerm));
       countryList.innerHTML = "";
-      var allReq = getRequests();
-      // build counts
-      var cCounts = {};
-      for (var i=0;i<allCountries.length;i++){ cCounts[allCountries[i]] = 0; }
-      for (var j=0;j<allReq.length;j++){
-        var cn = allReq[j].country;
-        if (cCounts.hasOwnProperty(cn)) cCounts[cn] += 1;
-      }
-
-      var term = countrySearch.value.toLowerCase();
-      var filtered = [];
-      for (var m=0;m<allCountries.length;m++){
-        var name = allCountries[m];
-        if (name.toLowerCase().indexOf(term) !== -1) filtered.push(name);
-      }
-
-      var limit = Math.min(filtered.length, visibleCountryCount);
-      for (var n=0;n<limit;n++){
-        var name2 = filtered[n];
-        var li = document.createElement("li");
-        li.innerHTML = '<a href="#">'+name2+'<span class="count">('+cCounts[name2]+')</span></a>';
-        (function(countryName){
-          li.addEventListener("click", function(){
-            selectedCountry = countryName;
-            visibleRequests = 15;
-            renderRequests();
-          });
-        })(name2);
+      filtered.slice(0, visibleCountries).forEach(c => {
+        const count = requests.filter(r => r.country === c).length;
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="#">${c}<span class="count">(${count})</span></a>`;
+        li.addEventListener("click", () => {
+          selectedCountry = c;
+          renderRequests();
+        });
         countryList.appendChild(li);
-      }
-      showMoreCountriesBtn.style.display = filtered.length > visibleCountryCount ? "block" : "none";
+      });
     }
 
-    function renderRequests(){
-      var allReq = getRequests();
+    document.getElementById("showMoreCountries").addEventListener("click", () => {
+      visibleCountries += 10;
+      renderCountries();
+    });
 
-      // draw side lists (always visible with counts)
+    countrySearch.addEventListener("input", renderCountries);
+    categorySearch.addEventListener("input", () => renderCategories(getRequests()));
+
+    clearFilters.addEventListener("click", () => {
+      selectedCategory = null;
+      selectedCountry = null;
+      searchInput.value = "";
+      categorySearch.value = "";
+      countrySearch.value = "";
+      visibleCategories = 15;
+      visibleCountries = 10;
+      renderRequests();
+    });
+
+    function renderRequests() {
+      const allReq = getRequests();
       renderCategories(allReq);
       renderCountries();
 
-      var term = (searchInput.value || "").toLowerCase();
-
-      var filtered = [];
-      for (var i=0;i<allReq.length;i++){
-        var r = allReq[i];
-        var okTab = (activeTab === "all") || (r.type === activeTab);
-        var okCat = (!selectedCategory) || (r.category === selectedCategory);
-        var okCtry = (!selectedCountry) || (r.country === selectedCountry);
-        var okText = (r.title && r.title.toLowerCase().indexOf(term) !== -1) ||
-                     (r.description && r.description.toLowerCase().indexOf(term) !== -1);
-        if (okTab && okCat && okCtry && okText){ filtered.push(r); }
-      }
+      const term = searchInput.value.toLowerCase();
+      let filtered = allReq.filter(r =>
+        (activeTab === "all" || r.type === activeTab) &&
+        (!selectedCategory || r.category === selectedCategory) &&
+        (!selectedCountry || r.country === selectedCountry) &&
+        (r.title.toLowerCase().includes(term) || r.description.toLowerCase().includes(term))
+      );
 
       requestContainer.innerHTML = "";
-      var lim = Math.min(filtered.length, visibleRequests);
-      for (var j=0;j<lim;j++){
-        var rr = filtered[j];
-        var card = document.createElement("div");
-        card.className = "request-card";
-        card.innerHTML =
-          '<h5>'+ (rr.title || '') +'</h5>'+
-          '<p>'+ (rr.description || '') +'</p>'+
-          '<small>'+ (rr.country || 'Unknown') +' · '+ (rr.category || 'Uncategorized') +'</small>';
-        (function(id){
-          card.addEventListener("click", function(){
-            window.location.href = "request-detail.html?id=" + encodeURIComponent(id);
-          });
-        })(rr.id);
-        requestContainer.appendChild(card);
-      }
+      filtered.slice(0, visibleRequests).forEach(r => {
+        const div = document.createElement("div");
+        div.className = "request-card";
+        div.innerHTML = `<h5>${r.title}</h5><p>${r.description}</p><small>${r.country} · ${r.category}</small>`;
+        requestContainer.appendChild(div);
+      });
 
-      var showBtn = document.getElementById("showMoreRequests");
-      showBtn.style.display = (filtered.length > visibleRequests) ? "block" : "none";
+      document.getElementById("showMoreRequests").style.display =
+        filtered.length > visibleRequests ? "block" : "none";
     }
 
-    /* ---------- Events ---------- */
-    document.getElementById("showMoreRequests").addEventListener("click", function(){
+    document.getElementById("showMoreRequests").addEventListener("click", () => {
       visibleRequests += 10;
       renderRequests();
     });
 
-    searchInput.addEventListener("input", function(){
-      visibleRequests = 15;
-      renderRequests();
+    searchInput.addEventListener("input", renderRequests);
+
+    ["tabAll", "tabBuy", "tabSell"].forEach(id => {
+      document.getElementById(id).addEventListener("click", e => {
+        document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+        e.target.classList.add("active");
+        activeTab = id === "tabAll" ? "all" : id === "tabBuy" ? "buy" : "sell";
+        renderRequests();
+      });
     });
 
-    tabs.all.addEventListener("click", function(){
-      tabs.all.classList.add("active"); tabs.buy.classList.remove("active"); tabs.sell.classList.remove("active");
-      activeTab = "all"; visibleRequests = 15; renderRequests();
-    });
-    tabs.buy.addEventListener("click", function(){
-      tabs.buy.classList.add("active"); tabs.all.classList.remove("active"); tabs.sell.classList.remove("active");
-      activeTab = "buy"; visibleRequests = 15; renderRequests();
-    });
-    tabs.sell.addEventListener("click", function(){
-      tabs.sell.classList.add("active"); tabs.all.classList.remove("active"); tabs.buy.classList.remove("active");
-      activeTab = "sell"; visibleRequests = 15; renderRequests();
-    });
-
-    showMoreCountriesBtn.addEventListener("click", function(){
-      visibleCountryCount += 10;
-      renderCountries();
-    });
-    countrySearch.addEventListener("input", function(){
-      visibleCountryCount = 10;
-      renderCountries();
-    });
-
-    document.getElementById("clearFilters").addEventListener("click", function(){
-      selectedCategory = null;
-      selectedCountry = null;
-      searchInput.value = "";
-      countrySearch.value = "";
-      visibleRequests = 15;
-      visibleCountryCount = 10;
-      renderRequests();
-    });
-
-    /* ---------- Initial paint ---------- */
     renderRequests();
   </script>
 </body>
