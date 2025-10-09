@@ -1,16 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Register — Trader Route</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Sign Up — Trader Route</title>
 <link rel="icon" href="assets/logos.png">
 <style>
   body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f4f7f8}
   header{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
   .box{max-width:520px;margin:50px auto;padding:22px;background:#fff;border-radius:10px;box-shadow:0 8px 30px rgba(2,8,23,0.06)}
-  input{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ddd}
-  .btn{background:#008b6a;color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
-  footer{text-align:center;padding:18px;background:#111;color:#eee;margin-top:30px}
+  label{display:block;margin-top:8px;font-weight:600;color:#333}
+  input{width:100%;padding:10px;margin-top:4px;border-radius:8px;border:1px solid #ccc;font-size:15px}
+  .btn{background:#008b6a;color:#fff;padding:12px 18px;border-radius:8px;border:none;cursor:pointer;font-weight:600;font-size:15px;margin-top:10px;width:100%}
+  .btn:hover{background:#006c51}
+  footer{text-align:center;padding:18px;background:#111;color:#eee;margin-top:30px;font-size:14px}
 </style>
 </head>
 <body>
@@ -23,41 +26,53 @@
 </header>
 
 <div class="box">
-  <h2>Create an Account</h2>
+  <h2>Sign Up</h2>
   <form id="regForm" onsubmit="event.preventDefault();doRegister();">
-    <input id="name" placeholder="Full name" required>
-    <input id="email" type="email" placeholder="Email" required>
-    <input id="company" placeholder="Company name (optional)">
+    <label for="name">Full Name</label>
+    <input id="name" type="text" placeholder="Your full name" required>
+
+    <label for="email">Email Address</label>
+    <input id="email" type="email" placeholder="example@mail.com" required>
+
+    <label for="company">Company Name (optional)</label>
+    <input id="company" type="text" placeholder="Your company">
+
+    <label for="password">Password</label>
     <input id="password" type="password" placeholder="Password" required>
-    <button class="btn" type="submit">Register</button>
+
+    <button class="btn" type="submit">Sign Up</button>
   </form>
-  <div id="regMsg" style="margin-top:12px;color:green"></div>
+  <div id="regMsg" style="margin-top:12px;color:green;text-align:center;"></div>
 </div>
 
 <footer>© 2025 Trader Route</footer>
 
 <script>
-  function doRegister(){
-    const name=document.getElementById('name').value.trim();
-    const email=document.getElementById('email').value.trim();
-    const company=document.getElementById('company').value.trim();
-    const password=document.getElementById('password').value;
-    const msg=document.getElementById('regMsg');
+function doRegister(){
+  const name=document.getElementById('name').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const company=document.getElementById('company').value.trim();
+  const password=document.getElementById('password').value;
+  const msg=document.getElementById('regMsg');
 
-    if(!name||!email||!password){ msg.textContent='Please fill required fields.'; msg.style.color='red'; return; }
-
-    const users = JSON.parse(localStorage.getItem('tr_users')||'[]');
-    if(users.find(u=>u.email.toLowerCase()===email.toLowerCase())){ msg.textContent='Email already registered (demo).'; msg.style.color='red'; return; }
-
-    const user={name,email,company,password,created:new Date().toISOString()};
-    users.push(user);
-    localStorage.setItem('tr_users', JSON.stringify(users));
-    localStorage.setItem('tr_user', JSON.stringify(user));
-
-    msg.textContent='Registration successful. Redirecting...';
-    msg.style.color='green';
-    setTimeout(()=> location.href='index.html',900);
+  if(!name||!email||!password){
+    msg.textContent='Please fill required fields.'; msg.style.color='red'; return;
   }
+
+  const users = JSON.parse(localStorage.getItem('tr_users')||'[]');
+  if(users.find(u=>u.email.toLowerCase()===email.toLowerCase())){
+    msg.textContent='This email is already registered.'; msg.style.color='red'; return;
+  }
+
+  const user={name,email,company,password,created:new Date().toISOString()};
+  users.push(user);
+  localStorage.setItem('tr_users', JSON.stringify(users));
+  localStorage.setItem('tr_user', JSON.stringify(user));
+
+  msg.textContent='Registration successful! Redirecting...';
+  msg.style.color='green';
+  setTimeout(()=>location.href='index.html',1200);
+}
 </script>
 </body>
 </html>
