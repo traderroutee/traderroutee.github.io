@@ -1,81 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Requests — Trader Route</title>
-<link rel="icon" href="assets/logos.png" type="image/png">
-<style>
-body{font-family:"Segoe UI",sans-serif;background:#f8f9fa;margin:0;}
-header{background:#fff;padding:15px 40px;box-shadow:0 2px 8px rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:space-between;}
-header .logo{display:flex;align-items:center;gap:10px;}
-header .logo img{height:40px;}
-main{display:flex;padding:20px 40px;gap:20px;}
-.sidebar{background:#fff;padding:20px;width:250px;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,0.1);}
-.sidebar h3{color:#008d62;}
-.sidebar ul{list-style:none;padding:0;}
-.sidebar ul li{padding:8px;border-bottom:1px solid #eee;cursor:pointer;}
-.sidebar ul li:hover{background:#f0f0f0;color:#008d62;}
-.content{flex:1;}
-.filters{display:flex;gap:10px;margin-bottom:15px;}
-.filters button{border:none;padding:8px 16px;border-radius:5px;cursor:pointer;}
-.filters .active{background:#008d62;color:white;}
-.request-card{background:#fff;padding:20px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
-.request-card:hover{transform:translateY(-2px);}
-.request-card h4{margin:0;color:#000;}
-small{color:#777;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trader Route - Requests</title>
+  <link rel="stylesheet" href="stil.css">
+  <style>
+    .container { max-width: 1200px; margin: 40px auto; display: flex; gap: 20px; }
+    .sidebar { width: 280px; background: #f8f9fa; padding: 20px; border-radius: 10px; }
+    .sidebar h4 { margin-bottom: 15px; color: #222; }
+    .category-list, .country-list { list-style: none; padding-left: 0; margin: 0; }
+    .category-list li, .country-list li { margin-bottom: 8px; }
+    .category-list a, .country-list a {
+      text-decoration: none; color: #333; display: flex; justify-content: space-between;
+    }
+    .category-list a:hover, .country-list a:hover { color: #007bff; }
+    .count { color: #888; font-size: 0.9em; }
+    .content { flex: 1; }
+    .request-card {
+      border: 1px solid #e3e3e3; border-radius: 8px;
+      padding: 15px; margin-bottom: 15px; background: #fff;
+      transition: all 0.2s ease-in-out;
+    }
+    .request-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .request-card h5 { margin: 0 0 5px; }
+    #countrySearch {
+      width: 100%; padding: 8px; border: 1px solid #ccc;
+      border-radius: 6px; margin-bottom: 10px;
+    }
+    #showMoreCountries {
+      display: block; width: 100%; padding: 8px;
+      border: none; background-color: #007bff;
+      color: white; border-radius: 6px; margin-top: 10px;
+      cursor: pointer; font-size: 14px;
+    }
+    #showMoreCountries:hover { background-color: #0056b3; }
+    @media(max-width: 768px) {
+      .container { flex-direction: column; }
+      .sidebar { width: 100%; }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">
-    <img src="assets/logos.png" alt="logo">
-    <span><b>Trader Route</b> — Requests</span>
-  </div>
-</header>
+  <div class="container">
+    <!-- SOL KISIM -->
+    <div class="sidebar">
+      <h4>Categories</h4>
+      <ul class="category-list" id="categoryList"></ul>
 
-<main>
-  <aside class="sidebar">
-    <h3>Categories</h3>
-    <ul id="categoryList"></ul>
-  </aside>
-
-  <section class="content">
-    <div class="filters">
-      <button id="allBtn" class="active">All Requests</button>
-      <button id="buyingBtn">Buying Requests</button>
-      <button id="sellingBtn">Selling Offers</button>
+      <h4>Countries</h4>
+      <input type="text" id="countrySearch" placeholder="Search country...">
+      <ul class="country-list" id="countryList"></ul>
+      <button id="showMoreCountries">Show more countries</button>
     </div>
-    <div id="requestsContainer"></div>
-  </section>
-</main>
 
-<script>
-async function loadRequests() {
-  const res = await fetch('data/requests.json');
-  const data = await res.json();
-  const container = document.getElementById("requestsContainer");
-  const categoryList = document.getElementById("categoryList");
-  const categories = [...new Set(data.map(item => item.category))];
-  categoryList.innerHTML = categories.map(cat => `<li onclick="filterByCategory('${cat}')">${cat}</li>`).join('');
-  displayRequests(data);
-  document.getElementById("allBtn").onclick = () => { displayRequests(data); setActive("allBtn"); };
-  document.getElementById("buyingBtn").onclick = () => { displayRequests(data.filter(i => i.type==="buying")); setActive("buyingBtn"); };
-  document.getElementById("sellingBtn").onclick = () => { displayRequests(data.filter(i => i.type==="selling")); setActive("sellingBtn"); };
-  window.filterByCategory = cat => displayRequests(data.filter(i => i.category===cat));
-  function setActive(id){document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));document.getElementById(id).classList.add("active");}
-  function displayRequests(list){
-    container.innerHTML = list.map((r, i) => `
-      <div class="request-card" onclick="location.href='request-detail.html?id=${i}'">
-        <h4>${r.title}</h4>
-        <small>${r.country} • ${r.category} • ${r.type}</small>
-        <p>${r.description}</p>
-      </div>`).join('');
-  }
-}
-loadRequests();
-</script>
+    <!-- SAĞ KISIM -->
+    <div class="content">
+      <h3>All Requests</h3>
+      <div id="requestItems"></div>
+    </div>
+  </div>
 
+  <script>
+    // --- KATEGORİLER ---
+    const categories = [
+      "Agriculture","Apparel","Automobiles & Motorcycles","Beauty & Personal Care",
+      "Business Services","Chemicals","Computer Hardware & Software","Construction & Real Estate",
+      "Consumer Electronics","Electrical Equipment & Supplies","Electronic Components & Supplies",
+      "Energy","Environment","Fashion Accessories","Food & Beverage","Furniture",
+      "Gifts & Crafts","Hardware","Health & Medical","Home & Garden","Home Appliances",
+      "Lights & Lighting","Luggage, Bags & Cases","Machinery","Measurement & Analysis Instruments",
+      "Minerals & Metallurgy","Office & School Supplies","Packaging & Printing","Rubber & Plastics",
+      "Security & Protection","Service Equipment","Shoes & Accessories","Sports & Entertainment",
+      "Telecommunications","Textiles & Leather Products","Tools","Toys & Hobbies","Transportation"
+    ];
+
+    const allCountries = [
+      "Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Armenia","Australia","Austria","Azerbaijan",
+      "Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
+      "Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada",
+      "Cape Verde","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica","Croatia",
+      "Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador",
+      "Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia",
+      "Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti",
+      "Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy",
+      "Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia",
+      "Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia",
+      "Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco",
+      "Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand",
+      "Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Palestine",
+      "Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia",
+      "Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia",
+      "Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","Spain",
+      "Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand",
+      "Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates",
+      "United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+    ];
+
+    const requestCounts = {};
+    categories.forEach(cat => requestCounts[cat] = Math.floor(Math.random() * 30) + 1);
+
+    // Kategorileri göster
+    const catList = document.getElementById('categoryList');
+    categories.forEach(cat => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="#">${cat}<span class="count">(${requestCounts[cat]})</span></a>`;
+      catList.appendChild(li);
+    });
+
+    // Ülkeler
+    let visibleCount = 10;
+    const countryList = document.getElementById('countryList');
+    const showMoreBtn = document.getElementById('showMoreCountries');
+    const searchInput = document.getElementById('countrySearch');
+
+    function renderCountries() {
+      countryList.innerHTML = "";
+      const filtered = allCountries.filter(c =>
+        c.toLowerCase().includes(searchInput.value.toLowerCase())
+      );
+      filtered.slice(0, visibleCount).forEach(c => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="#">${c}</a>`;
+        countryList.appendChild(li);
+      });
+      showMoreBtn.style.display = filtered.length > visibleCount ? "block" : "none";
+    }
+
+    searchInput.addEventListener('input', () => {
+      visibleCount = 10;
+      renderCountries();
+    });
+
+    showMoreBtn.addEventListener('click', () => {
+      visibleCount += 10;
+      renderCountries();
+    });
+
+    renderCountries();
+
+    // Sağdaki örnek ilanlar
+    const requestItems = document.getElementById('requestItems');
+    for (let i = 1; i <= 8; i++) {
+      const div = document.createElement('div');
+      div.className = 'request-card';
+      div.innerHTML = `
+        <h5>Request ${i}</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <small>Category: ${categories[Math.floor(Math.random()*categories.length)]}</small>
+      `;
+      requestItems.appendChild(div);
+    }
+  </script>
 </body>
 </html>
