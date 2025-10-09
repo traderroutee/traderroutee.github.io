@@ -1,185 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Free Request — Trader Route</title>
-<link rel="icon" href="assets/logos.png">
-<style>
-  :root {
-    --accent: #008b6a;
-    --accent-dark: #007157;
-  }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    background: #f7f7f7;
-    color: #222;
-  }
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    padding: 12px 28px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-  }
-  header img { height: 48px; }
-  nav a {
-    margin: 0 10px;
-    color: #333;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  nav a:hover { color: var(--accent); }
-
-  main {
-    max-width: 600px;
-    background: #fff;
-    margin: 40px auto;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  }
-
-  h1 {
-    text-align: center;
-    color: var(--accent);
-    margin-bottom: 20px;
-  }
-
-  label {
-    font-weight: 600;
-    display: block;
-    margin-top: 15px;
-  }
-
-  input, select, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 15px;
-  }
-
-  textarea {
-    min-height: 100px;
-    resize: vertical;
-  }
-
-  button {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-
-  button:hover {
-    background: var(--accent-dark);
-  }
-
-  .success-message {
-    display: none;
-    text-align: center;
-    background: #d1fae5;
-    color: #065f46;
-    border: 1px solid #a7f3d0;
-    padding: 15px;
-    border-radius: 6px;
-    margin-top: 15px;
-  }
-
-  footer {
-    background: #111;
-    color: #fff;
-    text-align: center;
-    padding: 15px;
-    margin-top: 50px;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Request - Trader Route</title>
+  <link rel="stylesheet" href="stil.css">
+  <style>
+    .container{max-width:1000px; margin:40px auto; padding:0 16px;}
+    .card{background:#fff; border:1px solid #e3e3e3; border-radius:10px; padding:20px;}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+    .row-1{display:block;}
+    label{display:block; font-weight:600; margin:10px 0 6px;}
+    input, select, textarea{
+      width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:14px;
+    }
+    textarea{min-height:140px; resize:vertical;}
+    .actions{display:flex; gap:10px; margin-top:18px;}
+    .btn{border:0; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:600;}
+    .btn-primary{background:#007bff; color:#fff;}
+    .btn-outline{background:#fff; border:1px solid #ddd;}
+    .hint{color:#666; font-size:12px; margin-top:6px;}
+    .note{background:#f8f9fa; border:1px dashed #d9d9d9; padding:10px 12px; border-radius:8px; margin-bottom:14px; color:#444;}
+    @media(max-width:768px){.row{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h2>Create a New Request</h2>
+    <p class="note">
+      Signed in as: <strong id="whoami">guest@traderroute.com</strong><br/>
+      (Login page should set <code>localStorage.currentUserEmail</code>.)
+    </p>
 
-<header>
-  <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo"></a>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="companies.html">Companies</a>
-    <a href="requests.html">Requests</a>
-    <a href="contact.html">Contact</a>
-    <a href="pricing.html">Pricing</a>
-  </nav>
-</header>
+    <div class="card">
+      <form id="requestForm">
+        <div class="row">
+          <div>
+            <label for="title">Title</label>
+            <input id="title" name="title" placeholder="e.g., Import 10,000 LED Bulbs" required />
+          </div>
+          <div>
+            <label for="quantity">Quantity</label>
+            <input id="quantity" name="quantity" type="number" min="1" placeholder="e.g., 10000" required />
+          </div>
 
-<main>
-  <h1>Free Request Submission</h1>
+          <div>
+            <label for="category">Category</label>
+            <select id="category" required></select>
+          </div>
+          <div>
+            <label for="country">Country</label>
+            <select id="country" required></select>
+          </div>
 
-  <form id="requestForm">
-    <label for="type">Request Type</label>
-    <select id="type" required>
-      <option value="">Select...</option>
-      <option value="buying">I'm a Buyer (Purchase Request)</option>
-      <option value="selling">I'm a Seller (Sales Offer)</option>
-    </select>
+          <div>
+            <label for="price">Target Price (optional)</label>
+            <input id="price" name="price" placeholder="e.g., 0.85 USD/unit" />
+          </div>
+          <div>
+            <label for="deadline">Deadline (optional)</label>
+            <input id="deadline" type="date" />
+          </div>
+        </div>
 
-    <label for="title">Request Title</label>
-    <input type="text" id="title" placeholder="e.g., Buy 500 kg Organic Honey" required>
+        <div class="row-1">
+          <label for="description">Description</label>
+          <textarea id="description" placeholder="Describe your request... (specs, incoterms, delivery expectations)"></textarea>
+          <div class="hint">Attachments aren’t stored on GitHub Pages. You can paste a link (e.g., Google Drive) into description.</div>
+        </div>
 
-    <label for="company">Company Name</label>
-    <input type="text" id="company" placeholder="Enter your company name" required>
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">Create Request</button>
+          <button class="btn btn-outline" type="reset">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-    <label for="country">Country</label>
-    <input type="text" id="country" placeholder="Enter your country" required>
+  <script>
+    // --- helpers / data -------------------------------------------------------
+    const CATEGORIES = [
+      "Agriculture","Apparel","Automobiles & Motorcycles","Beauty & Personal Care",
+      "Business Services","Chemicals","Computer Hardware & Software","Construction & Real Estate",
+      "Consumer Electronics","Electrical Equipment & Supplies","Electronic Components & Supplies",
+      "Energy","Environment","Fashion Accessories","Food & Beverage","Furniture",
+      "Gifts & Crafts","Hardware","Health & Medical","Home & Garden","Home Appliances",
+      "Lights & Lighting","Luggage, Bags & Cases","Machinery","Measurement & Analysis Instruments",
+      "Minerals & Metallurgy","Office & School Supplies","Packaging & Printing","Rubber & Plastics",
+      "Security & Protection","Service Equipment","Shoes & Accessories","Sports & Entertainment",
+      "Telecommunications","Textiles & Leather Products","Tools","Toys & Hobbies","Transportation"
+    ];
 
-    <label for="details">Request Details</label>
-    <textarea id="details" placeholder="Provide detailed information about your request..." required></textarea>
+    const COUNTRIES = [
+      "Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Armenia","Australia","Austria","Azerbaijan",
+      "Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
+      "Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada",
+      "Cape Verde","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica","Croatia",
+      "Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador",
+      "Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia",
+      "Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti",
+      "Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy",
+      "Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia",
+      "Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia",
+      "Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco",
+      "Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand",
+      "Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Palestine",
+      "Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia",
+      "Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia",
+      "Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","Spain",
+      "Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand",
+      "Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates",
+      "United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+    ];
 
-    <button type="submit">Submit Request</button>
-    <div class="success-message" id="successMessage">✅ Your request has been successfully submitted!</div>
-  </form>
-</main>
+    function getCurrentUserEmail(){
+      return localStorage.getItem('currentUserEmail') || 'guest@traderroute.com';
+    }
+    function loadRequests(){
+      try { return JSON.parse(localStorage.getItem('requests')||'[]'); } catch(e){ return []; }
+    }
+    function saveRequests(arr){
+      localStorage.setItem('requests', JSON.stringify(arr));
+    }
 
-<footer>
-  © 2025 Trader Route — Connecting Global Trade.
-</footer>
+    // --- init selects & whoami -----------------------------------------------
+    document.getElementById('whoami').textContent = getCurrentUserEmail();
+    const catSel = document.getElementById('category');
+    CATEGORIES.forEach(c=>{
+      const o=document.createElement('option'); o.value=c; o.textContent=c; catSel.appendChild(o);
+    });
+    const countrySel = document.getElementById('country');
+    COUNTRIES.forEach(c=>{
+      const o=document.createElement('option'); o.value=c; o.textContent=c; countrySel.appendChild(o);
+    });
 
-<script>
-document.getElementById("requestForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const type = document.getElementById("type").value;
-  const title = document.getElementById("title").value;
-  const company = document.getElementById("company").value;
-  const country = document.getElementById("country").value;
-  const details = document.getElementById("details").value;
-
-  const newRequest = {
-    type,
-    title,
-    company,
-    country,
-    details,
-    date: new Date().toISOString().split("T")[0]
-  };
-
-  let requests = JSON.parse(localStorage.getItem("requests") || "[]");
-  requests.push(newRequest);
-  localStorage.setItem("requests", JSON.stringify(requests));
-
-  document.getElementById("successMessage").style.display = "block";
-  document.getElementById("requestForm").reset();
-
-  // yönlendirme
-  setTimeout(() => {
-    window.location.href = `requests.html?type=${type}`;
-  }, 1500);
-});
-</script>
-
+    // --- submit ---------------------------------------------------------------
+    document.getElementById('requestForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = {
+        id: Date.now().toString(),
+        ownerEmail: getCurrentUserEmail(),
+        title: document.getElementById('title').value.trim(),
+        quantity: Number(document.getElementById('quantity').value),
+        category: document.getElementById('category').value,
+        country: document.getElementById('country').value,
+        price: document.getElementById('price').value.trim(),
+        deadline: document.getElementById('deadline').value,
+        description: document.getElementById('description').value.trim(),
+        createdAt: new Date().toISOString()
+      };
+      const list = loadRequests();
+      list.unshift(data);
+      saveRequests(list);
+      alert('Request created successfully!');
+      // Go to detail page
+      window.location.href = `istek-detay.html?id=${encodeURIComponent(data.id)}`;
+    });
+  </script>
 </body>
 </html>
