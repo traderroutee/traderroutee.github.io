@@ -2,159 +2,254 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create Request - Trader Route</title>
-  <link rel="stylesheet" href="stil.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post a Trade Request - TraderRoute</title>
+
+  <link rel="icon" href="assets/logo.png" />
+  <link rel="stylesheet" href="style.css" />
+
   <style>
-    .container{max-width:1000px; margin:40px auto; padding:0 16px;}
-    .card{background:#fff; border:1px solid #e3e3e3; border-radius:10px; padding:20px;}
-    .row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
-    .row-1{display:block;}
-    label{display:block; font-weight:600; margin:10px 0 6px;}
-    input, select, textarea{
-      width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:14px;
+    body {
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f6f8;
+      color: #222;
     }
-    textarea{min-height:140px; resize:vertical;}
-    .actions{display:flex; gap:10px; margin-top:18px;}
-    .btn{border:0; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:600;}
-    .btn-primary{background:#007bff; color:#fff;}
-    .btn-outline{background:#fff; border:1px solid #ddd;}
-    .hint{color:#666; font-size:12px; margin-top:6px;}
-    .note{background:#f8f9fa; border:1px dashed #d9d9d9; padding:10px 12px; border-radius:8px; margin-bottom:14px; color:#444;}
-    @media(max-width:768px){.row{grid-template-columns:1fr}}
+
+    header {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 30px;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    header img { height: 50px; }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      margin: 0 15px;
+      transition: 0.3s;
+    }
+    nav a:hover { color: #007bff; }
+
+    main {
+      max-width: 700px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: #111;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 18px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    form textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #005ec4;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      background: #d4edda;
+      color: #155724;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      border: 1px solid #c3e6cb;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      color: #555;
+      margin-top: 60px;
+    }
+
+    footer img {
+      height: 40px;
+      display: block;
+      margin: 0 auto 10px;
+    }
+
+    @media (max-width: 768px) {
+      main { margin: 30px 15px; padding: 25px; }
+    }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <h2>Create a New Request</h2>
-    <p class="note">
-      Signed in as: <strong id="whoami">guest@traderroute.com</strong><br/>
-      (Login page should set <code>localStorage.currentUserEmail</code>.)
-    </p>
+  <header>
+    <a href="index.html"><img src="assets/logos.png" alt="TraderRoute Logo" /></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="requests.html">Requests</a>
+      <a href="register.html">Register</a>
+      <a href="login.html">Login</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-    <div class="card">
-      <form id="requestForm">
-        <div class="row">
-          <div>
-            <label for="title">Title</label>
-            <input id="title" name="title" placeholder="e.g., Import 10,000 LED Bulbs" required />
-          </div>
-          <div>
-            <label for="quantity">Quantity</label>
-            <input id="quantity" name="quantity" type="number" min="1" placeholder="e.g., 10000" required />
-          </div>
+  <main>
+    <h1>Post a Trade Request</h1>
 
-          <div>
-            <label for="category">Category</label>
-            <select id="category" required></select>
-          </div>
-          <div>
-            <label for="country">Country</label>
-            <select id="country" required></select>
-          </div>
-
-          <div>
-            <label for="price">Target Price (optional)</label>
-            <input id="price" name="price" placeholder="e.g., 0.85 USD/unit" />
-          </div>
-          <div>
-            <label for="deadline">Deadline (optional)</label>
-            <input id="deadline" type="date" />
-          </div>
-        </div>
-
-        <div class="row-1">
-          <label for="description">Description</label>
-          <textarea id="description" placeholder="Describe your request... (specs, incoterms, delivery expectations)"></textarea>
-          <div class="hint">Attachments aren’t stored on GitHub Pages. You can paste a link (e.g., Google Drive) into description.</div>
-        </div>
-
-        <div class="actions">
-          <button class="btn btn-primary" type="submit">Create Request</button>
-          <button class="btn btn-outline" type="reset">Clear</button>
-        </div>
-      </form>
+    <div id="successMsg" class="success-message">
+      ✅ Your request has been successfully posted.
     </div>
-  </div>
+
+    <form id="requestForm">
+      <label for="title">Title</label>
+      <input type="text" id="title" placeholder="Enter request title" required />
+
+      <label for="description">Description</label>
+      <textarea id="description" placeholder="Describe your trade request..." required></textarea>
+
+      <label for="category">Category</label>
+      <select id="category" required>
+        <option value="">Select Category</option>
+      </select>
+
+      <label for="country">Country</label>
+      <select id="country" required>
+        <option value="">Select Country</option>
+      </select>
+
+      <label for="type">Type</label>
+      <select id="type" required>
+        <option value="buy">Buy Request</option>
+        <option value="sell">Sell Request</option>
+      </select>
+
+      <button type="submit">Submit Request</button>
+    </form>
+  </main>
+
+  <footer>
+    <img src="assets/logos.png" alt="TraderRoute Logo" />
+    <p>© 2025 TraderRoute. All rights reserved.</p>
+  </footer>
 
   <script>
-    // --- helpers / data -------------------------------------------------------
-    const CATEGORIES = [
-      "Agriculture","Apparel","Automobiles & Motorcycles","Beauty & Personal Care",
-      "Business Services","Chemicals","Computer Hardware & Software","Construction & Real Estate",
-      "Consumer Electronics","Electrical Equipment & Supplies","Electronic Components & Supplies",
-      "Energy","Environment","Fashion Accessories","Food & Beverage","Furniture",
-      "Gifts & Crafts","Hardware","Health & Medical","Home & Garden","Home Appliances",
-      "Lights & Lighting","Luggage, Bags & Cases","Machinery","Measurement & Analysis Instruments",
-      "Minerals & Metallurgy","Office & School Supplies","Packaging & Printing","Rubber & Plastics",
-      "Security & Protection","Service Equipment","Shoes & Accessories","Sports & Entertainment",
-      "Telecommunications","Textiles & Leather Products","Tools","Toys & Hobbies","Transportation"
+    const categories = [
+      "Agricultural Machinery","Agriculture Industry","Automotive","Baby Products and Accessories",
+      "Chemical Industry","Clothing - Fashion","Commercial Activities","Construction and Building Industry",
+      "Cosmetic Products","Data and Communication Technology","Defense Industry","Electric – Electronic",
+      "Energy Sector","Entertainment Hobbies","Environment and Recycling","Food Industry","Forestry Products",
+      "Furniture","Furniture – Wood Products","Giftware – Promotions","Heating - Cooling - Ventilation",
+      "Horeca - Hospitality Industry","Husbandry Industry","Industrial Products","Jewelry",
+      "Kitchenware–Glassware","Leather Products & Shoes","Machinery Industry","Marble–Mining",
+      "Marine Vehicles and Equipment","Medical Products – Healthcare – Pharmaceutical",
+      "Metals–Iron–Steel","Paper - Packaging - Printing","Plastic and Rubber Industry",
+      "Sanitary - Cleaning Products","Security Equipments","Services","Sporting Equipments - Materials",
+      "Stationery, Schools and Offices","Textile Products","Tourism","White Goods – Home Appliances"
     ];
 
-    const COUNTRIES = [
-      "Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Armenia","Australia","Austria","Azerbaijan",
-      "Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
-      "Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada",
-      "Cape Verde","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica","Croatia",
-      "Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador",
-      "Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia",
-      "Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti",
-      "Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy",
-      "Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia",
-      "Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia",
-      "Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco",
-      "Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand",
-      "Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Palestine",
-      "Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia",
-      "Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia",
-      "Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","Spain",
-      "Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand",
-      "Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates",
-      "United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+    const countries = [
+      "Turkey","United States","Germany","France","Italy","Spain","China","Japan","India","Brazil",
+      "Russia","Canada","Australia","United Kingdom","Netherlands","Sweden","Switzerland","United Arab Emirates","Saudi Arabia","Egypt"
     ];
 
-    function getCurrentUserEmail(){
-      return localStorage.getItem('currentUserEmail') || 'guest@traderroute.com';
-    }
-    function loadRequests(){
-      try { return JSON.parse(localStorage.getItem('requests')||'[]'); } catch(e){ return []; }
-    }
-    function saveRequests(arr){
-      localStorage.setItem('requests', JSON.stringify(arr));
-    }
-
-    // --- init selects & whoami -----------------------------------------------
-    document.getElementById('whoami').textContent = getCurrentUserEmail();
-    const catSel = document.getElementById('category');
-    CATEGORIES.forEach(c=>{
-      const o=document.createElement('option'); o.value=c; o.textContent=c; catSel.appendChild(o);
+    const catSelect = document.getElementById("category");
+    const countrySelect = document.getElementById("country");
+    categories.forEach(cat => {
+      const opt = document.createElement("option");
+      opt.value = cat;
+      opt.textContent = cat;
+      catSelect.appendChild(opt);
     });
-    const countrySel = document.getElementById('country');
-    COUNTRIES.forEach(c=>{
-      const o=document.createElement('option'); o.value=c; o.textContent=c; countrySel.appendChild(o);
+    countries.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      countrySelect.appendChild(opt);
     });
 
-    // --- submit ---------------------------------------------------------------
-    document.getElementById('requestForm').addEventListener('submit', (e)=>{
+    const requestForm = document.getElementById("requestForm");
+    const successMsg = document.getElementById("successMsg");
+
+    function getRequests() {
+      return JSON.parse(localStorage.getItem("requests") || "[]");
+    }
+
+    function saveRequests(requests) {
+      localStorage.setItem("requests", JSON.stringify(requests));
+    }
+
+    requestForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const data = {
-        id: Date.now().toString(),
-        ownerEmail: getCurrentUserEmail(),
-        title: document.getElementById('title').value.trim(),
-        quantity: Number(document.getElementById('quantity').value),
-        category: document.getElementById('category').value,
-        country: document.getElementById('country').value,
-        price: document.getElementById('price').value.trim(),
-        deadline: document.getElementById('deadline').value,
-        description: document.getElementById('description').value.trim(),
-        createdAt: new Date().toISOString()
+      const title = document.getElementById("title").value.trim();
+      const description = document.getElementById("description").value.trim();
+      const category = document.getElementById("category").value;
+      const country = document.getElementById("country").value;
+      const type = document.getElementById("type").value;
+
+      if (!title || !description || !category || !country) return;
+
+      const newReq = {
+        title,
+        description,
+        category,
+        country,
+        type,
+        date: new Date().toISOString()
       };
-      const list = loadRequests();
-      list.unshift(data);
-      saveRequests(list);
-      alert('Request created successfully!');
-      // Go to detail page
-      window.location.href = `istek-detay.html?id=${encodeURIComponent(data.id)}`;
+
+      const requests = getRequests();
+      requests.push(newReq);
+      saveRequests(requests);
+
+      successMsg.style.display = "block";
+      requestForm.reset();
+
+      setTimeout(() => {
+        successMsg.style.display = "none";
+      }, 3000);
     });
   </script>
 </body>
