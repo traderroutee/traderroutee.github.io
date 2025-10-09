@@ -192,44 +192,44 @@
 
   <script>
     const categories = [
-      "Agriculture","Apparel","Automobiles & Motorcycles","Beauty & Personal Care",
-      "Business Services","Chemicals","Computer Hardware & Software","Construction & Real Estate",
-      "Consumer Electronics","Electrical Equipment & Supplies","Electronic Components & Supplies",
-      "Energy","Environment","Fashion Accessories","Food & Beverage","Furniture",
-      "Gifts & Crafts","Hardware","Health & Medical","Home & Garden","Home Appliances",
-      "Lights & Lighting","Luggage, Bags & Cases","Machinery","Measurement & Analysis Instruments",
-      "Minerals & Metallurgy","Office & School Supplies","Packaging & Printing","Rubber & Plastics",
-      "Security & Protection","Service Equipment","Shoes & Accessories","Sports & Entertainment",
-      "Telecommunications","Textiles & Leather Products","Tools","Toys & Hobbies","Transportation"
+      "Agricultural Machinery","Agriculture Industry","Automotive","Baby Products and Accessories",
+      "Chemical Industry","Clothing - Fashion","Commercial Activities","Construction and Building Industry",
+      "Cosmetic Products","Data and Communication Technology","Defense Industry","Electric – Electronic",
+      "Energy Sector","Entertainment Hobbies","Environment and Recycling","Food Industry","Forestry Products",
+      "Furniture","Furniture – Wood Products","Giftware – Promotions","Heating - Cooling - Ventilation",
+      "Horeca - Hospitality Industry","Husbandry Industry","Industrial Products","Jewelry",
+      "Kitchenware–Glassware","Leather Products & Shoes","Machinery Industry","Marble–Mining",
+      "Marine Vehicles and Equipment","Medical Products – Healthcare – Pharmaceutical",
+      "Metals–Iron–Steel","Paper - Packaging - Printing","Plastic and Rubber Industry",
+      "Sanitary - Cleaning Products","Security Equipments","Services","Sporting Equipments - Materials",
+      "Stationery, Schools and Offices","Textile Products","Tourism","White Goods – Home Appliances"
     ];
 
-    // ISO list with all countries (200+)
     const allCountries = [
-      {code:'tr', name:'Turkey'}, {code:'us', name:'United States'}, {code:'de', name:'Germany'},
-      {code:'fr', name:'France'}, {code:'it', name:'Italy'}, {code:'es', name:'Spain'}, {code:'cn', name:'China'},
-      {code:'jp', name:'Japan'}, {code:'in', name:'India'}, {code:'br', name:'Brazil'}, {code:'ru', name:'Russia'},
-      {code:'ca', name:'Canada'}, {code:'au', name:'Australia'}, {code:'gb', name:'United Kingdom'},
-      {code:'mx', name:'Mexico'}, {code:'nl', name:'Netherlands'}, {code:'ch', name:'Switzerland'},
-      {code:'se', name:'Sweden'}, {code:'no', name:'Norway'}, {code:'dk', name:'Denmark'}, {code:'fi', name:'Finland'},
-      {code:'pl', name:'Poland'}, {code:'pt', name:'Portugal'}, {code:'gr', name:'Greece'}, {code:'cz', name:'Czech Republic'},
-      {code:'hu', name:'Hungary'}, {code:'ro', name:'Romania'}, {code:'bg', name:'Bulgaria'}, {code:'ua', name:'Ukraine'},
-      {code:'ae', name:'United Arab Emirates'}, {code:'sa', name:'Saudi Arabia'}, {code:'eg', name:'Egypt'},
-      {code:'za', name:'South Africa'}, {code:'sg', name:'Singapore'}, {code:'kr', name:'South Korea'}, {code:'th', name:'Thailand'},
-      {code:'my', name:'Malaysia'}, {code:'id', name:'Indonesia'}, {code:'ph', name:'Philippines'}, {code:'vn', name:'Vietnam'},
-      {code:'nz', name:'New Zealand'}, {code:'ar', name:'Argentina'}, {code:'cl', name:'Chile'}, {code:'co', name:'Colombia'},
-      {code:'pe', name:'Peru'}, {code:'ma', name:'Morocco'}, {code:'ke', name:'Kenya'}, {code:'ng', name:'Nigeria'},
-      {code:'qa', name:'Qatar'}, {code:'kw', name:'Kuwait'}, {code:'bh', name:'Bahrain'}, {code:'om', name:'Oman'},
-      {code:'jo', name:'Jordan'}, {code:'lb', name:'Lebanon'}, {code:'is', name:'Iceland'}, {code:'ie', name:'Ireland'},
-      {code:'lt', name:'Lithuania'}, {code:'lv', name:'Latvia'}, {code:'ee', name:'Estonia'}, {code:'hr', name:'Croatia'},
-      {code:'si', name:'Slovenia'}, {code:'sk', name:'Slovakia'}, {code:'rs', name:'Serbia'}, {code:'at', name:'Austria'},
-      {code:'be', name:'Belgium'}, {code:'lu', name:'Luxembourg'}, {code:'il', name:'Israel'}, {code:'ir', name:'Iran'},
-      {code:'pk', name:'Pakistan'}, {code:'bd', name:'Bangladesh'}, {code:'lk', name:'Sri Lanka'}, {code:'np', name:'Nepal'},
-      {code:'mm', name:'Myanmar'}, {code:'hk', name:'Hong Kong'}, {code:'tw', name:'Taiwan'}, {code:'hk', name:'Hong Kong'},
-      {code:'kz', name:'Kazakhstan'}, {code:'uz', name:'Uzbekistan'}, {code:'tm', name:'Turkmenistan'},
-      {code:'az', name:'Azerbaijan'}, {code:'ge', name:'Georgia'}, {code:'am', name:'Armenia'}, {code:'cy', name:'Cyprus'},
-      {code:'tn', name:'Tunisia'}, {code:'dz', name:'Algeria'}, {code:'cm', name:'Cameroon'}, {code:'ug', name:'Uganda'},
-      {code:'tz', name:'Tanzania'}, {code:'zm', name:'Zambia'}, {code:'zw', name:'Zimbabwe'}, {code:'gh', name:'Ghana'},
-      {code:'sn', name:'Senegal'}, {code:'sd', name:'Sudan'}, {code:'et', name:'Ethiopia'}
+      {code:'tr',name:'Turkey'},{code:'us',name:'United States'},{code:'de',name:'Germany'},{code:'fr',name:'France'},
+      {code:'it',name:'Italy'},{code:'es',name:'Spain'},{code:'cn',name:'China'},{code:'jp',name:'Japan'},
+      {code:'in',name:'India'},{code:'br',name:'Brazil'},{code:'ru',name:'Russia'},{code:'ca',name:'Canada'},
+      {code:'au',name:'Australia'},{code:'gb',name:'United Kingdom'},{code:'mx',name:'Mexico'},
+      {code:'nl',name:'Netherlands'},{code:'ch',name:'Switzerland'},{code:'se',name:'Sweden'},
+      {code:'no',name:'Norway'},{code:'dk',name:'Denmark'},{code:'fi',name:'Finland'},{code:'pl',name:'Poland'},
+      {code:'pt',name:'Portugal'},{code:'gr',name:'Greece'},{code:'cz',name:'Czech Republic'},
+      {code:'hu',name:'Hungary'},{code:'ro',name:'Romania'},{code:'bg',name:'Bulgaria'},{code:'ua',name:'Ukraine'},
+      {code:'ae',name:'United Arab Emirates'},{code:'sa',name:'Saudi Arabia'},{code:'eg',name:'Egypt'},
+      {code:'za',name:'South Africa'},{code:'sg',name:'Singapore'},{code:'kr',name:'South Korea'},
+      {code:'th',name:'Thailand'},{code:'my',name:'Malaysia'},{code:'id',name:'Indonesia'},
+      {code:'ph',name:'Philippines'},{code:'vn',name:'Vietnam'},{code:'ar',name:'Argentina'},
+      {code:'cl',name:'Chile'},{code:'co',name:'Colombia'},{code:'pe',name:'Peru'},{code:'ma',name:'Morocco'},
+      {code:'ke',name:'Kenya'},{code:'ng',name:'Nigeria'},{code:'qa',name:'Qatar'},{code:'kw',name:'Kuwait'},
+      {code:'bh',name:'Bahrain'},{code:'om',name:'Oman'},{code:'ie',name:'Ireland'},{code:'lt',name:'Lithuania'},
+      {code:'lv',name:'Latvia'},{code:'ee',name:'Estonia'},{code:'hr',name:'Croatia'},{code:'si',name:'Slovenia'},
+      {code:'sk',name:'Slovakia'},{code:'rs',name:'Serbia'},{code:'at',name:'Austria'},{code:'be',name:'Belgium'},
+      {code:'lu',name:'Luxembourg'},{code:'il',name:'Israel'},{code:'ir',name:'Iran'},{code:'pk',name:'Pakistan'},
+      {code:'bd',name:'Bangladesh'},{code:'lk',name:'Sri Lanka'},{code:'np',name:'Nepal'},{code:'mm',name:'Myanmar'},
+      {code:'hk',name:'Hong Kong'},{code:'tw',name:'Taiwan'},{code:'kz',name:'Kazakhstan'},{code:'uz',name:'Uzbekistan'},
+      {code:'tm',name:'Turkmenistan'},{code:'az',name:'Azerbaijan'},{code:'ge',name:'Georgia'},{code:'am',name:'Armenia'},
+      {code:'cy',name:'Cyprus'},{code:'tn',name:'Tunisia'},{code:'dz',name:'Algeria'},{code:'cm',name:'Cameroon'},
+      {code:'ug',name:'Uganda'},{code:'tz',name:'Tanzania'},{code:'zm',name:'Zambia'},{code:'zw',name:'Zimbabwe'},
+      {code:'gh',name:'Ghana'},{code:'sn',name:'Senegal'},{code:'sd',name:'Sudan'},{code:'et',name:'Ethiopia'}
     ];
 
     const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
@@ -251,7 +251,6 @@
       const searchTerm = categorySearch.value.toLowerCase();
       const filtered = categories.filter(c => c.toLowerCase().includes(searchTerm));
       categoryList.innerHTML = "";
-
       filtered.slice(0, visibleCategories).forEach(cat => {
         const count = requests.filter(r => r.category === cat).length;
         const li = document.createElement("li");
@@ -259,7 +258,6 @@
         li.addEventListener("click", () => { selectedCategory = cat; renderRequests(); });
         categoryList.appendChild(li);
       });
-
       categoryList.onscroll = () => {
         if (categoryList.scrollTop + categoryList.clientHeight >= categoryList.scrollHeight) {
           visibleCategories += 10;
@@ -273,7 +271,6 @@
       const searchTerm = countrySearch.value.toLowerCase();
       const filtered = allCountries.filter(c => c.name.toLowerCase().includes(searchTerm));
       countryList.innerHTML = "";
-
       filtered.forEach(c => {
         const count = requests.filter(r => r.country === c.name).length;
         const li = document.createElement("li");
@@ -291,7 +288,6 @@
       const allReq = getRequests();
       renderCategories(allReq);
       renderCountries();
-
       const term = searchInput.value.toLowerCase();
       const filtered = allReq.filter(r =>
         (activeTab === "all" || r.type === activeTab) &&
@@ -299,7 +295,6 @@
         (!selectedCountry || r.country === selectedCountry) &&
         (r.title.toLowerCase().includes(term) || r.description.toLowerCase().includes(term))
       );
-
       requestContainer.innerHTML = "";
       filtered.slice(0, visibleRequests).forEach(r => {
         const div = document.createElement("div");
@@ -307,7 +302,6 @@
         div.innerHTML = `<h5>${r.title}</h5><p>${r.description}</p><small>${r.country} · ${r.category}</small>`;
         requestContainer.appendChild(div);
       });
-
       document.getElementById("showMoreRequests").style.display =
         filtered.length > visibleRequests ? "block" : "none";
     }
