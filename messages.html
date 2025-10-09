@@ -1,45 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Messages — Trader Route</title>
-<link rel="icon" href="assets/logos.png" type="image/png">
-<style>
-body{font-family:"Segoe UI",sans-serif;background:#f8f9fa;margin:0;padding:20px;}
-.container{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:10px;box-shadow:0 3px 10px rgba(0,0,0,0.1);}
-.message-card{border-bottom:1px solid #eee;padding:15px 0;}
-small{color:#777;}
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Messages - Trader Route</title>
+  <link rel="stylesheet" href="stil.css">
+  <style>
+    .container{max-width:1100px; margin:40px auto; padding:0 16px;}
+    .header{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
+    .pill{display:inline-flex; gap:10px; background:#f1f1f1; border-radius:999px; padding:4px;}
+    .pill button{border:0; background:transparent; padding:8px 14px; border-radius:999px; cursor:pointer; font-weight:600;}
+    .pill button.active{background:#007bff; color:#fff;}
+    .list{display:grid; gap:12px;}
+    .card{background:#fff; border:1px solid #e3e3e3; border-radius:10px; padding:14px;}
+    .title{font-weight:700;}
+    .meta{color:#666; font-size:12px; margin-top:6px;}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;}
+    textarea{width:100%; min-height:90px; padding:10px; border:1px solid #ccc; border-radius:8px;}
+    .btn{border:0; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600;}
+    .btn-primary{background:#007bff; color:#fff;}
+    .empty{color:#666; border:1px dashed #ccc; padding:24px; border-radius:10px; text-align:center;}
+    @media(max-width:860px){.row{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h2>Messages</h2>
+        <div style="color:#444; font-size:14px;">Signed in as <strong id="whoami">guest@traderroute.com</strong></div>
+      </div>
+      <div class="pill">
+        <button id="tabInbox" class="active">Inbox</button>
+        <button id="tabSent">Sent</button>
+      </div>
+    </div>
 
-<div class="container">
-  <h2>Your Messages</h2>
-  <div id="messageList"></div>
-</div>
+    <div id="list" class="list"></div>
+    <div id="empty" class="empty" style="display:none;">No messages.</div>
+  </div>
 
-<script>
-async function loadMessages(){
-  const email = prompt("Enter your email:");
-  const res = await fetch("data/messages.json");
-  const data = await res.json();
-  const myMsgs = data.filter(m => m.to===email || m.from===email);
-  const list = document.getElementById("messageList");
-  if(myMsgs.length===0){
-    list.innerHTML="<p>No messages yet.</p>";
-  }else{
-    list.innerHTML = myMsgs.map(m=>`
-      <div class="message-card">
-        <small>${new Date(m.date).toLocaleString()}</small>
-        <p><b>From:</b> ${m.from}</p>
-        <p><b>To:</b> ${m.to}</p>
-        <p><b>About:</b> ${m.requestTitle}</p>
-        <p>${m.text}</p>
-      </div>`).join('');
-  }
-}
-loadMessages();
-</script>
+  <script>
+    function getCurrentUserEmail(){
+      return localStorage.getItem('currentUserEmail') || 'guest@traderroute.com';
+    }
+    function loadMessages(){ try { return JSON.parse(localStorage.getItem('messages')||'[]'); } catch(e){ return []; } }
+    function saveMessages(arr){ localStorage.setItem('messages', JSON.stringify(arr)); }
+    const me = getCurrentUserEmail();
+    document.getElementById('whoami').textContent = me;
+
+    let tab = 'inbox'; // or 'sent'
+    const tabInbox = document.getElementById('tabInbox');
+    const tabSent = document.getElementById('tabSent');
+    tabInbox.onclick = ()=>{ tab='inbox'; tabInbox.classList.add('active'); tabSent.classList.remove('active'); render(); };
+    tabSent.onclick = ()=>{ tab='sent'; tabSent.classList.add('active'); tabInbox.classList.remove('active'); render(); };
+
+    function render(){
+      const listEl = document.getElementById('list');
+      const emptyEl = document.getElementById('empty');
+      listEl.innerHTML = '';
+
+      const all = loadMessages().sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+      const filtered = tab==='inbox' ? all.filter(m=> m.to===me) : all.filter(m=> m.from===me);
+
+      if(filtered.length===0){ emptyEl.style.display='block'; return; } else { emptyEl.style.display='none'; }
+
+      filtered.forEach(m=>{
+        const card = document.createElement('div');
+        card.className='card';
+        card.innerHTML = `
+          <div class="title">${m.requestTitle || '(Request)'}</div>
+          <div class="meta">
+            ${tab==='inbox' ? `From: <strong>${m.from}</strong>` : `To: <strong>${m.to}</strong>`}
+            · <a href="istek-detay.html?id=${encodeURIComponent(m.requestId)}">Open request</a>
+            · ${new Date(m.createdAt).toLocaleString()}
+          </div>
+          <p style="white-space:pre-wrap; margin-top:10px;">${m.body}</p>
+
+          <div class="row">
+            <div>
+              <textarea placeholder="Write a reply..."></textarea>
+            </div>
+            <div>
+              <button class="btn btn-primary">Send Reply</button>
+            </div>
+          </div>
+        `;
+        // reply handler
+        const btn = card.querySelector('button');
+        const area = card.querySelector('textarea');
+        btn.addEventListener('click', ()=>{
+          const body = area.value.trim();
+          if(!body){ alert('Write a reply first.'); return; }
+          const reply = {
+            id: Date.now().toString(),
+            requestId: m.requestId,
+            requestTitle: m.requestTitle,
+            to: tab==='inbox' ? m.from : m.to,
+            from: me,
+            body,
+            createdAt: new Date().toISOString()
+          };
+          const list = loadMessages();
+          list.push(reply);
+          saveMessages(list);
+
+          // also open mailto
+          const subject = encodeURIComponent(`[Trader Route] Reply about: ${m.requestTitle}`);
+          const content = encodeURIComponent(`${body}\n\nFrom: ${me}`);
+          window.location.href = `mailto:${encodeURIComponent(reply.to)}?subject=${subject}&body=${content}`;
+
+          area.value='';
+          alert('Reply sent.');
+          render();
+        });
+
+        listEl.appendChild(card);
+      });
+    }
+
+    render();
+  </script>
 </body>
 </html>
