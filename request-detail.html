@@ -1,67 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Request Detail — Trader Route</title>
-<link rel="icon" href="assets/logos.png" type="image/png">
-<style>
-body{font-family:"Segoe UI",sans-serif;background:#f8f9fa;margin:0;padding:20px;}
-.container{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);}
-h2{color:#008d62;}
-small{color:#777;}
-textarea,input{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;margin-top:8px;}
-button{margin-top:10px;background:#008d62;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;}
-button:hover{background:#006b4a;}
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Request Detail - Trader Route</title>
+  <link rel="stylesheet" href="stil.css">
+  <style>
+    .container{max-width:1000px; margin:40px auto; padding:0 16px;}
+    .grid{display:grid; grid-template-columns:1.2fr 0.8fr; gap:20px;}
+    .card{background:#fff; border:1px solid #e3e3e3; border-radius:10px; padding:20px;}
+    .meta{color:#666; font-size:14px; margin:8px 0 14px;}
+    .tag{display:inline-block; background:#f1f5ff; border:1px solid #d7e3ff; color:#335; font-size:12px; padding:4px 8px; border-radius:999px; margin-right:6px;}
+    label{display:block; font-weight:600; margin:10px 0 6px;}
+    textarea, input{
+      width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:14px;
+    }
+    .btn{border:0; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:600;}
+    .btn-primary{background:#007bff; color:#fff;}
+    .btn-outline{background:#fff; border:1px solid #ddd;}
+    .note{background:#f8f9fa; border:1px dashed #d9d9d9; padding:10px 12px; border-radius:8px; margin-bottom:14px; color:#444;}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
+  <div class="container">
+    <div class="note">
+      Signed in as <strong id="whoami">guest@traderroute.com</strong>. Messages are saved locally and an email draft opens via <code>mailto:</code>.
+    </div>
 
-<div class="container">
-  <h2 id="title"></h2>
-  <small id="meta"></small>
-  <p id="desc" style="margin-top:15px;"></p>
+    <div class="grid">
+      <!-- LEFT: details -->
+      <div class="card">
+        <h2 id="title">Request</h2>
+        <div class="meta">
+          <span id="owner"></span> · <span id="created"></span>
+        </div>
+        <div id="tags"></div>
+        <p id="desc" style="white-space:pre-wrap; margin-top:14px;"></p>
+      </div>
 
-  <h3>Contact Seller / Buyer</h3>
-  <textarea id="messageBox" placeholder="Write your message..." required></textarea><br>
-  <button onclick="sendMessage()">Send Message</button>
-  <p id="status"></p>
-</div>
+      <!-- RIGHT: contact owner -->
+      <div class="card">
+        <h3>Contact Request Owner</h3>
+        <div style="font-size:14px; color:#444; margin:8px 0 14px;">
+          Owner: <strong id="ownerEmail">owner@example.com</strong>
+        </div>
 
-<script>
-async function loadDetail() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-  const res = await fetch("data/requests.json");
-  const data = await res.json();
-  const item = data[id];
-  document.getElementById("title").innerText = item.title;
-  document.getElementById("meta").innerText = `${item.country} • ${item.category} • ${item.type}`;
-  document.getElementById("desc").innerText = item.description;
-  window.requestItem = item;
-}
+        <label for="msg">Message</label>
+        <textarea id="msg" placeholder="Introduce yourself, include your offer / questions..." required></textarea>
 
-async function sendMessage() {
-  const item = window.requestItem;
-  const sender = prompt("Please enter your email:");
-  const msg = document.getElementById("messageBox").value;
-  if(!sender || !msg){alert("Please fill out message and email");return;}
+        <label for="yourEmail" style="margin-top:10px;">Your Email</label>
+        <input id="yourEmail" placeholder="your@email.com"/>
 
-  // 1️⃣ E-posta gönder
-  await fetch(`https://formsubmit.co/ajax/${item.email}`, {
-    method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({name:sender,message:msg,_subject:`New message about: ${item.title}`})
-  });
+        <div style="display:flex; gap:10px; margin-top:14px;">
+          <button class="btn btn-primary" id="sendBtn">Send Message</button>
+          <button class="btn btn-outline" id="saveDraftBtn">Save Draft</button>
+        </div>
+        <div id="status" style="margin-top:10px; color:#0a7; font-weight:600;"></div>
+      </div>
+    </div>
+  </div>
 
-  // 2️⃣ Mesaj kaydet
-  const msgRes = await fetch("data/messages.json");
-  const messages = await msgRes.json();
-  messages.push({to:item.email,from:sender,text:msg,date:new Date().toISOString(),requestTitle:item.title});
-  await fetch("data/messages.json",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(messages,null,2)});
-  document.getElementById("status").innerText="✅ Message sent and saved!";
-  document.getElementById("messageBox").value="";
-}
-loadDetail();
-</script>
+  <script>
+    // --- storage helpers ------------------------------------------------------
+    function getCurrentUserEmail(){
+      return localStorage.getItem('currentUserEmail') || 'guest@traderroute.com';
+    }
+    function loadRequests(){ try { return JSON.parse(localStorage.getItem('requests')||'[]'); } catch(e){ return []; } }
+    function loadMessages(){ try { return JSON.parse(localStorage.getItem('messages')||'[]'); } catch(e){ return []; } }
+    function saveMessages(arr){ localStorage.setItem('messages', JSON.stringify(arr)); }
+
+    function qs(name){
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    // --- render detail --------------------------------------------------------
+    const id = qs('id');
+    const req = loadRequests().find(r => r.id === id);
+    const who = getCurrentUserEmail();
+    document.getElementById('whoami').textContent = who;
+
+    if(!req){
+      document.body.innerHTML = '<div class="container"><h2>Request not found</h2><p>Go back to the list.</p></div>';
+    } else {
+      document.title = req.title + " - Trader Route";
+      document.getElementById('title').textContent = req.title;
+      document.getElementById('owner').textContent = "Owner: " + req.ownerEmail;
+      document.getElementById('created').textContent = new Date(req.createdAt).toLocaleString();
+      document.getElementById('desc').textContent = req.description || "(no description)";
+      document.getElementById('ownerEmail').textContent = req.ownerEmail;
+      const tags = [];
+      if(req.category) tags.push(`<span class="tag">${req.category}</span>`);
+      if(req.country) tags.push(`<span class="tag">${req.country}</span>`);
+      if(req.quantity) tags.push(`<span class="tag">Qty: ${req.quantity}</span>`);
+      if(req.price) tags.push(`<span class="tag">Price: ${req.price}</span>`);
+      if(req.deadline) tags.push(`<span class="tag">Deadline: ${req.deadline}</span>`);
+      document.getElementById('tags').innerHTML = tags.join(' ');
+    }
+
+    // --- messaging ------------------------------------------------------------
+    const msgEl = document.getElementById('msg');
+    const yourEmailEl = document.getElementById('yourEmail');
+    yourEmailEl.value = who;
+
+    document.getElementById('saveDraftBtn').addEventListener('click', ()=>{
+      localStorage.setItem('draft_'+id, msgEl.value);
+      document.getElementById('status').textContent = 'Draft saved.';
+      setTimeout(()=>document.getElementById('status').textContent='', 2000);
+    });
+
+    // Load draft if exists
+    const draft = localStorage.getItem('draft_'+id);
+    if(draft) msgEl.value = draft;
+
+    document.getElementById('sendBtn').addEventListener('click', ()=>{
+      const body = msgEl.value.trim();
+      const from = (yourEmailEl.value || '').trim();
+      if(!body){ alert('Please write a message.'); return; }
+      if(!from || !from.includes('@')){ alert('Please enter a valid email.'); return; }
+
+      // Save to local inbox of the owner
+      const messages = loadMessages();
+      messages.push({
+        id: Date.now().toString(),
+        requestId: id,
+        requestTitle: req.title,
+        to: req.ownerEmail,
+        from,
+        body,
+        createdAt: new Date().toISOString()
+      });
+      saveMessages(messages);
+
+      // Open mailto (for actual email notification by the user)
+      const subject = encodeURIComponent(`[Trader Route] Message about: ${req.title}`);
+      const content = encodeURIComponent(`${body}\n\nFrom: ${from}\nRequest: ${window.location.href}`);
+      window.location.href = `mailto:${encodeURIComponent(req.ownerEmail)}?subject=${subject}&body=${content}`;
+
+      localStorage.removeItem('draft_'+id);
+      document.getElementById('status').textContent = 'Message sent (saved to inbox & email draft opened).';
+      msgEl.value = '';
+      setTimeout(()=>document.getElementById('status').textContent='', 3000);
+    });
+  </script>
 </body>
 </html>
