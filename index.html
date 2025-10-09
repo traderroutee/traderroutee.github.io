@@ -108,13 +108,13 @@
 
     /* HERO SECTION */
     .hero {
-      position: relative;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 80px;
       height: 500px;
       background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      position: relative;
       overflow: hidden;
     }
 
@@ -129,9 +129,9 @@
     .hero-content {
       position: relative;
       z-index: 2;
-      max-width: 800px;
+      max-width: 600px;
       color: #fff;
-      text-align: center;
+      text-align: left;
     }
 
     .hero-content h1 {
@@ -141,18 +141,15 @@
       text-shadow: 0 3px 10px rgba(0,0,0,0.5);
     }
 
-    /* CATEGORIES FIXED LEFT */
+    /* CATEGORIES */
     .categories {
-      position: absolute;
-      top: 50%;
-      left: 40px;
-      transform: translateY(-50%);
+      position: relative;
+      z-index: 2;
       background: #fff;
       border-radius: 10px;
       padding: 15px;
       width: 240px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      z-index: 3;
       text-align: left;
     }
 
@@ -197,7 +194,6 @@
       background: #005ec4;
     }
 
-    /* MAIN BUTTONS */
     .middle-buttons {
       text-align: center;
       margin: 40px 0;
@@ -219,7 +215,6 @@
       background: #005ec4;
     }
 
-    /* JOIN SECTION */
     .main-section {
       background: #fff;
       padding: 60px 40px;
@@ -293,13 +288,18 @@
     }
 
     @media (max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        text-align: center;
+      }
       .categories {
-        position: static;
-        transform: none;
-        margin: 20px auto;
+        width: 90%;
       }
       .hero-content h1 {
         font-size: 28px;
+        text-align: center;
       }
     }
   </style>
@@ -344,13 +344,6 @@
     </div>
   </section>
 
-  <div class="middle-buttons">
-    <button onclick="location.href='requests.html'">All Requests</button>
-    <button onclick="location.href='requests.html?type=buy'">Buy Requests</button>
-    <button onclick="location.href='requests.html?type=sell'">Sell Offers</button>
-    <button onclick="location.href='request-form.html'">Post Free Request</button>
-  </div>
-
   <section class="main-section">
     <img src="assets/trader_route_step1.jpeg" alt="Trader Route">
     <div>
@@ -389,16 +382,11 @@
       "Stationery, Schools and Offices","Textile Products","Tourism","White Goods – Home Appliances"
     ];
 
-    const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
-    const reqs = getRequests();
     const list = document.getElementById("categoryList");
-
     categories.slice(0, 10).forEach(cat => {
-      const count = reqs.filter(r => r.category === cat).length;
       const div = document.createElement("div");
       div.className = "category-item";
-      div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
-      div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
+      div.innerHTML = `<span>${cat}</span><span>(0)</span>`;
       list.appendChild(div);
     });
   </script>
