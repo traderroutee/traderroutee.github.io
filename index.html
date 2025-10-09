@@ -11,8 +11,8 @@
   <style>
     body {
       font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: #f5f6f8;
       margin: 0;
-      background-color: #f5f6f8;
       color: #222;
     }
 
@@ -23,119 +23,68 @@
       justify-content: space-between;
       padding: 12px 30px;
       border-bottom: 1px solid #ddd;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
 
-    header img {
-      height: 50px;
-    }
+    header img { height: 50px; }
+    nav a { text-decoration: none; color: #333; font-weight: 600; margin: 0 15px; }
+    nav a:hover { color: #007bff; }
 
-    nav a {
-      text-decoration: none;
-      color: #333;
-      font-weight: 600;
-      margin: 0 15px;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: #007bff;
-    }
-
-    /* Hero Section */
+    /* Hero alanı */
     .hero {
       position: relative;
       background: url("assets/ihracat-haritasi.png") center/cover no-repeat;
       height: 520px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #fff;
       text-align: center;
-      padding: 0 20px;
+      color: #fff;
     }
-
     .hero::after {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: rgba(0, 0, 0, 0.45);
     }
-
     .hero-content {
       position: relative;
       z-index: 1;
       max-width: 800px;
+      padding: 0 20px;
     }
-
     .hero h1 {
       font-size: 42px;
       font-weight: 800;
-      margin-bottom: 15px;
-      line-height: 1.2;
+      margin-bottom: 10px;
     }
-
     .hero p {
       font-size: 18px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
-
     .hero-buttons a {
       display: inline-block;
-      padding: 12px 28px;
-      margin: 0 10px;
+      margin: 0 8px;
+      padding: 12px 25px;
       border-radius: 30px;
       font-weight: 600;
       text-decoration: none;
       transition: 0.3s;
     }
+    .btn-primary { background: #007bff; color: #fff; }
+    .btn-primary:hover { background: #005ec4; }
+    .btn-outline { border: 2px solid #fff; color: #fff; }
+    .btn-outline:hover { background: #fff; color: #007bff; }
 
-    .btn-primary {
-      background: #007bff;
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: #005ec4;
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 2px solid #fff;
-      color: #fff;
-    }
-
-    .btn-outline:hover {
-      background: #fff;
-      color: #007bff;
-    }
-
-    /* Categories Section */
-    .categories {
-      max-width: 1200px;
-      margin: 60px auto;
-      padding: 0 20px;
-    }
-
-    .categories h2 {
-      font-size: 28px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 25px;
-      color: #111;
-    }
-
-    .category-grid {
+    /* Categories */
+    .home-cats { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+    .home-cats h2 { text-align: center; font-size: 28px; font-weight: 700; margin-bottom: 25px; }
+    .home-cats__grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
+      gap: 16px;
     }
-
-    .category-card {
+    .home-cats__card {
       background: #fff;
       padding: 14px;
       border-radius: 10px;
@@ -143,113 +92,28 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: 0.25s;
       cursor: pointer;
-    }
-
-    .category-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      color: #007bff;
-    }
-
-    .category-card span {
-      color: #888;
-      font-size: 13px;
-    }
-
-    .view-all {
-      text-align: center;
-      margin-top: 25px;
-    }
-
-    .view-all a {
-      text-decoration: none;
-      color: #007bff;
-      font-weight: 600;
-    }
-
-    .view-all a:hover {
-      text-decoration: underline;
-    }
-
-    /* Latest Requests */
-    .latest {
-      max-width: 1200px;
-      margin: 60px auto;
-      padding: 0 20px;
-    }
-
-    .latest h2 {
-      font-size: 28px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 25px;
-      color: #111;
-    }
-
-    .request-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .request-card {
-      background: #fff;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
       transition: 0.25s;
     }
+    .home-cats__card:hover { transform: translateY(-3px); box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); color: #007bff; }
+    .home-cats__count { color: #888; font-size: 13px; }
 
-    .request-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .request-card h4 {
-      margin: 0 0 8px;
-      font-size: 16px;
-      color: #007bff;
-    }
-
-    .request-card p {
-      font-size: 14px;
-      margin: 0 0 6px;
-    }
-
-    .request-card small {
-      color: #777;
-    }
-
-    /* Footer */
     footer {
       text-align: center;
       padding: 20px;
       background: #fff;
       border-top: 1px solid #ddd;
       color: #555;
-      margin-top: 50px;
     }
-
-    footer img {
-      height: 40px;
-      display: block;
-      margin: 0 auto 10px;
-    }
+    footer nav { display: none !important; }
+    footer img { height: 40px; display: block; margin: 0 auto 10px; }
 
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 32px;
-      }
-
-      .hero p {
-        font-size: 16px;
-      }
+      .hero h1 { font-size: 30px; }
+      .hero p { font-size: 16px; }
     }
   </style>
 </head>
-
 <body>
   <header>
     <a href="index.html"><img src="assets/logos.png" alt="TraderRoute Logo" /></a>
@@ -262,7 +126,7 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
       <h1>Connect the World of Import & Export</h1>
@@ -275,19 +139,11 @@
   </section>
 
   <!-- Categories -->
-  <section class="categories">
+  <section class="home-cats">
     <h2>Explore Categories</h2>
-    <div class="category-grid" id="categoryGrid"></div>
-    <div class="view-all"><a href="requests.html">View All Categories →</a></div>
+    <div class="home-cats__grid" id="catGrid"></div>
   </section>
 
-  <!-- Latest Requests -->
-  <section class="latest">
-    <h2>Latest Trade Requests</h2>
-    <div class="request-grid" id="latestRequests"></div>
-  </section>
-
-  <!-- Footer -->
   <footer>
     <img src="assets/logos.png" alt="TraderRoute Logo" />
     <p>© 2025 TraderRoute. All rights reserved.</p>
@@ -307,42 +163,22 @@
       "Sanitary - Cleaning Products","Security Equipments","Services","Sporting Equipments - Materials",
       "Stationery, Schools and Offices","Textile Products","Tourism","White Goods – Home Appliances"
     ];
-
     const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
+    const grid = document.getElementById("catGrid");
 
-    // Categories render
-    const categoryGrid = document.getElementById("categoryGrid");
-    function renderCategories() {
-      const requests = getRequests();
-      categoryGrid.innerHTML = "";
+    const renderCats = () => {
+      const reqs = getRequests();
+      grid.innerHTML = "";
       categories.slice(0, 12).forEach(cat => {
-        const count = requests.filter(r => r.category === cat).length;
+        const count = reqs.filter(r => r.category === cat).length;
         const div = document.createElement("div");
-        div.className = "category-card";
-        div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
-        div.addEventListener("click", () => {
-          window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
-        });
-        categoryGrid.appendChild(div);
+        div.className = "home-cats__card";
+        div.innerHTML = `<span>${cat}</span><span class="home-cats__count">(${count})</span>`;
+        div.onclick = () => { window.location.href = `requests.html?category=${encodeURIComponent(cat)}`; };
+        grid.appendChild(div);
       });
-    }
-
-    // Latest requests render
-    const latestGrid = document.getElementById("latestRequests");
-    function renderLatest() {
-      const allReq = getRequests();
-      const latest = allReq.slice(-6).reverse();
-      latestGrid.innerHTML = "";
-      latest.forEach(r => {
-        const card = document.createElement("div");
-        card.className = "request-card";
-        card.innerHTML = `<h4>${r.title}</h4><p>${r.category}</p><small>${r.country}</small>`;
-        latestGrid.appendChild(card);
-      });
-    }
-
-    renderCategories();
-    renderLatest();
+    };
+    renderCats();
   </script>
 </body>
 </html>
