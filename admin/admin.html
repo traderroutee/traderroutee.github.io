@@ -1,254 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trader Route Admin Panel</title>
-  <link rel="icon" href="../assets/logos.png" type="image/png" />
-  <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #f4f4f4;
-    }
-    .hidden { display: none; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trader Route Admin Panel</title>
+<link rel="icon" href="../assets/logos.png" type="image/png" />
+<style>
+  :root{--brand:#008b6a;--danger:#d9534f;--info:#5bc0de}
+  *{box-sizing:border-box}
+  body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;margin:0;background:#f4f4f4;color:#222}
 
-    #login-screen {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #fff;
-    }
-    .login-box {
-      background: #f9f9f9;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-      text-align: center;
-      width: 320px;
-    }
-    .login-box img { height: 60px; margin-bottom: 15px; }
-    .login-box h2 { margin-bottom: 15px; color: #333; }
-    .login-box input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .login-box button {
-      width: 100%;
-      padding: 10px;
-      background: #008b6a;
-      border: none;
-      color: #fff;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .login-box button:hover { background: #006b52; }
-    .error-msg { color: red; font-size: 13px; }
+  /* Login */
+  #login-screen{display:flex;justify-content:center;align-items:center;height:100vh;background:#fff}
+  .login-box{background:#f9f9f9;padding:40px;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.1);text-align:center;width:320px}
+  .login-box img{height:60px;margin-bottom:15px}
+  .login-box h2{margin:0 0 15px}
+  .login-box input{width:90%;padding:10px;margin:10px 0;border:1px solid #ccc;border-radius:6px}
+  .login-box button{width:100%;padding:10px;background:var(--brand);border:none;color:#fff;border-radius:6px;cursor:pointer;font-weight:700}
+  .login-box button:hover{background:#006b52}
+  .error-msg{color:#e53935;font-size:13px;height:18px}
 
-    #dashboard { display: none; height: 100vh; }
-    .sidebar {
-      width: 220px;
-      background: #fff;
-      border-right: 1px solid #ddd;
-      padding: 20px;
-      float: left;
-      height: 100%;
-      box-sizing: border-box;
-    }
-    .sidebar img { height: 40px; margin-bottom: 10px; }
-    .sidebar h3 { color: #008b6a; font-size: 18px; margin-bottom: 20px; }
-    .sidebar a {
-      display: block;
-      text-decoration: none;
-      color: #333;
-      padding: 8px;
-      border-radius: 6px;
-      margin-bottom: 8px;
-    }
-    .sidebar a:hover, .sidebar a.active { background: #008b6a; color: #fff; }
+  /* Dashboard */
+  #dashboard{display:none;min-height:100vh}
+  .sidebar{width:240px;background:#fff;border-right:1px solid #ddd;padding:20px;position:fixed;top:0;bottom:0}
+  .sidebar img{height:40px;margin-bottom:10px}
+  .sidebar h3{color:var(--brand);font-size:18px;margin:8px 0 16px}
+  .navlink{display:block;text-decoration:none;color:#333;padding:8px;border-radius:6px;margin-bottom:8px}
+  .navlink:hover,.navlink.active{background:var(--brand);color:#fff}
 
-    .main {
-      margin-left: 220px;
-      padding: 30px;
-    }
-    .header { display: flex; justify-content: space-between; align-items: center; }
-    .header h2 { color: #008b6a; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border-bottom: 1px solid #ddd; padding: 10px; text-align: left; }
-    th { background: #fafafa; }
-    .action-btn {
-      padding: 6px 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
-    }
-    .approve { background: #008b6a; color: #fff; }
-    .delete { background: #d9534f; color: #fff; }
-    .edit { background: #5bc0de; color: #fff; }
+  .main{margin-left:240px;padding:30px}
+  .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .header h2{color:var(--brand);margin:0}
 
-    #edit-section {
-      display: none;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      max-width: 600px;
-      margin: 20px auto;
-    }
-    #edit-section input, #edit-section textarea, #edit-section select {
-      width: 100%;
-      margin-bottom: 15px;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-    #edit-section button {
-      background: #008b6a;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-  </style>
+  .btn{padding:8px 12px;border:none;border-radius:6px;cursor:pointer;font-weight:600}
+  .btn-primary{background:var(--info);color:#fff}
+  .btn-green{background:var(--brand);color:#fff}
+  .btn-red{background:var(--danger);color:#fff}
+  .btn-outline{background:#fff;border:1px solid #ccc;color:#333}
+
+  .card{background:#fff;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.08);padding:20px;margin-top:16px}
+
+  table{width:100%;border-collapse:collapse;margin-top:10px}
+  th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
+  thead th{background:#fafafa}
+
+  /* Edit panel */
+  #edit-section{display:none;background:#fff;padding:20px;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.1);max-width:700px;margin:20px auto}
+  #edit-section input,#edit-section select,#edit-section textarea{width:100%;margin:6px 0 12px;padding:10px;border:1px solid #ccc;border-radius:6px}
+
+  @media (max-width:900px){
+    .sidebar{position:static;width:auto}
+    .main{margin:0}
+  }
+</style>
 </head>
 <body>
+
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <img src="../assets/logos.png" alt="Trader Route Logo">
+    <img src="../assets/logos.png" alt="Trader Route Logo" />
     <h2>Admin Panel</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
     <button id="loginBtn">Login</button>
-    <p class="error-msg" id="loginError"></p>
+    <div class="error-msg" id="loginError"></div>
   </div>
 </div>
 
+<!-- DASHBOARD -->
 <div id="dashboard">
-  <div class="sidebar">
+  <aside class="sidebar">
     <img src="../assets/logos.png" alt="">
     <h3>Trader Route</h3>
-    <a href="#" id="show-all" class="active">All Requests</a>
-    <a href="#" id="show-buying">Buying Requests</a>
-    <a href="#" id="show-selling">Selling Offers</a>
-    <a href="#" id="show-free">Free Requests</a>
-    <a href="#" id="logout">Logout</a>
-  </div>
+    <a href="#" class="navlink active" id="nav-requests">Requests</a>
+    <a href="#" class="navlink" id="nav-users">Registered Users</a>
+    <a href="#" class="navlink" id="nav-logout">Logout</a>
+  </aside>
 
-  <div class="main">
+  <main class="main">
     <div class="header">
-      <h2>Welcome, Admin</h2>
-      <button id="newRequestBtn" class="action-btn edit">+ New Request</button>
+      <h2 id="viewTitle">Requests</h2>
+      <div>
+        <button class="btn btn-outline" id="seedBtn" title="Demo data ekle">+ Seed Demo</button>
+        <button class="btn btn-outline" id="clearAllBtn" title="Tüm requestleri temizle">Clear Requests</button>
+      </div>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th><th>Type</th><th>Company</th><th>Date</th><th>Status</th><th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="requestsTable"></tbody>
-    </table>
-  </div>
-</div>
+    <!-- REQUESTS VIEW -->
+    <section id="requestsView" class="card">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <button class="btn btn-outline" data-filter="all">All</button>
+        <button class="btn btn-outline" data-filter="buy">Buy</button>
+        <button class="btn btn-outline" data-filter="sell">Sell</button>
+        <button class="btn btn-primary" id="newRequestBtn">+ New Request</button>
+      </div>
 
-<div id="edit-section">
-  <h3>Edit Request</h3>
-  <input type="text" id="edit-title" placeholder="Title">
-  <input type="text" id="edit-company" placeholder="Company Name">
-  <input type="date" id="edit-date">
-  <select id="edit-type">
-    <option value="buying">Buying Request</option>
-    <option value="selling">Selling Offer</option>
-    <option value="free">Free Request</option>
-  </select>
-  <textarea id="edit-desc" placeholder="Description"></textarea>
-  <button id="saveEditBtn">Save</button>
-  <button id="cancelEditBtn" style="background:#d9534f;">Cancel</button>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th><th>Type</th><th>Company</th><th>Country</th><th>Category</th><th>Date</th><th>Status</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="requestsTable"></tbody>
+      </table>
+    </section>
+
+    <!-- USERS VIEW -->
+    <section id="usersView" class="card" style="display:none">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <button class="btn btn-green" id="exportUsersBtn">Export CSV</button>
+        <button class="btn btn-red" id="clearUsersBtn">Clear Users (demo)</button>
+      </div>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Name</th><th>Email</th><th>Company</th><th>Registered At</th></tr>
+        </thead>
+        <tbody id="usersTable"></tbody>
+      </table>
+      <div id="usersMsg" style="margin-top:8px;color:#2e7d32;font-weight:600"></div>
+    </section>
+
+    <!-- EDIT PANEL -->
+    <section id="edit-section">
+      <h3 id="editTitleH">New Request</h3>
+      <input type="text" id="edit-title" placeholder="Title" />
+      <input type="text" id="edit-company" placeholder="Company Name" />
+      <input type="text" id="edit-country" placeholder="Country (e.g. Turkey)" />
+      <input type="text" id="edit-category" placeholder="Category (e.g. Food Industry)" />
+      <select id="edit-type">
+        <option value="buy">Buy Request</option>
+        <option value="sell">Sell Offer</option>
+      </select>
+      <input type="date" id="edit-date" />
+      <textarea id="edit-desc" rows="4" placeholder="Description"></textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-green" id="saveEditBtn">Save</button>
+        <button class="btn btn-red" id="cancelEditBtn">Cancel</button>
+      </div>
+    </section>
+  </main>
 </div>
 
 <script>
-window.onload = function() {
-  const loginScreen = document.getElementById("login-screen");
-  const dashboard = document.getElementById("dashboard");
-  const editSection = document.getElementById("edit-section");
-  const requestsTable = document.getElementById("requestsTable");
-  const loginBtn = document.getElementById("loginBtn");
-  const loginError = document.getElementById("loginError");
+(() => {
+  /* ====== Auth ====== */
+  const loginScreen = document.getElementById('login-screen');
+  const dashboard   = document.getElementById('dashboard');
+  const loginBtn    = document.getElementById('loginBtn');
+  const loginError  = document.getElementById('loginError');
 
-  let requests = JSON.parse(localStorage.getItem("requests")) || [
-    {title:"Buy 500kg Honey",type:"buying",company:"Istanbul Imports",date:"2025-10-01",status:"Pending"},
-    {title:"Sell Wheat 1000 Tons",type:"selling",company:"Anadolu Export",date:"2025-09-20",status:"Approved"},
-    {title:"Free Request: Listing Help",type:"free",company:"TraderRoute",date:"2025-10-02",status:"Approved"}
-  ];
-  let editIndex = null;
-
-  function renderTable(filter="all"){
-    requestsTable.innerHTML = "";
-    let filtered = requests.filter(r => filter==="all" ? true : r.type===filter);
-    filtered.forEach((r,i)=>{
-      requestsTable.innerHTML += `
-        <tr>
-          <td>${r.title}</td>
-          <td>${r.type}</td>
-          <td>${r.company}</td>
-          <td>${r.date}</td>
-          <td>${r.status}</td>
-          <td>
-            <button class="action-btn edit" onclick="editRequest(${i})">Edit</button>
-            <button class="action-btn approve" onclick="approveRequest(${i})">Approve</button>
-            <button class="action-btn delete" onclick="deleteRequest(${i})">Delete</button>
-          </td>
-        </tr>`;
-    });
-    localStorage.setItem("requests", JSON.stringify(requests));
-  }
-
-  loginBtn.addEventListener("click",()=>{
-    const user = document.getElementById("username").value.trim();
-    const pass = document.getElementById("password").value.trim();
-    if(user==="admin" && pass==="trader2025"){
-      loginScreen.style.display = "none";
-      dashboard.style.display = "block";
-      renderTable();
+  loginBtn.addEventListener('click', () => {
+    const u = document.getElementById('username').value.trim();
+    const p = document.getElementById('password').value.trim();
+    if (u === 'admin' && p === 'trader2025') {
+      loginScreen.style.display = 'none';
+      dashboard.style.display = 'block';
+      renderAll();
     } else {
-      loginError.textContent = "Invalid username or password!";
+      loginError.textContent = 'Invalid username or password!';
     }
   });
 
-  document.getElementById("show-all").onclick=()=>{renderTable("all");setActive("show-all");}
-  document.getElementById("show-buying").onclick=()=>{renderTable("buying");setActive("show-buying");}
-  document.getElementById("show-selling").onclick=()=>{renderTable("selling");setActive("show-selling");}
-  document.getElementById("show-free").onclick=()=>{renderTable("free");setActive("show-free");}
-  function setActive(id){document.querySelectorAll(".sidebar a").forEach(a=>a.classList.remove("active"));document.getElementById(id).classList.add("active");}
+  /* ====== Data (localStorage) ====== */
+  const REQ_KEY = 'requests';
+  const USERS_KEY = 'tr_users'; // register.html bu anahtara yazıyor
 
-  window.editRequest=function(i){
-    editIndex=i;
-    const r=requests[i];
-    dashboard.style.display="none";
-    editSection.style.display="block";
-    document.getElementById("edit-title").value=r.title;
-    document.getElementById("edit-company").value=r.company;
-    document.getElementById("edit-date").value=r.date;
-    document.getElementById("edit-type").value=r.type;
-    document.getElementById("edit-desc").value=r.desc||"";
+  let requests = read(REQ_KEY);
+  function read(k){ return JSON.parse(localStorage.getItem(k) || '[]'); }
+  function write(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+
+  /* ====== Views Nav ====== */
+  const requestsView = document.getElementById('requestsView');
+  const usersView    = document.getElementById('usersView');
+  const viewTitle    = document.getElementById('viewTitle');
+  function showView(name){
+    document.querySelectorAll('.navlink').forEach(a=>a.classList.remove('active'));
+    if(name==='users'){
+      document.getElementById('nav-users').classList.add('active');
+      requestsView.style.display='none'; usersView.style.display='block';
+      viewTitle.textContent='Registered Users';
+      renderUsers();
+    }else{
+      document.getElementById('nav-requests').classList.add('active');
+      usersView.style.display='none'; requestsView.style.display='block';
+      viewTitle.textContent='Requests';
+      renderRequests();
+    }
   }
-  document.getElementById("saveEditBtn").onclick=()=>{
-    requests[editIndex]={title:editTitle.value,type:editType.value,company:editCompany.value,date:editDate.value,desc:editDesc.value,status:"Pending"};
-    editSection.style.display="none";dashboard.style.display="block";renderTable();
+  document.getElementById('nav-requests').addEventListener('click', e=>{e.preventDefault();showView('requests');});
+  document.getElementById('nav-users').addEventListener('click', e=>{e.preventDefault();showView('users');});
+  document.getElementById('nav-logout').addEventListener('click', e=>{e.preventDefault();location.reload();});
+
+  /* ====== Requests Table ====== */
+  const reqTbody = document.getElementById('requestsTable');
+  let currentFilter = 'all';
+
+  document.querySelectorAll('[data-filter]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ currentFilter = btn.dataset.filter; renderRequests(); });
+  });
+
+  function renderRequests(){
+    requests = read(REQ_KEY);
+    reqTbody.innerHTML = '';
+    const list = requests.filter(r => currentFilter==='all' ? true : r.type === currentFilter);
+    list.forEach((r,i)=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${r.title||'-'}</td>
+        <td>${r.type||'-'}</td>
+        <td>${r.company||'-'}</td>
+        <td>${r.country||'-'}</td>
+        <td>${r.category||'-'}</td>
+        <td>${r.date||'-'}</td>
+        <td>${r.status||'Pending'}</td>
+        <td>
+          <button class="btn btn-primary" onclick="editReq(${i})">Edit</button>
+          <button class="btn btn-green" onclick="approveReq(${i})">Approve</button>
+          <button class="btn btn-red" onclick="deleteReq(${i})">Delete</button>
+        </td>`;
+      reqTbody.appendChild(tr);
+    });
+  }
+
+  window.editReq = (i)=>{
+    const r = requests[i];
+    document.getElementById('editTitleH').textContent = 'Edit Request';
+    document.getElementById('edit-title').value    = r.title||'';
+    document.getElementById('edit-company').value  = r.company||'';
+    document.getElementById('edit-country').value  = r.country||'';
+    document.getElementById('edit-category').value = r.category||'';
+    document.getElementById('edit-type').value     = r.type||'buy';
+    document.getElementById('edit-date').value     = (r.date||'').slice(0,10);
+    document.getElementById('edit-desc').value     = r.desc||'';
+    editIndex = i;
+    toggleEdit(true);
   };
-  document.getElementById("cancelEditBtn").onclick=()=>{editSection.style.display="none";dashboard.style.display="block";};
-  window.approveRequest=function(i){requests[i].status="Approved";renderTable();}
-  window.deleteRequest=function(i){requests.splice(i,1);renderTable();}
-  document.getElementById("newRequestBtn").onclick=()=>{requests.push({title:"New Request",type:"buying",company:"New Co",date:new Date().toISOString().split("T")[0],status:"Pending"});renderTable();}
-  document.getElementById("logout").onclick=()=>{location.reload();}
-};
+
+  let editIndex = null;
+  function toggleEdit(show){
+    document.getElementById('edit-section').style.display = show ? 'block' : 'none';
+    requestsView.style.display = show ? 'none' : 'block';
+    usersView.style.display    = show ? 'none' : usersView.style.display;
+  }
+
+  document.getElementById('saveEditBtn').addEventListener('click', ()=>{
+    const obj = {
+      title:   document.getElementById('edit-title').value.trim(),
+      company: document.getElementById('edit-company').value.trim(),
+      country: document.getElementById('edit-country').value.trim(),
+      category:document.getElementById('edit-category').value.trim(),
+      type:    document.getElementById('edit-type').value,
+      date:    document.getElementById('edit-date').value || new Date().toISOString().slice(0,10),
+      desc:    document.getElementById('edit-desc').value,
+      status:  'Pending'
+    };
+    if(editIndex===null){ requests.push(obj); } else { requests[editIndex]=obj; }
+    write(REQ_KEY, requests);
+    editIndex=null; toggleEdit(false); renderRequests();
+  });
+  document.getElementById('cancelEditBtn').addEventListener('click', ()=>{ editIndex=null; toggleEdit(false); });
+
+  window.approveReq = (i)=>{ requests[i].status='Approved'; write(REQ_KEY, requests); renderRequests(); };
+  window.deleteReq  = (i)=>{ requests.splice(i,1); write(REQ_KEY, requests); renderRequests(); };
+
+  document.getElementById('newRequestBtn').addEventListener('click', ()=>{
+    document.getElementById('editTitleH').textContent = 'New Request';
+    editIndex = null;
+    document.querySelectorAll('#edit-section input, #edit-section textarea').forEach(el=>el.value='');
+    document.getElementById('edit-type').value='buy';
+    toggleEdit(true);
+  });
+
+  document.getElementById('seedBtn').addEventListener('click', ()=>{
+    const seed = [
+      {title:"Buy 500kg Honey", type:"buy",  company:"Istanbul Imports", country:"Turkey", category:"Food Industry", date:new Date().toISOString().slice(0,10), status:"Pending"},
+      {title:"Sell Wheat 1000 Tons", type:"sell", company:"Anadolu Export",  country:"Turkey", category:"Agriculture Industry", date:new Date().toISOString().slice(0,10), status:"Approved"}
+    ];
+    requests = read(REQ_KEY).concat(seed);
+    write(REQ_KEY, requests);
+    renderRequests();
+  });
+  document.getElementById('clearAllBtn').addEventListener('click', ()=>{
+    if(confirm('Clear all requests from this browser?')){ write(REQ_KEY, []); renderRequests(); }
+  });
+
+  /* ====== Users Table ====== */
+  const usersTbody = document.getElementById('usersTable');
+  const usersMsg   = document.getElementById('usersMsg');
+
+  function renderUsers(){
+    const users = read(USERS_KEY);
+    usersTbody.innerHTML = '';
+    if(!users.length){ usersMsg.textContent='No registered users yet.'; return; }
+    usersMsg.textContent = `Total ${users.length} user(s).`;
+    users.forEach((u,i)=>{
+      const tr = document.createElement('tr');
+      const date = u.created ? new Date(u.created).toLocaleString() : '-';
+      tr.innerHTML = `<td>${i+1}</td><td>${u.name||'-'}</td><td>${u.email||'-'}</td><td>${u.company||'-'}</td><td>${date}</td>`;
+      usersTbody.appendChild(tr);
+    });
+  }
+
+  document.getElementById('exportUsersBtn').addEventListener('click', ()=>{
+    const users = read(USERS_KEY);
+    if(!users.length){ alert('No users to export.'); return; }
+    const rows=[['Name','Email','Company','RegisteredAt']];
+    users.forEach(u=>rows.push([u.name||'',u.email||'',u.company||'',u.created||'']));
+    const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download='users.csv'; a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  document.getElementById('clearUsersBtn').addEventListener('click', ()=>{
+    if(confirm('Clear all users from this browser? (demo)')){ localStorage.removeItem(USERS_KEY); renderUsers(); }
+  });
+
+  /* ====== Init ====== */
+  function renderAll(){ showView('requests'); }
+})();
 </script>
 </body>
 </html>
