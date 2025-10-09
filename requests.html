@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trader Route - Requests</title>
-  <link rel="stylesheet" href="stil.css" />
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -71,21 +71,25 @@
       margin-bottom: 10px;
       color: #222;
     }
-    .category-list, .country-list {
+    .category-list,
+    .country-list {
       list-style: none;
       padding-left: 0;
       margin: 0 0 15px 0;
     }
-    .category-list li, .country-list li {
+    .category-list li,
+    .country-list li {
       margin-bottom: 8px;
     }
-    .category-list a, .country-list a {
+    .category-list a,
+    .country-list a {
       text-decoration: none;
       color: #333;
       display: flex;
       justify-content: space-between;
     }
-    .category-list a:hover, .country-list a:hover {
+    .category-list a:hover,
+    .country-list a:hover {
       color: #007bff;
     }
     .count {
@@ -202,7 +206,7 @@
   <!-- LOGO -->
   <header>
     <a href="index.html">
-      <img src="varlıklar/logos.png" alt="Trader Route Logo" />
+      <img src="assets/logos.png" alt="Trader Route Logo" />
     </a>
   </header>
 
@@ -238,7 +242,6 @@
   </div>
 
   <script>
-    // === VERİLER ===
     const categories = [
       "Agriculture","Apparel","Automobiles & Motorcycles","Beauty & Personal Care",
       "Business Services","Chemicals","Computer Hardware & Software","Construction & Real Estate",
@@ -257,17 +260,18 @@
       "Greece","Hungary","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Japan",
       "Kenya","Kuwait","Lebanon","Malaysia","Mexico","Morocco","Netherlands","Nigeria","Norway","Pakistan",
       "Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Saudi Arabia","Singapore","South Africa",
-      "South Korea","Spain","Sweden","Switzerland","Thailand","Turkey","Ukraine","United Arab Emirates","United Kingdom","United States"
+      "South Korea","Spain","Sri Lanka","Sweden","Switzerland","Thailand","Turkey","Ukraine","United Arab Emirates","United Kingdom","United States"
     ];
 
     const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
 
-    // === ELEMENTLER ===
     const requestContainer = document.getElementById("requestItems");
     const searchInput = document.getElementById("searchInput");
     const categoryList = document.getElementById("categoryList");
     const countryList = document.getElementById("countryList");
     const clearFilters = document.getElementById("clearFilters");
+    const showMoreCountries = document.getElementById("showMoreCountries");
+    const countrySearch = document.getElementById("countrySearch");
 
     const tabs = {
       all: document.getElementById("tabAll"),
@@ -279,11 +283,11 @@
     let activeTab = "all";
     let selectedCategory = null;
     let selectedCountry = null;
+    let visibleCountryCount = 10;
 
-    // === KATEGORİLER ===
     function renderCategories(requests) {
       categoryList.innerHTML = "";
-      categories.slice(0, 15).forEach(cat => {
+      categories.forEach(cat => {
         const count = requests.filter(r => r.category === cat).length;
         const li = document.createElement("li");
         li.innerHTML = `<a href="#">${cat}<span class="count">(${count})</span></a>`;
@@ -295,11 +299,6 @@
         categoryList.appendChild(li);
       });
     }
-
-    // === ÜLKELER ===
-    let visibleCountryCount = 10;
-    const showMoreCountries = document.getElementById("showMoreCountries");
-    const countrySearch = document.getElementById("countrySearch");
 
     function renderCountries() {
       countryList.innerHTML = "";
@@ -317,16 +316,15 @@
       showMoreCountries.style.display = filtered.length > visibleCountryCount ? "block" : "none";
     }
 
-    countrySearch.addEventListener("input", () => {
-      visibleCountryCount = 10;
-      renderCountries();
-    });
     showMoreCountries.addEventListener("click", () => {
       visibleCountryCount += 10;
       renderCountries();
     });
+    countrySearch.addEventListener("input", () => {
+      visibleCountryCount = 10;
+      renderCountries();
+    });
 
-    // === FİLTRELERİ TEMİZLE ===
     clearFilters.addEventListener("click", () => {
       selectedCategory = null;
       selectedCountry = null;
@@ -334,18 +332,17 @@
       renderRequests();
     });
 
-    // === İLANLAR ===
     function renderRequests() {
       const allReq = getRequests();
       renderCategories(allReq);
       renderCountries();
 
-      const searchTerm = searchInput.value.toLowerCase();
+      const term = searchInput.value.toLowerCase();
       let filtered = allReq.filter(r =>
         (activeTab === "all" || r.type === activeTab) &&
         (!selectedCategory || r.category === selectedCategory) &&
         (!selectedCountry || r.country === selectedCountry) &&
-        (r.title.toLowerCase().includes(searchTerm) || r.description.toLowerCase().includes(searchTerm))
+        (r.title.toLowerCase().includes(term) || r.description.toLowerCase().includes(term))
       );
 
       requestContainer.innerHTML = "";
