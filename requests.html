@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trader Route - Requests</title>
 
-  <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="assets/logo.png" />
+  <link rel="stylesheet" href="style.css" />
 
   <style>
     body {
       font-family: "Inter", "Segoe UI", Arial, sans-serif;
-      background: #f5f6f8;
+      background-color: #f6f8fa;
       margin: 0;
       color: #222;
     }
@@ -22,8 +22,13 @@
       background: #fff;
       padding: 12px 20px;
       border-bottom: 1px solid #ddd;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-    header img { height: 52px; cursor: pointer; }
+
+    header img {
+      height: 54px;
+      cursor: pointer;
+    }
 
     .tabs {
       display: flex;
@@ -31,55 +36,71 @@
       background: #fff;
       border-bottom: 1px solid #ddd;
       gap: 10px;
-      padding: 12px 0;
+      padding: 14px 0;
     }
+
     .tabs button {
       background: none;
       border: none;
       font-weight: 600;
       font-size: 17px;
-      padding: 10px 22px;
+      padding: 10px 24px;
       border-radius: 25px;
       cursor: pointer;
-      transition: 0.2s;
+      transition: 0.25s;
+      color: #333;
     }
-    .tabs button.active { background: #007bff; color: white; }
+
+    .tabs button:hover {
+      background: #f0f0f0;
+    }
+
+    .tabs button.active {
+      background: #007bff;
+      color: #fff;
+    }
 
     .container {
-      max-width: 1200px;
-      margin: 30px auto;
+      max-width: 1300px;
+      margin: 35px auto;
       display: flex;
-      gap: 20px;
+      gap: 24px;
       padding: 0 15px;
     }
 
+    /* Sidebar */
     .sidebar {
-      width: 280px;
+      width: 300px;
       background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      height: 80vh;
+      padding: 22px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      height: auto;
     }
+
     .sidebar h4 {
       font-size: 19px;
       font-weight: 700;
       color: #111;
       margin-bottom: 10px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 4px;
     }
 
-    .category-search, .country-search {
+    .category-search,
+    .country-search {
       width: 100%;
-      padding: 8px;
+      padding: 9px;
       border: 1px solid #ccc;
       border-radius: 6px;
       margin-bottom: 10px;
       font-size: 14px;
     }
 
-    .category-list, .country-list {
+    .category-list,
+    .country-list {
       list-style: none;
       padding-left: 0;
       margin: 0;
@@ -88,8 +109,23 @@
       scrollbar-color: #ccc transparent;
       flex: 1;
     }
-    .category-list li, .country-list li { margin-bottom: 6px; }
-    .category-list a, .country-list a {
+
+    .category-list {
+      max-height: 250px;
+      margin-bottom: 20px;
+    }
+
+    .country-list {
+      max-height: 300px;
+    }
+
+    .category-list li,
+    .country-list li {
+      margin-bottom: 6px;
+    }
+
+    .category-list a,
+    .country-list a {
       text-decoration: none;
       color: #333;
       display: flex;
@@ -97,27 +133,44 @@
       justify-content: space-between;
       font-size: 14px;
       gap: 6px;
+      padding: 4px 3px;
+      border-radius: 5px;
+      transition: 0.2s;
     }
-    .category-list a:hover, .country-list a:hover { color: #007bff; }
-    .count { color: #888; font-size: 13px; }
+
+    .category-list a:hover,
+    .country-list a:hover {
+      background: #f1f6ff;
+      color: #007bff;
+    }
+
+    .count {
+      color: #888;
+      font-size: 13px;
+    }
 
     .flag {
-      width: 18px;
-      height: 12px;
+      width: 20px;
+      height: 14px;
       border: 1px solid #ccc;
       border-radius: 2px;
       margin-right: 6px;
       object-fit: cover;
     }
 
+    /* Content */
     .content {
       flex: 1;
       background: #fff;
-      border-radius: 10px;
-      padding: 25px;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
 
-    .search-bar { margin-bottom: 20px; }
+    .search-bar {
+      margin-bottom: 20px;
+    }
+
     #searchInput {
       width: 100%;
       max-width: 400px;
@@ -133,12 +186,30 @@
       padding: 15px;
       margin-bottom: 15px;
       background: #fff;
-      transition: all 0.2s ease-in-out;
+      transition: all 0.25s ease;
       cursor: pointer;
     }
-    .request-card:hover { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
-    .request-card h5 { margin: 0 0 5px; font-size: 17px; }
-    .request-card small { color: #666; }
+
+    .request-card:hover {
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .request-card h5 {
+      margin: 0 0 6px;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .request-card p {
+      margin: 0 0 4px;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .request-card small {
+      color: #666;
+    }
 
     #showMoreRequests {
       background: #007bff;
@@ -150,15 +221,28 @@
       font-weight: 600;
       margin: 20px auto;
       display: block;
+      transition: 0.3s;
     }
-    #showMoreRequests:hover { background: #0056b3; }
 
-    @media (max-width: 768px) {
-      .container { flex-direction: column; }
-      .sidebar { width: 100%; height: auto; max-height: none; }
+    #showMoreRequests:hover {
+      background: #005ec4;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        order: 2;
+      }
+      .content {
+        order: 1;
+      }
     }
   </style>
 </head>
+
 <body>
   <header>
     <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo" /></a>
@@ -209,27 +293,16 @@
       {code:'tr',name:'Turkey'},{code:'us',name:'United States'},{code:'de',name:'Germany'},{code:'fr',name:'France'},
       {code:'it',name:'Italy'},{code:'es',name:'Spain'},{code:'cn',name:'China'},{code:'jp',name:'Japan'},
       {code:'in',name:'India'},{code:'br',name:'Brazil'},{code:'ru',name:'Russia'},{code:'ca',name:'Canada'},
-      {code:'au',name:'Australia'},{code:'gb',name:'United Kingdom'},{code:'mx',name:'Mexico'},
-      {code:'nl',name:'Netherlands'},{code:'ch',name:'Switzerland'},{code:'se',name:'Sweden'},
-      {code:'no',name:'Norway'},{code:'dk',name:'Denmark'},{code:'fi',name:'Finland'},{code:'pl',name:'Poland'},
-      {code:'pt',name:'Portugal'},{code:'gr',name:'Greece'},{code:'cz',name:'Czech Republic'},
-      {code:'hu',name:'Hungary'},{code:'ro',name:'Romania'},{code:'bg',name:'Bulgaria'},{code:'ua',name:'Ukraine'},
-      {code:'ae',name:'United Arab Emirates'},{code:'sa',name:'Saudi Arabia'},{code:'eg',name:'Egypt'},
-      {code:'za',name:'South Africa'},{code:'sg',name:'Singapore'},{code:'kr',name:'South Korea'},
-      {code:'th',name:'Thailand'},{code:'my',name:'Malaysia'},{code:'id',name:'Indonesia'},
-      {code:'ph',name:'Philippines'},{code:'vn',name:'Vietnam'},{code:'ar',name:'Argentina'},
-      {code:'cl',name:'Chile'},{code:'co',name:'Colombia'},{code:'pe',name:'Peru'},{code:'ma',name:'Morocco'},
-      {code:'ke',name:'Kenya'},{code:'ng',name:'Nigeria'},{code:'qa',name:'Qatar'},{code:'kw',name:'Kuwait'},
-      {code:'bh',name:'Bahrain'},{code:'om',name:'Oman'},{code:'ie',name:'Ireland'},{code:'lt',name:'Lithuania'},
-      {code:'lv',name:'Latvia'},{code:'ee',name:'Estonia'},{code:'hr',name:'Croatia'},{code:'si',name:'Slovenia'},
-      {code:'sk',name:'Slovakia'},{code:'rs',name:'Serbia'},{code:'at',name:'Austria'},{code:'be',name:'Belgium'},
-      {code:'lu',name:'Luxembourg'},{code:'il',name:'Israel'},{code:'ir',name:'Iran'},{code:'pk',name:'Pakistan'},
-      {code:'bd',name:'Bangladesh'},{code:'lk',name:'Sri Lanka'},{code:'np',name:'Nepal'},{code:'mm',name:'Myanmar'},
-      {code:'hk',name:'Hong Kong'},{code:'tw',name:'Taiwan'},{code:'kz',name:'Kazakhstan'},{code:'uz',name:'Uzbekistan'},
-      {code:'tm',name:'Turkmenistan'},{code:'az',name:'Azerbaijan'},{code:'ge',name:'Georgia'},{code:'am',name:'Armenia'},
-      {code:'cy',name:'Cyprus'},{code:'tn',name:'Tunisia'},{code:'dz',name:'Algeria'},{code:'cm',name:'Cameroon'},
-      {code:'ug',name:'Uganda'},{code:'tz',name:'Tanzania'},{code:'zm',name:'Zambia'},{code:'zw',name:'Zimbabwe'},
-      {code:'gh',name:'Ghana'},{code:'sn',name:'Senegal'},{code:'sd',name:'Sudan'},{code:'et',name:'Ethiopia'}
+      {code:'au',name:'Australia'},{code:'gb',name:'United Kingdom'},{code:'mx',name:'Mexico'},{code:'nl',name:'Netherlands'},
+      {code:'ch',name:'Switzerland'},{code:'se',name:'Sweden'},{code:'no',name:'Norway'},{code:'dk',name:'Denmark'},
+      {code:'fi',name:'Finland'},{code:'pl',name:'Poland'},{code:'pt',name:'Portugal'},{code:'gr',name:'Greece'},
+      {code:'cz',name:'Czech Republic'},{code:'hu',name:'Hungary'},{code:'ro',name:'Romania'},{code:'bg',name:'Bulgaria'},
+      {code:'ua',name:'Ukraine'},{code:'ae',name:'United Arab Emirates'},{code:'sa',name:'Saudi Arabia'},
+      {code:'eg',name:'Egypt'},{code:'za',name:'South Africa'},{code:'sg',name:'Singapore'},{code:'kr',name:'South Korea'},
+      {code:'th',name:'Thailand'},{code:'my',name:'Malaysia'},{code:'id',name:'Indonesia'},{code:'ph',name:'Philippines'},
+      {code:'vn',name:'Vietnam'},{code:'ar',name:'Argentina'},{code:'cl',name:'Chile'},{code:'co',name:'Colombia'},
+      {code:'pe',name:'Peru'},{code:'ma',name:'Morocco'},{code:'ke',name:'Kenya'},{code:'ng',name:'Nigeria'},
+      {code:'qa',name:'Qatar'},{code:'kw',name:'Kuwait'},{code:'bh',name:'Bahrain'},{code:'om',name:'Oman'}
     ];
 
     const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
@@ -251,19 +324,13 @@
       const searchTerm = categorySearch.value.toLowerCase();
       const filtered = categories.filter(c => c.toLowerCase().includes(searchTerm));
       categoryList.innerHTML = "";
-      filtered.slice(0, visibleCategories).forEach(cat => {
+      filtered.forEach(cat => {
         const count = requests.filter(r => r.category === cat).length;
         const li = document.createElement("li");
         li.innerHTML = `<a href="#">${cat}<span class="count">(${count})</span></a>`;
         li.addEventListener("click", () => { selectedCategory = cat; renderRequests(); });
         categoryList.appendChild(li);
       });
-      categoryList.onscroll = () => {
-        if (categoryList.scrollTop + categoryList.clientHeight >= categoryList.scrollHeight) {
-          visibleCategories += 10;
-          renderCategories(requests);
-        }
-      };
     }
 
     function renderCountries() {
@@ -274,11 +341,7 @@
       filtered.forEach(c => {
         const count = requests.filter(r => r.country === c.name).length;
         const li = document.createElement("li");
-        li.innerHTML =
-          `<a href="#">
-            <img class="flag" src="https://flagcdn.com/h20/${c.code}.png" alt="${c.name}">
-            ${c.name}<span class="count">(${count})</span>
-          </a>`;
+        li.innerHTML = `<a href="#"><img class="flag" src="https://flagcdn.com/h20/${c.code}.png" alt="${c.name}"> ${c.name}<span class="count">(${count})</span></a>`;
         li.addEventListener("click", () => { selectedCountry = c.name; renderRequests(); });
         countryList.appendChild(li);
       });
@@ -288,6 +351,7 @@
       const allReq = getRequests();
       renderCategories(allReq);
       renderCountries();
+
       const term = searchInput.value.toLowerCase();
       const filtered = allReq.filter(r =>
         (activeTab === "all" || r.type === activeTab) &&
@@ -295,6 +359,7 @@
         (!selectedCountry || r.country === selectedCountry) &&
         (r.title.toLowerCase().includes(term) || r.description.toLowerCase().includes(term))
       );
+
       requestContainer.innerHTML = "";
       filtered.slice(0, visibleRequests).forEach(r => {
         const div = document.createElement("div");
@@ -302,6 +367,7 @@
         div.innerHTML = `<h5>${r.title}</h5><p>${r.description}</p><small>${r.country} · ${r.category}</small>`;
         requestContainer.appendChild(div);
       });
+
       document.getElementById("showMoreRequests").style.display =
         filtered.length > visibleRequests ? "block" : "none";
     }
@@ -310,13 +376,14 @@
       visibleRequests += 10;
       renderRequests();
     });
+
     searchInput.addEventListener("input", renderRequests);
 
-    ["tabAll", "tabBuy", "tabSell"].forEach(id => {
-      document.getElementById(id).addEventListener("click", e => {
-        document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+    ["tabAll","tabBuy","tabSell"].forEach(id=>{
+      document.getElementById(id).addEventListener("click", e=>{
+        document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
         e.target.classList.add("active");
-        activeTab = id === "tabAll" ? "all" : id === "tabBuy" ? "buy" : "sell";
+        activeTab=id==="tabAll"?"all":id==="tabBuy"?"buy":"sell";
         renderRequests();
       });
     });
