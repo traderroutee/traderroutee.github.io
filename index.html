@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trader Route - Import & Export Platform</title>
   <link rel="icon" href="assets/logos.png" type="image/png">
+  <link rel="stylesheet" href="style.css" />
+
   <style>
     body {
       margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f8f9fa;
     }
 
@@ -47,10 +49,11 @@
       text-decoration: none;
       color: #000;
       font-weight: 500;
+      transition: color .3s;
     }
 
     nav a:hover {
-      color: #008d62;
+      color: #007bff;
     }
 
     .header-right {
@@ -76,20 +79,17 @@
       width: 150px;
     }
 
-    .search-box button {
+    .login-btn, .join-btn {
       border: none;
-      background: none;
       cursor: pointer;
-      color: #555;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: .3s;
     }
 
     .login-btn {
       background: #f1f1f1;
-      border: none;
       padding: 7px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
     }
 
     .login-btn:hover {
@@ -97,19 +97,16 @@
     }
 
     .join-btn {
-      background: #6c63ff;
+      background: #007bff;
       color: white;
-      border: none;
       padding: 8px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
     }
 
     .join-btn:hover {
-      background: #5a53e6;
+      background: #005ec4;
     }
 
+    /* HERO SECTION */
     .hero {
       position: relative;
       height: 500px;
@@ -117,74 +114,141 @@
       display: flex;
       align-items: flex-start;
       justify-content: left;
-      padding-top: 80px;
-      padding-left: 40px;
-      flex-direction: column;
+      padding: 80px 40px;
     }
 
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 1;
+      border-radius: 6px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      color: #fff;
+    }
+
+    .hero-content h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin: 0 0 10px;
+    }
+
+    .hero-content p {
+      font-size: 17px;
+      margin-bottom: 20px;
+      color: #f1f1f1;
+    }
+
+    .hero-buttons a {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: .3s;
+    }
+
+    .btn-primary {
+      background: #007bff;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #005ec4;
+    }
+
+    .btn-outline {
+      border: 2px solid #fff;
+      color: #fff;
+    }
+
+    .btn-outline:hover {
+      background: #fff;
+      color: #007bff;
+    }
+
+    /* CATEGORY BOX */
     .categories {
       background: #fff;
       border-radius: 10px;
       padding: 15px;
       width: 240px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 3;
     }
 
     .categories h3 {
-      margin-top: 0;
-      margin-bottom: 15px;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
+      margin-bottom: 10px;
     }
 
     .category-item {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       font-size: 14px;
-      margin: 6px 0;
-      color: #444;
+      margin: 5px 0;
+      color: #333;
+      cursor: pointer;
+      transition: .3s;
     }
 
     .category-item:hover {
-      color: #008d62;
+      color: #007bff;
+    }
+
+    .category-item span {
+      font-size: 12px;
+      color: #888;
     }
 
     .category-button {
-      background: #000;
-      color: #fff;
-      border: none;
       width: 100%;
+      background: #007bff;
+      border: none;
+      color: #fff;
       padding: 8px;
-      border-radius: 5px;
+      border-radius: 6px;
+      font-weight: 600;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
+    .category-button:hover {
+      background: #005ec4;
+    }
+
+    /* MAIN BUTTONS */
     .middle-buttons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin: 30px auto;
-      flex-wrap: wrap;
+      text-align: center;
+      margin: 40px 0;
     }
 
     .middle-buttons button {
-      background-color: #008d62;
+      background: #007bff;
       color: #fff;
       border: none;
       padding: 10px 18px;
-      border-radius: 6px;
+      border-radius: 25px;
+      margin: 5px;
       cursor: pointer;
-      font-weight: 500;
-      transition: background 0.3s ease;
+      font-weight: 600;
+      transition: .3s;
     }
 
     .middle-buttons button:hover {
-      background-color: #006e4b;
+      background: #005ec4;
     }
 
+    /* JOIN SECTION */
     .main-section {
       background: #fff;
       padding: 60px 40px;
@@ -192,6 +256,10 @@
       justify-content: center;
       align-items: center;
       gap: 40px;
+      border-radius: 10px;
+      max-width: 1100px;
+      margin: 40px auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
     .main-section img {
@@ -201,7 +269,7 @@
 
     .main-section h2 {
       font-size: 24px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       color: #000;
     }
 
@@ -211,29 +279,21 @@
       font-size: 15px;
     }
 
-    .subscribe-section {
-      background: #f1f1f1;
-      text-align: center;
-      padding: 50px 20px;
-    }
-
-    .subscribe-section input {
-      padding: 10px;
-      width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-right: 10px;
-    }
-
-    .subscribe-section button {
-      background: #000;
-      color: #fff;
+    .main-section button {
+      background: #007bff;
       border: none;
-      padding: 10px 20px;
+      color: #fff;
+      padding: 8px 16px;
       border-radius: 5px;
+      font-weight: 600;
       cursor: pointer;
     }
 
+    .main-section button:hover {
+      background: #005ec4;
+    }
+
+    /* FOOTER */
     footer {
       background: #fff;
       display: flex;
@@ -249,8 +309,8 @@
     }
 
     footer h4 {
-      margin-bottom: 10px;
       font-size: 15px;
+      margin-bottom: 10px;
       color: #000;
     }
 
@@ -261,8 +321,17 @@
       padding: 10px;
       font-size: 13px;
     }
+
+    @media (max-width: 900px) {
+      .main-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .categories { width: 100%; }
+    }
   </style>
 </head>
+
 <body>
 
   <header>
@@ -292,25 +361,25 @@
   <section class="hero">
     <div class="categories">
       <h3>Categories</h3>
-      <div class="category-item">Agricultural Machinery <span>16</span></div>
-      <div class="category-item">Agriculture Industry <span>175</span></div>
-      <div class="category-item">Automotive <span>39</span></div>
-      <div class="category-item">Baby Products & Accessories <span>11</span></div>
-      <div class="category-item">Chemical Industry <span>50</span></div>
-      <div class="category-item">Clothing & Fashion <span>148</span></div>
-      <div class="category-item">Commercial Activities <span>58</span></div>
-      <div class="category-item">Construction Industry <span>54</span></div>
-      <div class="category-item">Cosmetics <span>74</span></div>
-      <div class="category-item">IT & Communication <span>8</span></div>
-      <button class="category-button">View All Categories</button>
+      <div id="categoryList"></div>
+      <button class="category-button" onclick="location.href='requests.html'">View All Categories</button>
+    </div>
+
+    <div class="hero-content">
+      <h1>Connect the World of Import & Export</h1>
+      <p>Discover global trade opportunities, find buyers and suppliers worldwide.</p>
+      <div class="hero-buttons">
+        <a href="requests.html" class="btn-primary">View All Requests</a>
+        <a href="request-form.html" class="btn-outline">Post a Request</a>
+      </div>
     </div>
   </section>
 
   <div class="middle-buttons">
     <button onclick="location.href='requests.html'">All Requests</button>
-    <button onclick="location.href='requests.html?type=buyer'">Buy Requests</button>
-    <button onclick="location.href='requests.html?type=seller'">Sell Offers</button>
-    <button onclick="location.href='request-form.html'">Free Request!</button>
+    <button onclick="location.href='requests.html?type=buy'">Buy Requests</button>
+    <button onclick="location.href='requests.html?type=sell'">Sell Offers</button>
+    <button onclick="location.href='request-form.html'">Post Free Request</button>
   </div>
 
   <section class="main-section">
@@ -319,10 +388,10 @@
       <h2>Join Trader Route</h2>
       <p>
         As a company, our primary goal has always been to achieve success in global trade.
-        Traders wondering “How can I find buyers for my products?” will find the answer here.
-        Trader Route connects reliable importers and exporters around the world.
+        Find buyers for your products and reach new markets with Trader Route —  
+        the global trade connection platform.
       </p>
-      <button style="background:#008d62; color:#fff; border:none; padding:8px 14px; border-radius:5px; cursor:pointer;">Join Now</button>
+      <button onclick="location.href='register.html'">Join Now</button>
     </div>
   </section>
 
@@ -335,5 +404,34 @@
   <div class="footer-bottom">
     © 2025 Trader Route — Connecting Global Trade.
   </div>
+
+  <script>
+    const categories = [
+      "Agricultural Machinery","Agriculture Industry","Automotive","Baby Products and Accessories",
+      "Chemical Industry","Clothing - Fashion","Commercial Activities","Construction and Building Industry",
+      "Cosmetic Products","Data and Communication Technology","Defense Industry","Electric – Electronic",
+      "Energy Sector","Entertainment Hobbies","Environment and Recycling","Food Industry","Forestry Products",
+      "Furniture","Furniture – Wood Products","Giftware – Promotions","Heating - Cooling - Ventilation",
+      "Horeca - Hospitality Industry","Husbandry Industry","Industrial Products","Jewelry",
+      "Kitchenware–Glassware","Leather Products & Shoes","Machinery Industry","Marble–Mining",
+      "Marine Vehicles and Equipment","Medical Products – Healthcare – Pharmaceutical",
+      "Metals–Iron–Steel","Paper - Packaging - Printing","Plastic and Rubber Industry",
+      "Sanitary - Cleaning Products","Security Equipments","Services","Sporting Equipments - Materials",
+      "Stationery, Schools and Offices","Textile Products","Tourism","White Goods – Home Appliances"
+    ];
+
+    const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
+    const reqs = getRequests();
+    const list = document.getElementById("categoryList");
+
+    categories.slice(0, 10).forEach(cat => {
+      const count = reqs.filter(r => r.category === cat).length;
+      const div = document.createElement("div");
+      div.className = "category-item";
+      div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
+      div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
+      list.appendChild(div);
+    });
+  </script>
 </body>
 </html>
