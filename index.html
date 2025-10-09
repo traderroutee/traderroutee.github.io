@@ -112,9 +112,9 @@
       height: 500px;
       background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
       display: flex;
-      align-items: flex-start;
-      justify-content: left;
-      padding: 80px 40px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     .hero::after {
@@ -129,52 +129,18 @@
     .hero-content {
       position: relative;
       z-index: 2;
-      max-width: 600px;
+      max-width: 800px;
       color: #fff;
+      text-align: center;
     }
 
     .hero-content h1 {
-      font-size: 42px;
+      font-size: 44px;
       font-weight: 800;
-      margin: 0 0 10px;
+      margin: 0;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.5);
     }
 
-    .hero-content p {
-      font-size: 17px;
-      margin-bottom: 20px;
-      color: #f1f1f1;
-    }
-
-    .hero-buttons a {
-      display: inline-block;
-      margin-right: 10px;
-      padding: 10px 20px;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: .3s;
-    }
-
-    .btn-primary {
-      background: #007bff;
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: #005ec4;
-    }
-
-    .btn-outline {
-      border: 2px solid #fff;
-      color: #fff;
-    }
-
-    .btn-outline:hover {
-      background: #fff;
-      color: #007bff;
-    }
-
-    /* CATEGORY BOX */
     .categories {
       background: #fff;
       border-radius: 10px;
@@ -358,20 +324,19 @@
     </div>
   </header>
 
+  <!-- HERO (CENTERED TEXT, NO BUTTONS BELOW) -->
   <section class="hero">
+    <div class="hero-content">
+      <h1>Connect the World of Import & Export</h1>
+    </div>
+  </section>
+
+  <!-- Categories (left list) -->
+  <section style="display:flex; justify-content:center; margin-top:-120px; position:relative; z-index:3;">
     <div class="categories">
       <h3>Categories</h3>
       <div id="categoryList"></div>
       <button class="category-button" onclick="location.href='requests.html'">View All Categories</button>
-    </div>
-
-    <div class="hero-content">
-      <h1>Connect the World of Import & Export</h1>
-      <p>Discover global trade opportunities, find buyers and suppliers worldwide.</p>
-      <div class="hero-buttons">
-        <a href="requests.html" class="btn-primary">View All Requests</a>
-        <a href="request-form.html" class="btn-outline">Post a Request</a>
-      </div>
     </div>
   </section>
 
