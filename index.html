@@ -1,423 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trader Route - Import & Export Platform</title>
+  <title>Trader Route - İthalat & İhracat Platformu</title>
   <link rel="icon" href="assets/logos.png" type="image/png">
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    body {
-      margin: 0;
-      font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f9fa;
+    /* ——— Genel ——— */
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa}
+
+    header{background:#fff;padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:space-between}
+    .logo-container{display:flex;align-items:center;gap:10px}
+    .logo-container img{height:42px}
+    .logo-text{font-size:15px;color:#555;font-weight:500}
+    nav{display:flex;align-items:center;gap:15px}
+    nav a{text-decoration:none;color:#000;font-weight:500;transition:.3s}
+    nav a:hover{color:#007bff}
+    .header-right{display:flex;align-items:center;gap:10px}
+    .search-box{display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px}
+    .search-box input{border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px}
+    .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:500;transition:.3s}
+    .login-btn{background:#f1f1f1;padding:7px 14px}
+    .login-btn:hover{background:#e0e0e0}
+    .join-btn{background:#007bff;color:#fff;padding:8px 15px}
+    .join-btn:hover{background:#005ec4}
+
+    /* ——— HERO ——— */
+    .hero{
+      position:relative;
+      height:500px;
+      background:url('assets/ihracat-haritasi.png') center/cover no-repeat;
+      display:flex;align-items:center;justify-content:center;text-align:center;
+    }
+    .hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1;border-radius:6px}
+    .hero-content{position:relative;z-index:2;max-width:800px;color:#fff;text-align:center}
+    .hero-content h1{font-size:44px;font-weight:800;margin:0;text-shadow:0 3px 10px rgba(0,0,0,.5)}
+
+    /* ——— Kategoriler kutusu ——— */
+    .categories{
+      background:#fff;border-radius:10px;padding:15px;width:240px;
+      box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:5;
+    }
+    .categories h3{font-size:16px;font-weight:700;margin-bottom:10px}
+    .category-item{display:flex;justify-content:space-between;font-size:14px;margin:5px 0;color:#333;cursor:pointer;transition:.3s}
+    .category-item:hover{color:#007bff}
+    .category-item span{font-size:12px;color:#888}
+    .category-button{width:100%;background:#007bff;border:none;color:#fff;padding:8px;border-radius:6px;font-weight:600;cursor:pointer;margin-top:8px}
+    .category-button:hover{background:#005ec4}
+
+    /* ——— Orta butonlar / içerik ——— */
+    .middle-buttons{text-align:center;margin:40px 0}
+    .middle-buttons button{background:#007bff;color:#fff;border:none;padding:10px 18px;border-radius:25px;margin:5px;cursor:pointer;font-weight:600;transition:.3s}
+    .middle-buttons button:hover{background:#005ec4}
+
+    .main-section{background:#fff;padding:60px 40px;display:flex;justify-content:center;align-items:center;gap:40px;border-radius:10px;max-width:1100px;margin:40px auto;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    .main-section img{width:300px;border-radius:10px}
+    .main-section h2{font-size:24px;margin-bottom:10px;color:#000}
+    .main-section p{color:#333;line-height:1.6;font-size:15px}
+    .main-section button{background:#007bff;border:none;color:#fff;padding:8px 16px;border-radius:5px;font-weight:600;cursor:pointer}
+    .main-section button:hover{background:#005ec4}
+
+    footer{background:#fff;display:flex;justify-content:space-around;padding:40px;font-size:14px;color:#333;border-top:1px solid #ddd}
+    footer div{width:200px}
+    footer h4{font-size:15px;margin-bottom:10px;color:#000}
+    .footer-bottom{text-align:center;background:#000;color:#fff;padding:10px;font-size:13px}
+
+    /* ——— Mobil ——— */
+    @media (max-width:900px){
+      .main-section{flex-direction:column;text-align:center}
+      .categories{width:100%}
     }
 
-    header {
-      background: #fff;
-      padding: 10px 40px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* ——— Part 3.2: Kategori Kutusunu .hero'nun soluna sabitleme (JS ile konumlanacak) ——— */
+    .cat-holder{
+      position:absolute; /* JS ile top/left ayarlanacak */
+      transform:translateY(-50%);
+      z-index:5;
     }
 
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-container img {
-      height: 42px;
-    }
-
-    .logo-text {
-      font-size: 15px;
-      color: #555;
-      font-weight: 500;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: #000;
-      font-weight: 500;
-      transition: color .3s;
-    }
-
-    nav a:hover {
-      color: #007bff;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      background: #f1f1f1;
-      border-radius: 20px;
-      padding: 5px 10px;
-    }
-
-    .search-box input {
-      border: none;
-      background: none;
-      outline: none;
-      padding: 5px;
-      font-size: 14px;
-      width: 150px;
-    }
-
-    .login-btn, .join-btn {
-      border: none;
-      cursor: pointer;
-      border-radius: 6px;
-      font-weight: 500;
-      transition: .3s;
-    }
-
-    .login-btn {
-      background: #f1f1f1;
-      padding: 7px 14px;
-    }
-
-    .login-btn:hover {
-      background: #e0e0e0;
-    }
-
-    .join-btn {
-      background: #007bff;
-      color: white;
-      padding: 8px 15px;
-    }
-
-    .join-btn:hover {
-      background: #005ec4;
-    }
-
-    /* HERO SECTION */
-    .hero {
-      position: relative;
-      height: 500px;
-      background: url('assets/ihracat-haritasi.png') center/cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      z-index: 1;
-      border-radius: 6px;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-      color: #fff;
-      text-align: center;
-    }
-
-    .hero-content h1 {
-      font-size: 44px;
-      font-weight: 800;
-      margin: 0;
-      text-shadow: 0 3px 10px rgba(0,0,0,0.5);
-    }
-
-    .categories {
-      background: #fff;
-      border-radius: 10px;
-      padding: 15px;
-      width: 240px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      z-index: 4;
-    }
-
-    .categories h3 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .category-item {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      margin: 5px 0;
-      color: #333;
-      cursor: pointer;
-      transition: .3s;
-    }
-
-    .category-item:hover {
-      color: #007bff;
-    }
-
-    .category-item span {
-      font-size: 12px;
-      color: #888;
-    }
-
-    .category-button {
-      width: 100%;
-      background: #007bff;
-      border: none;
-      color: #fff;
-      padding: 8px;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-
-    .category-button:hover {
-      background: #005ec4;
-    }
-
-    /* MAIN BUTTONS */
-    .middle-buttons {
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    .middle-buttons button {
-      background: #007bff;
-      color: #fff;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 25px;
-      margin: 5px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: .3s;
-    }
-
-    .middle-buttons button:hover {
-      background: #005ec4;
-    }
-
-    /* JOIN SECTION */
-    .main-section {
-      background: #fff;
-      padding: 60px 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 40px;
-      border-radius: 10px;
-      max-width: 1100px;
-      margin: 40px auto;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    .main-section img {
-      width: 300px;
-      border-radius: 10px;
-    }
-
-    .main-section h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      color: #000;
-    }
-
-    .main-section p {
-      color: #333;
-      line-height: 1.6;
-      font-size: 15px;
-    }
-
-    .main-section button {
-      background: #007bff;
-      border: none;
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 5px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .main-section button:hover {
-      background: #005ec4;
-    }
-
-    /* FOOTER */
-    footer {
-      background: #fff;
-      display: flex;
-      justify-content: space-around;
-      padding: 40px;
-      font-size: 14px;
-      color: #333;
-      border-top: 1px solid #ddd;
-    }
-
-    footer div {
-      width: 200px;
-    }
-
-    footer h4 {
-      font-size: 15px;
-      margin-bottom: 10px;
-      color: #000;
-    }
-
-    .footer-bottom {
-      text-align: center;
-      background: #000;
-      color: #fff;
-      padding: 10px;
-      font-size: 13px;
-    }
-
-    @media (max-width: 900px) {
-      .main-section {
-        flex-direction: column;
-        text-align: center;
+    /* Mobilde tekrar akışa dönsün */
+    @media (max-width:900px){
+      .cat-holder{
+        position:static;
+        transform:none;
+        margin-top:-100px; /* eski görünümü korur */
+        display:flex;justify-content:center;
       }
-      .categories { width: 100%; }
-    }
-
-    /* ✅ PART 3.1 FINAL: KATEGORİLER SOLA VE DİKEY ORTALI */
-    .hero {
-      position: relative;
-    }
-
-    .hero + section {
-      position: absolute !important;
-      top: 50% !important;
-      left: 8% !important;
-      transform: translateY(-50%) !important;
-      z-index: 5 !important;
-      margin-top: 0 !important;
-      display: flex !important;
-      justify-content: flex-start !important;
-    }
-
-    .hero + section .categories {
-      width: 260px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.15);
-    }
-
-    @media (max-width: 900px) {
-      .hero + section {
-        position: static !important;
-        transform: none !important;
-        margin-top: -100px !important;
-        justify-content: center !important;
-      }
-
-      .hero + section .categories {
-        width: 90%;
-      }
+      .cat-holder .categories{width:90%}
     }
   </style>
 </head>
-
 <body>
 
   <header>
     <div class="logo-container">
       <img src="assets/logos.png" alt="Trader Route Logo">
-      <span class="logo-text">The Silk Road of E-Commerce</span>
+      <span class="logo-text">E-Ticaretin İpek Yolu</span>
     </div>
 
     <nav>
-      <a href="index.html">Home</a>
-      <a href="companies.html">Companies</a>
-      <a href="requests.html">Requests</a>
-      <a href="contact.html">Contact</a>
-      <a href="pricing.html">Pricing</a>
+      <a href="index.html">Ev</a>
+      <a href="companies.html">Şirketler</a>
+      <a href="requests.html">İstekler</a>
+      <a href="contact.html">İletişim</a>
+      <a href="pricing.html">Fiyatlandırma</a>
     </nav>
 
     <div class="header-right">
       <div class="search-box">
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Aramak...">
         <button>🔍</button>
       </div>
-      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+      <button class="login-btn" onclick="location.href='login.html'">Giriş Yap</button>
+      <button class="join-btn" onclick="location.href='register.html'">Hemen Katılın</button>
     </div>
   </header>
 
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Connect the World of Import & Export</h1>
+      <h1>İthalat ve İhracat Dünyasını Birleştirin</h1>
     </div>
   </section>
 
-  <!-- KATEGORİLER (SOLDA) -->
-  <section>
+  <!-- KATEGORİLER (JS ile .hero'nun soluna sabitlenecek) -->
+  <section class="cat-holder">
     <div class="categories">
-      <h3>Categories</h3>
+      <h3>Kategoriler</h3>
       <div id="categoryList"></div>
-      <button class="category-button" onclick="location.href='requests.html'">View All Categories</button>
+      <button class="category-button" onclick="location.href='requests.html'">Tüm Kategorileri Görüntüle</button>
     </div>
   </section>
 
   <div class="middle-buttons">
-    <button onclick="location.href='requests.html'">All Requests</button>
-    <button onclick="location.href='requests.html?type=buy'">Buy Requests</button>
-    <button onclick="location.href='requests.html?type=sell'">Sell Offers</button>
-    <button onclick="location.href='request-form.html'">Post Free Request</button>
+    <button onclick="location.href='requests.html'">Tüm İstekler</button>
+    <button onclick="location.href='requests.html?type=buy'">Satın Alma Talepleri</button>
+    <button onclick="location.href='requests.html?type=sell'">Satış Teklifleri</button>
+    <button onclick="location.href='request-form.html'">Ücretsiz İstek Gönderin</button>
   </div>
 
   <section class="main-section">
     <img src="assets/trader_route_step1.jpeg" alt="Trader Route">
     <div>
-      <h2>Join Trader Route</h2>
+      <h2>Trader Route’a Katılın</h2>
       <p>
-        As a company, our primary goal has always been to achieve success in global trade.
-        Find buyers for your products and reach new markets with Trader Route —  
-        the global trade connection platform.
+        Küresel ticarette başarıyı hedefleyen tüm firmalar için;
+        ürünlerinize alıcı bulun ve yeni pazarlara ulaşın — Trader Route ile.
       </p>
-      <button onclick="location.href='register.html'">Join Now</button>
+      <button onclick="location.href='register.html'">Hemen Katılın</button>
     </div>
   </section>
 
   <footer>
-    <div><h4>Corporate</h4><p>Export Success Stories</p><p>About Us</p></div>
-    <div><h4>Our Services</h4><p>Free Registration</p><p>Contact Buyers</p></div>
-    <div><h4>Quick Links</h4><p>Company Index</p><p>Buyer Directory</p></div>
+    <div><h4>Kurumsal</h4><p>İhracat Başarı Hikayeleri</p><p>Hakkımızda</p></div>
+    <div><h4>Hizmetlerimiz</h4><p>Ücretsiz Kayıt</p><p>Alıcılarla İletişim</p></div>
+    <div><h4>Hızlı Linkler</h4><p>Şirket Dizini</p><p>Alıcı Rehberi</p></div>
   </footer>
 
-  <div class="footer-bottom">
-    © 2025 Trader Route — Connecting Global Trade.
-  </div>
+  <div class="footer-bottom">© 2025 Trader Route — Connecting Global Trade.</div>
 
   <script>
+    /* ——— Kategori listesi (mevcut mantık korunur) ——— */
     const categories = [
-      "Agricultural Machinery","Agriculture Industry","Automotive","Baby Products and Accessories",
-      "Chemical Industry","Clothing - Fashion","Commercial Activities","Construction and Building Industry",
-      "Cosmetic Products","Data and Communication Technology","Defense Industry","Electric – Electronic",
-      "Energy Sector","Entertainment Hobbies","Environment and Recycling","Food Industry","Forestry Products",
-      "Furniture","Furniture – Wood Products","Giftware – Promotions","Heating - Cooling - Ventilation",
-      "Horeca - Hospitality Industry","Husbandry Industry","Industrial Products","Jewelry",
-      "Kitchenware–Glassware","Leather Products & Shoes","Machinery Industry","Marble–Mining",
-      "Marine Vehicles and Equipment","Medical Products – Healthcare – Pharmaceutical",
-      "Metals–Iron–Steel","Paper - Packaging - Printing","Plastic and Rubber Industry",
-      "Sanitary - Cleaning Products","Security Equipments","Services","Sporting Equipments - Materials",
-      "Stationery, Schools and Offices","Textile Products","Tourism","White Goods – Home Appliances"
+      "Tarım Makineleri","Tarım Endüstrisi","Otomotiv","Bebek Ürünleri ve Aksesuarları",
+      "Kimya Endüstrisi","Giyim - Moda","Ticari Faaliyetler","İnşaat ve Yapı Endüstrisi",
+      "Kozmetik Ürünleri","Veri ve İletişim Teknolojileri","Savunma Sanayi","Elektrik – Elektronik",
+      "Enerji Sektörü","Eğlence Hobileri","Çevre ve Geri Dönüşüm","Gıda Endüstrisi","Ormancılık Ürünleri",
+      "Mobilya","Mobilya – Ahşap Ürünler","Hediyelik – Promosyon","Isıtma - Soğutma - Havalandırma",
+      "Horeca - Otelcilik","Hayvancılık","Endüstriyel Ürünler","Mücevher",
+      "Mutfak – Cam Eşya","Deri Ürünleri & Ayakkabı","Makine Endüstrisi","Mermer – Madencilik",
+      "Deniz Araçları ve Ekipmanları","Medikal – Sağlık – İlaç","Metaller – Demir – Çelik",
+      "Kağıt - Ambalaj - Baskı","Plastik ve Kauçuk","Temizlik Ürünleri","Güvenlik Ekipmanları",
+      "Hizmetler","Spor Ekipmanları","Kırtasiye ve Ofis","Tekstil Ürünleri","Turizm",
+      "Beyaz Eşya – Ev Aletleri"
     ];
 
     const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
@@ -432,6 +190,43 @@
       div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
       list.appendChild(div);
     });
+
+    /* ——— Part 3.2: Kutuyu .hero'nun soluna, dikey ortada konumlandır ——— */
+    (function(){
+      const hero = document.querySelector('.hero');
+      const holder = document.querySelector('.cat-holder');
+
+      function placeBox(){
+        if(!hero || !holder) return;
+
+        // Mobilde akışa dön
+        if (window.innerWidth <= 900){
+          holder.style.position = 'static';
+          holder.style.transform = 'none';
+          holder.style.left = '';
+          holder.style.top = '';
+          return;
+        }
+
+        const rect = hero.getBoundingClientRect();
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        const scrollX = window.scrollX || document.documentElement.scrollLeft;
+
+        const top = rect.top + scrollY + rect.height / 2;      // dikey merkez
+        const left = rect.left + scrollX + Math.max(rect.width * 0.06, 32); // soldan %6 içerde
+
+        holder.style.position = 'absolute';
+        holder.style.top = `${top}px`;
+        holder.style.left = `${left}px`;
+        holder.style.transform = 'translateY(-50%)';
+        holder.style.zIndex = '5';
+        holder.style.marginTop = '0';
+      }
+
+      placeBox();
+      window.addEventListener('resize', placeBox);
+      window.addEventListener('scroll', placeBox);
+    })();
   </script>
 </body>
 </html>
