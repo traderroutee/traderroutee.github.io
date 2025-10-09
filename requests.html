@@ -106,7 +106,8 @@
   </div>
 
   <script>
-    // --- Data ---
+    // --- Helpers ---
+    const getRequests = () => JSON.parse(localStorage.getItem('requests') || '[]');
     const categories = [
       "Agriculture","Apparel","Automobiles & Motorcycles","Beauty & Personal Care",
       "Business Services","Chemicals","Computer Hardware & Software","Construction & Real Estate",
@@ -131,30 +132,32 @@
       "Thailand","Turkey","Ukraine","United Arab Emirates","United Kingdom","United States","Vietnam","Zambia","Zimbabwe"
     ];
 
-    // --- Fake requests (for demo) ---
-    const requests = [];
-    for (let i = 1; i <= 50; i++) {
-      const type = i % 2 === 0 ? "buy" : "sell";
-      requests.push({
-        id: i,
-        title: type === "buy" ? `Buying ${categories[i % categories.length]}` : `Selling ${categories[i % categories.length]}`,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere.",
-        type,
-        category: categories[i % categories.length],
-        country: allCountries[i % allCountries.length]
+    // --- Elements ---
+    const requestContainer = document.getElementById('requestItems');
+    const searchInput = document.getElementById('searchInput');
+    const tabs = {
+      all: document.getElementById('tabAll'),
+      buy: document.getElementById('tabBuy'),
+      sell: document.getElementById('tabSell')
+    };
+
+    let visibleRequests = 15;
+    let activeTab = "all";
+
+    function renderCategories(requests) {
+      const catList = document.getElementById('categoryList');
+      catList.innerHTML = "";
+      categories.forEach(cat => {
+        const count = requests.filter(r => r.category === cat).length;
+        if (count > 0) {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="#">${cat}<span class="count">(${count})</span></a>`;
+          catList.appendChild(li);
+        }
       });
     }
 
-    // --- Populate categories ---
-    const catList = document.getElementById('categoryList');
-    categories.forEach(cat => {
-      const count = requests.filter(r => r.category === cat).length;
-      const li = document.createElement('li');
-      li.innerHTML = `<a href="#">${cat}<span class="count">(${count})</span></a>`;
-      catList.appendChild(li);
-    });
-
-    // --- Populate countries (with show more + search) ---
+    // Countries
     let visibleCountryCount = 10;
     const countryList = document.getElementById('countryList');
     const showMoreCountries = document.getElementById('showMoreCountries');
@@ -175,22 +178,17 @@
     showMoreCountries.addEventListener('click', () => { visibleCountryCount += 10; renderCountries(); });
     renderCountries();
 
-    // --- Render requests ---
-    const requestContainer = document.getElementById('requestItems');
-    const showMoreRequests = document.getElementById('showMoreRequests');
-    const searchInput = document.getElementById('searchInput');
-    const tabs = { all: document.getElementById('tabAll'), buy: document.getElementById('tabBuy'), sell: document.getElementById('tabSell') };
-    let visibleRequests = 15;
-    let activeTab = "all";
-
+    // --- Requests ---
     function renderRequests() {
-      requestContainer.innerHTML = "";
+      const allReq = getRequests();
+      renderCategories(allReq);
       const searchTerm = searchInput.value.toLowerCase();
-      let filtered = requests.filter(r =>
+      let filtered = allReq.filter(r =>
         (activeTab === "all" || r.type === activeTab) &&
         (r.title.toLowerCase().includes(searchTerm) || r.description.toLowerCase().includes(searchTerm))
       );
 
+      requestContainer.innerHTML = "";
       filtered.slice(0, visibleRequests).forEach(r => {
         const div = document.createElement('div');
         div.className = 'request-card';
@@ -199,14 +197,25 @@
           <p>${r.description}</p>
           <small>${r.country} · ${r.category}</small>
         `;
+        div.addEventListener('click', () => {
+          window.location.href = `istek-detay.html?id=${encodeURIComponent(r.id)}`;
+        });
         requestContainer.appendChild(div);
       });
 
-      showMoreRequests.style.display = filtered.length > visibleRequests ? "block" : "none";
+      document.getElementById('showMoreRequests').style.display =
+        filtered.length > visibleRequests ? "block" : "none";
     }
 
-    showMoreRequests.addEventListener('click', () => { visibleRequests += 10; renderRequests(); });
-    searchInput.addEventListener('input', () => { visibleRequests = 15; renderRequests(); });
+    document.getElementById('showMoreRequests').addEventListener('click', () => {
+      visibleRequests += 10;
+      renderRequests();
+    });
+
+    searchInput.addEventListener('input', () => {
+      visibleRequests = 15;
+      renderRequests();
+    });
 
     Object.entries(tabs).forEach(([key, btn]) => {
       btn.addEventListener('click', () => {
@@ -218,6 +227,7 @@
       });
     });
 
+    // --- Start ---
     renderRequests();
   </script>
 </body>
