@@ -42,14 +42,20 @@
     const email=document.getElementById('email').value.trim();
     const company=document.getElementById('company').value.trim();
     const password=document.getElementById('password').value;
-    if(!name||!email||!password){ document.getElementById('regMsg').textContent='Please fill required fields.'; document.getElementById('regMsg').style.color='red'; return; }
+    const msg=document.getElementById('regMsg');
+
+    if(!name||!email||!password){ msg.textContent='Please fill required fields.'; msg.style.color='red'; return; }
+
     const users = JSON.parse(localStorage.getItem('tr_users')||'[]');
-    if(users.find(u=>u.email===email)){ document.getElementById('regMsg').textContent='Email already registered (demo).'; document.getElementById('regMsg').style.color='red'; return; }
+    if(users.find(u=>u.email.toLowerCase()===email.toLowerCase())){ msg.textContent='Email already registered (demo).'; msg.style.color='red'; return; }
+
     const user={name,email,company,password,created:new Date().toISOString()};
     users.push(user);
     localStorage.setItem('tr_users', JSON.stringify(users));
     localStorage.setItem('tr_user', JSON.stringify(user));
-    document.getElementById('regMsg').textContent='Registration successful. Redirecting...';
+
+    msg.textContent='Registration successful. Redirecting...';
+    msg.style.color='green';
     setTimeout(()=> location.href='index.html',900);
   }
 </script>
