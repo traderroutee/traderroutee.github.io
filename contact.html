@@ -1,54 +1,218 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Contact — Trader Route</title>
-<link rel="icon" href="assets/logos.png">
-<style>
-  body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f5f5f5}
-  header{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06);position:sticky;top:0}
-  .container{max-width:900px;margin:30px auto;padding:0 20px;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(8,20,40,0.04);padding:28px}
-  input,textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;margin-bottom:12px;font-size:15px}
-  .btn{background:#008b6a;color:#fff;padding:10px 14px;border-radius:8px;text-decoration:none;display:inline-block}
-  footer{text-align:center;padding:18px;background:#111;color:#eee;margin-top:30px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Discover verified international companies and suppliers on Trader Route. Search by company name, product, or country.">
+  <meta name="keywords" content="Trader Route, Companies, Global Suppliers, Exporters, B2B, International Trade">
+  <meta name="author" content="Trader Route">
+  <title>Trader Route — Verified Companies & Global Partners</title>
+  <link rel="icon" href="assets/logos.png" type="image/png">
+  <link rel="preload" href="assets/logos.png" as="image">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: #f5f7fa;
+      color: #222;
+    }
+
+    header {
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      padding: 12px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header img {
+      height: 46px;
+    }
+
+    nav a {
+      margin: 0 14px;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      color: #007bff;
+    }
+
+    .search-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 25px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin: 20px auto;
+      max-width: 1000px;
+      border-radius: 10px;
+    }
+
+    input, select {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      min-width: 180px;
+    }
+
+    button {
+      background: #008b6a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 18px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      background: #006b52;
+    }
+
+    .companies {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto 60px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+      padding: 18px;
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: #555;
+    }
+
+    footer {
+      background: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #666;
+      border-top: 1px solid #ddd;
+    }
+
+    @media(max-width:768px){
+      header { flex-direction: column; gap: 10px; }
+      .search-bar { flex-direction: column; padding: 20px; }
+      input, select, button { width: 90%; }
+    }
+  </style>
 </head>
 <body>
-<header>
-  <img src="assets/logos.png" alt="Trader Route" style="height:48px">
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="companies.html">Companies</a>
-    <a href="requests.html">Requests</a>
-    <a href="pricing.html">Pricing</a>
-  </nav>
-</header>
+  <header>
+    <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="login.html">Sign In</a>
+      <a href="register.html">Sign Up</a>
+    </nav>
+  </header>
 
-<div class="container">
-  <h1>Contact Us</h1>
-  <p>Send your message and our team will reply within 48 hours.</p>
+  <section class="search-bar">
+    <input type="text" id="companySearch" placeholder="Search companies by name, country or product...">
+    <select id="countryFilter">
+      <option value="">All Countries</option>
+      <option value="Turkey">Turkey</option>
+      <option value="China">China</option>
+      <option value="Germany">Germany</option>
+      <option value="United States">United States</option>
+      <option value="Italy">Italy</option>
+    </select>
+    <button onclick="filterCompanies()">Search</button>
+  </section>
 
-  <form id="contactForm" onsubmit="event.preventDefault();submitContact()">
-    <input id="cname" placeholder="Your name" required/>
-    <input id="cemail" type="email" placeholder="Email address" required/>
-    <input id="csubject" placeholder="Subject" />
-    <textarea id="cmessage" rows="6" placeholder="Your message..." required></textarea>
-    <button class="btn" type="submit">Send Message</button>
-  </form>
+  <section class="companies" id="companiesList">
+    <div class="card">
+      <h3>Global Textiles Co.</h3>
+      <p><strong>Country:</strong> Turkey</p>
+      <p><strong>Products:</strong> Fabrics, Yarn</p>
+    </div>
 
-  <div id="contactResult" style="margin-top:12px;color:green"></div>
-</div>
+    <div class="card">
+      <h3>Oceanic Metals Ltd.</h3>
+      <p><strong>Country:</strong> China</p>
+      <p><strong>Products:</strong> Steel, Alloys</p>
+    </div>
 
-<footer>© 2025 Trader Route</footer>
+    <div class="card">
+      <h3>GreenFoods Export</h3>
+      <p><strong>Country:</strong> Italy</p>
+      <p><strong>Products:</strong> Olive Oil, Pasta, Sauces</p>
+    </div>
 
-<script>
-  function submitContact(){
-    const name=document.getElementById('cname').value;
-    // fake send -> show confirmation
-    document.getElementById('contactResult').textContent = 'Thank you, ' + name + '. Your message has been received.';
-    document.getElementById('contactForm').reset();
-  }
-</script>
+    <div class="card">
+      <h3>EuroMachines GmbH</h3>
+      <p><strong>Country:</strong> Germany</p>
+      <p><strong>Products:</strong> Industrial Machinery</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Trader Route — Verified Companies & Global Partners
+  </footer>
+
+  <script>
+    function filterCompanies() {
+      const searchValue = document.getElementById("companySearch").value.toLowerCase();
+      const selectedCountry = document.getElementById("countryFilter").value.toLowerCase();
+      const cards = document.querySelectorAll(".card");
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const match = (!searchValue || text.includes(searchValue)) &&
+                      (!selectedCountry || text.includes(selectedCountry));
+        card.style.display = match ? "block" : "none";
+        if (match) visibleCount++;
+      });
+
+      if (visibleCount === 0) {
+        document.getElementById("companiesList").insertAdjacentHTML(
+          'beforeend',
+          '<p id="noResults" style="text-align:center;color:#777;">No companies found.</p>'
+        );
+      } else {
+        const msg = document.getElementById("noResults");
+        if (msg) msg.remove();
+      }
+    }
+
+    document.getElementById("companySearch").addEventListener("keyup", e => {
+      if (e.key === "Enter") filterCompanies();
+    });
+  </script>
 </body>
 </html>
