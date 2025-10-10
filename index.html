@@ -1,248 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Trader Route — Global import and export network connecting buyers and suppliers worldwide. Discover trade opportunities, post requests, and connect with verified companies.">
-  <meta name="keywords" content="Trader Route, import export, global trade, suppliers, B2B, marketplace, business network">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trader Route - Global Import & Export Platform</title>
+
+  <!-- 🌐 SEO Meta Tags -->
+  <meta name="description" content="Trader Route — the global platform connecting importers and exporters worldwide. Find buyers, suppliers, and grow your business.">
+  <meta name="keywords" content="Trader Route, global trade, import export, buyers, suppliers, B2B, marketplace">
   <meta name="author" content="Trader Route">
   <link rel="canonical" href="https://traderroute.com/">
-  <title>Trader Route — Connecting Global Import and Export</title>
+
+  <!-- 🔧 Optimization -->
   <link rel="icon" href="assets/logos.png" type="image/png">
-  <!-- Performance Optimizations -->
-  <link rel="preload" href="assets/logos.png" as="image">
   <link rel="preload" href="assets/ihracat-haritasi.png" as="image">
+  <link rel="preload" href="assets/logos.png" as="image">
+  <link rel="stylesheet" href="style.css" />
+
   <style>
-    /* Base Reset */
-    body {
-      margin: 0;
-      font-family: "Inter", "Segoe UI", Arial, sans-serif;
-      background: #f5f7fa;
-      color: #222;
-      overflow-x: hidden;
+    /* === GENERAL === */
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa}
+
+    header{background:#fff;padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:space-between}
+    .logo-container{display:flex;align-items:center;gap:10px}
+    .logo-container img{height:42px}
+    .logo-text{font-size:15px;color:#555;font-weight:500}
+    nav{display:flex;align-items:center;gap:15px}
+    nav a{text-decoration:none;color:#000;font-weight:500;transition:.3s}
+    nav a:hover{color:#007bff}
+    .header-right{display:flex;align-items:center;gap:10px}
+    .search-box{display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px}
+    .search-box input{border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px}
+    
+    /* 💚 Button Colors Updated */
+    .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:500;transition:.3s}
+    .login-btn{background:#f1f1f1;padding:7px 14px}
+    .login-btn:hover{background:#e0e0e0}
+    .join-btn{background:#008b6a;color:#fff;padding:8px 15px}
+    .join-btn:hover{background:#006b52}
+
+    /* === HERO === */
+    .hero{
+      position:relative;
+      height:500px;
+      background:url('assets/ihracat-haritasi.png') center/cover no-repeat;
+      display:flex;align-items:center;justify-content:center;text-align:center;
+    }
+    .hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1;border-radius:6px}
+    .hero-content{position:relative;z-index:2;max-width:800px;color:#fff;text-align:center}
+    .hero-content h1{font-size:44px;font-weight:800;margin:0;text-shadow:0 3px 10px rgba(0,0,0,.5)}
+
+    /* === CATEGORY BOX === */
+    .categories{
+      background:#fff;border-radius:10px;padding:15px;width:240px;
+      box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:5;
+    }
+    .categories h3{font-size:16px;font-weight:700;margin-bottom:10px}
+    .category-item{display:flex;justify-content:space-between;font-size:14px;margin:5px 0;color:#333;cursor:pointer;transition:.3s}
+    .category-item:hover{color:#008b6a}
+    .category-item span{font-size:12px;color:#888}
+    .category-button{width:100%;background:#008b6a;border:none;color:#fff;padding:8px;border-radius:6px;font-weight:600;cursor:pointer;margin-top:8px}
+    .category-button:hover{background:#006b52}
+
+    /* === MIDDLE BUTTONS === */
+    .middle-buttons{text-align:center;margin:40px 0}
+    .middle-buttons button{background:#008b6a;color:#fff;border:none;padding:10px 18px;border-radius:25px;margin:5px;cursor:pointer;font-weight:600;transition:.3s}
+    .middle-buttons button:hover{background:#006b52}
+
+    /* === MAIN SECTION === */
+    .main-section{background:#fff;padding:60px 40px;display:flex;justify-content:center;align-items:center;gap:40px;border-radius:10px;max-width:1100px;margin:40px auto;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    .main-section img{width:300px;border-radius:10px}
+    .main-section h2{font-size:24px;margin-bottom:10px;color:#000}
+    .main-section p{color:#333;line-height:1.6;font-size:15px}
+    .main-section button{background:#008b6a;border:none;color:#fff;padding:8px 16px;border-radius:5px;font-weight:600;cursor:pointer}
+    .main-section button:hover{background:#006b52}
+
+    footer{background:#fff;display:flex;justify-content:space-around;padding:40px;font-size:14px;color:#333;border-top:1px solid #ddd}
+    footer div{width:200px}
+    footer h4{font-size:15px;margin-bottom:10px;color:#000}
+    .footer-bottom{text-align:center;background:#000;color:#fff;padding:10px;font-size:13px}
+
+    /* === MOBILE === */
+    @media (max-width:900px){
+      .main-section{flex-direction:column;text-align:center}
+      .categories{width:100%}
     }
 
-    /* Header */
-    header {
-      background: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 40px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    /* === Category Holder (Position Control) === */
+    .cat-holder{
+      position:absolute;
+      transform:translateY(-50%);
+      z-index:5;
     }
 
-    header img {
-      height: 46px;
-    }
-
-    nav a {
-      margin: 0 14px;
-      text-decoration: none;
-      color: #222;
-      font-weight: 500;
-      transition: color 0.25s ease;
-    }
-
-    nav a:hover {
-      color: #007bff;
-    }
-
-    /* Hero Section */
-    .hero {
-      position: relative;
-      background: url('assets/ihracat-haritasi.png') no-repeat center center/cover;
-      height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #fff;
-      overflow: hidden;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.45);
-      z-index: 1;
-    }
-
-    .hero-content {
-      z-index: 2;
-      max-width: 700px;
-    }
-
-    .hero-content h1 {
-      font-size: 38px;
-      margin-bottom: 18px;
-      line-height: 1.3;
-    }
-
-    .hero-content p {
-      font-size: 18px;
-      color: #e0e0e0;
-      margin-bottom: 30px;
-    }
-
-    /* Green Button Theme */
-    .hero-content a {
-      display: inline-block;
-      background: #008b6a;
-      color: #fff;
-      padding: 12px 22px;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.25s ease;
-    }
-
-    .hero-content a:hover {
-      background: #006b52;
-      transform: scale(1.05);
-    }
-
-    /* Category Box */
-    .categories-box {
-      position: absolute;
-      left: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.9);
-      border-radius: 12px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-      padding: 15px;
-      width: 200px;
-      z-index: 3;
-    }
-
-    .categories-box h3 {
-      text-align: center;
-      color: #007bff;
-      margin-bottom: 10px;
-      font-size: 17px;
-    }
-
-    .category-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 10px;
-      background: #fff;
-      border-radius: 6px;
-      margin-bottom: 6px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.25s;
-    }
-
-    .category-item:hover {
-      background: #008b6a;
-      color: #fff;
-    }
-
-    /* Footer */
-    footer {
-      background: #fff;
-      text-align: center;
-      padding: 25px;
-      color: #666;
-      border-top: 1px solid #ddd;
-      margin-top: 60px;
-      font-size: 14px;
-    }
-
-    /* Responsive */
-    @media(max-width:900px){
-      .categories-box {
-        position: static;
-        width: 90%;
-        margin: 20px auto;
-        transform: none;
+    @media (max-width:900px){
+      .cat-holder{
+        position:static;
+        transform:none;
+        margin-top:-100px;
+        display:flex;justify-content:center;
       }
-      .hero {
-        height: auto;
-        padding: 60px 20px;
-      }
+      .cat-holder .categories{width:90%}
     }
   </style>
 </head>
 
 <body>
   <header>
-    <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+    <div class="logo-container">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
+
     <nav>
       <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
       <a href="requests.html">Requests</a>
       <a href="contact.html">Contact</a>
       <a href="pricing.html">Pricing</a>
-      <a href="login.html">Sign In</a>
-      <a href="register.html">Sign Up</a>
     </nav>
+
+    <div class="header-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <button>🔍</button>
+      </div>
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+    </div>
   </header>
 
+  <!-- HERO -->
   <section class="hero">
-    <div class="categories-box" id="categoryBox">
-      <h3>Categories</h3>
-      <div id="categories"></div>
-    </div>
-
     <div class="hero-content">
       <h1>Connecting the World of Import and Export</h1>
-      <p>Join the Trader Route network to grow your business, discover new trade opportunities, and connect globally.</p>
-      <a href="free-request.html">Create Free Request</a>
     </div>
   </section>
 
+  <!-- CATEGORY BOX -->
+  <section class="cat-holder">
+    <div class="categories">
+      <h3>Categories</h3>
+      <div id="categoryList"></div>
+      <button class="category-button" onclick="location.href='requests.html'">View All Categories</button>
+    </div>
+  </section>
+
+  <!-- MIDDLE BUTTONS -->
+  <div class="middle-buttons">
+    <button onclick="location.href='requests.html'">All Requests</button>
+    <button onclick="location.href='requests.html?type=buy'">Buyer Requests</button>
+    <button onclick="location.href='requests.html?type=sell'">Seller Offers</button>
+    <button onclick="location.href='request-form.html'">Create Free Request</button>
+  </div>
+
+  <!-- MAIN SECTION -->
+  <section class="main-section">
+    <img src="assets/trader_route_step1.jpeg" alt="Trader Route Step" loading="lazy">
+    <div>
+      <h2>Join Trader Route</h2>
+      <p>
+        For companies aiming for global trade success; find buyers for your products and reach new markets — with Trader Route.
+      </p>
+      <button onclick="location.href='register.html'">Join Now</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer>
-    © 2025 Trader Route — All Rights Reserved.
+    <div><h4>Corporate</h4><p>Export Success Stories</p><p>About Us</p></div>
+    <div><h4>Our Services</h4><p>Free Registration</p><p>Contact Buyers</p></div>
+    <div><h4>Quick Links</h4><p>Company Directory</p><p>Buyer Guide</p></div>
   </footer>
 
+  <div class="footer-bottom">© 2025 Trader Route — Connecting Global Trade.</div>
+
   <script>
-    // --- Category Rendering ---
+    // --- Category List ---
     const categories = [
-      "Food Industry", "Machinery", "Textile", "Electronics", "Chemical",
-      "Energy", "Metals", "Furniture", "Agriculture", "Logistics"
+      "Agriculture Machinery","Agriculture Industry","Automotive","Baby Products & Accessories",
+      "Chemical Industry","Fashion & Apparel","Commercial Activities","Construction & Building",
+      "Cosmetics","IT & Communication","Defense Industry","Electrical & Electronics",
+      "Energy Sector","Entertainment & Hobbies","Environment & Recycling","Food Industry",
+      "Forestry Products","Furniture","Gifts & Promotion","HVAC Systems","Hospitality & Tourism",
+      "Livestock","Industrial Products","Jewelry","Kitchenware & Glass","Leather & Footwear",
+      "Machinery Industry","Marble & Mining","Marine Equipment","Medical & Pharmaceutical",
+      "Metals & Steel","Packaging & Printing","Plastics & Rubber","Cleaning Products",
+      "Security Equipment","Services","Sports Equipment","Stationery & Office","Textile Products",
+      "Tourism","Home Appliances"
     ];
 
-    function loadCategories() {
-      const list = document.getElementById("categories");
-      const reqs = JSON.parse(localStorage.getItem("requests") || "[]");
+    const reqs = JSON.parse(localStorage.getItem("requests") || "[]");
+    const list = document.getElementById("categoryList");
 
-      list.innerHTML = "";
-      categories.forEach(cat => {
-        const count = reqs.filter(r => r.category === cat).length;
-        const div = document.createElement("div");
-        div.className = "category-item";
-        div.textContent = `${cat} (${count})`;
-        div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
-        list.appendChild(div);
-      });
-    }
-
-    // --- Responsive Position Fix ---
-    function adjustBox() {
-      const box = document.getElementById("categoryBox");
-      if (window.innerWidth <= 900) {
-        box.style.position = "static";
-      } else {
-        box.style.position = "absolute";
-        box.style.left = "40px";
-        box.style.top = "50%";
-        box.style.transform = "translateY(-50%)";
-      }
-    }
-
-    window.addEventListener("resize", adjustBox);
-    window.addEventListener("DOMContentLoaded", () => {
-      loadCategories();
-      adjustBox();
+    categories.slice(0, 10).forEach(cat => {
+      const count = reqs.filter(r => r.category === cat).length;
+      const div = document.createElement("div");
+      div.className = "category-item";
+      div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
+      div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
+      list.appendChild(div);
     });
+
+    // --- Category Box Position ---
+    (function(){
+      const hero = document.querySelector('.hero');
+      const holder = document.querySelector('.cat-holder');
+
+      function placeBox(){
+        if(!hero || !holder) return;
+
+        if (window.innerWidth <= 900){
+          holder.style.position = 'static';
+          holder.style.transform = 'none';
+          holder.style.left = '';
+          holder.style.top = '';
+          return;
+        }
+
+        const rect = hero.getBoundingClientRect();
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        const scrollX = window.scrollX || document.documentElement.scrollLeft;
+
+        const top = rect.top + scrollY + rect.height / 2;
+        const left = rect.left + scrollX + Math.max(rect.width * 0.06, 32);
+
+        holder.style.position = 'absolute';
+        holder.style.top = `${top}px`;
+        holder.style.left = `${left}px`;
+        holder.style.transform = 'translateY(-50%)';
+        holder.style.zIndex = '5';
+        holder.style.marginTop = '0';
+      }
+
+      placeBox();
+      window.addEventListener('resize', placeBox);
+      window.addEventListener('scroll', placeBox);
+    })();
   </script>
 </body>
 </html>
