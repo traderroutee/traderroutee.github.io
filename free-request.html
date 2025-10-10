@@ -1,52 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Request | Trader Route</title>
-<link rel="icon" href="assets/logos.png" type="image/png">
-<style>
-body { font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif; background:#f8f9fa; margin:0; }
-.container { max-width:600px; margin:50px auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
-input, textarea, select { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:6px; }
-button { background:#008d62; color:#fff; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:500; }
-button:hover { background:#007250; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create your free buyer or seller request on Trader Route — connect with global companies instantly.">
+  <meta name="keywords" content="Trader Route, Free Request, Buyer Request, Seller Offer, Global Trade, B2B Marketplace">
+  <meta name="author" content="Trader Route">
+  <link rel="canonical" href="https://traderroute.com/free-request.html">
+  <title>Create a Free Request — Trader Route</title>
+  <link rel="icon" href="assets/logos.png" type="image/png">
+  <link rel="preload" href="assets/logos.png" as="image">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: #f6f8fa;
+      color: #222;
+    }
+
+    header {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+    }
+
+    header img {
+      height: 46px;
+    }
+
+    nav a {
+      margin: 0 14px;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #007bff;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 5px 16px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 20px;
+      background: #008b6a;
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      background: #006c51;
+    }
+
+    .success-message {
+      text-align: center;
+      margin-top: 20px;
+      color: #28a745;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      color: #777;
+      margin-top: 40px;
+      border-top: 1px solid #ddd;
+    }
+
+    @media(max-width:768px){
+      header { flex-direction: column; gap: 10px; }
+      .container { margin: 30px 15px; padding: 20px; }
+    }
+  </style>
 </head>
 <body>
+
+<header>
+  <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html">Requests</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="login.html">Sign In</a>
+    <a href="register.html">Sign Up</a>
+  </nav>
+</header>
 
 <div class="container">
   <h2>Create a Free Request</h2>
   <form id="requestForm">
-    <input type="text" id="title" placeholder="Title" required>
-    <textarea id="desc" placeholder="Description" required></textarea>
-    <input type="text" id="category" placeholder="Category" required>
-    <input type="text" id="country" placeholder="Country" required>
-    <select id="type">
+    <label for="title">Request Title</label>
+    <input type="text" id="title" placeholder="Enter request title" required>
+
+    <label for="desc">Description</label>
+    <textarea id="desc" rows="4" placeholder="Describe your request" required></textarea>
+
+    <label for="category">Category</label>
+    <select id="category" required>
+      <option value="">Select Category</option>
+      <option value="Food Industry">Food Industry</option>
+      <option value="Machinery">Machinery</option>
+      <option value="Textile">Textile</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Chemical">Chemical</option>
+    </select>
+
+    <label for="country">Country</label>
+    <select id="country" required>
+      <option value="">Select Country</option>
+      <option value="Turkey">Turkey</option>
+      <option value="United States">United States</option>
+      <option value="Germany">Germany</option>
+      <option value="Italy">Italy</option>
+      <option value="China">China</option>
+      <option value="India">India</option>
+    </select>
+
+    <label for="type">Request Type</label>
+    <select id="type" required>
+      <option value="">Select Type</option>
       <option value="buyer">Buyer Request</option>
       <option value="seller">Seller Offer</option>
     </select>
+
     <button type="submit">Submit Request</button>
   </form>
+  <div id="messageBox" class="success-message"></div>
 </div>
 
+<footer>© 2025 Trader Route — Global B2B Trade Platform</footer>
+
 <script>
-document.getElementById('requestForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const reqs = JSON.parse(localStorage.getItem('requests')) || [];
-  reqs.push({
-    title: title.value,
-    desc: desc.value,
-    category: category.value,
-    country: country.value,
-    type: type.value,
-    approved: true,
-    date: new Date().toLocaleDateString()
+  // Sanitize input to prevent HTML injection
+  function sanitize(input) {
+    return input.replace(/</g, "&lt;").replace(/>/g, "&gt;").trim();
+  }
+
+  const form = document.getElementById('requestForm');
+  const msgBox = document.getElementById('messageBox');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const title = sanitize(document.getElementById('title').value);
+    const desc = sanitize(document.getElementById('desc').value);
+    const category = sanitize(document.getElementById('category').value);
+    const country = sanitize(document.getElementById('country').value);
+    const type = sanitize(document.getElementById('type').value);
+
+    if (!title || !desc || !category || !country || !type) {
+      msgBox.style.color = 'red';
+      msgBox.textContent = 'Please fill out all fields.';
+      return;
+    }
+
+    const requests = JSON.parse(localStorage.getItem('requests') || '[]');
+    requests.push({
+      title, desc, category, country, type,
+      approved: true,
+      date: new Date().toLocaleDateString()
+    });
+
+    localStorage.setItem('requests', JSON.stringify(requests));
+
+    msgBox.style.color = '#28a745';
+    msgBox.textContent = 'Your request was submitted successfully! Redirecting...';
+
+    form.reset();
+
+    setTimeout(() => {
+      window.location.href = 'requests.html';
+    }, 1200);
   });
-  localStorage.setItem('requests', JSON.stringify(reqs));
-  alert("Request submitted successfully!");
-  window.location.href = "requests.html";
-});
 </script>
 </body>
 </html>
