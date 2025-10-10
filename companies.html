@@ -1,75 +1,205 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Companies — Trader Route</title>
-<link rel="icon" href="assets/logos.png">
-<style>
-  body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f5f5f5;color:#222}
-  header{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06);position:sticky;top:0;z-index:50}
-  .logo{height:48px}
-  nav a{margin:0 12px;color:#333;text-decoration:none;font-weight:600}
-  .container{max-width:1100px;margin:28px auto;padding:0 20px}
-  .search-row{display:flex;gap:12px;align-items:center;margin-bottom:18px}
-  .search-row input{flex:1;padding:10px;border-radius:8px;border:1px solid #ddd}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-  .card{background:#fff;padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(8,20,40,0.04)}
-  .card h3{margin:0 0 6px 0}
-  footer{text-align:center;padding:18px;background:#111;color:#eee;margin-top:40px}
-  @media(max-width:640px){header{padding:10px 16px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse verified international companies, exporters, and suppliers on Trader Route. Search by country, name, or industry.">
+  <meta name="keywords" content="Trader Route, Companies, Exporters, Suppliers, B2B, Global Trade, Marketplace">
+  <meta name="author" content="Trader Route">
+  <title>Trader Route — Companies</title>
+  <link rel="icon" href="assets/logos.png" type="image/png">
+  <link rel="preload" href="assets/logos.png" as="image">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: #f5f7fa;
+      color: #222;
+    }
+
+    header {
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      padding: 12px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header img {
+      height: 46px;
+    }
+
+    nav a {
+      margin: 0 14px;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      color: #007bff;
+    }
+
+    .search-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 25px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin: 20px auto;
+      max-width: 1000px;
+      border-radius: 10px;
+    }
+
+    input, select {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      min-width: 180px;
+    }
+
+    button {
+      background: #008b6a;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 18px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      background: #006b52;
+    }
+
+    .companies {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto 60px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+      padding: 18px;
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: #555;
+    }
+
+    footer {
+      background: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #666;
+      border-top: 1px solid #ddd;
+    }
+
+    @media(max-width:768px){
+      header { flex-direction: column; gap: 10px; }
+      .search-bar { flex-direction: column; padding: 20px; }
+      input, select, button { width: 90%; }
+    }
+  </style>
 </head>
 <body>
-<header>
-  <img src="assets/logos.png" alt="Trader Route" class="logo">
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="companies.html">Companies</a>
-    <a href="requests.html">Requests</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="contact.html">Contact</a>
-    <a href="login.html">Sign In</a>
-    <a href="register.html" style="color:#fff;background:#008b6a;padding:8px 12px;border-radius:6px;text-decoration:none">Join</a>
-  </nav>
-</header>
+  <header>
+    <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="login.html">Sign In</a>
+      <a href="register.html">Sign Up</a>
+    </nav>
+  </header>
 
-<div class="container">
-  <h1>Companies</h1>
-  <p>Find verified companies, suppliers and distributors. Use search and filters below.</p>
-
-  <div class="search-row">
-    <input id="companySearch" placeholder="Search companies by name, country or product...">
+  <section class="search-bar">
+    <input type="text" id="companySearch" placeholder="Search companies by name, country or product...">
     <select id="countryFilter">
-      <option value="">All countries</option>
-      <option>Turkey</option><option>China</option><option>USA</option><option>Germany</option>
+      <option value="">All Countries</option>
+      <option value="Turkey">Turkey</option>
+      <option value="China">China</option>
+      <option value="Germany">Germany</option>
+      <option value="United States">United States</option>
+      <option value="Italy">Italy</option>
     </select>
     <button onclick="filterCompanies()">Search</button>
-  </div>
+  </section>
 
-  <div id="companiesGrid" class="grid">
-    <!-- sample cards -->
-    <div class="card"><h3>Global Textiles Co.</h3><p>Country: Turkey</p><p>Products: Fabrics, Yarn</p></div>
-    <div class="card"><h3>Oceanic Metals Ltd.</h3><p>Country: China</p><p>Products: Steel, Alloys</p></div>
-    <div class="card"><h3>Northwind Exports</h3><p>Country: USA</p><p>Products: Agricultural products</p></div>
-    <div class="card"><h3>Euro Components GmbH</h3><p>Country: Germany</p><p>Products: Electronic components</p></div>
-  </div>
-</div>
+  <section class="companies" id="companiesList">
+    <div class="card">
+      <h3>Global Textiles Co.</h3>
+      <p><strong>Country:</strong> Turkey</p>
+      <p><strong>Products:</strong> Fabrics, Yarn</p>
+    </div>
 
-<footer>© 2025 Trader Route — All rights reserved.</footer>
+    <div class="card">
+      <h3>Oceanic Metals Ltd.</h3>
+      <p><strong>Country:</strong> China</p>
+      <p><strong>Products:</strong> Steel, Alloys</p>
+    </div>
 
-<script>
-  function filterCompanies(){
-    const q=document.getElementById('companySearch').value.toLowerCase();
-    const country=document.getElementById('countryFilter').value;
-    const cards=document.querySelectorAll('#companiesGrid .card');
-    cards.forEach(c=>{
-      const text=c.textContent.toLowerCase();
-      const matchesQ = q === '' || text.includes(q);
-      const matchesCountry = country === '' || text.includes(country.toLowerCase());
-      c.style.display = (matchesQ && matchesCountry) ? 'block' : 'none';
+    <div class="card">
+      <h3>GreenFoods Export</h3>
+      <p><strong>Country:</strong> Italy</p>
+      <p><strong>Products:</strong> Olive Oil, Pasta, Sauces</p>
+    </div>
+
+    <div class="card">
+      <h3>EuroMachines GmbH</h3>
+      <p><strong>Country:</strong> Germany</p>
+      <p><strong>Products:</strong> Industrial Machinery</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Trader Route — Verified Companies & Global Partners
+  </footer>
+
+  <script>
+    function filterCompanies() {
+      const searchValue = document.getElementById("companySearch").value.toLowerCase();
+      const selectedCountry = document.getElementById("countryFilter").value.toLowerCase();
+      const cards = document.querySelectorAll(".card");
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const match = (!searchValue || text.includes(searchValue)) &&
+                      (!selectedCountry || text.includes(selectedCountry));
+        card.style.display = match ? "block" : "none";
+      });
+    }
+
+    document.getElementById("companySearch").addEventListener("keyup", e => {
+      if (e.key === "Enter") filterCompanies();
     });
-  }
-</script>
+  </script>
 </body>
 </html>
