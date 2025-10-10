@@ -9,8 +9,6 @@
   :root{--brand:#008b6a;--danger:#d9534f;--info:#5bc0de}
   *{box-sizing:border-box}
   body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;margin:0;background:#f4f4f4;color:#222}
-
-  /* Login */
   #login-screen{display:flex;justify-content:center;align-items:center;height:100vh;background:#fff}
   .login-box{background:#f9f9f9;padding:40px;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.1);text-align:center;width:320px}
   .login-box img{height:60px;margin-bottom:15px}
@@ -19,35 +17,26 @@
   .login-box button{width:100%;padding:10px;background:var(--brand);border:none;color:#fff;border-radius:6px;cursor:pointer;font-weight:700}
   .login-box button:hover{background:#006b52}
   .error-msg{color:#e53935;font-size:13px;height:18px}
-
-  /* Dashboard */
   #dashboard{display:none;min-height:100vh}
   .sidebar{width:240px;background:#fff;border-right:1px solid #ddd;padding:20px;position:fixed;top:0;bottom:0}
   .sidebar img{height:40px;margin-bottom:10px}
   .sidebar h3{color:var(--brand);font-size:18px;margin:8px 0 16px}
   .navlink{display:block;text-decoration:none;color:#333;padding:8px;border-radius:6px;margin-bottom:8px}
   .navlink:hover,.navlink.active{background:var(--brand);color:#fff}
-
   .main{margin-left:240px;padding:30px}
   .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
   .header h2{color:var(--brand);margin:0}
-
   .btn{padding:8px 12px;border:none;border-radius:6px;cursor:pointer;font-weight:600}
   .btn-primary{background:var(--info);color:#fff}
   .btn-green{background:var(--brand);color:#fff}
   .btn-red{background:var(--danger);color:#fff}
   .btn-outline{background:#fff;border:1px solid #ccc;color:#333}
-
   .card{background:#fff;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.08);padding:20px;margin-top:16px}
-
-  table{width:100%;border-collapse:collapse;margin-top:10px}
+  table{width:100%;border-collapse:collapse}
   th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
   thead th{background:#fafafa}
-
-  /* Edit panel */
   #edit-section{display:none;background:#fff;padding:20px;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.1);max-width:700px;margin:20px auto}
   #edit-section input,#edit-section select,#edit-section textarea{width:100%;margin:6px 0 12px;padding:10px;border:1px solid #ccc;border-radius:6px}
-
   @media (max-width:900px){
     .sidebar{position:static;width:auto}
     .main{margin:0}
@@ -81,74 +70,47 @@
   <main class="main">
     <div class="header">
       <h2 id="viewTitle">Requests</h2>
-      <div>
-        <button class="btn btn-outline" id="seedBtn" title="Demo data ekle">+ Seed Demo</button>
-        <button class="btn btn-outline" id="clearAllBtn" title="Tüm requestleri temizle">Clear Requests</button>
-      </div>
     </div>
 
-    <!-- REQUESTS VIEW -->
+    <!-- REQUESTS SECTION -->
     <section id="requestsView" class="card">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <button class="btn btn-outline" data-filter="all">All</button>
-        <button class="btn btn-outline" data-filter="buy">Buy</button>
-        <button class="btn btn-outline" data-filter="sell">Sell</button>
-        <button class="btn btn-primary" id="newRequestBtn">+ New Request</button>
-      </div>
-
       <table>
         <thead>
           <tr>
-            <th>Title</th><th>Type</th><th>Company</th><th>Country</th><th>Category</th><th>Date</th><th>Status</th><th>Actions</th>
+            <th>Title</th><th>Type</th><th>Company</th><th>Country</th><th>Category</th><th>Date</th><th>Status</th>
           </tr>
         </thead>
         <tbody id="requestsTable"></tbody>
       </table>
     </section>
 
-    <!-- USERS VIEW -->
+    <!-- USERS SECTION -->
     <section id="usersView" class="card" style="display:none">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-        <button class="btn btn-green" id="exportUsersBtn">Export CSV</button>
-        <button class="btn btn-red" id="clearUsersBtn">Clear Users (demo)</button>
-      </div>
+      <h3>Registered Users</h3>
       <table>
         <thead>
-          <tr><th>#</th><th>Name</th><th>Email</th><th>Company</th><th>Registered At</th></tr>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Company</th>
+            <th>Country</th>
+            <th>Registered At</th>
+          </tr>
         </thead>
         <tbody id="usersTable"></tbody>
       </table>
       <div id="usersMsg" style="margin-top:8px;color:#2e7d32;font-weight:600"></div>
-    </section>
-
-    <!-- EDIT PANEL -->
-    <section id="edit-section">
-      <h3 id="editTitleH">New Request</h3>
-      <input type="text" id="edit-title" placeholder="Title" />
-      <input type="text" id="edit-company" placeholder="Company Name" />
-      <input type="text" id="edit-country" placeholder="Country (e.g. Turkey)" />
-      <input type="text" id="edit-category" placeholder="Category (e.g. Food Industry)" />
-      <select id="edit-type">
-        <option value="buy">Buy Request</option>
-        <option value="sell">Sell Offer</option>
-      </select>
-      <input type="date" id="edit-date" />
-      <textarea id="edit-desc" rows="4" placeholder="Description"></textarea>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn btn-green" id="saveEditBtn">Save</button>
-        <button class="btn btn-red" id="cancelEditBtn">Cancel</button>
-      </div>
     </section>
   </main>
 </div>
 
 <script>
 (() => {
-  /* ====== Auth ====== */
   const loginScreen = document.getElementById('login-screen');
-  const dashboard   = document.getElementById('dashboard');
-  const loginBtn    = document.getElementById('loginBtn');
-  const loginError  = document.getElementById('loginError');
+  const dashboard = document.getElementById('dashboard');
+  const loginBtn = document.getElementById('loginBtn');
+  const loginError = document.getElementById('loginError');
 
   loginBtn.addEventListener('click', () => {
     const u = document.getElementById('username').value.trim();
@@ -156,169 +118,56 @@
     if (u === 'admin' && p === 'trader2025') {
       loginScreen.style.display = 'none';
       dashboard.style.display = 'block';
-      renderAll();
+      showUsers();
     } else {
       loginError.textContent = 'Invalid username or password!';
     }
   });
 
-  /* ====== Data (localStorage) ====== */
-  const REQ_KEY = 'requests';
-  const USERS_KEY = 'tr_users'; // register.html bu anahtara yazıyor
-
-  let requests = read(REQ_KEY);
-  function read(k){ return JSON.parse(localStorage.getItem(k) || '[]'); }
-  function write(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
-
-  /* ====== Views Nav ====== */
-  const requestsView = document.getElementById('requestsView');
-  const usersView    = document.getElementById('usersView');
-  const viewTitle    = document.getElementById('viewTitle');
-  function showView(name){
-    document.querySelectorAll('.navlink').forEach(a=>a.classList.remove('active'));
-    if(name==='users'){
-      document.getElementById('nav-users').classList.add('active');
-      requestsView.style.display='none'; usersView.style.display='block';
-      viewTitle.textContent='Registered Users';
-      renderUsers();
-    }else{
-      document.getElementById('nav-requests').classList.add('active');
-      usersView.style.display='none'; requestsView.style.display='block';
-      viewTitle.textContent='Requests';
-      renderRequests();
-    }
-  }
-  document.getElementById('nav-requests').addEventListener('click', e=>{e.preventDefault();showView('requests');});
-  document.getElementById('nav-users').addEventListener('click', e=>{e.preventDefault();showView('users');});
-  document.getElementById('nav-logout').addEventListener('click', e=>{e.preventDefault();location.reload();});
-
-  /* ====== Requests Table ====== */
-  const reqTbody = document.getElementById('requestsTable');
-  let currentFilter = 'all';
-
-  document.querySelectorAll('[data-filter]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{ currentFilter = btn.dataset.filter; renderRequests(); });
+  document.getElementById('nav-requests').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('requestsView').style.display = 'block';
+    document.getElementById('usersView').style.display = 'none';
+    document.getElementById('viewTitle').textContent = 'Requests';
   });
 
-  function renderRequests(){
-    requests = read(REQ_KEY);
-    reqTbody.innerHTML = '';
-    const list = requests.filter(r => currentFilter==='all' ? true : r.type === currentFilter);
-    list.forEach((r,i)=>{
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${r.title||'-'}</td>
-        <td>${r.type||'-'}</td>
-        <td>${r.company||'-'}</td>
-        <td>${r.country||'-'}</td>
-        <td>${r.category||'-'}</td>
-        <td>${r.date||'-'}</td>
-        <td>${r.status||'Pending'}</td>
-        <td>
-          <button class="btn btn-primary" onclick="editReq(${i})">Edit</button>
-          <button class="btn btn-green" onclick="approveReq(${i})">Approve</button>
-          <button class="btn btn-red" onclick="deleteReq(${i})">Delete</button>
-        </td>`;
-      reqTbody.appendChild(tr);
-    });
-  }
-
-  window.editReq = (i)=>{
-    const r = requests[i];
-    document.getElementById('editTitleH').textContent = 'Edit Request';
-    document.getElementById('edit-title').value    = r.title||'';
-    document.getElementById('edit-company').value  = r.company||'';
-    document.getElementById('edit-country').value  = r.country||'';
-    document.getElementById('edit-category').value = r.category||'';
-    document.getElementById('edit-type').value     = r.type||'buy';
-    document.getElementById('edit-date').value     = (r.date||'').slice(0,10);
-    document.getElementById('edit-desc').value     = r.desc||'';
-    editIndex = i;
-    toggleEdit(true);
-  };
-
-  let editIndex = null;
-  function toggleEdit(show){
-    document.getElementById('edit-section').style.display = show ? 'block' : 'none';
-    requestsView.style.display = show ? 'none' : 'block';
-    usersView.style.display    = show ? 'none' : usersView.style.display;
-  }
-
-  document.getElementById('saveEditBtn').addEventListener('click', ()=>{
-    const obj = {
-      title:   document.getElementById('edit-title').value.trim(),
-      company: document.getElementById('edit-company').value.trim(),
-      country: document.getElementById('edit-country').value.trim(),
-      category:document.getElementById('edit-category').value.trim(),
-      type:    document.getElementById('edit-type').value,
-      date:    document.getElementById('edit-date').value || new Date().toISOString().slice(0,10),
-      desc:    document.getElementById('edit-desc').value,
-      status:  'Pending'
-    };
-    if(editIndex===null){ requests.push(obj); } else { requests[editIndex]=obj; }
-    write(REQ_KEY, requests);
-    editIndex=null; toggleEdit(false); renderRequests();
-  });
-  document.getElementById('cancelEditBtn').addEventListener('click', ()=>{ editIndex=null; toggleEdit(false); });
-
-  window.approveReq = (i)=>{ requests[i].status='Approved'; write(REQ_KEY, requests); renderRequests(); };
-  window.deleteReq  = (i)=>{ requests.splice(i,1); write(REQ_KEY, requests); renderRequests(); };
-
-  document.getElementById('newRequestBtn').addEventListener('click', ()=>{
-    document.getElementById('editTitleH').textContent = 'New Request';
-    editIndex = null;
-    document.querySelectorAll('#edit-section input, #edit-section textarea').forEach(el=>el.value='');
-    document.getElementById('edit-type').value='buy';
-    toggleEdit(true);
+  document.getElementById('nav-users').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('requestsView').style.display = 'none';
+    document.getElementById('usersView').style.display = 'block';
+    document.getElementById('viewTitle').textContent = 'Registered Users';
+    showUsers();
   });
 
-  document.getElementById('seedBtn').addEventListener('click', ()=>{
-    const seed = [
-      {title:"Buy 500kg Honey", type:"buy",  company:"Istanbul Imports", country:"Turkey", category:"Food Industry", date:new Date().toISOString().slice(0,10), status:"Pending"},
-      {title:"Sell Wheat 1000 Tons", type:"sell", company:"Anadolu Export",  country:"Turkey", category:"Agriculture Industry", date:new Date().toISOString().slice(0,10), status:"Approved"}
-    ];
-    requests = read(REQ_KEY).concat(seed);
-    write(REQ_KEY, requests);
-    renderRequests();
-  });
-  document.getElementById('clearAllBtn').addEventListener('click', ()=>{
-    if(confirm('Clear all requests from this browser?')){ write(REQ_KEY, []); renderRequests(); }
+  document.getElementById('nav-logout').addEventListener('click', (e) => {
+    e.preventDefault();
+    location.reload();
   });
 
-  /* ====== Users Table ====== */
-  const usersTbody = document.getElementById('usersTable');
-  const usersMsg   = document.getElementById('usersMsg');
-
-  function renderUsers(){
-    const users = read(USERS_KEY);
+  function showUsers(){
+    const usersTbody = document.getElementById('usersTable');
+    const usersMsg = document.getElementById('usersMsg');
+    const users = JSON.parse(localStorage.getItem('tr_users') || '[]');
     usersTbody.innerHTML = '';
-    if(!users.length){ usersMsg.textContent='No registered users yet.'; return; }
+    if (!users.length) {
+      usersMsg.textContent = 'No registered users yet.';
+      return;
+    }
     usersMsg.textContent = `Total ${users.length} user(s).`;
-    users.forEach((u,i)=>{
+    users.forEach((u, i) => {
       const tr = document.createElement('tr');
       const date = u.created ? new Date(u.created).toLocaleString() : '-';
-      tr.innerHTML = `<td>${i+1}</td><td>${u.name||'-'}</td><td>${u.email||'-'}</td><td>${u.company||'-'}</td><td>${date}</td>`;
+      tr.innerHTML = `
+        <td>${i + 1}</td>
+        <td>${u.name || '-'}</td>
+        <td>${u.email || '-'}</td>
+        <td>${u.company || '-'}</td>
+        <td>${u.country || '-'}</td>
+        <td>${date}</td>
+      `;
       usersTbody.appendChild(tr);
     });
   }
-
-  document.getElementById('exportUsersBtn').addEventListener('click', ()=>{
-    const users = read(USERS_KEY);
-    if(!users.length){ alert('No users to export.'); return; }
-    const rows=[['Name','Email','Company','RegisteredAt']];
-    users.forEach(u=>rows.push([u.name||'',u.email||'',u.company||'',u.created||'']));
-    const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-    const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
-    const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob); a.download='users.csv'; a.click(); URL.revokeObjectURL(a.href);
-  });
-
-  document.getElementById('clearUsersBtn').addEventListener('click', ()=>{
-    if(confirm('Clear all users from this browser? (demo)')){ localStorage.removeItem(USERS_KEY); renderUsers(); }
-  });
-
-  /* ====== Init ====== */
-  function renderAll(){ showView('requests'); }
 })();
 </script>
 </body>
