@@ -1,103 +1,266 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Sign Up — Trader Route</title>
-<link rel="icon" href="assets/logos.png">
-<style>
-  body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f4f7f8}
-  header{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
-  .box{max-width:520px;margin:50px auto;padding:22px;background:#fff;border-radius:10px;box-shadow:0 8px 30px rgba(2,8,23,0.06)}
-  label{display:block;margin-top:8px;font-weight:600;color:#333}
-  input, select{width:100%;padding:10px;margin-top:4px;border-radius:8px;border:1px solid #ccc;font-size:15px}
-  .btn{background:#008b6a;color:#fff;padding:12px 18px;border-radius:8px;border:none;cursor:pointer;font-weight:600;font-size:15px;margin-top:10px;width:100%}
-  .btn:hover{background:#006c51}
-  footer{text-align:center;padding:18px;background:#111;color:#eee;margin-top:30px;font-size:14px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — Trader Route</title>
+
+  <!-- ✅ SEO META TAGS -->
+  <meta name="description" content="Join Trader Route to connect with global buyers and sellers. Create your free account and start trading internationally.">
+  <meta name="keywords" content="Trader Route, register, join, sign up, e-commerce, import export, global trade">
+  <meta name="author" content="Trader Route">
+  <link rel="canonical" href="https://traderroute.com/register.html">
+
+  <!-- ⚡ PERFORMANCE -->
+  <link rel="preload" href="assets/logos.png" as="image" />
+  <link rel="icon" href="assets/logos.png" type="image/png" />
+
+  <style>
+    :root {
+      --brand-green: #008b6a;
+      --brand-dark: #006b52;
+      --light-bg: #f8f9fa;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: var(--light-bg);
+      margin: 0;
+      color: #222;
+    }
+
+    /* === HEADER === */
+    header {
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header img {
+      height: 46px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    nav a {
+      margin: 0 14px;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      transition: color 0.25s ease;
+    }
+
+    nav a:hover {
+      color: var(--brand-green);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f1f1;
+      border-radius: 20px;
+      padding: 5px 10px;
+    }
+
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      padding: 5px;
+      font-size: 14px;
+      width: 150px;
+    }
+
+    .login-btn, .join-btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: 0.25s;
+    }
+
+    .login-btn {
+      background: #f1f1f1;
+      padding: 7px 14px;
+    }
+
+    .login-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .join-btn {
+      background: var(--brand-green);
+      color: #fff;
+      padding: 8px 15px;
+    }
+
+    .join-btn:hover {
+      background: var(--brand-dark);
+    }
+
+    /* === REGISTER FORM === */
+    .container {
+      max-width: 450px;
+      margin: 70px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--brand-green);
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--brand-green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .btn:hover {
+      background: var(--brand-dark);
+    }
+
+    footer {
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <img src="assets/logos.png" alt="Trader Route" style="height:48px">
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="login.html">Sign In</a>
-  </nav>
-</header>
 
-<div class="box">
-  <h2>Sign Up</h2>
-  <form id="regForm" onsubmit="event.preventDefault();doRegister();">
-    <label for="name">Full Name</label>
-    <input id="name" type="text" placeholder="Your full name" required>
+  <!-- HEADER -->
+  <header>
+    <div class="logo-container">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
 
-    <label for="email">Email Address</label>
-    <input id="email" type="email" placeholder="example@mail.com" required>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
 
-    <label for="company">Company Name (optional)</label>
-    <input id="company" type="text" placeholder="Your company">
+    <div class="header-right" style="display:flex;align-items:center;gap:10px;">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <button style="background:none;border:none;cursor:pointer;">🔍</button>
+      </div>
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" disabled>Join Now</button>
+    </div>
+  </header>
 
-    <label for="country">Country</label>
-    <select id="country" required>
-      <option value="">Select your country</option>
-      <option value="Turkey">Turkey</option>
-      <option value="United States">United States</option>
-      <option value="Germany">Germany</option>
-      <option value="France">France</option>
-      <option value="Italy">Italy</option>
-      <option value="Spain">Spain</option>
-      <option value="China">China</option>
-      <option value="India">India</option>
-      <option value="United Kingdom">United Kingdom</option>
-      <option value="Russia">Russia</option>
-      <option value="Canada">Canada</option>
-      <option value="Brazil">Brazil</option>
-      <option value="Japan">Japan</option>
-      <option value="United Arab Emirates">United Arab Emirates</option>
-      <option value="Saudi Arabia">Saudi Arabia</option>
-      <option value="South Korea">South Korea</option>
-      <option value="Egypt">Egypt</option>
-      <option value="South Africa">South Africa</option>
-      <option value="Other">Other</option>
-    </select>
+  <!-- REGISTER FORM -->
+  <div class="container">
+    <h2>Sign Up</h2>
+    <form onsubmit="event.preventDefault(); doRegister();">
+      <label>Full Name</label>
+      <input type="text" id="name" required />
 
-    <label for="password">Password</label>
-    <input id="password" type="password" placeholder="Password" required>
+      <label>Email Address</label>
+      <input type="email" id="email" required />
 
-    <button class="btn" type="submit">Sign Up</button>
-  </form>
-  <div id="regMsg" style="margin-top:12px;color:green;text-align:center;"></div>
-</div>
+      <label>Company Name</label>
+      <input type="text" id="company" placeholder="Optional" />
 
-<footer>© 2025 Trader Route</footer>
+      <label>Country</label>
+      <select id="country" required>
+        <option value="">Select your country</option>
+        <option>United States</option>
+        <option>United Kingdom</option>
+        <option>Germany</option>
+        <option>Turkey</option>
+        <option>India</option>
+        <option>China</option>
+        <option>Japan</option>
+      </select>
 
-<script>
-function doRegister(){
-  const name=document.getElementById('name').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const company=document.getElementById('company').value.trim();
-  const country=document.getElementById('country').value;
-  const password=document.getElementById('password').value;
-  const msg=document.getElementById('regMsg');
+      <label>Password</label>
+      <input type="password" id="password" required placeholder="Minimum 6 characters" />
 
-  if(!name||!email||!password||!country){
-    msg.textContent='Please fill required fields.'; msg.style.color='red'; return;
-  }
+      <button class="btn" type="submit">Create Account</button>
+    </form>
+  </div>
 
-  const users = JSON.parse(localStorage.getItem('tr_users')||'[]');
-  if(users.find(u=>u.email.toLowerCase()===email.toLowerCase())){
-    msg.textContent='This email is already registered.'; msg.style.color='red'; return;
-  }
+  <footer>
+    © 2025 Trader Route — All Rights Reserved.
+  </footer>
 
-  const user={name,email,company,country,password,created:new Date().toISOString()};
-  users.push(user);
-  localStorage.setItem('tr_users', JSON.stringify(users));
-  localStorage.setItem('tr_user', JSON.stringify(user));
+  <script>
+    function doRegister(){
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const company = document.getElementById("company").value.trim();
+      const country = document.getElementById("country").value;
+      const password = document.getElementById("password").value.trim();
 
-  msg.textContent='Registration successful! Redirecting...';
-  msg.style.color='green';
-  setTimeout(()=>location.href='index.html',1200);
-}
-</script>
+      if(!name || !email || !password || !country){
+        alert("Please fill all required fields.");
+        return;
+      }
+
+      let users = JSON.parse(localStorage.getItem("tr_users") || "[]");
+      if(users.find(u => u.email === email)){
+        alert("This email is already registered.");
+        return;
+      }
+
+      const user = { name, email, company, country, password, created: new Date().toISOString() };
+      users.push(user);
+      localStorage.setItem("tr_users", JSON.stringify(users));
+      localStorage.setItem("tr_user", JSON.stringify(user));
+
+      // Redirect and show welcome message
+      localStorage.setItem("welcome_name", name);
+      window.location.href = "index.html";
+    }
+  </script>
 </body>
 </html>
