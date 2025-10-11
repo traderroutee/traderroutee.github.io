@@ -104,7 +104,12 @@
     </section>
   </main>
 </div>
-
+  
+<script>
+// BUNU <script> bloğunuzun en üstüne ekleyin:
+const DATA_BASE = location.pathname.includes('/admin/') ? '../data/' : 'data/';
+</script>
+  
 <script>
 (() => {
   const loginScreen = document.getElementById('login-screen');
