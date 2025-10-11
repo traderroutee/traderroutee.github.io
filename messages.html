@@ -1,164 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Messages - Trader Route</title>
-  <link rel="stylesheet" href="stil.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Messages – Trader Route</title>
+
+  <!-- ✅ SEO -->
+  <meta name="description" content="Private chat between Trader Route members. Communicate securely with buyers and suppliers.">
+  <meta name="keywords" content="Trader Route, B2B, messages, trading, buyers, sellers, private chat, e-commerce">
+  <meta name="author" content="Trader Route">
+  <link rel="icon" href="assets/logos.png" />
+
+  <!-- ✅ EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      // 🔧 Kendi EmailJS bilgilerinizi girin:
+      emailjs.init("YOUR_PUBLIC_KEY"); // örnek: "4Vg8HnX1wYZAbC"
+      window.emailServiceID = "YOUR_SERVICE_ID"; // örnek: "service_traderroute"
+      window.emailTemplateID = "YOUR_TEMPLATE_ID"; // örnek: "template_notify_message"
+    })();
+  </script>
+
   <style>
-    .container{max-width:1100px; margin:40px auto; padding:0 16px;}
-    .header{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
-    .pill{display:inline-flex; gap:10px; background:#f1f1f1; border-radius:999px; padding:4px;}
-    .pill button{border:0; background:transparent; padding:8px 14px; border-radius:999px; cursor:pointer; font-weight:600;}
-    .pill button.active{background:#008b6a; color:#fff;}
-    .list{display:grid; gap:12px;}
-    .card{background:#fff; border:1px solid #e3e3e3; border-radius:10px; padding:14px;}
-    .title{font-weight:700;}
-    .meta{color:#666; font-size:12px; margin-top:6px;}
-    .row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;}
-    textarea{width:100%; min-height:90px; padding:10px; border:1px solid #ccc; border-radius:8px;}
-    .btn{border:0; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600;}
-    .btn-primary{background:#008b6a; color:#fff;}
-    .empty{color:#666; border:1px dashed #ccc; padding:24px; border-radius:10px; text-align:center;}
-    @media(max-width:860px){.row{grid-template-columns:1fr}}
+    :root{
+      --green:#008b6a;
+      --green-dark:#006b52;
+      --bg:#f6f8fa;
+    }
+    body{
+      font-family:"Inter","Segoe UI",Arial,sans-serif;
+      background:var(--bg);
+      margin:0;
+      color:#222;
+    }
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:#fff;
+      padding:12px 20px;
+      border-bottom:1px solid #ddd;
+      box-shadow:0 2px 4px rgba(0,0,0,.05);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    header .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      cursor:pointer;
+    }
+    header img{
+      height:50px;
+    }
+    header .tagline{
+      font-size:14px;
+      color:#555;
+      font-weight:600;
+    }
+    .chat{
+      max-width:900px;
+      margin:30px auto;
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+      display:flex;
+      flex-direction:column;
+      height:78vh;
+      overflow:hidden;
+    }
+    .head{
+      background:var(--green);
+      color:#fff;
+      padding:14px 18px;
+      font-weight:700;
+    }
+    .list{
+      flex:1;
+      overflow-y:auto;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .bubble{
+      padding:10px 14px;
+      border-radius:10px;
+      max-width:70%;
+      font-size:14px;
+      line-height:1.4;
+    }
+    .sent{
+      background:var(--green);
+      color:#fff;
+      align-self:flex-end;
+      border-bottom-right-radius:0;
+    }
+    .recv{
+      background:#e9e9e9;
+      color:#111;
+      align-self:flex-start;
+      border-bottom-left-radius:0;
+    }
+    .input{
+      display:flex;
+      gap:10px;
+      padding:14px;
+      border-top:1px solid #e5e7eb;
+    }
+    .input input{
+      flex:1;
+      padding:10px;
+      border:1px solid #ccc;
+      border-radius:6px;
+      font-size:14px;
+    }
+    .input button{
+      background:var(--green);
+      color:#fff;
+      border:none;
+      border-radius:6px;
+      padding:10px 18px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .input button:hover{
+      background:var(--green-dark);
+    }
+    .status{
+      font-size:12px;
+      color:#6b7280;
+      text-align:center;
+      margin:5px 0;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div>
-        <h2>Messages</h2>
-        <div style="color:#444; font-size:14px;">Signed in as <strong id="whoami">guest@traderroute.com</strong></div>
-      </div>
-      <div class="pill">
-        <button id="tabInbox" class="active">Inbox</button>
-        <button id="tabSent">Sent</button>
-      </div>
+  <!-- ✅ Header -->
+  <header>
+    <div class="brand" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo" />
+      <span class="tagline">The Silk Road of E-Commerce</span>
     </div>
+  </header>
 
-    <div id="list" class="list"></div>
-    <div id="empty" class="empty" style="display:none;">No messages.</div>
+  <!-- ✅ Chat Layout -->
+  <div class="chat">
+    <div class="head" id="who">Chat</div>
+    <div class="list" id="list"></div>
+    <div class="input">
+      <input type="text" id="msg" placeholder="Type your message..." />
+      <button id="send">Send</button>
+    </div>
+    <div class="status" id="status"></div>
   </div>
 
   <script>
-    // === Base Functions ===
-    function getCurrentUserEmail(){
-      const u = JSON.parse(localStorage.getItem('tr_user')||'null');
-      return (u && u.email) ? u.email.toLowerCase() : 'guest@traderroute.com';
+    // === USER SESSION ===
+    const me = JSON.parse(localStorage.getItem("loggedUser") || '{"email":"me@traderroute.com"}');
+    const to = new URLSearchParams(location.search).get("to") || "unknown@user.com";
+
+    const who  = document.getElementById("who");
+    const list = document.getElementById("list");
+    const msg  = document.getElementById("msg");
+    const send = document.getElementById("send");
+    const status = document.getElementById("status");
+
+    who.textContent = "Chat with " + to;
+
+    function getMessages(){
+      try { return JSON.parse(localStorage.getItem("messages") || "[]"); }
+      catch { return []; }
+    }
+    function saveMessages(arr){
+      localStorage.setItem("messages", JSON.stringify(arr));
     }
 
-    function loadConversations(){
-      return JSON.parse(localStorage.getItem('tr_conversations')||'[]');
-    }
-    function saveConversations(list){
-      localStorage.setItem('tr_conversations', JSON.stringify(list));
-    }
-
-    const me = getCurrentUserEmail();
-    document.getElementById('whoami').textContent = me;
-    let tab = 'inbox';
-
-    const tabInbox = document.getElementById('tabInbox');
-    const tabSent = document.getElementById('tabSent');
-
-    tabInbox.onclick = ()=>{ tab='inbox'; tabInbox.classList.add('active'); tabSent.classList.remove('active'); render(); };
-    tabSent.onclick = ()=>{ tab='sent'; tabSent.classList.add('active'); tabInbox.classList.remove('active'); render(); };
-
-    // === Core Conversation Logic ===
-    function getFilteredConversations(){
-      const all = loadConversations().sort((a,b)=> new Date(b.lastUpdated)-new Date(a.lastUpdated));
-      return all.filter(c => c.participants.includes(me));
-    }
-
+    // === Render Chat ===
     function render(){
-      const listEl = document.getElementById('list');
-      const emptyEl = document.getElementById('empty');
-      listEl.innerHTML = '';
-
-      const convs = getFilteredConversations().filter(c=>{
-        return tab==='inbox'
-          ? c.messages.some(m=>m.to===me)
-          : c.messages.some(m=>m.from===me);
+      const all = getMessages();
+      list.innerHTML = "";
+      const mine = all.filter(m =>
+        (m.from === me.email && m.to === to) ||
+        (m.from === to && m.to === me.email)
+      );
+      mine.forEach(m=>{
+        const b = document.createElement("div");
+        b.className = "bubble " + (m.from === me.email ? "sent" : "recv");
+        b.textContent = m.text;
+        list.appendChild(b);
       });
-
-      if(convs.length===0){ emptyEl.style.display='block'; return; } else { emptyEl.style.display='none'; }
-
-      convs.forEach(conv=>{
-        const lastMsg = conv.messages[conv.messages.length-1];
-        const other = conv.participants.find(p=>p!==me);
-        const card = document.createElement('div');
-        card.className='card';
-        card.innerHTML = `
-          <div class="title">${conv.listingTitle || '(Request)'}</div>
-          <div class="meta">
-            ${tab==='inbox' ? `From: <strong>${lastMsg.from}</strong>` : `To: <strong>${other}</strong>`}
-            · <a href="request.html?id=${encodeURIComponent(conv.listingId)}">Open Request</a>
-            · ${new Date(lastMsg.created).toLocaleString()}
-          </div>
-          <p style="white-space:pre-wrap; margin-top:10px;">${lastMsg.body}</p>
-          <div class="row">
-            <div>
-              <textarea placeholder="Write a reply..."></textarea>
-            </div>
-            <div>
-              <button class="btn btn-primary">Send Reply</button>
-            </div>
-          </div>
-        `;
-        const btn = card.querySelector('button');
-        const area = card.querySelector('textarea');
-        btn.onclick = ()=>{
-          const text = area.value.trim();
-          if(!text){ alert('Write a reply first.'); return; }
-          const msg = {
-            from: me,
-            to: other,
-            body: text,
-            created: new Date().toISOString()
-          };
-          conv.messages.push(msg);
-          conv.lastUpdated = new Date().toISOString();
-          const all = loadConversations().filter(c=>c.id!==conv.id);
-          all.push(conv);
-          saveConversations(all);
-          area.value='';
-          render();
-        };
-        listEl.appendChild(card);
-      });
+      list.scrollTop = list.scrollHeight;
     }
 
-    // === Old message migration ===
-    function migrateOldMessages(){
-      const old = JSON.parse(localStorage.getItem('messages')||'[]');
-      if(!old.length) return;
-      let store = loadConversations();
-      old.forEach(m=>{
-        const id = btoa([m.from, m.to, m.requestId].sort().join('|'));
-        let conv = store.find(c=>c.id===id);
-        if(!conv){
-          conv = {
-            id,
-            participants:[m.from.toLowerCase(), m.to.toLowerCase()],
-            listingId:m.requestId,
-            listingTitle:m.requestTitle||'',
-            messages:[],
-            lastUpdated:new Date().toISOString()
-          };
-          store.push(conv);
+    // === Send Message ===
+    function sendMessage(){
+      const text = msg.value.trim();
+      if(!text) return;
+      const all = getMessages();
+      all.push({ from: me.email, to, text, time: Date.now() });
+      saveMessages(all);
+      msg.value = "";
+      render();
+      notifyByEmail(to, text);
+    }
+
+    // === Email Notification (EmailJS) ===
+    function notifyByEmail(target, text){
+      emailjs.send(window.emailServiceID, window.emailTemplateID, {
+        to_email: target,
+        from_email: me.email,
+        message: text,
+      }).then(
+        () => {
+          console.log("📧 Email sent to", target);
+          status.textContent = "Email notification sent successfully ✔";
+          setTimeout(()=>status.textContent="",3000);
+        },
+        (err) => {
+          console.error("❌ Email failed", err);
+          status.textContent = "⚠ Email notification failed";
         }
-        conv.messages.push({
-          from:m.from,
-          to:m.to,
-          body:m.body,
-          created:m.createdAt
-        });
-      });
-      saveConversations(store);
-      localStorage.removeItem('messages');
+      );
     }
 
-    migrateOldMessages();
+    send.onclick = sendMessage;
+    msg.addEventListener("keypress", e=>{ if(e.key==="Enter") sendMessage(); });
+    setInterval(render, 4000);
     render();
   </script>
 </body>
