@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Taxonomy (Categories & Countries)</title>
+
+  <!-- 🌐 SEO -->
+  <meta name="description" content="Admin panel to manage categories and countries for Trader Route. Edit, import, and export JSON datasets.">
+  <meta name="keywords" content="Trader Route, admin, categories, countries, taxonomy, JSON editor">
+  <meta name="author" content="Trader Route">
+  <link rel="canonical" href="https://traderroute.com/admin-taxonomy.html"/>
+
+  <!-- ⚡ Performance -->
+  <link rel="icon" href="assets/logos.png" type="image/png"/>
+  <link rel="preload" href="assets/logos.png" as="image"/>
+
+  <style>
+    :root{
+      --brand-green:#008b6a;
+      --brand-dark:#006b52;
+      --light-bg:#f8f9fa;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--light-bg);color:#222}
+
+    /* Header (site-wide consistent) */
+    header{background:#fff;display:flex;justify-content:space-between;align-items:center;
+      padding:14px 40px;box-shadow:0 2px 8px rgba(0,0,0,.05);position:sticky;top:0;z-index:1000}
+    header img{height:46px}
+    .logo-container{display:flex;align-items:center;gap:10px}
+    .logo-text{font-size:15px;color:#555;font-weight:500}
+    nav a{margin:0 14px;text-decoration:none;color:#222;font-weight:500;transition:.25s}
+    nav a:hover{color:var(--brand-green)}
+    .search-box{display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px}
+    .search-box input{border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px}
+    .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:600;transition:.25s}
+    .login-btn{background:#f1f1f1;padding:7px 14px}
+    .login-btn:hover{background:#e0e0e0}
+    .join-btn{background:var(--brand-green);color:#fff;padding:8px 15px}
+    .join-btn:hover{background:var(--brand-dark)}
+
+    /* Page layout */
+    .wrap{max-width:1200px;margin:40px auto;padding:0 20px}
+    h1{margin:0 0 10px}
+    .subtitle{color:#555;margin-bottom:24px}
+
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+    .card{
+      background:#fff;border-radius:12px;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,.06);
+      border:1px solid #eaeaea;
+    }
+    .card h2{margin:0 0 6px;color:var(--brand-green)}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+    .row input[type="text"]{flex:1;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:14px}
+    .btn{background:var(--brand-green);color:#fff;border:none;border-radius:8px;padding:10px 14px;cursor:pointer;font-weight:600;transition:.25s}
+    .btn:hover{background:var(--brand-dark)}
+    .btn.secondary{background:#f1f1f1;color:#222}
+    .btn.secondary:hover{background:#e5e5e5}
+    .btn.warn{background:#ef4444}
+    .btn.warn:hover{background:#c43737}
+
+    .tools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+    .list{border:1px solid #eee;border-radius:10px;max-height:420px;overflow:auto}
+    .item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid #f2f2f2}
+    .item:last-child{border-bottom:none}
+    .item .name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:10px}
+    .muted{color:#777;font-size:12px}
+    .success{position:fixed;right:24px;bottom:24px;background:var(--brand-green);color:#fff;padding:12px 16px;border-radius:8px;box-shadow:0 6px 24px rgba(0,0,0,.18);opacity:0;pointer-events:none;transition:.4s;z-index:9999}
+    .success.show{opacity:1;pointer-events:auto}
+    footer{text-align:center;padding:22px;margin-top:36px;background:#fff;border-top:1px solid #eaeaea;color:#666}
+    .inline{display:inline-block}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo-container">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <button style="background:none;border:none;cursor:pointer">🔍</button>
+      </div>
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+    </div>
+  </header>
+
+  <!-- Body -->
+  <div class="wrap">
+    <h1>Taxonomy Manager</h1>
+    <div class="subtitle">Edit your <strong>Categories</strong> and <strong>Countries</strong> datasets safely. Import current JSON, make changes, then export the new JSON files to upload into <code>data/</code> folder.</div>
+
+    <div class="grid">
+      <!-- Categories -->
+      <section class="card" id="catCard">
+        <h2>Categories</h2>
+        <div class="muted">File: <code>data/categories.json</code></div>
+
+        <div class="tools">
+          <button class="btn secondary" onclick="importJson('#catFile','categories')">Import JSON</button>
+          <input id="catFile" type="file" accept="application/json" style="display:none">
+          <button class="btn" onclick="fetchRemote('categories')">Load from /data</button>
+          <button class="btn" onclick="exportJson('categories')">Download JSON</button>
+          <button class="btn secondary" onclick="sortList('categories')">Sort A→Z</button>
+          <button class="btn warn" onclick="clearAll('categories')">Clear All</button>
+        </div>
+
+        <div class="row">
+          <input id="catInput" type="text" placeholder="Add a new category…">
+          <button class="btn" onclick="addItem('categories')">Add</button>
+        </div>
+
+        <div id="catList" class="list"></div>
+      </section>
+
+      <!-- Countries -->
+      <section class="card" id="countryCard">
+        <h2>Countries</h2>
+        <div class="muted">File: <code>data/countries.json</code></div>
+
+        <div class="tools">
+          <button class="btn secondary" onclick="importJson('#countryFile','countries')">Import JSON</button>
+          <input id="countryFile" type="file" accept="application/json" style="display:none">
+          <button class="btn" onclick="fetchRemote('countries')">Load from /data</button>
+          <button class="btn" onclick="exportJson('countries')">Download JSON</button>
+          <button class="btn secondary" onclick="sortList('countries')">Sort A→Z</button>
+          <button class="btn warn" onclick="clearAll('countries')">Clear All</button>
+        </div>
+
+        <div class="row">
+          <input id="countryInput" type="text" placeholder="Add a new country…">
+          <button class="btn" onclick="addItem('countries')">Add</button>
+        </div>
+
+        <div id="countryList" class="list"></div>
+      </section>
+    </div>
+  </div>
+
+  <div id="successToast" class="success">Saved</div>
+
+  <footer>© 2025 Trader Route — Admin</footer>
+
+  <script>
+    // In-memory state (safe; no server writes)
+    const state = {
+      categories: [],
+      countries: []
+    };
+
+    // Helpers
+    const el = (sel) => document.querySelector(sel);
+
+    function showToast(text='Saved'){
+      const t=el('#successToast');
+      t.textContent=text;
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'), 1800);
+    }
+
+    function sanitize(s){
+      const d=document.createElement('div'); d.textContent=String(s||'').trim(); return d.textContent;
+    }
+
+    function dedupe(arr){
+      const seen=new Set(); const out=[];
+      for(const x of arr){
+        const k=String(x).toLowerCase();
+        if(!seen.has(k) && k.length){ seen.add(k); out.push(x); }
+      }
+      return out;
+    }
+
+    // Render list
+    function renderList(kind){
+      const listId = kind==='categories' ? '#catList' : '#countryList';
+      const container = el(listId);
+      container.innerHTML='';
+      const items = state[kind];
+
+      if(!items.length){
+        const empty = document.createElement('div');
+        empty.className='item';
+        empty.innerHTML='<div class="name muted">Empty</div>';
+        container.appendChild(empty);
+        return;
+      }
+
+      items.forEach((name, i)=>{
+        const row = document.createElement('div');
+        row.className='item';
+
+        const left = document.createElement('div');
+        left.className='name';
+        left.title=name;
+        left.textContent=name;
+
+        const right = document.createElement('div');
+        right.style.display='flex';
+        right.style.gap='6px';
+
+        const editBtn = document.createElement('button');
+        editBtn.className='btn secondary inline';
+        editBtn.textContent='Edit';
+        editBtn.onclick = ()=>{
+          const val = prompt('Edit value:', name);
+          if(val==null) return;
+          const v = sanitize(val);
+          if(!v){ alert('Value required.'); return; }
+          state[kind][i]=v;
+          state[kind]=dedupe(state[kind]).sort((a,b)=>a.localeCompare(b));
+          renderList(kind); showToast('Updated');
+        };
+
+        const delBtn = document.createElement('button');
+        delBtn.className='btn warn inline';
+        delBtn.textContent='Delete';
+        delBtn.onclick = ()=>{
+          if(confirm('Delete this item?')){
+            state[kind].splice(i,1);
+            renderList(kind); showToast('Deleted');
+          }
+        };
+
+        right.appendChild(editBtn);
+        right.appendChild(delBtn);
+        row.appendChild(left);
+        row.appendChild(right);
+        container.appendChild(row);
+      });
+    }
+
+    // Add item
+    function addItem(kind){
+      const inputId = kind==='categories' ? '#catInput' : '#countryInput';
+      const inp = el(inputId);
+      const v = sanitize(inp.value);
+      if(!v){ alert('Value required.'); return; }
+      state[kind].push(v);
+      state[kind]=dedupe(state[kind]).sort((a,b)=>a.localeCompare(b));
+      inp.value=''; renderList(kind); showToast('Added');
+    }
+
+    // Sort list
+    function sortList(kind){
+      state[kind]=[...state[kind]].sort((a,b)=>a.localeCompare(b));
+      renderList(kind); showToast('Sorted');
+    }
+
+    // Clear all
+    function clearAll(kind){
+      if(confirm('Clear all items?')){
+        state[kind]=[]; renderList(kind); showToast('Cleared');
+      }
+    }
+
+    // Import JSON from file
+    function importJson(fileSel, kind){
+      const input = el(fileSel);
+      input.value='';
+      input.onchange = (e)=>{
+        const file = e.target.files?.[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = ()=>{
+          try{
+            const arr = JSON.parse(reader.result);
+            if(!Array.isArray(arr)) throw new Error('JSON should be an array of strings.');
+            state[kind] = dedupe(arr.map(sanitize)).sort((a,b)=>a.localeCompare(b));
+            renderList(kind); showToast('Imported');
+          }catch(err){
+            alert('Invalid JSON file: ' + err.message);
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+
+    // Load current files from /data
+    async function fetchRemote(kind){
+      const url = kind==='categories' ? 'data/categories.json' : 'data/countries.json';
+      try{
+        const res = await fetch(url, {cache:'no-store'});
+        if(!res.ok) throw new Error(res.status + ' ' + res.statusText);
+        const arr = await res.json();
+        if(!Array.isArray(arr)) throw new Error('JSON should be an array.');
+        state[kind] = dedupe(arr.map(sanitize)).sort((a,b)=>a.localeCompare(b));
+        renderList(kind); showToast('Loaded from /data');
+      }catch(e){
+        alert('Load error: ' + e.message + '\nMake sure ' + url + ' exists.');
+      }
+    }
+
+    // Export JSON (download)
+    function exportJson(kind){
+      const data = JSON.stringify(state[kind], null, 2);
+      const blob = new Blob([data], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href=url;
+      a.download = kind==='categories' ? 'categories.json' : 'countries.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast('Downloaded');
+    }
+
+    // Initial: try loading from /data
+    fetchRemote('categories');
+    fetchRemote('countries');
+  </script>
+</body>
+</html>
