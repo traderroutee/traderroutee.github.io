@@ -10,7 +10,7 @@
     .header{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
     .pill{display:inline-flex; gap:10px; background:#f1f1f1; border-radius:999px; padding:4px;}
     .pill button{border:0; background:transparent; padding:8px 14px; border-radius:999px; cursor:pointer; font-weight:600;}
-    .pill button.active{background:#007bff; color:#fff;}
+    .pill button.active{background:#008b6a; color:#fff;}
     .list{display:grid; gap:12px;}
     .card{background:#fff; border:1px solid #e3e3e3; border-radius:10px; padding:14px;}
     .title{font-weight:700;}
@@ -18,7 +18,7 @@
     .row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;}
     textarea{width:100%; min-height:90px; padding:10px; border:1px solid #ccc; border-radius:8px;}
     .btn{border:0; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600;}
-    .btn-primary{background:#007bff; color:#fff;}
+    .btn-primary{background:#008b6a; color:#fff;}
     .empty{color:#666; border:1px dashed #ccc; padding:24px; border-radius:10px; text-align:center;}
     @media(max-width:860px){.row{grid-template-columns:1fr}}
   </style>
@@ -41,42 +41,61 @@
   </div>
 
   <script>
+    // === Base Functions ===
     function getCurrentUserEmail(){
-      return localStorage.getItem('currentUserEmail') || 'guest@traderroute.com';
+      const u = JSON.parse(localStorage.getItem('tr_user')||'null');
+      return (u && u.email) ? u.email.toLowerCase() : 'guest@traderroute.com';
     }
-    function loadMessages(){ try { return JSON.parse(localStorage.getItem('messages')||'[]'); } catch(e){ return []; } }
-    function saveMessages(arr){ localStorage.setItem('messages', JSON.stringify(arr)); }
+
+    function loadConversations(){
+      return JSON.parse(localStorage.getItem('tr_conversations')||'[]');
+    }
+    function saveConversations(list){
+      localStorage.setItem('tr_conversations', JSON.stringify(list));
+    }
+
     const me = getCurrentUserEmail();
     document.getElementById('whoami').textContent = me;
+    let tab = 'inbox';
 
-    let tab = 'inbox'; // or 'sent'
     const tabInbox = document.getElementById('tabInbox');
     const tabSent = document.getElementById('tabSent');
+
     tabInbox.onclick = ()=>{ tab='inbox'; tabInbox.classList.add('active'); tabSent.classList.remove('active'); render(); };
     tabSent.onclick = ()=>{ tab='sent'; tabSent.classList.add('active'); tabInbox.classList.remove('active'); render(); };
+
+    // === Core Conversation Logic ===
+    function getFilteredConversations(){
+      const all = loadConversations().sort((a,b)=> new Date(b.lastUpdated)-new Date(a.lastUpdated));
+      return all.filter(c => c.participants.includes(me));
+    }
 
     function render(){
       const listEl = document.getElementById('list');
       const emptyEl = document.getElementById('empty');
       listEl.innerHTML = '';
 
-      const all = loadMessages().sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
-      const filtered = tab==='inbox' ? all.filter(m=> m.to===me) : all.filter(m=> m.from===me);
+      const convs = getFilteredConversations().filter(c=>{
+        return tab==='inbox'
+          ? c.messages.some(m=>m.to===me)
+          : c.messages.some(m=>m.from===me);
+      });
 
-      if(filtered.length===0){ emptyEl.style.display='block'; return; } else { emptyEl.style.display='none'; }
+      if(convs.length===0){ emptyEl.style.display='block'; return; } else { emptyEl.style.display='none'; }
 
-      filtered.forEach(m=>{
+      convs.forEach(conv=>{
+        const lastMsg = conv.messages[conv.messages.length-1];
+        const other = conv.participants.find(p=>p!==me);
         const card = document.createElement('div');
         card.className='card';
         card.innerHTML = `
-          <div class="title">${m.requestTitle || '(Request)'}</div>
+          <div class="title">${conv.listingTitle || '(Request)'}</div>
           <div class="meta">
-            ${tab==='inbox' ? `From: <strong>${m.from}</strong>` : `To: <strong>${m.to}</strong>`}
-            · <a href="istek-detay.html?id=${encodeURIComponent(m.requestId)}">Open request</a>
-            · ${new Date(m.createdAt).toLocaleString()}
+            ${tab==='inbox' ? `From: <strong>${lastMsg.from}</strong>` : `To: <strong>${other}</strong>`}
+            · <a href="request.html?id=${encodeURIComponent(conv.listingId)}">Open Request</a>
+            · ${new Date(lastMsg.created).toLocaleString()}
           </div>
-          <p style="white-space:pre-wrap; margin-top:10px;">${m.body}</p>
-
+          <p style="white-space:pre-wrap; margin-top:10px;">${lastMsg.body}</p>
           <div class="row">
             <div>
               <textarea placeholder="Write a reply..."></textarea>
@@ -86,39 +105,60 @@
             </div>
           </div>
         `;
-        // reply handler
         const btn = card.querySelector('button');
         const area = card.querySelector('textarea');
-        btn.addEventListener('click', ()=>{
-          const body = area.value.trim();
-          if(!body){ alert('Write a reply first.'); return; }
-          const reply = {
-            id: Date.now().toString(),
-            requestId: m.requestId,
-            requestTitle: m.requestTitle,
-            to: tab==='inbox' ? m.from : m.to,
+        btn.onclick = ()=>{
+          const text = area.value.trim();
+          if(!text){ alert('Write a reply first.'); return; }
+          const msg = {
             from: me,
-            body,
-            createdAt: new Date().toISOString()
+            to: other,
+            body: text,
+            created: new Date().toISOString()
           };
-          const list = loadMessages();
-          list.push(reply);
-          saveMessages(list);
-
-          // also open mailto
-          const subject = encodeURIComponent(`[Trader Route] Reply about: ${m.requestTitle}`);
-          const content = encodeURIComponent(`${body}\n\nFrom: ${me}`);
-          window.location.href = `mailto:${encodeURIComponent(reply.to)}?subject=${subject}&body=${content}`;
-
+          conv.messages.push(msg);
+          conv.lastUpdated = new Date().toISOString();
+          const all = loadConversations().filter(c=>c.id!==conv.id);
+          all.push(conv);
+          saveConversations(all);
           area.value='';
-          alert('Reply sent.');
           render();
-        });
-
+        };
         listEl.appendChild(card);
       });
     }
 
+    // === Old message migration ===
+    function migrateOldMessages(){
+      const old = JSON.parse(localStorage.getItem('messages')||'[]');
+      if(!old.length) return;
+      let store = loadConversations();
+      old.forEach(m=>{
+        const id = btoa([m.from, m.to, m.requestId].sort().join('|'));
+        let conv = store.find(c=>c.id===id);
+        if(!conv){
+          conv = {
+            id,
+            participants:[m.from.toLowerCase(), m.to.toLowerCase()],
+            listingId:m.requestId,
+            listingTitle:m.requestTitle||'',
+            messages:[],
+            lastUpdated:new Date().toISOString()
+          };
+          store.push(conv);
+        }
+        conv.messages.push({
+          from:m.from,
+          to:m.to,
+          body:m.body,
+          created:m.createdAt
+        });
+      });
+      saveConversations(store);
+      localStorage.removeItem('messages');
+    }
+
+    migrateOldMessages();
     render();
   </script>
 </body>
