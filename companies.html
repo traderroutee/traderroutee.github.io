@@ -127,6 +127,59 @@
     }
   </style>
 </head>
+<header style="display:flex;align-items:center;justify-content:space-between;background:#fff;
+               padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000;">
+
+  <!-- Sol: Logo -->
+  <div class="logo-container" style="flex:0 0 auto;display:flex;align-items:center;gap:10px;cursor:pointer;"
+       onclick="location.href='index.html'">
+    <img src="assets/logos.png" alt="Trader Route Logo" style="height:45px;">
+    <span class="logo-text" style="font-size:15px;color:#555;font-weight:500;">
+      The Silk Road of E-Commerce
+    </span>
+  </div>
+
+  <!-- Orta: Menü -->
+  <nav style="flex:1;display:flex;justify-content:center;align-items:center;gap:20px;">
+    <a href="index.html"      style="text-decoration:none;color:#000;font-weight:500;">Home</a>
+    <a href="companies.html"  style="text-decoration:none;color:#000;font-weight:500;">Companies</a>
+    <a href="requests.html"   style="text-decoration:none;color:#000;font-weight:500;">Requests</a>
+    <a href="contact.html"    style="text-decoration:none;color:#000;font-weight:500;">Contact</a>
+    <a href="pricing.html"    style="text-decoration:none;color:#000;font-weight:500;">Pricing</a>
+  </nav>
+
+  <!-- Sağ: Arama + Giriş + Kullanıcı menüsü -->
+  <div class="header-right" style="flex:0 0 auto;display:flex;align-items:center;gap:10px;">
+    <div class="search-box" style="display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px;">
+      <input type="text" placeholder="Search..." 
+             style="border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px;">
+      <button style="background:none;border:none;cursor:pointer;">🔍</button>
+    </div>
+
+    <button class="login-btn" onclick="location.href='login.html'" 
+            style="border:none;cursor:pointer;border-radius:6px;background:#f1f1f1;padding:7px 14px;font-weight:500;">
+      Sign In
+    </button>
+    <button class="join-btn" onclick="location.href='register.html'" 
+            style="border:none;cursor:pointer;border-radius:6px;background:#008b6a;color:#fff;padding:8px 15px;font-weight:500;">
+      Join Now
+    </button>
+
+    <!-- 👤 Kullanıcı İkonu -->
+    <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
+      <img id="userIcon" src="assets/user-icon.png" alt="User"
+           style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+      <div id="userDropdown"
+           style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
+                  box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+        <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+        <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+        <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
+  
 <body>
   <header>
     <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
