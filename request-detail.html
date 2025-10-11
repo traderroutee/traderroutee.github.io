@@ -3,33 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Request Detail — Trader Route</title>
+  <title>Request Detail | Trader Route</title>
 
-  <!-- 🌐 SEO META TAGS -->
-  <meta name="description" content="View request details on Trader Route and contact buyers or sellers directly.">
-  <meta name="keywords" content="Trader Route, request detail, contact, buyer, seller, B2B marketplace">
+  <!-- 🌐 SEO -->
+  <meta name="description" content="View trade request details on Trader Route. Connect with global buyers and sellers through the Silk Road of E-Commerce.">
+  <meta name="keywords" content="Trader Route, trade request detail, global commerce, B2B trade, buyer, seller">
   <meta name="author" content="Trader Route">
-  <link rel="canonical" href="https://traderroute.com/request-detail.html">
+  <link rel="canonical" href="https://traderroute.com/request-detail.html" />
 
-  <!-- ⚡ PERFORMANCE -->
-  <link rel="preload" href="assets/logos.png" as="image" />
+  <!-- ⚡ Performance -->
   <link rel="icon" href="assets/logos.png" type="image/png" />
+  <link rel="preload" href="assets/logos.png" as="image" />
 
   <style>
     :root {
       --brand-green: #008b6a;
       --brand-dark: #006b52;
       --light-bg: #f8f9fa;
+      --text-color: #222;
     }
 
     body {
       font-family: "Inter", "Segoe UI", Arial, sans-serif;
-      background: var(--light-bg);
       margin: 0;
-      color: #222;
+      background: var(--light-bg);
+      color: var(--text-color);
     }
 
-    /* === HEADER === */
+    /* HEADER */
     header {
       background: #fff;
       display: flex;
@@ -42,15 +43,9 @@
       z-index: 1000;
     }
 
-    header img {
-      height: 46px;
-    }
+    header img { height: 46px; cursor: pointer; }
 
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .logo-container { display: flex; align-items: center; gap: 10px; }
 
     .logo-text {
       font-size: 15px;
@@ -66,9 +61,7 @@
       transition: color 0.25s ease;
     }
 
-    nav a:hover {
-      color: var(--brand-green);
-    }
+    nav a:hover { color: var(--brand-green); }
 
     .search-box {
       display: flex;
@@ -100,9 +93,7 @@
       padding: 7px 14px;
     }
 
-    .login-btn:hover {
-      background: #e0e0e0;
-    }
+    .login-btn:hover { background: #e0e0e0; }
 
     .join-btn {
       background: var(--brand-green);
@@ -110,113 +101,85 @@
       padding: 8px 15px;
     }
 
-    .join-btn:hover {
-      background: var(--brand-dark);
-    }
+    .join-btn:hover { background: var(--brand-dark); }
 
-    /* === PAGE CONTENT === */
+    /* MAIN */
     .container {
       max-width: 1100px;
-      margin: 60px auto;
+      margin: 40px auto;
       padding: 0 20px;
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 20px;
-    }
-
-    .detail-card {
       background: #fff;
-      border-radius: 10px;
-      padding: 25px;
+      border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
-    .detail-card h2 {
-      color: var(--brand-green);
-      margin-bottom: 10px;
+    .header-section {
+      border-bottom: 1px solid #eee;
+      padding: 24px 0;
     }
 
-    .detail-card p {
-      line-height: 1.6;
-      color: #444;
+    h1 {
+      color: var(--brand-green);
+      margin: 0;
+      font-size: 26px;
     }
 
-    .tags span {
-      background: #e9f6f3;
-      color: var(--brand-green);
-      border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 13px;
+    .meta {
+      color: #666;
+      margin-top: 6px;
+      font-size: 14px;
+    }
+
+    .flag {
+      width: 22px;
+      height: 16px;
+      border-radius: 2px;
       margin-right: 6px;
     }
 
-    .form-box {
-      background: #fff;
-      border-radius: 10px;
-      padding: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    .content-section {
+      padding: 24px 0;
+      line-height: 1.7;
+      font-size: 15px;
     }
 
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
+    .info-box {
+      margin-top: 20px;
+      background: #f8fdfb;
+      border-left: 4px solid var(--brand-green);
+      padding: 14px 18px;
       border-radius: 6px;
-      font-size: 14px;
-      margin-top: 6px;
-      margin-bottom: 14px;
+    }
+
+    .info-box strong {
+      color: var(--brand-green);
     }
 
     .btn {
+      display: inline-block;
       background: var(--brand-green);
       color: #fff;
       border: none;
-      padding: 10px 16px;
       border-radius: 8px;
-      cursor: pointer;
+      padding: 12px 24px;
+      font-size: 15px;
       font-weight: 600;
-      transition: all 0.25s ease;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      margin-top: 25px;
     }
 
     .btn:hover {
       background: var(--brand-dark);
     }
 
-    /* SUCCESS ALERT */
-    .alert {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: var(--brand-green);
-      color: #fff;
-      padding: 12px 18px;
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-      z-index: 9999;
-      font-weight: 500;
-    }
-
-    .alert.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    @media(max-width:900px){
-      .container {
-        grid-template-columns: 1fr;
-      }
-    }
-
     footer {
       text-align: center;
       padding: 25px;
+      margin-top: 40px;
       color: #777;
       border-top: 1px solid #ddd;
-      margin-top: 60px;
-      font-size: 14px;
       background: #fff;
     }
   </style>
@@ -225,20 +188,18 @@
 <body>
   <!-- HEADER -->
   <header>
-    <div class="logo-container">
-      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+    <div class="logo-container" onclick="window.location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy" />
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
-
     <nav>
       <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
-      <a href="requests.html">Requests</a>
+      <a href="requests.html" style="color:var(--brand-green);font-weight:600;">Requests</a>
       <a href="contact.html">Contact</a>
       <a href="pricing.html">Pricing</a>
     </nav>
-
-    <div class="header-right" style="display:flex;align-items:center;gap:10px;">
+    <div style="display:flex;align-items:center;gap:10px;">
       <div class="search-box">
         <input type="text" placeholder="Search...">
         <button style="background:none;border:none;cursor:pointer;">🔍</button>
@@ -248,93 +209,78 @@
     </div>
   </header>
 
-  <!-- CONTENT -->
+  <!-- MAIN -->
   <div class="container">
-    <div class="detail-card" id="requestDetail">
-      <h2 id="reqTitle">Request Title</h2>
-      <p id="reqDesc">Loading description...</p>
-      <div class="tags" id="reqTags"></div>
-      <p><strong>Price:</strong> <span id="reqPrice">-</span></p>
-      <p><strong>Country:</strong> <span id="reqCountry">-</span></p>
+    <div class="header-section">
+      <h1 id="requestTitle">Loading...</h1>
+      <div class="meta">
+        <img id="requestFlag" class="flag" src="" alt="" loading="lazy">
+        <span id="requestCountry"></span> | 
+        <span id="requestCategory"></span> | 
+        <span id="requestType"></span>
+      </div>
     </div>
 
-    <div class="form-box">
-      <h3>Contact Request Owner</h3>
-      <input id="msgEmail" type="email" placeholder="Your Email" required>
-      <textarea id="msgBody" placeholder="Write your message..." required></textarea>
-      <button class="btn" id="sendBtn">Send Message</button>
+    <div class="content-section">
+      <p id="requestDescription">Please wait while the request details are loading...</p>
+
+      <div class="info-box" id="contactBox" style="display:none;">
+        <strong>Contact:</strong> <span id="contactName"></span><br>
+        <strong>Email:</strong> <span id="contactEmail"></span>
+      </div>
+
+      <a href="#" class="btn" id="messageButton">Send Message</a>
     </div>
   </div>
 
-  <!-- SUCCESS ALERT -->
-  <div id="successAlert" class="alert">Message sent successfully ✅</div>
-
-  <footer>
-    © 2025 Trader Route — All Rights Reserved.
-  </footer>
+  <footer>© 2025 Trader Route — The Silk Road of E-Commerce</footer>
 
   <script>
-    // === SAFE TEXT ===
-    function safe(text){
-      const div=document.createElement('div');
-      div.textContent=text;
-      return div.innerHTML;
-    }
+    async function loadRequestDetail() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
 
-    // === LOAD REQUEST DETAIL ===
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
-    const requests = JSON.parse(localStorage.getItem("requests")||"[]");
-    const req = requests.find(r => r.id == id);
-
-    if(req){
-      document.getElementById("reqTitle").textContent = req.title || "(Untitled)";
-      document.getElementById("reqDesc").innerHTML = safe(req.description || "(no description)");
-      document.getElementById("reqPrice").textContent = req.price || "Not specified";
-      document.getElementById("reqCountry").textContent = req.country || "Unknown";
-
-      const tagsDiv = document.getElementById("reqTags");
-      tagsDiv.innerHTML = "";
-      (req.tags || []).forEach(tag=>{
-        const span = document.createElement("span");
-        span.textContent = tag;
-        tagsDiv.appendChild(span);
-      });
-    }
-
-    // === SUCCESS MESSAGE ===
-    function showAlert(){
-      const alertBox = document.getElementById("successAlert");
-      alertBox.classList.add("show");
-      setTimeout(()=> alertBox.classList.remove("show"), 3000);
-    }
-
-    // === SEND MESSAGE ===
-    document.getElementById("sendBtn").onclick = function(){
-      const email = document.getElementById("msgEmail").value.trim();
-      const body = document.getElementById("msgBody").value.trim();
-
-      if(!email || !body){
-        alert("Please fill all fields.");
+      if (!id) {
+        document.getElementById("requestTitle").textContent = "Request not found.";
+        document.getElementById("requestDescription").textContent = "Invalid request ID.";
         return;
       }
 
-      const msg = {
-        from: email,
-        to: req.owner || "unknown",
-        requestId: req.id,
-        requestTitle: req.title,
-        body,
-        createdAt: new Date().toISOString()
-      };
+      try {
+        const res = await fetch("data/requests.json", { cache: "no-store" });
+        const data = await res.json();
+        const request = data.find(r => String(r.id) === id);
 
-      const messages = JSON.parse(localStorage.getItem("messages") || "[]");
-      messages.push(msg);
-      localStorage.setItem("messages", JSON.stringify(messages));
+        if (!request) {
+          document.getElementById("requestTitle").textContent = "Request not found.";
+          document.getElementById("requestDescription").textContent = "No request with this ID exists.";
+          return;
+        }
 
-      document.getElementById("msgBody").value = "";
-      showAlert();
+        document.getElementById("requestTitle").textContent = request.title;
+        document.getElementById("requestCountry").textContent = request.country;
+        document.getElementById("requestFlag").src = `https://flagcdn.com/h20/${request.flag || 'tr'}.png`;
+        document.getElementById("requestFlag").alt = request.country;
+        document.getElementById("requestCategory").textContent = request.category;
+        document.getElementById("requestType").textContent = request.type.toUpperCase();
+        document.getElementById("requestDescription").textContent = request.description || "No description available.";
+
+        if (request.contactName && request.contactEmail) {
+          document.getElementById("contactBox").style.display = "block";
+          document.getElementById("contactName").textContent = request.contactName;
+          document.getElementById("contactEmail").textContent = request.contactEmail;
+          document.getElementById("messageButton").href = `mailto:${request.contactEmail}?subject=Inquiry about ${encodeURIComponent(request.title)}`;
+        } else {
+          document.getElementById("messageButton").style.display = "none";
+        }
+
+      } catch (err) {
+        document.getElementById("requestTitle").textContent = "Error loading request.";
+        console.error(err);
+      }
     }
+
+    loadRequestDetail();
   </script>
 </body>
 </html>
