@@ -3,309 +3,287 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Requests | Trader Route</title>
+  <title>Trader Route - Requests</title>
 
-  <!-- 🌐 SEO Meta -->
-  <meta name="description" content="Explore global buy and sell requests on Trader Route. Connect with importers and exporters worldwide.">
-  <meta name="keywords" content="Trader Route, global trade, buy requests, sell offers, B2B marketplace, import export">
-  <meta name="author" content="Trader Route">
+  <!-- ✅ SEO -->
+  <meta name="description" content="Explore global buy and sell requests on Trader Route. Filter by category and country to find real B2B trade opportunities." />
+  <meta name="keywords" content="Trader Route, requests, buy, sell, B2B, global trade, marketplace, import, export" />
+  <meta name="author" content="Trader Route" />
   <link rel="canonical" href="https://traderroute.com/requests.html" />
 
+  <link rel="icon" href="assets/logos.png" />
+  <link rel="stylesheet" href="style.css" />
   <style>
-    :root {
-      --brand-green: #008b6a;
-      --brand-dark: #006b52;
-      --light-gray: #f3f4f6;
+    /* === orijinal stiller korunuyor; yalnızca yeşil tema için küçük eklemeler === */
+    :root{
+      --brand-green:#008b6a;
+      --brand-dark:#006b52;
     }
-
-    body {
-      font-family: "Inter", Arial, sans-serif;
-      margin: 0;
-      background: var(--light-gray);
-    }
-
-    /* HEADER */
-    header {
-      background: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 40px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    header img { height: 42px; cursor: pointer; }
-
-    .logo-container { display: flex; align-items: center; gap: 10px; }
-    .logo-text { font-size: 15px; color: #555; font-weight: 500; }
-
-    nav a {
-      margin: 0 12px;
-      text-decoration: none;
-      color: #222;
-      font-weight: 500;
-      transition: color 0.25s ease;
-    }
-    nav a:hover { color: var(--brand-green); }
-
-    .right-buttons { display: flex; align-items: center; gap: 10px; }
-
-    .search-box {
-      background: #f1f1f1;
-      border-radius: 20px;
-      padding: 5px 10px;
-      display: flex;
-      align-items: center;
-    }
-    .search-box input {
-      border: none;
-      background: none;
-      outline: none;
-      padding: 5px;
-      width: 140px;
-    }
-
-    .green-btn {
-      background: var(--brand-green);
-      color: #fff;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .green-btn:hover { background: var(--brand-dark); }
-
-    /* MAIN */
-    .main {
-      display: flex;
-      max-width: 1250px;
-      margin: 30px auto;
-      gap: 20px;
-    }
-
-    .sidebar {
-      width: 260px;
-      background: #fff;
-      border-radius: 8px;
-      padding: 15px;
-      height: 85vh;
-      overflow-y: auto;
-    }
-
-    .sidebar h3 { color: #333; }
-
-    .category-item, .country-item {
-      padding: 6px 0;
-      font-size: 14px;
-      color: #444;
-      border-bottom: 1px solid #eee;
-      cursor: pointer;
-    }
-    .category-item:hover, .country-item:hover { color: var(--brand-green); }
-
-    .show-more {
-      text-align: center;
-      color: var(--brand-green);
-      cursor: pointer;
-      font-weight: 600;
-      margin-top: 8px;
-    }
-
-    .requests-list { flex: 1; }
-
-    .tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .tabs button {
-      background: #eaeaea;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 14px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-    .tabs button.active {
-      background: var(--brand-green);
-      color: #fff;
-    }
-
-    .request-card {
-      background: #fff;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      padding: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .request-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    }
-
-    .request-title {
-      font-weight: 600;
-      color: var(--brand-green);
-      margin-bottom: 8px;
-      font-size: 17px;
-    }
-
-    .request-country img {
-      width: 20px;
-      height: 14px;
-      border-radius: 2px;
-    }
+    body {font-family:"Inter",Segoe UI,Arial,sans-serif;background:#f6f8fa;margin:0;color:#222;}
+    header{display:flex;align-items:center;background:#fff;padding:12px 20px;border-bottom:1px solid #ddd;box-shadow:0 2px 4px rgba(0,0,0,0.05);}
+    header img{height:54px;cursor:pointer;}
+    .tabs{display:flex;justify-content:center;background:#fff;border-bottom:1px solid #ddd;gap:10px;padding:14px 0;}
+    .tabs button{background:none;border:none;font-weight:600;font-size:17px;padding:10px 24px;border-radius:25px;cursor:pointer;transition:0.25s;color:#333;}
+    .tabs button:hover{background:#f0f0f0;}
+    /* aktif sekme rengi yeşil */
+    .tabs button.active{background:var(--brand-green);color:#fff;}
+    .container{max-width:1300px;margin:35px auto;display:flex;gap:24px;padding:0 15px;}
+    .sidebar{width:300px;background:#fff;padding:22px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,0.06);display:flex;flex-direction:column;}
+    .sidebar h4{font-size:19px;font-weight:700;color:#111;margin-bottom:10px;border-bottom:1px solid #eee;padding-bottom:4px;}
+    .category-search,.country-search{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;margin-bottom:10px;font-size:14px;}
+    .category-list,.country-list{list-style:none;padding-left:0;margin:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#ccc transparent;flex:1;}
+    .category-list{max-height:250px;margin-bottom:20px;}
+    .country-list{max-height:300px;}
+    .category-list li,.country-list li{margin-bottom:6px;}
+    .category-list a,.country-list a{text-decoration:none;color:#333;display:flex;align-items:center;justify-content:space-between;font-size:14px;gap:6px;padding:4px 3px;border-radius:5px;transition:0.2s;}
+    .category-list a:hover,.country-list a:hover{background:#f1f6ff;color:#007bff;}
+    .count{color:#888;font-size:13px;}
+    .flag{width:20px;height:14px;border:1px solid #ccc;border-radius:2px;margin-right:6px;object-fit:cover;}
+    .content{flex:1;background:#fff;border-radius:12px;padding:30px;box-shadow:0 2px 6px rgba(0,0,0,0.06);}
+    .search-bar{margin-bottom:20px;}
+    #searchInput{width:100%;max-width:400px;padding:10px;border-radius:6px;border:1px solid #ccc;font-size:14px;}
+    .request-card{border:1px solid #e3e3e3;border-radius:8px;padding:15px;margin-bottom:15px;background:#fff;transition:0.25s;cursor:pointer;}
+    .request-card:hover{box-shadow:0 3px 10px rgba(0,0,0,0.08);transform:translateY(-2px);}
+    .request-card h5{margin:0 0 6px;font-size:17px;font-weight:600;}
+    .request-card p{margin:0 0 4px;font-size:14px;color:#444;}
+    .request-card small{color:#666;}
+    /* show more (requests) düğmesini yeşil yap */
+    #showMoreRequests{background:var(--brand-green);color:#fff;border:none;border-radius:6px;padding:10px 15px;cursor:pointer;font-weight:600;margin:20px auto;display:block;transition:0.3s;}
+    #showMoreRequests:hover{background:var(--brand-dark);}
+    /* header’a JS ile eklenecek yeşil butonlar */
+    .tr-btn{background:var(--brand-green);color:#fff;border:none;border-radius:24px;padding:8px 14px;font-weight:600;cursor:pointer;}
+    .tr-btn:hover{background:var(--brand-dark);}
+    .tr-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+    .tr-search{background:#f1f1f1;border-radius:20px;padding:5px 10px;display:flex;align-items:center;}
+    .tr-search input{border:none;background:none;outline:none;padding:5px;width:160px;}
+    @media(max-width:900px){.container{flex-direction:column}.sidebar{width:100%;order:2}.content{order:1}}
   </style>
 </head>
 
 <body>
-  <!-- ✅ HEADER -->
-  <header>
-    <div class="logo-container" onclick="window.location.href='index.html'">
-      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy" />
-      <span class="logo-text">The Silk Road of E-Commerce</span>
-    </div>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="companies.html">Companies</a>
-      <a href="requests.html" style="color:var(--brand-green);font-weight:600;">Requests</a>
-      <a href="contact.html">Contact</a>
-      <a href="pricing.html">Prices</a>
-    </nav>
-
-    <div class="right-buttons">
-      <div class="search-box">
-        <input type="text" placeholder="Search..." id="searchInput">
-        🔍
-      </div>
-      <button class="green-btn" onclick="location.href='free-request.html'">Free Request</button>
-      <button class="green-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="green-btn" onclick="location.href='register.html'">Sign Up</button>
-    </div>
+  <!-- === ORİJİNAL HEADER BLOĞU (sadece logo vardı) === -->
+  <header id="trHeader">
+    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo" /></a>
+    <!-- 🧩 Menü ve butonlar JS ile eklenecek (HTML yapısını ellemedim) -->
   </header>
 
-  <div class="main">
-    <div class="sidebar">
-      <h3>Categories</h3>
-      <div id="categoriesList"></div>
-      <div class="show-more" id="showMoreCategories">Show more</div>
+  <!-- === ORİJİNAL TABS (Free Request sekmesi JS ile eklenecek) === -->
+  <div class="tabs" id="trTabs">
+    <button class="active" id="tabAll">All Requests</button>
+    <button id="tabBuy">Buy Requests</button>
+    <button id="tabSell">Sell Requests</button>
+  </div>
 
-      <h3 style="margin-top:25px;">Countries</h3>
-      <div id="countriesList"></div>
+  <!-- === ORİJİNAL SAYFA İSKELETİ === -->
+  <div class="container">
+    <div class="sidebar">
+      <h4>Categories</h4>
+      <input type="text" class="category-search" id="categorySearch" placeholder="Search category..." />
+      <ul class="category-list" id="categoryList"></ul>
+
+      <h4>Countries</h4>
+      <input type="text" class="country-search" id="countrySearch" placeholder="Search country..." />
+      <ul class="country-list" id="countryList"></ul>
     </div>
 
-    <div class="requests-list">
-      <div class="tabs">
-        <button id="tabAll" class="active">All Requests</button>
-        <button id="tabBuy">Buy Requests</button>
-        <button id="tabSell">Sell Requests</button>
-        <button id="tabFree">Free Request</button>
+    <div class="content">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search requests..." />
       </div>
-      <div id="requestsContainer"></div>
+      <div id="requestItems"></div>
+      <button id="showMoreRequests">Show more requests</button>
     </div>
   </div>
 
   <script>
+    /* ======= ORİJİNAL DEĞİŞKENLER (gerekli olanlar) ======= */
+    const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
+    const requestContainer = document.getElementById("requestItems");
+    const searchInput = document.getElementById("searchInput");
+    const categoryList = document.getElementById("categoryList");
+    const countryList = document.getElementById("countryList");
+    const categorySearch = document.getElementById("categorySearch");
+    const countrySearch = document.getElementById("countrySearch");
+
+    let visibleRequests = 15;
+    let activeTab = "all";
+    let selectedCategory = null;
+    let selectedCountry = new URLSearchParams(location.search).get("country") || null;
+
+    /* ======= 1) HEADER EKLEMESİ (YAPISAL HTML'E DOKUNMADAN) ======= */
+    (function enhanceHeader(){
+      const hdr = document.getElementById('trHeader');
+      // NAV
+      const nav = document.createElement('nav');
+      nav.style.marginLeft = '20px';
+      nav.innerHTML = `
+        <a href="index.html" style="margin:0 10px;text-decoration:none;color:#222;font-weight:600;">Home</a>
+        <a href="companies.html" style="margin:0 10px;text-decoration:none;color:#222;font-weight:600;">Companies</a>
+        <a href="requests.html" style="margin:0 10px;text-decoration:none;color:var(--brand-green);font-weight:700;">Requests</a>
+        <a href="contact.html" style="margin:0 10px;text-decoration:none;color:#222;font-weight:600;">Contact</a>
+        <a href="pricing.html" style="margin:0 10px;text-decoration:none;color:#222;font-weight:600;">Prices</a>
+      `;
+      hdr.appendChild(nav);
+      // RIGHT SIDE
+      const right = document.createElement('div');
+      right.className = 'tr-right';
+      right.innerHTML = `
+        <div class="tr-search">
+          <input type="text" id="hdrSearch" placeholder="Search..." />
+          🔍
+        </div>
+        <button class="tr-btn" onclick="location.href='free-request.html'">Free Request</button>
+        <button class="tr-btn" onclick="location.href='login.html'">Sign In</button>
+        <button class="tr-btn" onclick="location.href='register.html'">Sign Up</button>
+      `;
+      hdr.appendChild(right);
+    })();
+
+    /* ======= 2) TABS: FREE REQUEST SEKME EKLE ======= */
+    (function addFreeRequestTab(){
+      const tabs = document.getElementById('trTabs');
+      const btn = document.createElement('button');
+      btn.textContent = 'Free Request';
+      btn.onclick = () => location.href = 'free-request.html';
+      tabs.appendChild(btn);
+    })();
+
+    /* ======= 3) JSON'DAN KATEGORİ & ÜLKE YÜKLE ======= */
     let categories = [];
-    let countries = [];
-    let allRequests = [];
-    let selectedType = "all";
+    let countries = []; // normalized: {name, code}
 
-    async function loadCategories() {
-      const res = await fetch('data/categories.json');
-      categories = await res.json();
-      renderCategories();
-    }
-
-    async function loadCountries() {
-      const res = await fetch('data/countries.json');
-      countries = await res.json();
-      renderCountries();
-    }
-
-    async function loadRequests() {
-      const res = await fetch('data/requests.json');
-      allRequests = await res.json();
-      renderRequests();
-    }
-
-    function renderCategories() {
-      const container = document.getElementById('categoriesList');
-      container.innerHTML = '';
-      categories.slice(0, 10).forEach(cat => {
-        const div = document.createElement('div');
-        div.className = 'category-item';
-        div.textContent = cat;
-        container.appendChild(div);
-      });
-    }
-
-    function renderCountries() {
-      const container = document.getElementById('countriesList');
-      container.innerHTML = '';
-      countries.slice(0, 10).forEach(c => {
-        const div = document.createElement('div');
-        div.className = 'country-item';
-        div.textContent = c;
-        container.appendChild(div);
-      });
-    }
-
-    function renderRequests() {
-      const container = document.getElementById('requestsContainer');
-      container.innerHTML = '';
-
-      let filtered = [...allRequests];
-      if (selectedType !== "all") filtered = filtered.filter(r => r.type === selectedType);
-
-      filtered.forEach(r => {
-        const div = document.createElement('div');
-        div.className = 'request-card';
-        div.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}`;
-        div.innerHTML = `
-          <div class="request-title">${r.title}</div>
-          <div>${r.category} | ${r.type.toUpperCase()}</div>
-          <div class="request-country">
-            <img src="https://flagcdn.com/h20/${r.flag || 'tr'}.png" alt="${r.country}" loading="lazy">
-            ${r.country}
-          </div>
-        `;
-        container.appendChild(div);
-      });
-    }
-
-    document.getElementById('showMoreCategories').onclick = () => {
-      const container = document.getElementById('categoriesList');
-      container.innerHTML = '';
-      categories.forEach(cat => {
-        const div = document.createElement('div');
-        div.className = 'category-item';
-        div.textContent = cat;
-        container.appendChild(div);
-      });
-      document.getElementById('showMoreCategories').style.display = 'none';
+    // Bazı yaygın ülke adları için ISO2 kod kestirmesi (fallback)
+    const countryCodeMap = {
+      "Turkey":"tr","United States":"us","Germany":"de","France":"fr","Italy":"it","Spain":"es","China":"cn","Japan":"jp",
+      "India":"in","Brazil":"br","Russia":"ru","Canada":"ca","Australia":"au","United Kingdom":"gb","UK":"gb","Mexico":"mx"
     };
 
-    document.getElementById('tabAll').onclick = () => { selectedType = "all"; setActive('tabAll'); renderRequests(); };
-    document.getElementById('tabBuy').onclick = () => { selectedType = "buy"; setActive('tabBuy'); renderRequests(); };
-    document.getElementById('tabSell').onclick = () => { selectedType = "sell"; setActive('tabSell'); renderRequests(); };
-    document.getElementById('tabFree').onclick = () => { window.location.href='free-request.html'; };
-
-    function setActive(id) {
-      document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    async function loadCategories(){
+      try{
+        const res = await fetch('data/categories.json',{cache:'no-store'});
+        const arr = await res.json();
+        categories = Array.isArray(arr) ? arr.map(String) : [];
+      }catch{ categories = []; }
     }
 
-    loadCategories();
-    loadCountries();
-    loadRequests();
+    async function loadCountries(){
+      try{
+        const res = await fetch('data/countries.json',{cache:'no-store'});
+        const arr = await res.json();
+        // arr: ["Turkey","United States",...]  veya [{name:"Turkey",code:"tr"},...]
+        countries = (arr || []).map(it=>{
+          if(typeof it === 'string'){
+            const name = it;
+            const code = (countryCodeMap[name] || name.slice(0,2)).toLowerCase();
+            return {name, code};
+          }else{
+            return {name:String(it.name), code:String(it.code||'').toLowerCase() || (countryCodeMap[it.name]||it.name.slice(0,2)).toLowerCase()};
+          }
+        });
+      }catch{ countries = []; }
+    }
+
+    /* ======= 4) SCROLL-LİMİT: İLK 10, SONRASI AŞAĞI KAYDIRDIKÇA YÜKLE ======= */
+    function makeInfiniteList({ulEl, items, renderItem, batch=20, first=10}){
+      ulEl.innerHTML = '';
+      let index = 0;
+      function appendMore(){
+        const end = Math.min(index + (index===0 ? first : batch), items.length);
+        for(; index<end; index++){
+          const li = document.createElement('li');
+          li.appendChild(renderItem(items[index]));
+          ulEl.appendChild(li);
+        }
+      }
+      appendMore();
+      ulEl.addEventListener('scroll', ()=>{
+        if(ulEl.scrollTop + ulEl.clientHeight >= ulEl.scrollHeight - 4){
+          appendMore();
+        }
+      });
+      return ()=>{ index=0; appendMore(); }; // refresher
+    }
+
+    /* ======= 5) LİSTELERİ OLUŞTUR (COUNT'LAR KORUNUR) ======= */
+    function renderCategories(requests){
+      const term = categorySearch.value.toLowerCase();
+      const data = categories.filter(c => c.toLowerCase().includes(term));
+      const items = data.map(cat=>{
+        const count = requests.filter(r => r.category === cat).length;
+        const a = document.createElement('a');
+        a.href = '#';
+        a.innerHTML = `${cat}<span class="count">(${count})</span>`;
+        a.addEventListener('click', (e)=>{ e.preventDefault(); selectedCategory = cat; selectedCountry = null; renderRequests(); });
+        return a;
+      });
+      makeInfiniteList({ulEl: categoryList, items, renderItem:(node)=>node, first:10, batch:20});
+    }
+
+    function renderCountries(requests){
+      const term = countrySearch.value.toLowerCase();
+      const data = countries.filter(c => c.name.toLowerCase().includes(term));
+      const items = data.map(c=>{
+        const count = requests.filter(r => r.country === c.name).length;
+        const a = document.createElement('a');
+        a.href = '#';
+        a.innerHTML = `<span style="display:flex;align-items:center;gap:6px;"><img class="flag" src="https://flagcdn.com/h20/${c.code}.png" alt="${c.name}" loading="lazy">${c.name}</span><span class="count">(${count})</span>`;
+        a.addEventListener('click',(e)=>{ e.preventDefault(); window.location.href = \`requests.html?country=\${encodeURIComponent(c.name)}\`; });
+        return a;
+      });
+      makeInfiniteList({ulEl: countryList, items, renderItem:(node)=>node, first:10, batch:30});
+    }
+
+    /* ======= 6) REQUEST KARTLARI: TIKLANINCA DETAY ======= */
+    function renderRequests(){
+      const allReq = getRequests();
+      renderCategories(allReq);
+      renderCountries(allReq);
+
+      const term = (searchInput.value||'').toLowerCase();
+      const filtered = allReq.filter(r =>
+        (activeTab === "all" || r.type === activeTab) &&
+        (!selectedCategory || r.category === selectedCategory) &&
+        (!selectedCountry || r.country === selectedCountry) &&
+        ((r.title||'').toLowerCase().includes(term) || (r.description||'').toLowerCase().includes(term))
+      );
+
+      requestContainer.innerHTML = '';
+      const sliceCount = Math.min(filtered.length, visibleRequests);
+      for(let i=0;i<sliceCount;i++){
+        const r = filtered[i];
+        const div = document.createElement('div');
+        div.className = 'request-card';
+        div.innerHTML = `<h5>${r.title}</h5><p>${r.description||''}</p><small>${r.country} · ${r.category}</small>`;
+        // ✅ tıklayınca detay
+        div.onclick = ()=>{ window.location.href = \`request-detail.html?id=\${encodeURIComponent(r.id)}\`; };
+        requestContainer.appendChild(div);
+      }
+      document.getElementById("showMoreRequests").style.display = filtered.length > visibleRequests ? "block" : "none";
+    }
+
+    /* ======= 7) ETKİLEŞİMLER ======= */
+    document.getElementById("showMoreRequests").addEventListener("click", () => {
+      visibleRequests += 10;
+      renderRequests();
+    });
+    searchInput.addEventListener("input", renderRequests);
+    categorySearch.addEventListener("input", renderRequests);
+    countrySearch.addEventListener("input", renderRequests);
+
+    ["tabAll","tabBuy","tabSell"].forEach(id=>{
+      document.getElementById(id).addEventListener("click", e=>{
+        document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+        e.target.classList.add("active");
+        activeTab = id==="tabAll" ? "all" : id==="tabBuy" ? "buy" : "sell";
+        renderRequests();
+      });
+    });
+
+    /* ======= 8) BAŞLAT ======= */
+    (async function init(){
+      await Promise.all([loadCategories(), loadCountries()]);
+      renderRequests();
+    })();
   </script>
 </body>
 </html>
