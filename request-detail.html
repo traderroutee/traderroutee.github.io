@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Request Detail – Trader Route</title>
 
+  <!-- ✅ SEO Meta -->
   <meta name="description" content="View detailed information about a trade request on Trader Route and contact the owner directly.">
-  <meta name="keywords" content="Trader Route, request detail, B2B, buy request, sell request, import, export">
+  <meta name="keywords" content="Trader Route, request detail, B2B, buy request, sell request, import, export, message seller">
   <meta name="author" content="Trader Route">
   <link rel="canonical" href="https://traderroute.com/request-detail.html">
   <link rel="icon" href="assets/logos.png" />
@@ -16,31 +17,38 @@
     *{ box-sizing:border-box }
     body{ font-family:"Inter","Segoe UI",Arial,sans-serif; margin:0; background:var(--bg); color:#222 }
 
+    /* HEADER */
     header{display:flex;align-items:center;justify-content:space-between;background:#fff;
-      padding:12px 20px;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,.05)}
-    header .brand{display:flex;align-items:center;gap:10px;cursor:pointer}
-    header img{height:50px}
-    header .tagline{font-size:14px;color:#555;font-weight:600}
-    nav a{margin:0 10px;text-decoration:none;color:#333;font-weight:600}
-    nav a:hover{color:var(--green)}
-    .btn{border:none;border-radius:6px;padding:8px 14px;font-weight:600;cursor:pointer}
-    .btn-green{background:var(--green);color:#fff}
-    .btn-green:hover{background:var(--green-dark)}
-    .btn-ghost{background:#eef2f1;color:#0f172a}
-    .btn-ghost:hover{background:#e5ecea}
+      padding:12px 20px;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:100;
+      box-shadow:0 2px 4px rgba(0,0,0,.05);}
+    header .brand{display:flex;align-items:center;gap:10px;cursor:pointer;}
+    header img{height:50px;}
+    header .tagline{font-size:14px;color:#555;font-weight:600;}
+    nav a{margin:0 10px;text-decoration:none;color:#333;font-weight:600;}
+    nav a:hover{color:var(--green);}
+    .btn{border:none;border-radius:6px;padding:8px 14px;font-weight:600;cursor:pointer;}
+    .btn-green{background:var(--green);color:#fff;}
+    .btn-green:hover{background:var(--green-dark);}
+    .btn-ghost{background:#eef2f1;color:#0f172a;}
+    .btn-ghost:hover{background:#e5ecea;}
 
-    .wrapper{max-width:1100px;margin:28px auto;padding:0 16px}
-    .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:22px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
-    .title{font-size:22px;font-weight:700;margin:0 0 8px}
-    .meta{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 6px}
-    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:20px;background:#f1f5f9;color:#0f172a;font-size:13px;border:1px solid #e2e8f0}
-    .flag{width:20px;height:14px;border:1px solid #cbd5e1;border-radius:2px;object-fit:cover}
-    .desc{line-height:1.6;font-size:15px;color:#374151;margin-top:6px;white-space:pre-wrap}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-    .small{font-size:12px;color:#6b7280}
+    /* PAGE CONTENT */
+    .wrapper{max-width:1100px;margin:28px auto;padding:0 16px;}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:22px;
+          box-shadow:0 2px 6px rgba(0,0,0,.06);}
+    .title{font-size:22px;font-weight:700;margin:0 0 8px;}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 6px;}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:20px;
+          background:#f1f5f9;color:#0f172a;font-size:13px;border:1px solid #e2e8f0;}
+    .flag{width:20px;height:14px;border:1px solid #cbd5e1;border-radius:2px;object-fit:cover;}
+    .desc{line-height:1.6;font-size:15px;color:#374151;margin-top:6px;white-space:pre-wrap;}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+    .small{font-size:12px;color:#6b7280;}
+    .status{font-size:13px;color:#555;margin-top:8px;}
   </style>
 </head>
 <body>
+  <!-- HEADER -->
   <header>
     <div class="brand" onclick="location.href='index.html'">
       <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy" />
@@ -59,6 +67,7 @@
     </div>
   </header>
 
+  <!-- CONTENT -->
   <main class="wrapper">
     <div style="margin-bottom:12px;">
       <button class="btn btn-ghost" onclick="location.href='requests.html'">← Back to Requests</button>
@@ -67,71 +76,4 @@
     <section class="card">
       <h1 id="reqTitle" class="title">Loading...</h1>
       <div id="reqMeta" class="meta"></div>
-      <div id="reqDesc" class="desc"></div>
-
-      <div class="actions">
-        <button id="messageBtn" class="btn btn-green" style="display:none;">Message Seller</button>
-        <a id="mailtoFallback" class="btn btn-ghost" style="display:none;" href="#">Email</a>
-      </div>
-
-      <p id="ownerInfo" class="small" style="margin-top:8px;"></p>
-    </section>
-  </main>
-
-  <script>
-    const params = new URLSearchParams(location.search);
-    const reqId = params.get('id');
-    const toParam = params.get('to'); // requests.html → &to=
-
-    function getRequests(){
-      try{ return JSON.parse(localStorage.getItem('requests')||'[]'); }catch{ return []; }
-    }
-
-    const titleEl = document.getElementById('reqTitle');
-    const metaEl  = document.getElementById('reqMeta');
-    const descEl  = document.getElementById('reqDesc');
-    const msgBtn  = document.getElementById('messageBtn');
-    const mailtoA = document.getElementById('mailtoFallback');
-    const ownerInfo = document.getElementById('ownerInfo');
-
-    function flagImg(code, alt){
-      const c = (code||'').toLowerCase();
-      return `<img class="flag" loading="lazy" src="https://flagcdn.com/h20/${c}.png" alt="${alt||''}">`;
-    }
-
-    function render(req){
-      titleEl.textContent = req.title || 'Untitled Request';
-      const typeChip = `<span class="chip">${(req.type||'').toString().toUpperCase()}</span>`;
-      const catChip  = req.category ? `<span class="chip">${req.category}</span>` : '';
-      const countryChip = req.country ? `<span class="chip">${req.flag ? flagImg(req.flag, req.country) : ''}${req.country}</span>` : '';
-      metaEl.innerHTML = typeChip + catChip + countryChip;
-      descEl.textContent = (req.description||'').trim() || '—';
-
-      const owner = req.ownerEmail || req.contactEmail || req.email || toParam || '';
-      if (owner){
-        ownerInfo.textContent = `Contact: ${owner}`;
-        msgBtn.style.display = 'inline-block';
-        msgBtn.onclick = () => location.href = `messages.html?to=${encodeURIComponent(owner)}`;
-        mailtoA.style.display = 'inline-block';
-        mailtoA.href = `mailto:${owner}?subject=${encodeURIComponent('About your request: '+(req.title||''))}`;
-      } else {
-        ownerInfo.textContent = 'Contact: —';
-      }
-    }
-
-    (function init(){
-      const req = getRequests().find(x => String(x.id) === String(reqId));
-      if (!req){
-        document.querySelector('section.card').innerHTML =
-          `<div style="text-align:center;color:#64748b;padding:60px 20px">
-             <h2 style="margin:0 0 6px;">Request not found</h2>
-             <p>Please return to the requests page and try again.</p>
-             <div style="margin-top:14px;"><a class="btn btn-green" href="requests.html">Back to Requests</a></div>
-           </div>`;
-        return;
-      }
-      render(req);
-    })();
-  </script>
-</body>
-</html>
+      <div id="reqDesc" class="des
