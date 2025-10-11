@@ -112,7 +112,15 @@
       <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
-
+<script>
+window.addEventListener('DOMContentLoaded', ()=>{
+  const name = localStorage.getItem('welcome_name');
+  if(name){
+    alert(`Welcome, ${name}!`);
+    localStorage.removeItem('welcome_name');
+  }
+});
+</script>
     <nav>
       <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
