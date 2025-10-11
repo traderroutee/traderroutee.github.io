@@ -105,7 +105,60 @@
     }
   </style>
 </head>
+<script>
+/* === USER MENU KONTROL — EKLEME (non-destructive) === */
+(function(){
+  const header = document.querySelector('header');
+  if(!header) return;
 
+  // Hedef “sağ” grup (varsa .header-right, yoksa header içindeki son div)
+  const target = header.querySelector('.header-right') || [...header.querySelectorAll('div,nav')].slice(-1)[0] || header;
+
+  // UserMenuContainer header'a ekli değilse ekle (id çakışmasını önlemek için kontrol)
+  if (!document.getElementById('userMenuContainer')) {
+    // Buraya HTML bloğu zaten manuel eklemiş olacaksınız; bu güvenlik kontrolü sadece yinelenmeyi engeller.
+  }
+
+  // Elemanlar
+  const icon     = document.getElementById('userIcon');
+  const dropdown = document.getElementById('userDropdown');
+
+  // Header içindeki login/register butonlarını tespit et (mevcut yapıyı BOZMADAN sadece gizle/göster)
+  const buttons = [...header.querySelectorAll('button')];
+  const loginBtn = buttons.find(b => (b.getAttribute('onclick')||'').includes('login.html'));
+  const joinBtn  = buttons.find(b => (b.getAttribute('onclick')||'').includes('register.html') || (b.getAttribute('onclick')||'').includes('join'));
+
+  // Oturum durumu
+  const currentUser = JSON.parse(localStorage.getItem('tr_user') || 'null');
+
+  if (currentUser) {
+    if (icon) icon.style.display = 'inline-block';
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (joinBtn)  joinBtn.style.display  = 'none';
+  } else {
+    if (icon) icon.style.display = 'none';
+    if (loginBtn) loginBtn.style.display = '';
+    if (joinBtn)  joinBtn.style.display  = '';
+  }
+
+  // Dropdown aç/kapa
+  if (icon && dropdown) {
+    icon.addEventListener('click', function(e){
+      e.stopPropagation();
+      dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+    });
+    document.addEventListener('click', function(e){
+      if (!e.target.closest('#userMenuContainer')) dropdown.style.display = 'none';
+    });
+  }
+
+  // Global logout
+  window.logoutUser = function(){
+    localStorage.removeItem('tr_user');
+    location.href = 'index.html';
+  };
+})();
+</script>
 <body>
   <header>
     <!-- 👤 USER ICON MENU — EKLEME -->
