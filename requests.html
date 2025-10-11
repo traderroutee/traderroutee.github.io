@@ -5,29 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Requests | Trader Route</title>
 
-  <!-- 🌐 SEO & META -->
-  <meta name="description" content="Browse global buy and sell requests on Trader Route. Filter by category, country, or type to find real business opportunities worldwide.">
-  <meta name="keywords" content="Trader Route, trade requests, buy, sell, global commerce, B2B, marketplace">
+  <!-- 🌐 SEO Meta -->
+  <meta name="description" content="Find global buying and selling requests on Trader Route. Connect with importers and exporters worldwide.">
+  <meta name="keywords" content="Trader Route, global trade, buy request, sell offer, B2B marketplace, import export">
   <meta name="author" content="Trader Route">
   <link rel="canonical" href="https://traderroute.com/requests.html" />
-
-  <!-- ⚡ PERFORMANCE -->
-  <link rel="icon" href="assets/logos.png" type="image/png" />
-  <link rel="preload" href="assets/logos.png" as="image" />
 
   <style>
     :root {
       --brand-green: #008b6a;
       --brand-dark: #006b52;
-      --light-bg: #f8f9fa;
-      --text-color: #222;
+      --light-gray: #f3f4f6;
     }
 
     body {
-      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      font-family: "Inter", Arial, sans-serif;
       margin: 0;
-      background: var(--light-bg);
-      color: var(--text-color);
+      background: var(--light-gray);
     }
 
     /* HEADER */
@@ -44,7 +38,7 @@
     }
 
     header img {
-      height: 46px;
+      height: 42px;
       cursor: pointer;
     }
 
@@ -61,7 +55,7 @@
     }
 
     nav a {
-      margin: 0 14px;
+      margin: 0 12px;
       text-decoration: none;
       color: #222;
       font-weight: 500;
@@ -70,12 +64,18 @@
 
     nav a:hover { color: var(--brand-green); }
 
-    .search-box {
+    .right-buttons {
       display: flex;
       align-items: center;
+      gap: 10px;
+    }
+
+    .search-box {
       background: #f1f1f1;
       border-radius: 20px;
       padding: 5px 10px;
+      display: flex;
+      align-items: center;
     }
 
     .search-box input {
@@ -83,153 +83,132 @@
       background: none;
       outline: none;
       padding: 5px;
-      font-size: 14px;
-      width: 150px;
+      width: 140px;
     }
 
-    .login-btn, .join-btn {
+    .free-btn {
+      background: var(--brand-green);
+      color: #fff;
       border: none;
-      cursor: pointer;
+      padding: 8px 15px;
       border-radius: 6px;
-      font-weight: 500;
-      transition: 0.25s;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .free-btn:hover {
+      background: var(--brand-dark);
     }
 
     .login-btn {
-      background: #f1f1f1;
-      padding: 7px 14px;
-    }
-
-    .login-btn:hover { background: #e0e0e0; }
-
-    .join-btn {
-      background: var(--brand-green);
-      color: #fff;
-      padding: 8px 15px;
-    }
-
-    .join-btn:hover { background: var(--brand-dark); }
-
-    /* MAIN */
-    .container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    h1 {
-      color: var(--brand-green);
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-
-    select, input[type="text"] {
-      padding: 10px 14px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 25px;
-    }
-
-    .tabs button {
+      background: #e9e9e9;
+      color: #222;
       border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
+      border-radius: 6px;
+      padding: 8px 14px;
       cursor: pointer;
-      background: #eaeaea;
+    }
+
+    .signup-btn {
+      background: #6f42c1;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      cursor: pointer;
+    }
+
+    /* LEFT PANEL */
+    .sidebar {
+      width: 250px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      height: 85vh;
+      overflow-y: auto;
+    }
+
+    .sidebar h3 {
+      margin-top: 0;
       color: #333;
-      font-weight: 500;
-      transition: 0.3s;
     }
 
-    .tabs button.active {
-      background: var(--brand-green);
-      color: #fff;
+    .category-item, .country-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 14px;
+      color: #444;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
     }
 
-    .tabs button:hover {
-      background: var(--brand-dark);
-      color: #fff;
+    .category-item:hover, .country-item:hover {
+      color: var(--brand-green);
     }
 
-    .requests-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    .show-more {
+      text-align: center;
+      color: var(--brand-green);
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    /* MAIN AREA */
+    .main {
+      display: flex;
+      max-width: 1250px;
+      margin: 30px auto;
       gap: 20px;
+    }
+
+    .requests-list {
+      flex: 1;
     }
 
     .request-card {
       background: #fff;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
       cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     .request-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .request-title {
       font-weight: 600;
       color: var(--brand-green);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      font-size: 17px;
     }
 
-    .request-country {
+    .request-desc {
       font-size: 14px;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .request-meta {
+      font-size: 13px;
       color: #666;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
-    .request-country img {
+    .request-meta img {
       width: 20px;
       height: 14px;
       border-radius: 2px;
     }
 
-    #showMoreRequests {
-      display: block;
-      margin: 40px auto;
-      background: var(--brand-green);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 24px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    #showMoreRequests:hover { background: var(--brand-dark); }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      margin-top: 40px;
-      color: #777;
-      border-top: 1px solid #ddd;
-      background: #fff;
-    }
   </style>
 </head>
 
@@ -238,138 +217,125 @@
   <header>
     <div class="logo-container" onclick="window.location.href='index.html'">
       <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy" />
-      <span class="logo-text">The Silk Road of E-Commerce</span>
+      <span class="logo-text">the Silk Road of e-commerce</span>
     </div>
+
     <nav>
-      <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
       <a href="requests.html" style="color:var(--brand-green);font-weight:600;">Requests</a>
       <a href="contact.html">Contact</a>
-      <a href="pricing.html">Pricing</a>
+      <a href="pricing.html">Prices</a>
     </nav>
-    <div style="display:flex;align-items:center;gap:10px;">
+
+    <div class="right-buttons">
       <div class="search-box">
-        <input type="text" placeholder="Search..." id="searchInput">
-        <button style="background:none;border:none;cursor:pointer;">🔍</button>
+        <input type="text" placeholder="Search...">
+        🔍
       </div>
-      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+      <button class="free-btn" onclick="location.href='free-request.html'">Free Request</button>
+      <button class="login-btn" onclick="location.href='login.html'">Log In</button>
+      <button class="signup-btn" onclick="location.href='register.html'">Sign Up</button>
     </div>
   </header>
 
-  <!-- MAIN -->
-  <div class="container">
-    <h1>All Trade Requests</h1>
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <!-- LEFT PANEL -->
+    <div class="sidebar">
+      <h3>Categories</h3>
+      <div id="categoriesList"></div>
+      <div class="show-more" id="showMoreCategories">Show more</div>
 
-    <div class="filters">
-      <select id="categoryFilter"><option value="">All Categories</option></select>
-      <select id="countryFilter"><option value="">All Countries</option></select>
+      <h3 style="margin-top:25px;">Countries</h3>
+      <div id="countriesList"></div>
     </div>
 
-    <div class="tabs">
-      <button class="active" id="tabAll">All</button>
-      <button id="tabBuy">Buy</button>
-      <button id="tabSell">Sell</button>
+    <!-- REQUESTS LIST -->
+    <div class="requests-list" id="requestsContainer">
+      <!-- Request cards will be loaded here -->
     </div>
-
-    <div class="requests-grid" id="requestsContainer"></div>
-    <button id="showMoreRequests">Show More Requests</button>
   </div>
 
-  <footer>© 2025 Trader Route — The Silk Road of E-Commerce</footer>
-
   <script>
-    const requestsContainer = document.getElementById('requestsContainer');
-    const categoryFilter = document.getElementById('categoryFilter');
-    const countryFilter = document.getElementById('countryFilter');
-    const showMoreBtn = document.getElementById('showMoreRequests');
-    const searchInput = document.getElementById('searchInput');
+    // ✅ LOAD DATA
+    let categories = [];
+    let countries = [];
     let allRequests = [];
-    let visibleCount = 15;
-    let selectedType = "all";
-
-    async function loadRequests() {
-      try {
-        const res = await fetch('data/requests.json', { cache: 'no-store' });
-        allRequests = await res.json();
-        renderRequests();
-      } catch (err) {
-        console.error("Request load error:", err);
-      }
-    }
 
     async function loadCategories() {
-      try {
-        const res = await fetch('data/categories.json');
-        const cats = await res.json();
-        cats.forEach(c => {
-          const opt = document.createElement('option');
-          opt.value = c; opt.textContent = c;
-          categoryFilter.appendChild(opt);
-        });
-      } catch {}
+      const res = await fetch('data/categories.json');
+      categories = await res.json();
+      renderCategories();
     }
 
     async function loadCountries() {
-      try {
-        const res = await fetch('data/countries.json');
-        const countries = await res.json();
-        countries.forEach(c => {
-          const opt = document.createElement('option');
-          opt.value = c; opt.textContent = c;
-          countryFilter.appendChild(opt);
-        });
-      } catch {}
+      const res = await fetch('data/countries.json');
+      countries = await res.json();
+      renderCountries();
     }
 
-    function renderRequests() {
-      requestsContainer.innerHTML = '';
-      let filtered = [...allRequests];
+    async function loadRequests() {
+      const res = await fetch('data/requests.json');
+      allRequests = await res.json();
+      renderRequests();
+    }
 
-      const cat = categoryFilter.value;
-      const country = countryFilter.value;
-      const searchTerm = searchInput.value.toLowerCase();
-
-      if (cat) filtered = filtered.filter(r => r.category === cat);
-      if (country) filtered = filtered.filter(r => r.country === country);
-      if (selectedType !== "all") filtered = filtered.filter(r => r.type === selectedType);
-      if (searchTerm) filtered = filtered.filter(r => r.title.toLowerCase().includes(searchTerm));
-
-      filtered.slice(0, visibleCount).forEach(r => {
+    function renderCategories() {
+      const container = document.getElementById('categoriesList');
+      container.innerHTML = '';
+      categories.slice(0, 10).forEach(cat => {
         const div = document.createElement('div');
-        div.className = "request-card";
-        div.onclick = () => {
-          window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}`;
-        };
-        div.innerHTML = `
-          <div class="request-title">${r.title}</div>
-          <div>${r.category} | ${r.type.toUpperCase()}</div>
-          <div class="request-country">
-            <img src="https://flagcdn.com/h20/${r.flag || 'tr'}.png" alt="${r.country}" loading="lazy">
-            ${r.country}
-          </div>
-        `;
-        requestsContainer.appendChild(div);
+        div.className = 'category-item';
+        div.textContent = cat;
+        container.appendChild(div);
       });
     }
 
-    showMoreBtn.addEventListener('click', () => { visibleCount += 10; renderRequests(); });
-    categoryFilter.addEventListener('change', renderRequests);
-    countryFilter.addEventListener('change', renderRequests);
-    searchInput.addEventListener('input', renderRequests);
-
-    document.getElementById('tabAll').onclick = () => { selectedType = "all"; setActiveTab('tabAll'); renderRequests(); };
-    document.getElementById('tabBuy').onclick = () => { selectedType = "buy"; setActiveTab('tabBuy'); renderRequests(); };
-    document.getElementById('tabSell').onclick = () => { selectedType = "sell"; setActiveTab('tabSell'); renderRequests(); };
-
-    function setActiveTab(id) {
-      document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    function renderCountries() {
+      const container = document.getElementById('countriesList');
+      container.innerHTML = '';
+      countries.slice(0, 10).forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'country-item';
+        div.textContent = c;
+        container.appendChild(div);
+      });
     }
 
-    loadRequests();
+    function renderRequests() {
+      const container = document.getElementById('requestsContainer');
+      container.innerHTML = '';
+      allRequests.forEach(r => {
+        const card = document.createElement('div');
+        card.className = 'request-card';
+        card.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}`;
+        card.innerHTML = `
+          <div class="request-title">${r.title}</div>
+          <div class="request-desc">${r.description || ''}</div>
+          <div class="request-meta">
+            <img src="https://flagcdn.com/h20/${r.flag || 'tr'}.png" loading="lazy">
+            ${r.country}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById('showMoreCategories').onclick = () => {
+      const container = document.getElementById('categoriesList');
+      container.innerHTML = '';
+      categories.forEach(cat => {
+        const div = document.createElement('div');
+        div.className = 'category-item';
+        div.textContent = cat;
+        container.appendChild(div);
+      });
+      document.getElementById('showMoreCategories').style.display = 'none';
+    };
+
     loadCategories();
     loadCountries();
+    loadRequests();
   </script>
 </body>
 </html>
