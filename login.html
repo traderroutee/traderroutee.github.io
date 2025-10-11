@@ -3,168 +3,111 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign In — Trader Route</title>
-
-  <!-- 🌐 SEO & Meta Tags -->
-  <meta name="description" content="Sign in to your Trader Route account to connect with verified buyers and suppliers around the world.">
-  <meta name="keywords" content="Trader Route, login, sign in, global trade, import export, B2B marketplace">
-  <meta name="author" content="Trader Route">
-  <link rel="canonical" href="https://traderroute.com/login.html">
-
-  <!-- ⚡ Optimization -->
-  <link rel="icon" href="assets/logos.png" type="image/png" />
-  <link rel="preload" href="assets/logos.png" as="image" />
-  
+  <title>Trader Route – Sign In</title>
+  <link rel="icon" href="assets/logos.png" />
   <style>
     body {
-      font-family: "Inter", "Segoe UI", Arial, sans-serif;
-      background: #f8f9fa;
+      font-family: "Inter","Segoe UI",Arial,sans-serif;
+      background: #f6f8fa;
       margin: 0;
-      color: #222;
-    }
-
-    header {
-      background: #fff;
-      padding: 14px 40px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
-
-    header img {
-      height: 46px;
-    }
-
     .login-container {
-      max-width: 400px;
       background: #fff;
-      margin: 80px auto;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 380px;
     }
-
     h2 {
+      margin-top: 0;
       text-align: center;
       color: #008b6a;
-      margin-bottom: 25px;
     }
-
-    label {
-      display: block;
-      font-weight: 600;
-      margin-top: 10px;
-      color: #333;
-    }
-
-    input[type="email"],
-    input[type="password"] {
+    input {
       width: 100%;
       padding: 10px;
-      margin-top: 6px;
+      margin-bottom: 14px;
       border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 15px;
+      font-size: 14px;
     }
-
     button {
       width: 100%;
+      padding: 10px;
       background: #008b6a;
       color: #fff;
       border: none;
-      padding: 10px;
       border-radius: 6px;
       font-weight: 600;
+      font-size: 15px;
       cursor: pointer;
-      margin-top: 18px;
-      transition: 0.25s;
+      transition: .3s;
     }
-
-    button:hover {
-      background: #006b52;
-    }
-
-    #loginMsg {
+    button:hover { background: #006b52; }
+    .msg {
       text-align: center;
-      margin-top: 12px;
       font-size: 14px;
-      color: #28a745;
+      margin-top: 10px;
     }
-
-    footer {
+    .back-link {
       text-align: center;
-      padding: 20px;
-      background: #fff;
-      color: #777;
-      border-top: 1px solid #ddd;
-      margin-top: 60px;
-      font-size: 14px;
+      margin-top: 15px;
     }
-
-    @media (max-width: 600px) {
-      .login-container {
-        margin: 50px 15px;
-        padding: 20px;
-      }
+    .back-link a {
+      color: #008b6a;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-link a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
-
 <body>
-  <header>
-    <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy" />
-  </header>
-
   <div class="login-container">
     <h2>Sign In</h2>
-
-    <label for="email">Email Address</label>
-    <input type="email" id="email" placeholder="Enter your email" required />
-
-    <label for="password">Password</label>
-    <input type="password" id="password" placeholder="Enter your password" required />
-
-    <button onclick="doLogin()">Sign In</button>
-    <p id="loginMsg"></p>
-
-    <p style="text-align:center; margin-top: 10px; font-size: 14px;">
-      Don’t have an account?
-      <a href="register.html" style="color: #008b6a; text-decoration: none; font-weight: 600;">Join now</a>
-    </p>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button id="loginBtn">Sign In</button>
+    <div class="msg" id="msg"></div>
+    <div class="back-link">
+      <a href="register.html">Don't have an account? Register</a>
+    </div>
   </div>
 
-  <footer>
-    © 2025 Trader Route — All Rights Reserved.
-  </footer>
-
   <script>
-    // --- LOGIN FUNCTION ---
-    function doLogin() {
-      const email = document.getElementById('email').value.trim().toLowerCase();
-      const pwd = document.getElementById('password').value.trim();
-      const users = JSON.parse(localStorage.getItem('tr_users') || '[]');
-      const msg = document.getElementById('loginMsg');
+    const loginBtn = document.getElementById("loginBtn");
+    const msg = document.getElementById("msg");
 
-      // Input Validation
-      if (!email || !pwd) {
-        msg.style.color = 'red';
-        msg.textContent = 'Please fill out all fields.';
+    loginBtn.addEventListener("click", function() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        msg.style.color = "red";
+        msg.textContent = "Please fill in all fields.";
         return;
       }
 
-      // Demo Authentication
-      const user = users.find(u => u.email === email && u.password === pwd);
+      const users = JSON.parse(localStorage.getItem("tr_users") || "[]");
+      const user = users.find(u => u.email === email && u.password === password);
+
       if (user) {
-        localStorage.setItem('tr_user', JSON.stringify(user));
-        msg.style.color = '#28a745';
-        msg.textContent = 'Signed in successfully. Redirecting...';
-        setTimeout(() => (window.location.href = 'index.html'), 1000);
+        // ✅ KULLANICI GİRİŞİ BAŞARILI
+        localStorage.setItem("tr_user", JSON.stringify(user)); // önce kaydet
+        msg.style.color = "#28a745";
+        msg.textContent = "Signed in successfully. Redirecting...";
+        window.location.href = "index.html"; // hemen yönlendir
       } else {
-        msg.style.color = 'red';
-        msg.textContent = 'Invalid email or password.';
+        msg.style.color = "red";
+        msg.textContent = "Invalid email or password.";
       }
-    }
+    });
   </script>
 </body>
 </html>
