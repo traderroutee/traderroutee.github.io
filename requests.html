@@ -4,61 +4,73 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trader Route – Requests</title>
-  <meta name="description" content="Explore global buy and sell requests on Trader Route. Connect directly with verified buyers and suppliers." />
-  <meta name="keywords" content="Trader Route, requests, marketplace, B2B trade, buyer, seller" />
-  <meta name="author" content="Trader Route" />
-  <link rel="canonical" href="https://traderroute.com/requests.html" />
+
+  <!-- SEO -->
+  <meta name="description" content="Explore global buy and sell requests on Trader Route. Filter by category and country to find real B2B opportunities worldwide.">
+  <meta name="keywords" content="Trader Route, requests, buy, sell, B2B, marketplace, global trade, import, export">
+  <meta name="author" content="Trader Route">
+  <link rel="canonical" href="https://traderroute.com/requests.html">
   <link rel="icon" href="assets/logos.png" />
 
   <style>
-    :root { --green: #008b6a; --green-dark: #006b52; }
-    body { font-family: "Inter", Arial, sans-serif; background: #f6f8fa; margin: 0; color: #222; }
+    :root{ --green:#008b6a; --green-dark:#006b52; --bg:#f6f8fa; }
+    body{ font-family:"Inter","Segoe UI",Arial,sans-serif; margin:0; background:var(--bg); color:#222; }
 
-    header { display: flex; align-items: center; justify-content: space-between;
-      background: #fff; padding: 12px 20px; border-bottom: 1px solid #ddd;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 999; }
-    header img { height: 50px; cursor: pointer; }
-    header .tagline { font-size: 14px; color: #555; font-weight: 600; margin-left: 10px; }
-    nav a { margin: 0 10px; text-decoration: none; color: #333; font-weight: 600; }
-    nav a:hover { color: var(--green); }
+    /* Header (bozulmadan: logo + tagline + menü + yeşil butonlar) */
+    header{display:flex;align-items:center;justify-content:space-between;background:#fff;
+      padding:12px 20px;border-bottom:1px solid #ddd;box-shadow:0 2px 4px rgba(0,0,0,.05);position:sticky;top:0;z-index:1000;}
+    header .brand{display:flex;align-items:center;gap:10px;cursor:pointer;}
+    header img{height:50px}
+    header .tagline{font-size:14px;color:#555;font-weight:600}
+    nav a{margin:0 10px;text-decoration:none;color:#333;font-weight:600}
+    nav a:hover{color:var(--green)}
+    .btn{border:none;border-radius:6px;padding:8px 14px;font-weight:600;cursor:pointer}
+    .btn-green{background:var(--green);color:#fff}
+    .btn-green:hover{background:var(--green-dark)}
 
-    .btn-green { background: var(--green); color: #fff; border: none; border-radius: 6px;
-      padding: 8px 14px; font-weight: 600; cursor: pointer; }
-    .btn-green:hover { background: var(--green-dark); }
+    /* Tabs */
+    .tabs{display:flex;justify-content:center;background:#fff;border-bottom:1px solid #ddd;gap:10px;padding:14px 0}
+    .tabs button{background:none;border:none;font-weight:600;font-size:17px;padding:10px 24px;border-radius:25px;cursor:pointer;color:#333}
+    .tabs button.active{background:var(--green);color:#fff}
+    .tabs button:hover{background:#f0f0f0}
 
-    .tabs { display: flex; justify-content: center; gap: 10px; padding: 14px 0;
-      background: #fff; border-bottom: 1px solid #ddd; }
-    .tabs button { background: none; border: none; font-weight: 600; font-size: 17px;
-      padding: 10px 24px; border-radius: 25px; cursor: pointer; color: #333; }
-    .tabs button.active { background: var(--green); color: #fff; }
+    /* Layout */
+    .container{max-width:1300px;margin:30px auto;display:flex;gap:20px;padding:0 15px}
+    .sidebar{width:300px;background:#fff;padding:22px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+    .sidebar h4{font-size:19px;font-weight:700;color:#111;margin-bottom:10px;border-bottom:1px solid #eee;padding-bottom:4px}
+    .category-search,.country-search{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;margin-bottom:10px;font-size:14px}
+    .category-list,.country-list{list-style:none;padding:0;margin:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#ccc transparent}
+    .category-list{max-height:260px;margin-bottom:20px}
+    .country-list{max-height:320px}
+    .category-list li,.country-list li{margin-bottom:6px}
+    .category-list a,.country-list a{display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:#333;font-size:14px;gap:6px;padding:4px 3px;border-radius:5px;transition:.15s}
+    .category-list a:hover,.country-list a:hover{background:#f1f6ff;color:#007bff}
+    .count{color:#888;font-size:13px}
+    .flag{width:20px;height:14px;border:1px solid #ccc;border-radius:2px;margin-right:6px;object-fit:cover}
 
-    .container { max-width: 1300px; margin: 30px auto; display: flex; gap: 20px; padding: 0 15px; }
-    .sidebar { width: 300px; background: #fff; padding: 22px; border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-    .content { flex: 1; background: #fff; border-radius: 12px; padding: 30px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .content{flex:1;background:#fff;border-radius:12px;padding:30px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+    .search-bar{margin-bottom:20px}
+    #searchInput{width:100%;max-width:420px;padding:10px;border-radius:6px;border:1px solid #ccc;font-size:14px}
 
-    .request-card { border: 1px solid #e3e3e3; border-radius: 8px; padding: 15px;
-      margin-bottom: 15px; background: #fff; transition: .2s; cursor: pointer; }
-    .request-card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.08); transform: translateY(-2px); }
-    .request-card h5 { margin: 0 0 6px; font-size: 17px; font-weight: 600; }
-    .request-card p { margin: 0 0 4px; font-size: 14px; color: #444; }
-    .request-card small { color: #666; }
-    .msg-btn { background: var(--green); color: #fff; border: none; border-radius: 5px;
-      padding: 6px 10px; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 6px; }
-    .msg-btn:hover { background: var(--green-dark); }
+    .request-card{border:1px solid #e3e3e3;border-radius:8px;padding:15px;margin-bottom:15px;background:#fff;transition:.2s;cursor:pointer}
+    .request-card:hover{box-shadow:0 3px 10px rgba(0,0,0,.08);transform:translateY(-2px)}
+    .request-card h5{margin:0 0 6px;font-size:17px;font-weight:600}
+    .request-card p{margin:0 0 4px;font-size:14px;color:#444}
+    .request-card small{color:#666}
+    .msg-btn{background:var(--green);color:#fff;border:none;border-radius:5px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px}
+    .msg-btn:hover{background:var(--green-dark)}
 
-    #showMoreRequests { background: var(--green); color: #fff; border: none; border-radius: 6px;
-      padding: 10px 15px; cursor: pointer; font-weight: 600; margin: 20px auto; display: block; }
-    #showMoreRequests:hover { background: var(--green-dark); }
+    #showMoreRequests{background:var(--green);color:#fff;border:none;border-radius:6px;padding:10px 15px;cursor:pointer;font-weight:600;margin:20px auto;display:block}
+    #showMoreRequests:hover{background:var(--green-dark)}
+
+    @media (max-width:900px){ .container{flex-direction:column}.sidebar{width:100%;order:2}.content{order:1} }
   </style>
 </head>
-
 <body>
-  <!-- ✅ HEADER -->
+  <!-- HEADER -->
   <header>
-    <div style="display:flex;align-items:center;cursor:pointer;" onclick="location.href='index.html'">
-      <img src="assets/logos.png" alt="Trader Route" />
+    <div class="brand" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy" />
       <span class="tagline">The Silk Road of E-Commerce</span>
     </div>
     <nav>
@@ -66,81 +78,202 @@
       <a href="companies.html">Companies</a>
       <a href="requests.html" style="color:var(--green);font-weight:700;">Requests</a>
       <a href="contact.html">Contact</a>
-      <a href="pricing.html">Pricing</a>
+      <a href="pricing.html">Prices</a>
     </nav>
     <div>
-      <button class="btn-green" onclick="location.href='login.html'">Sign In</button>
-      <button class="btn-green" onclick="location.href='register.html'">Sign Up</button>
+      <button class="btn btn-green" onclick="location.href='login.html'">Sign In</button>
+      <button class="btn btn-green" onclick="location.href='register.html'">Sign Up</button>
     </div>
   </header>
 
-  <!-- ✅ TABS -->
+  <!-- TABS -->
   <div class="tabs">
-    <button id="tabAll" class="active">All Requests</button>
+    <button class="active" id="tabAll">All Requests</button>
     <button id="tabBuy">Buy Requests</button>
     <button id="tabSell">Sell Requests</button>
     <button id="tabFree" onclick="location.href='free-request.html'">Free Request</button>
   </div>
 
+  <!-- LAYOUT -->
   <div class="container">
     <div class="sidebar">
       <h4>Categories</h4>
-      <ul id="categoryList"></ul>
+      <input type="text" class="category-search" id="categorySearch" placeholder="Search category..." />
+      <ul class="category-list" id="categoryList"></ul>
 
       <h4>Countries</h4>
-      <ul id="countryList"></ul>
+      <input type="text" class="country-search" id="countrySearch" placeholder="Search country..." />
+      <ul class="country-list" id="countryList"></ul>
     </div>
 
     <div class="content">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search requests..." />
+      </div>
       <div id="requestItems"></div>
       <button id="showMoreRequests">Show more requests</button>
     </div>
   </div>
 
   <script>
-    const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
-    const container = document.getElementById("requestItems");
-    const showMoreBtn = document.getElementById("showMoreRequests");
-    let visible = 10;
-    let activeTab = "all";
+    /* === VARS (mevcut yapınızı korur) === */
+    // Eğer window.categories / window.allCountries zaten tanımlıysa onları kullanır.
+    let categories   = (window.categories && Array.isArray(window.categories)) ? window.categories.slice() : null;
+    let allCountries = (window.allCountries && Array.isArray(window.allCountries)) ? window.allCountries.slice() : null;
 
-    function renderRequests() {
-      const all = getRequests();
-      const filtered = all.filter(r => activeTab === "all" || r.type === activeTab);
-      container.innerHTML = "";
-      filtered.slice(0, visible).forEach(r => {
-        const msgTo = r.ownerEmail || r.contactEmail || r.email || "";
+    const getRequests = () => {
+      try { return JSON.parse(localStorage.getItem("requests") || "[]"); }
+      catch { return []; }
+    };
+
+    const requestContainer = document.getElementById("requestItems");
+    const searchInput = document.getElementById("searchInput");
+    const categoryList = document.getElementById("categoryList");
+    const countryList = document.getElementById("countryList");
+    const categorySearch = document.getElementById("categorySearch");
+    const countrySearch = document.getElementById("countrySearch");
+
+    let visibleRequests = 15;
+    let activeTab = "all";
+    let selectedCategory = null;
+    let selectedCountry = null;
+
+    /* === URL parametreleri (orijinal davranış korunur) === */
+    (function () {
+      const params = new URLSearchParams(location.search);
+      const urlCat = params.get("category");
+      const urlCou = params.get("country");
+      if (urlCat) selectedCategory = urlCat;
+      if (urlCou) selectedCountry = urlCou;
+    })();
+
+    /* === JSON’dan doldur (yoksa mevcut dizileri kullan) === */
+    const countryCodeMap = {"Turkey":"tr","United States":"us","Germany":"de","France":"fr","Italy":"it","Spain":"es","China":"cn","Japan":"jp","India":"in","Brazil":"br","Russia":"ru","Canada":"ca","Australia":"au","United Kingdom":"gb","UK":"gb","Mexico":"mx"};
+    const toCode = name => (name||"").slice(0,2).toLowerCase();
+
+    async function ensureCategories(){
+      if (categories) return;
+      try{
+        const res = await fetch("data/categories.json",{cache:"no-store"});
+        const arr = await res.json();
+        categories = Array.isArray(arr) ? arr.map(String) : [];
+      }catch{ categories = []; }
+    }
+    async function ensureCountries(){
+      if (allCountries) return;
+      try{
+        const res = await fetch("data/countries.json",{cache:"no-store"});
+        const arr = await res.json();
+        allCountries = (arr||[]).map(it=>{
+          if (typeof it === "string"){
+            const name = it; const code = (countryCodeMap[name]||toCode(name));
+            return {name, code};
+          } else {
+            const name = String(it.name);
+            const code = String(it.code||countryCodeMap[name]||toCode(name)).toLowerCase();
+            return {name, code};
+          }
+        });
+      }catch{ allCountries = []; }
+    }
+
+    /* === Liste render (adet sayıları aynen korunur) === */
+    function renderCategories(requests){
+      const term = (categorySearch.value||"").toLowerCase();
+      const data = (categories||[]).filter(c=>c.toLowerCase().includes(term));
+      categoryList.innerHTML = "";
+      data.forEach(cat=>{
+        const count = requests.filter(r=>r.category === cat).length;
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="#">${cat}<span class="count">(${count})</span></a>`;
+        li.addEventListener("click",(e)=>{ e.preventDefault(); selectedCategory = cat; selectedCountry = null; renderRequests(); });
+        categoryList.appendChild(li);
+      });
+    }
+    function renderCountries(requests){
+      const term = (countrySearch.value||"").toLowerCase();
+      const data = (allCountries||[]).filter(c=>c.name.toLowerCase().includes(term));
+      countryList.innerHTML = "";
+      data.forEach(c=>{
+        const count = requests.filter(r=>r.country === c.name).length;
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <a href="#">
+            <span style="display:flex;align-items:center;gap:6px;">
+              <img class="flag" src="https://flagcdn.com/h20/${c.code}.png" alt="${c.name}" loading="lazy">
+              ${c.name}
+            </span>
+            <span class="count">(${count})</span>
+          </a>`;
+        li.addEventListener("click",(e)=>{ e.preventDefault(); selectedCountry = c.name; selectedCategory = null; renderRequests(); });
+        countryList.appendChild(li);
+      });
+    }
+
+    /* === İlanlar: tıklanınca detay + Message butonu === */
+    function renderRequests(){
+      const allReq = getRequests();
+
+      // Sol listeleri (adetli) güncelle
+      renderCategories(allReq);
+      renderCountries(allReq);
+
+      const term = (searchInput.value||"").toLowerCase();
+      const filtered = allReq.filter(r =>
+        (activeTab === "all" || r.type === activeTab) &&
+        (!selectedCategory || r.category === selectedCategory) &&
+        (!selectedCountry || r.country === selectedCountry) &&
+        ((r.title||"").toLowerCase().includes(term) || (r.description||"").toLowerCase().includes(term))
+      );
+
+      requestContainer.innerHTML = "";
+      filtered.slice(0, visibleRequests).forEach(r=>{
         const div = document.createElement("div");
         div.className = "request-card";
+
+        // 👇 İLAN TIKLANINCA: detay + sahibin maili parametreyle gider
+        const owner = r.ownerEmail || r.contactEmail || r.email || "";
         div.onclick = () => {
-          window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(msgTo)}`;
+          window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
         };
-        const msgBtn = msgTo
-          ? `<button class="msg-btn" onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(msgTo)}'">Message</button>`
+
+        // Mesaj butonu (kart içinde, tıklama yayılmasın)
+        const msgBtn = owner
+          ? `<button class="msg-btn" onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(owner)}'">Message</button>`
           : "";
+
         div.innerHTML = `
           <h5>${r.title || "Untitled Request"}</h5>
           <p>${r.description || ""}</p>
-          <small>${r.country || ""} • ${r.category || ""}</small><br>
+          <small>${r.country || ""} · ${r.category || ""}</small><br>
           ${msgBtn}
         `;
-        container.appendChild(div);
+        requestContainer.appendChild(div);
       });
-      showMoreBtn.style.display = filtered.length > visible ? "block" : "none";
+
+      document.getElementById("showMoreRequests").style.display = filtered.length > visibleRequests ? "block" : "none";
     }
 
-    document.getElementById("tabAll").onclick = () => { activeTab = "all"; setActive("tabAll"); renderRequests(); };
-    document.getElementById("tabBuy").onclick = () => { activeTab = "buy"; setActive("tabBuy"); renderRequests(); };
-    document.getElementById("tabSell").onclick = () => { activeTab = "sell"; setActive("tabSell"); renderRequests(); };
+    // Tabs
+    document.getElementById("tabAll").onclick  = ()=>{ setActive("tabAll");  activeTab="all";  renderRequests(); };
+    document.getElementById("tabBuy").onclick  = ()=>{ setActive("tabBuy");  activeTab="buy";  renderRequests(); };
+    document.getElementById("tabSell").onclick = ()=>{ setActive("tabSell"); activeTab="sell"; renderRequests(); };
+    function setActive(id){ document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active")); document.getElementById(id).classList.add("active"); }
 
-    function setActive(id) {
-      document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-    }
+    // Show more
+    document.getElementById("showMoreRequests").onclick = ()=>{ visibleRequests += 10; renderRequests(); };
 
-    showMoreBtn.onclick = () => { visible += 10; renderRequests(); };
+    // Aramalar
+    searchInput.addEventListener("input", renderRequests);
+    categorySearch.addEventListener("input", renderRequests);
+    countrySearch.addEventListener("input", renderRequests);
 
-    renderRequests();
+    // Başlat
+    (async function init(){
+      await ensureCategories();
+      await ensureCountries();
+      renderRequests();
+    })();
   </script>
 </body>
 </html>
