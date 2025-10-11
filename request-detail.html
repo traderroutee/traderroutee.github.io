@@ -1,148 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Request Detail - Trader Route</title>
-  <link rel="stylesheet" href="stil.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request Detail — Trader Route</title>
+
+  <!-- 🌐 SEO META TAGS -->
+  <meta name="description" content="View request details on Trader Route and contact buyers or sellers directly.">
+  <meta name="keywords" content="Trader Route, request detail, contact, buyer, seller, B2B marketplace">
+  <meta name="author" content="Trader Route">
+  <link rel="canonical" href="https://traderroute.com/request-detail.html">
+
+  <!-- ⚡ PERFORMANCE -->
+  <link rel="preload" href="assets/logos.png" as="image" />
+  <link rel="icon" href="assets/logos.png" type="image/png" />
+
   <style>
-    .container{max-width:1000px; margin:40px auto; padding:0 16px;}
-    .grid{display:grid; grid-template-columns:1.2fr 0.8fr; gap:20px;}
-    .card{background:#fff; border:1px solid #e3e3e3; border-radius:10px; padding:20px;}
-    .meta{color:#666; font-size:14px; margin:8px 0 14px;}
-    .tag{display:inline-block; background:#f1f5ff; border:1px solid #d7e3ff; color:#335; font-size:12px; padding:4px 8px; border-radius:999px; margin-right:6px;}
-    label{display:block; font-weight:600; margin:10px 0 6px;}
-    textarea, input{
-      width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:14px;
+    :root {
+      --brand-green: #008b6a;
+      --brand-dark: #006b52;
+      --light-bg: #f8f9fa;
     }
-    .btn{border:0; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:600;}
-    .btn-primary{background:#007bff; color:#fff;}
-    .btn-outline{background:#fff; border:1px solid #ddd;}
-    .note{background:#f8f9fa; border:1px dashed #d9d9d9; padding:10px 12px; border-radius:8px; margin-bottom:14px; color:#444;}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+    body {
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: var(--light-bg);
+      margin: 0;
+      color: #222;
+    }
+
+    /* === HEADER === */
+    header {
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header img {
+      height: 46px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    nav a {
+      margin: 0 14px;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      transition: color 0.25s ease;
+    }
+
+    nav a:hover {
+      color: var(--brand-green);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f1f1;
+      border-radius: 20px;
+      padding: 5px 10px;
+    }
+
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      padding: 5px;
+      font-size: 14px;
+      width: 150px;
+    }
+
+    .login-btn, .join-btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: 0.25s;
+    }
+
+    .login-btn {
+      background: #f1f1f1;
+      padding: 7px 14px;
+    }
+
+    .login-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .join-btn {
+      background: var(--brand-green);
+      color: #fff;
+      padding: 8px 15px;
+    }
+
+    .join-btn:hover {
+      background: var(--brand-dark);
+    }
+
+    /* === PAGE CONTENT === */
+    .container {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .detail-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .detail-card h2 {
+      color: var(--brand-green);
+      margin-bottom: 10px;
+    }
+
+    .detail-card p {
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .tags span {
+      background: #e9f6f3;
+      color: var(--brand-green);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 13px;
+      margin-right: 6px;
+    }
+
+    .form-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-top: 6px;
+      margin-bottom: 14px;
+    }
+
+    .btn {
+      background: var(--brand-green);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.25s ease;
+    }
+
+    .btn:hover {
+      background: var(--brand-dark);
+    }
+
+    @media(max-width:900px){
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #777;
+      border-top: 1px solid #ddd;
+      margin-top: 60px;
+      font-size: 14px;
+      background: #fff;
+    }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="note">
-      Signed in as <strong id="whoami">guest@traderroute.com</strong>. Messages are saved locally and an email draft opens via <code>mailto:</code>.
+  <!-- HEADER -->
+  <header>
+    <div class="logo-container">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
 
-    <div class="grid">
-      <!-- LEFT: details -->
-      <div class="card">
-        <h2 id="title">Request</h2>
-        <div class="meta">
-          <span id="owner"></span> · <span id="created"></span>
-        </div>
-        <div id="tags"></div>
-        <p id="desc" style="white-space:pre-wrap; margin-top:14px;"></p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+
+    <div class="header-right" style="display:flex;align-items:center;gap:10px;">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <button style="background:none;border:none;cursor:pointer;">🔍</button>
       </div>
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+    </div>
+  </header>
 
-      <!-- RIGHT: contact owner -->
-      <div class="card">
-        <h3>Contact Request Owner</h3>
-        <div style="font-size:14px; color:#444; margin:8px 0 14px;">
-          Owner: <strong id="ownerEmail">owner@example.com</strong>
-        </div>
+  <!-- CONTENT -->
+  <div class="container">
+    <div class="detail-card" id="requestDetail">
+      <h2 id="reqTitle">Request Title</h2>
+      <p id="reqDesc">Loading description...</p>
+      <div class="tags" id="reqTags"></div>
+      <p><strong>Price:</strong> <span id="reqPrice">-</span></p>
+      <p><strong>Country:</strong> <span id="reqCountry">-</span></p>
+    </div>
 
-        <label for="msg">Message</label>
-        <textarea id="msg" placeholder="Introduce yourself, include your offer / questions..." required></textarea>
-
-        <label for="yourEmail" style="margin-top:10px;">Your Email</label>
-        <input id="yourEmail" placeholder="your@email.com"/>
-
-        <div style="display:flex; gap:10px; margin-top:14px;">
-          <button class="btn btn-primary" id="sendBtn">Send Message</button>
-          <button class="btn btn-outline" id="saveDraftBtn">Save Draft</button>
-        </div>
-        <div id="status" style="margin-top:10px; color:#0a7; font-weight:600;"></div>
-      </div>
+    <div class="form-box">
+      <h3>Contact Request Owner</h3>
+      <input id="msgEmail" type="email" placeholder="Your Email" required>
+      <textarea id="msgBody" placeholder="Write your message..." required></textarea>
+      <button class="btn" id="sendBtn">Send Message</button>
     </div>
   </div>
 
+  <footer>
+    © 2025 Trader Route — All Rights Reserved.
+  </footer>
+
   <script>
-    // --- storage helpers ------------------------------------------------------
-    function getCurrentUserEmail(){
-      return localStorage.getItem('currentUserEmail') || 'guest@traderroute.com';
-    }
-    function loadRequests(){ try { return JSON.parse(localStorage.getItem('requests')||'[]'); } catch(e){ return []; } }
-    function loadMessages(){ try { return JSON.parse(localStorage.getItem('messages')||'[]'); } catch(e){ return []; } }
-    function saveMessages(arr){ localStorage.setItem('messages', JSON.stringify(arr)); }
-
-    function qs(name){
-      const url = new URL(window.location.href);
-      return url.searchParams.get(name);
+    // === SAFE TEXT ===
+    function safe(text){
+      const div=document.createElement('div');
+      div.textContent=text;
+      return div.innerHTML;
     }
 
-    // --- render detail --------------------------------------------------------
-    const id = qs('id');
-    const req = loadRequests().find(r => r.id === id);
-    const who = getCurrentUserEmail();
-    document.getElementById('whoami').textContent = who;
+    // === LOAD REQUEST DETAIL ===
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const requests = JSON.parse(localStorage.getItem("requests")||"[]");
+    const req = requests.find(r => r.id == id);
 
-    if(!req){
-      document.body.innerHTML = '<div class="container"><h2>Request not found</h2><p>Go back to the list.</p></div>';
-    } else {
-      document.title = req.title + " - Trader Route";
-      document.getElementById('title').textContent = req.title;
-      document.getElementById('owner').textContent = "Owner: " + req.ownerEmail;
-      document.getElementById('created').textContent = new Date(req.createdAt).toLocaleString();
-      document.getElementById('desc').textContent = req.description || "(no description)";
-      document.getElementById('ownerEmail').textContent = req.ownerEmail;
-      const tags = [];
-      if(req.category) tags.push(`<span class="tag">${req.category}</span>`);
-      if(req.country) tags.push(`<span class="tag">${req.country}</span>`);
-      if(req.quantity) tags.push(`<span class="tag">Qty: ${req.quantity}</span>`);
-      if(req.price) tags.push(`<span class="tag">Price: ${req.price}</span>`);
-      if(req.deadline) tags.push(`<span class="tag">Deadline: ${req.deadline}</span>`);
-      document.getElementById('tags').innerHTML = tags.join(' ');
+    if(req){
+      document.getElementById("reqTitle").textContent = req.title || "(Untitled)";
+      document.getElementById("reqDesc").innerHTML = safe(req.description || "(no description)");
+      document.getElementById("reqPrice").textContent = req.price || "Not specified";
+      document.getElementById("reqCountry").textContent = req.country || "Unknown";
+
+      const tagsDiv = document.getElementById("reqTags");
+      tagsDiv.innerHTML = "";
+      (req.tags || []).forEach(tag=>{
+        const span = document.createElement("span");
+        span.textContent = tag;
+        tagsDiv.appendChild(span);
+      });
     }
 
-    // --- messaging ------------------------------------------------------------
-    const msgEl = document.getElementById('msg');
-    const yourEmailEl = document.getElementById('yourEmail');
-    yourEmailEl.value = who;
+    // === SEND MESSAGE ===
+    document.getElementById("sendBtn").onclick = function(){
+      const email = document.getElementById("msgEmail").value.trim();
+      const body = document.getElementById("msgBody").value.trim();
 
-    document.getElementById('saveDraftBtn').addEventListener('click', ()=>{
-      localStorage.setItem('draft_'+id, msgEl.value);
-      document.getElementById('status').textContent = 'Draft saved.';
-      setTimeout(()=>document.getElementById('status').textContent='', 2000);
-    });
+      if(!email || !body){
+        alert("Please fill all fields.");
+        return;
+      }
 
-    // Load draft if exists
-    const draft = localStorage.getItem('draft_'+id);
-    if(draft) msgEl.value = draft;
-
-    document.getElementById('sendBtn').addEventListener('click', ()=>{
-      const body = msgEl.value.trim();
-      const from = (yourEmailEl.value || '').trim();
-      if(!body){ alert('Please write a message.'); return; }
-      if(!from || !from.includes('@')){ alert('Please enter a valid email.'); return; }
-
-      // Save to local inbox of the owner
-      const messages = loadMessages();
-      messages.push({
-        id: Date.now().toString(),
-        requestId: id,
+      const msg = {
+        from: email,
+        to: req.owner || "unknown",
+        requestId: req.id,
         requestTitle: req.title,
-        to: req.ownerEmail,
-        from,
         body,
         createdAt: new Date().toISOString()
-      });
-      saveMessages(messages);
+      };
 
-      // Open mailto (for actual email notification by the user)
-      const subject = encodeURIComponent(`[Trader Route] Message about: ${req.title}`);
-      const content = encodeURIComponent(`${body}\n\nFrom: ${from}\nRequest: ${window.location.href}`);
-      window.location.href = `mailto:${encodeURIComponent(req.ownerEmail)}?subject=${subject}&body=${content}`;
+      const messages = JSON.parse(localStorage.getItem("messages") || "[]");
+      messages.push(msg);
+      localStorage.setItem("messages", JSON.stringify(messages));
 
-      localStorage.removeItem('draft_'+id);
-      document.getElementById('status').textContent = 'Message sent (saved to inbox & email draft opened).';
-      msgEl.value = '';
-      setTimeout(()=>document.getElementById('status').textContent='', 3000);
-    });
+      alert("Message sent successfully!");
+      document.getElementById("msgBody").value = "";
+    }
   </script>
 </body>
 </html>
