@@ -220,138 +220,12 @@
 
       <label>Category</label>
       <select id="category" required>
-        <option value="">Select a Category</option>
-        <option>Agriculture</option>
-        <option>Apparel & Fashion</option>
-        <option>Automobiles & Motorcycles</option>
-        <option>Beauty & Personal Care</option>
-        <option>Business Services</option>
-        <option>Chemicals</option>
-        <option>Computer Hardware & Software</option>
-        <option>Construction & Real Estate</option>
-        <option>Consumer Electronics</option>
-        <option>Electrical Equipment & Supplies</option>
-        <option>Energy</option>
-        <option>Environment</option>
-        <option>Food & Beverage</option>
-        <option>Furniture</option>
-        <option>Gifts & Crafts</option>
-        <option>Hardware</option>
-        <option>Health & Medical</option>
-        <option>Home & Garden</option>
-        <option>Industrial Machinery</option>
-        <option>Jewelry & Watches</option>
-        <option>Lights & Lighting</option>
-        <option>Luggage, Bags & Cases</option>
-        <option>Mechanical Parts & Fabrication</option>
-        <option>Minerals & Metallurgy</option>
-        <option>Office Supplies</option>
-        <option>Packaging & Printing</option>
-        <option>Security & Protection</option>
-        <option>Service Equipment</option>
-        <option>Sports & Entertainment</option>
-        <option>Telecommunications</option>
-        <option>Textiles & Leather Products</option>
-        <option>Tools</option>
-        <option>Toys & Hobbies</option>
-        <option>Transportation</option>
-        <option>Travel & Tourism</option>
-        <option>Others</option>
+        <option value="">Loading categories...</option>
       </select>
 
       <label>Country</label>
       <select id="country" required>
-        <option value="">Select a Country</option>
-        <option>Afghanistan</option>
-        <option>Albania</option>
-        <option>Algeria</option>
-        <option>Andorra</option>
-        <option>Angola</option>
-        <option>Argentina</option>
-        <option>Armenia</option>
-        <option>Australia</option>
-        <option>Austria</option>
-        <option>Azerbaijan</option>
-        <option>Bangladesh</option>
-        <option>Belarus</option>
-        <option>Belgium</option>
-        <option>Brazil</option>
-        <option>Bulgaria</option>
-        <option>Canada</option>
-        <option>Chile</option>
-        <option>China</option>
-        <option>Colombia</option>
-        <option>Costa Rica</option>
-        <option>Croatia</option>
-        <option>Czech Republic</option>
-        <option>Denmark</option>
-        <option>Egypt</option>
-        <option>Estonia</option>
-        <option>Finland</option>
-        <option>France</option>
-        <option>Germany</option>
-        <option>Greece</option>
-        <option>Hong Kong</option>
-        <option>Hungary</option>
-        <option>Iceland</option>
-        <option>India</option>
-        <option>Indonesia</option>
-        <option>Iran</option>
-        <option>Iraq</option>
-        <option>Ireland</option>
-        <option>Israel</option>
-        <option>Italy</option>
-        <option>Japan</option>
-        <option>Jordan</option>
-        <option>Kazakhstan</option>
-        <option>Kenya</option>
-        <option>Kuwait</option>
-        <option>Kyrgyzstan</option>
-        <option>Latvia</option>
-        <option>Lebanon</option>
-        <option>Lithuania</option>
-        <option>Luxembourg</option>
-        <option>Malaysia</option>
-        <option>Mexico</option>
-        <option>Monaco</option>
-        <option>Morocco</option>
-        <option>Nepal</option>
-        <option>Netherlands</option>
-        <option>New Zealand</option>
-        <option>Nigeria</option>
-        <option>Norway</option>
-        <option>Pakistan</option>
-        <option>Peru</option>
-        <option>Philippines</option>
-        <option>Poland</option>
-        <option>Portugal</option>
-        <option>Qatar</option>
-        <option>Romania</option>
-        <option>Russia</option>
-        <option>Saudi Arabia</option>
-        <option>Serbia</option>
-        <option>Singapore</option>
-        <option>Slovakia</option>
-        <option>Slovenia</option>
-        <option>South Africa</option>
-        <option>South Korea</option>
-        <option>Spain</option>
-        <option>Sri Lanka</option>
-        <option>Sweden</option>
-        <option>Switzerland</option>
-        <option>Taiwan</option>
-        <option>Thailand</option>
-        <option>Tunisia</option>
-        <option>Turkey</option>
-        <option>Ukraine</option>
-        <option>United Arab Emirates</option>
-        <option>United Kingdom</option>
-        <option>United States</option>
-        <option>Uruguay</option>
-        <option>Uzbekistan</option>
-        <option>Venezuela</option>
-        <option>Vietnam</option>
-        <option>Zambia</option>
+        <option value="">Loading countries...</option>
       </select>
 
       <label>Request Type</label>
@@ -371,6 +245,42 @@
   </footer>
 
   <script>
+    // === Load Categories & Countries ===
+    async function loadSelectData() {
+      try {
+        const [catRes, countryRes] = await Promise.all([
+          fetch("data/categories.json"),
+          fetch("data/countries.json")
+        ]);
+
+        const categories = await catRes.json();
+        const countries = await countryRes.json();
+
+        const catSelect = document.getElementById("category");
+        const countrySelect = document.getElementById("country");
+
+        catSelect.innerHTML = '<option value="">Select a Category</option>';
+        categories.forEach(c => {
+          const opt = document.createElement("option");
+          opt.textContent = c;
+          catSelect.appendChild(opt);
+        });
+
+        countrySelect.innerHTML = '<option value="">Select a Country</option>';
+        countries.forEach(c => {
+          const opt = document.createElement("option");
+          opt.textContent = c;
+          countrySelect.appendChild(opt);
+        });
+
+      } catch (err) {
+        console.error("Data load error:", err);
+      }
+    }
+
+    loadSelectData();
+
+    // === Form Save Logic ===
     const form = document.getElementById("requestForm");
     form.addEventListener("submit", function(e) {
       e.preventDefault();
@@ -407,7 +317,6 @@
 
       const successMsg = document.getElementById("successMsg");
       successMsg.style.display = "block";
-
       form.reset();
 
       setTimeout(() => {
