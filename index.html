@@ -22,18 +22,20 @@
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa}
 
-    header{background:#fff;padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:space-between}
-    .logo-container{display:flex;align-items:center;gap:10px}
+    /* Header */
+    header{background:#fff;padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);
+           display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1000}
+    .logo-container{display:flex;align-items:center;gap:10px;cursor:pointer}
     .logo-container img{height:42px}
     .logo-text{font-size:15px;color:#555;font-weight:500}
-    nav{display:flex;align-items:center;gap:15px}
+    nav{display:flex;align-items:center;gap:15px;flex:1;justify-content:center}
     nav a{text-decoration:none;color:#000;font-weight:500;transition:.3s}
     nav a:hover{color:#007bff}
     .header-right{display:flex;align-items:center;gap:10px}
     .search-box{display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px}
     .search-box input{border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px}
-    
-    /* 💚 Button Colors Updated */
+
+    /* Buttons */
     .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:500;transition:.3s}
     .login-btn{background:#f1f1f1;padding:7px 14px}
     .login-btn:hover{background:#e0e0e0}
@@ -41,21 +43,15 @@
     .join-btn:hover{background:#006b52}
 
     /* === HERO === */
-    .hero{
-      position:relative;
-      height:500px;
-      background:url('assets/ihracat-haritasi.png') center/cover no-repeat;
-      display:flex;align-items:center;justify-content:center;text-align:center;
-    }
+    .hero{position:relative;height:500px;background:url('assets/ihracat-haritasi.png') center/cover no-repeat;
+          display:flex;align-items:center;justify-content:center;text-align:center}
     .hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1;border-radius:6px}
     .hero-content{position:relative;z-index:2;max-width:800px;color:#fff;text-align:center}
     .hero-content h1{font-size:44px;font-weight:800;margin:0;text-shadow:0 3px 10px rgba(0,0,0,.5)}
 
     /* === CATEGORY BOX === */
-    .categories{
-      background:#fff;border-radius:10px;padding:15px;width:240px;
-      box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:5;
-    }
+    .categories{background:#fff;border-radius:10px;padding:15px;width:240px;
+                box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:5}
     .categories h3{font-size:16px;font-weight:700;margin-bottom:10px}
     .category-item{display:flex;justify-content:space-between;font-size:14px;margin:5px 0;color:#333;cursor:pointer;transition:.3s}
     .category-item:hover{color:#008b6a}
@@ -76,6 +72,7 @@
     .main-section button{background:#008b6a;border:none;color:#fff;padding:8px 16px;border-radius:5px;font-weight:600;cursor:pointer}
     .main-section button:hover{background:#006b52}
 
+    /* FOOTER */
     footer{background:#fff;display:flex;justify-content:space-around;padding:40px;font-size:14px;color:#333;border-top:1px solid #ddd}
     footer div{width:200px}
     footer h4{font-size:15px;margin-bottom:10px;color:#000}
@@ -85,105 +82,35 @@
     @media (max-width:900px){
       .main-section{flex-direction:column;text-align:center}
       .categories{width:100%}
+      nav{gap:10px}
     }
 
     /* === Category Holder (Position Control) === */
-    .cat-holder{
-      position:absolute;
-      transform:translateY(-50%);
-      z-index:5;
-    }
-
+    .cat-holder{position:absolute;transform:translateY(-50%);z-index:5}
     @media (max-width:900px){
-      .cat-holder{
-        position:static;
-        transform:none;
-        margin-top:-100px;
-        display:flex;justify-content:center;
-      }
+      .cat-holder{position:static;transform:none;margin-top:-100px;display:flex;justify-content:center}
       .cat-holder .categories{width:90%}
     }
   </style>
 </head>
-<header style="display:flex;align-items:center;justify-content:space-between;background:#fff;
-               padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000;">
-
-  <!-- Sol: Logo -->
-  <div class="logo-container" style="flex:0 0 auto;display:flex;align-items:center;gap:10px;cursor:pointer;"
-       onclick="location.href='index.html'">
-    <img src="assets/logos.png" alt="Trader Route Logo" style="height:45px;">
-    <span class="logo-text" style="font-size:15px;color:#555;font-weight:500;">
-      The Silk Road of E-Commerce
-    </span>
-  </div>
-
-  <!-- Orta: Menü -->
-  <nav style="flex:1;display:flex;justify-content:center;align-items:center;gap:20px;">
-    <a href="index.html"      style="text-decoration:none;color:#000;font-weight:500;">Home</a>
-    <a href="companies.html"  style="text-decoration:none;color:#000;font-weight:500;">Companies</a>
-    <a href="requests.html"   style="text-decoration:none;color:#000;font-weight:500;">Requests</a>
-    <a href="contact.html"    style="text-decoration:none;color:#000;font-weight:500;">Contact</a>
-    <a href="pricing.html"    style="text-decoration:none;color:#000;font-weight:500;">Pricing</a>
-  </nav>
-
-  <!-- Sağ: Arama + Giriş + Kullanıcı menüsü -->
-  <div class="header-right" style="flex:0 0 auto;display:flex;align-items:center;gap:10px;">
-    <div class="search-box" style="display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px;">
-      <input type="text" placeholder="Search..." 
-             style="border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px;">
-      <button style="background:none;border:none;cursor:pointer;">🔍</button>
-    </div>
-
-    <button class="login-btn" onclick="location.href='login.html'" 
-            style="border:none;cursor:pointer;border-radius:6px;background:#f1f1f1;padding:7px 14px;font-weight:500;">
-      Sign In
-    </button>
-    <button class="join-btn" onclick="location.href='register.html'" 
-            style="border:none;cursor:pointer;border-radius:6px;background:#008b6a;color:#fff;padding:8px 15px;font-weight:500;">
-      Join Now
-    </button>
-
-    <!-- 👤 Kullanıcı İkonu -->
-    <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
-      <img id="userIcon" src="assets/user-icon.png" alt="User"
-           style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
-      <div id="userDropdown"
-           style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
-                  box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
-        <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
-        <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
-        <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
-      </div>
-    </div>
-  </div>
-</header>
 <body>
+  <!-- Welcome alert (orijinal davranış korunur) -->
+  <script>
+  window.addEventListener('DOMContentLoaded', ()=>{
+    const name = localStorage.getItem('welcome_name');
+    if(name){ alert(`Welcome, ${name}!`); localStorage.removeItem('welcome_name'); }
+  });
+  </script>
+
+  <!-- ✅ TEK HEADER -->
   <header>
-    <!-- 👤 USER ICON MENU — EKLEME -->
-<div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
-  <img id="userIcon" src="assets/user-icon.png" alt="User"
-       style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
-  <div id="userDropdown"
-       style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
-              box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden">
-    <a href="profile.html"   style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
-    <a href="messages.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
-    <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
-  </div>
-</div>
-    <div class="logo-container">
+    <!-- Sol: Logo (anasayfaya gider) -->
+    <div class="logo-container" onclick="location.href='index.html'">
       <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
-<script>
-window.addEventListener('DOMContentLoaded', ()=>{
-  const name = localStorage.getItem('welcome_name');
-  if(name){
-    alert(`Welcome, ${name}!`);
-    localStorage.removeItem('welcome_name');
-  }
-});
-</script>
+
+    <!-- Orta: Menü -->
     <nav>
       <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
@@ -192,6 +119,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
       <a href="pricing.html">Pricing</a>
     </nav>
 
+    <!-- Sağ: Arama + Giriş + Kullanıcı menüsü -->
     <div class="header-right">
       <div class="search-box">
         <input type="text" placeholder="Search...">
@@ -199,6 +127,19 @@ window.addEventListener('DOMContentLoaded', ()=>{
       </div>
       <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
       <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+
+      <!-- 👤 Kullanıcı İkonu (giriş varsa görünür) -->
+      <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
+        <img id="userIcon" src="assets/user-icon.png" alt="User"
+             style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+        <div id="userDropdown"
+             style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
+                    box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+          <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+          <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -231,9 +172,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     <img src="assets/trader_route_step1.jpeg" alt="Trader Route Step" loading="lazy">
     <div>
       <h2>Join Trader Route</h2>
-      <p>
-        For companies aiming for global trade success; find buyers for your products and reach new markets — with Trader Route.
-      </p>
+      <p>For companies aiming for global trade success; find buyers for your products and reach new markets — with Trader Route.</p>
       <button onclick="location.href='register.html'">Join Now</button>
     </div>
   </section>
@@ -244,11 +183,10 @@ window.addEventListener('DOMContentLoaded', ()=>{
     <div><h4>Our Services</h4><p>Free Registration</p><p>Contact Buyers</p></div>
     <div><h4>Quick Links</h4><p>Company Directory</p><p>Buyer Guide</p></div>
   </footer>
-
   <div class="footer-bottom">© 2025 Trader Route — Connecting Global Trade.</div>
 
+  <!-- Kategoriler (orijinal JS korunur) -->
   <script>
-    // --- Category List ---
     const categories = [
       "Agriculture Machinery","Agriculture Industry","Automotive","Baby Products & Accessories",
       "Chemical Industry","Fashion & Apparel","Commercial Activities","Construction & Building",
@@ -261,10 +199,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
       "Security Equipment","Services","Sports Equipment","Stationery & Office","Textile Products",
       "Tourism","Home Appliances"
     ];
-
     const reqs = JSON.parse(localStorage.getItem("requests") || "[]");
     const list = document.getElementById("categoryList");
-
     categories.slice(0, 10).forEach(cat => {
       const count = reqs.filter(r => r.category === cat).length;
       const div = document.createElement("div");
@@ -274,14 +210,11 @@ window.addEventListener('DOMContentLoaded', ()=>{
       list.appendChild(div);
     });
 
-    // --- Category Box Position ---
     (function(){
       const hero = document.querySelector('.hero');
       const holder = document.querySelector('.cat-holder');
-
       function placeBox(){
         if(!hero || !holder) return;
-
         if (window.innerWidth <= 900){
           holder.style.position = 'static';
           holder.style.transform = 'none';
@@ -289,14 +222,11 @@ window.addEventListener('DOMContentLoaded', ()=>{
           holder.style.top = '';
           return;
         }
-
         const rect = hero.getBoundingClientRect();
         const scrollY = window.scrollY || document.documentElement.scrollTop;
         const scrollX = window.scrollX || document.documentElement.scrollLeft;
-
         const top = rect.top + scrollY + rect.height / 2;
         const left = rect.left + scrollX + Math.max(rect.width * 0.06, 32);
-
         holder.style.position = 'absolute';
         holder.style.top = `${top}px`;
         holder.style.left = `${left}px`;
@@ -304,11 +234,45 @@ window.addEventListener('DOMContentLoaded', ()=>{
         holder.style.zIndex = '5';
         holder.style.marginTop = '0';
       }
-
       placeBox();
       window.addEventListener('resize', placeBox);
       window.addEventListener('scroll', placeBox);
     })();
+  </script>
+
+  <!-- 👤 Kullanıcı menüsü kontrolü (non-destructive) -->
+  <script>
+  (function(){
+    const header   = document.querySelector('header');
+    const icon     = document.getElementById('userIcon');
+    const dropdown = document.getElementById('userDropdown');
+    const loginBtn = header?.querySelector("button[onclick*='login.html']");
+    const joinBtn  = header?.querySelector("button[onclick*='register.html']");
+    const currentUser = JSON.parse(localStorage.getItem('tr_user') || 'null');
+
+    if (currentUser) {
+      if (icon) icon.style.display = 'inline-block';
+      if (loginBtn) loginBtn.style.display = 'none';
+      if (joinBtn)  joinBtn.style.display  = 'none';
+    } else {
+      if (icon) icon.style.display = 'none';
+      if (loginBtn) loginBtn.style.display = '';
+      if (joinBtn)  joinBtn.style.display  = '';
+    }
+
+    icon?.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+    });
+    document.addEventListener('click', (e)=>{
+      if (!e.target.closest('#userMenuContainer')) dropdown.style.display = 'none';
+    });
+
+    window.logoutUser = function(){
+      localStorage.removeItem('tr_user');
+      location.href = 'index.html';
+    };
+  })();
   </script>
 </body>
 </html>
