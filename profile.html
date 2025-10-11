@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile — Trader Route</title>
+<link rel="icon" href="assets/logos.png">
+<style>
+  :root{--green:#008b6a;--green-dark:#006b52;--bg:#f6f8fa;}
+  body{font-family:"Inter","Segoe UI",Arial,sans-serif;margin:0;background:var(--bg);color:#222}
+  header{display:flex;align-items:center;justify-content:space-between;background:#fff;padding:12px 20px;border-bottom:1px solid #ddd;box-shadow:0 2px 4px rgba(0,0,0,.05);position:sticky;top:0;z-index:1000;}
+  header .brand{display:flex;align-items:center;gap:10px;cursor:pointer;}
+  header img{height:50px}
+  header .tagline{font-size:14px;color:#555;font-weight:600}
+  nav a{margin:0 10px;text-decoration:none;color:#333;font-weight:600}
+  nav a:hover{color:var(--green)}
+  .btn{border:none;border-radius:6px;padding:8px 14px;font-weight:600;cursor:pointer}
+  .btn-green{background:var(--green);color:#fff}
+  .btn-green:hover{background:var(--green-dark)}
+  .profile-box{max-width:700px;margin:40px auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.06)}
+  .profile-box h2{margin-top:0;color:var(--green)}
+  .info-line{margin:8px 0;font-size:16px}
+</style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="brand" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy" />
+      <span class="tagline">The Silk Road of E-Commerce</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Prices</a>
+    </nav>
+
+    <!-- 👤 USER ICON MENU -->
+    <div id="userMenuContainer" style="position:relative;">
+      <img id="userIcon" src="assets/user-icon.png" alt="User" style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+      <div id="userDropdown" style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 3px 10px rgba(0,0,0,0.1);width:160px;z-index:999;">
+        <a href="profile.html" style="display:block;padding:10px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+        <a href="messages.html" style="display:block;padding:10px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+        <a href="#" onclick="logoutUser()" style="display:block;padding:10px;color:#d9534f;text-decoration:none;">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="profile-box" id="profileBox">
+    <h2>Your Profile</h2>
+    <div id="profileInfo"></div>
+  </div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("tr_user") || "null");
+    const box = document.getElementById("profileInfo");
+
+    if (!user) {
+      box.innerHTML = "<p style='color:red;'>You are not logged in. <a href='login.html'>Sign In</a></p>";
+    } else {
+      box.innerHTML = `
+        <div class='info-line'><b>Name:</b> ${user.name || '-'}</div>
+        <div class='info-line'><b>Email:</b> ${user.email || '-'}</div>
+        <div class='info-line'><b>Company:</b> ${user.company || '-'}</div>
+        <div class='info-line'><b>Country:</b> ${user.country || '-'}</div>
+      `;
+    }
+
+    // User menu behavior
+    const icon = document.getElementById("userIcon");
+    const menu = document.getElementById("userDropdown");
+    if (user) icon.style.display = "inline-block";
+
+    icon?.addEventListener("click", () => {
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    });
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest("#userMenuContainer")) menu.style.display = "none";
+    });
+    function logoutUser(){
+      localStorage.removeItem("tr_user");
+      location.href='index.html';
+    }
+  </script>
+</body>
+</html>
