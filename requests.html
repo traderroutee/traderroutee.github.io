@@ -3,70 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trader Route – Requests</title>
+  <title>Trader Route - Requests</title>
 
-  <!-- ✅ SEO META -->
-  <meta name="description" content="Explore global buy and sell requests on Trader Route. Connect with worldwide buyers and suppliers." />
-  <meta name="keywords" content="Trader Route, requests, buy, sell, B2B, global trade, marketplace" />
+  <!-- ✅ SEO -->
+  <meta name="description" content="Explore global buy and sell requests on Trader Route. Filter by category and country to find real B2B trade opportunities." />
+  <meta name="keywords" content="Trader Route, requests, buy, sell, B2B, global trade, marketplace, import, export" />
   <meta name="author" content="Trader Route" />
   <link rel="canonical" href="https://traderroute.com/requests.html" />
-  <link rel="icon" href="assets/logos.png" />
 
+  <link rel="icon" href="assets/logos.png" />
+  <link rel="stylesheet" href="style.css" />
   <style>
-    :root{--green:#008b6a;--green-dark:#006b52;}
-    body{font-family:"Inter",Arial,sans-serif;background:#f6f8fa;margin:0;color:#222;}
+    /* 🔒 Orijinal stil yapısını koruyorum; sadece gereken ufak eklemeler */
+    body {font-family:"Inter",Segoe UI,Arial,sans-serif;background:#f6f8fa;margin:0;color:#222;}
+
+    /* Header eklentisi (ana sayfa ile aynı) */
     header{display:flex;align-items:center;justify-content:space-between;background:#fff;
-            padding:12px 20px;border-bottom:1px solid #ddd;box-shadow:0 2px 4px rgba(0,0,0,0.05);}
-    header img{height:50px;cursor:pointer;}
+           padding:12px 20px;border-bottom:1px solid #ddd;box-shadow:0 2px 4px rgba(0,0,0,0.05);}
+    header img{height:54px;cursor:pointer;}
     nav a{margin:0 10px;text-decoration:none;color:#333;font-weight:600;}
-    nav a:hover{color:var(--green);}
-    .right button{background:var(--green);color:#fff;border:none;border-radius:6px;
-                  padding:8px 14px;font-weight:600;cursor:pointer;}
-    .right button:hover{background:var(--green-dark);}
-    .tabs{display:flex;justify-content:center;background:#fff;border-bottom:1px solid #ddd;
-          gap:10px;padding:14px 0;}
-    .tabs button{background:none;border:none;font-weight:600;font-size:17px;padding:10px 24px;
-                 border-radius:25px;cursor:pointer;color:#333;}
-    .tabs button.active{background:var(--green);color:#fff;}
+    nav a:hover{color:#008b6a;}
+    .right{display:flex;align-items:center;gap:10px;}
+    .right .search{background:#f1f1f1;border-radius:20px;padding:5px 10px;display:flex;align-items:center;}
+    .right .search input{border:none;background:none;outline:none;padding:5px;width:150px;}
+    .btn-green{background:#008b6a;color:#fff;border:none;border-radius:6px;padding:8px 14px;font-weight:600;cursor:pointer;}
+    .btn-green:hover{background:#006b52;}
+
+    /* Tabs (orijinal yapıyı koruyup aktif sekme rengini yeşil yaptım) */
+    .tabs{display:flex;justify-content:center;background:#fff;border-bottom:1px solid #ddd;gap:10px;padding:14px 0;}
+    .tabs button{background:none;border:none;font-weight:600;font-size:17px;padding:10px 24px;border-radius:25px;cursor:pointer;transition:0.25s;color:#333;}
+    .tabs button:hover{background:#f0f0f0;}
+    .tabs button.active{background:#008b6a;color:#fff;}
+
     .container{max-width:1300px;margin:35px auto;display:flex;gap:24px;padding:0 15px;}
-    .sidebar{width:300px;background:#fff;padding:22px;border-radius:12px;
-             box-shadow:0 2px 6px rgba(0,0,0,0.06);}
-    .category-list,.country-list{max-height:250px;overflow-y:auto;list-style:none;padding:0;margin:0;}
-    .category-list a,.country-list a{display:flex;justify-content:space-between;
-                                    text-decoration:none;color:#333;padding:5px 3px;border-radius:6px;}
-    .category-list a:hover,.country-list a:hover{color:var(--green);}
-    .flag{width:20px;height:14px;border:1px solid #ccc;border-radius:2px;margin-right:6px;}
-    .content{flex:1;background:#fff;border-radius:12px;padding:30px;
-             box-shadow:0 2px 6px rgba(0,0,0,0.06);}
-    .request-card{border:1px solid #e3e3e3;border-radius:8px;padding:15px;margin-bottom:15px;
-                  background:#fff;cursor:pointer;transition:0.25s;}
-    .request-card:hover{box-shadow:0 3px 10px rgba(0,0,0,0.08);}
-    .msg-btn{background:var(--green);color:#fff;border:none;border-radius:5px;
-             padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px;}
+    .sidebar{width:300px;background:#fff;padding:22px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,0.06);display:flex;flex-direction:column;}
+    .sidebar h4{font-size:19px;font-weight:700;color:#111;margin-bottom:10px;border-bottom:1px solid #eee;padding-bottom:4px;}
+    .category-search,.country-search{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;margin-bottom:10px;font-size:14px;}
+    .category-list,.country-list{list-style:none;padding-left:0;margin:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#ccc transparent;flex:1;}
+    .category-list{max-height:250px;margin-bottom:20px;}
+    .country-list{max-height:300px;}
+    .category-list li,.country-list li{margin-bottom:6px;}
+    .category-list a,.country-list a{text-decoration:none;color:#333;display:flex;align-items:center;justify-content:space-between;font-size:14px;gap:6px;padding:4px 3px;border-radius:5px;transition:0.2s;}
+    .category-list a:hover,.country-list a:hover{background:#f1f6ff;color:#007bff;}
+    .count{color:#888;font-size:13px;}
+    .flag{width:20px;height:14px;border:1px solid #ccc;border-radius:2px;margin-right:6px;object-fit:cover;}
+
+    .content{flex:1;background:#fff;border-radius:12px;padding:30px;box-shadow:0 2px 6px rgba(0,0,0,0.06);}
+    .search-bar{margin-bottom:20px;}
+    #searchInput{width:100%;max-width:400px;padding:10px;border-radius:6px;border:1px solid #ccc;font-size:14px;}
+
+    .request-card{border:1px solid #e3e3e3;border-radius:8px;padding:15px;margin-bottom:15px;background:#fff;transition:0.25s;cursor:pointer;}
+    .request-card:hover{box-shadow:0 3px 10px rgba(0,0,0,0.08);transform:translateY(-2px);}
+    .request-card h5{margin:0 0 6px;font-size:17px;font-weight:600;}
+    .request-card p{margin:0 0 4px;font-size:14px;color:#444;}
+    .request-card small{color:#666;}
+    .msg-btn{background:#008b6a;color:#fff;border:none;border-radius:5px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px;}
+    .msg-btn:hover{background:#006b52;}
+
+    /* Show more butonunu yeşil yap */
+    #showMoreRequests{background:#008b6a;color:#fff;border:none;border-radius:6px;padding:10px 15px;cursor:pointer;font-weight:600;margin:20px auto;display:block;transition:0.3s;}
+    #showMoreRequests:hover{background:#006b52;}
+
+    @media (max-width:900px){
+      .container{flex-direction:column}
+      .sidebar{width:100%;order:2}
+      .content{order:1}
+    }
   </style>
 </head>
 
 <body>
-  <!-- ✅ HEADER -->
+  <!-- ✅ HEADER (ana sayfa ile aynı mantık) -->
   <header>
-    <div class="left">
-      <img src="assets/logos.png" alt="Trader Route Logo" onclick="location.href='index.html'" loading="lazy">
-    </div>
+    <a href="index.html"><img src="assets/logos.png" alt="Trader Route Logo" loading="lazy" /></a>
     <nav>
       <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
-      <a href="requests.html" style="color:var(--green)">Requests</a>
+      <a href="requests.html" style="color:#008b6a;font-weight:700;">Requests</a>
       <a href="contact.html">Contact</a>
-      <a href="pricing.html">Pricing</a>
+      <a href="pricing.html">Prices</a>
     </nav>
     <div class="right">
-      <button onclick="location.href='free-request.html'">Free Request</button>
-      <button onclick="location.href='login.html'">Sign In</button>
-      <button onclick="location.href='register.html'">Sign Up</button>
+      <div class="search">
+        <input type="text" id="hdrSearch" placeholder="Search..." />
+        🔍
+      </div>
+      <button class="btn-green" onclick="location.href='free-request.html'">Free Request</button>
+      <button class="btn-green" onclick="location.href='login.html'">Sign In</button>
+      <button class="btn-green" onclick="location.href='register.html'">Sign Up</button>
     </div>
   </header>
 
-  <!-- ✅ TABS -->
+  <!-- ✅ Orijinal tabs + Free Request sekmesi -->
   <div class="tabs">
     <button class="active" id="tabAll">All Requests</button>
     <button id="tabBuy">Buy Requests</button>
@@ -74,84 +102,175 @@
     <button id="tabFree" onclick="location.href='free-request.html'">Free Request</button>
   </div>
 
-  <!-- ✅ SAYFA İSKELETİ (bozulmadan) -->
   <div class="container">
     <div class="sidebar">
       <h4>Categories</h4>
-      <ul id="categoryList" class="category-list"></ul>
+      <input type="text" class="category-search" id="categorySearch" placeholder="Search category..." />
+      <ul class="category-list" id="categoryList"></ul>
+
       <h4>Countries</h4>
-      <ul id="countryList" class="country-list"></ul>
+      <input type="text" class="country-search" id="countrySearch" placeholder="Search country..." />
+      <ul class="country-list" id="countryList"></ul>
     </div>
 
     <div class="content">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search requests..." />
+      </div>
       <div id="requestItems"></div>
-      <button id="showMoreRequests" style="background:var(--green);color:#fff;">Show more requests</button>
+      <button id="showMoreRequests">Show more requests</button>
     </div>
   </div>
 
   <script>
+    /* ========= Orijinal veri yapını ve filtre akışını koruyorum ========= */
+    const categories = [
+      "Agricultural Machinery","Agriculture Industry","Automotive","Baby Products and Accessories",
+      "Chemical Industry","Clothing - Fashion","Commercial Activities","Construction and Building Industry",
+      "Cosmetic Products","Data and Communication Technology","Defense Industry","Electric – Electronic",
+      "Energy Sector","Entertainment Hobbies","Environment and Recycling","Food Industry","Forestry Products",
+      "Furniture","Furniture – Wood Products","Giftware – Promotions","Heating - Cooling - Ventilation",
+      "Horeca - Hospitality Industry","Husbandry Industry","Industrial Products","Jewelry",
+      "Kitchenware–Glassware","Leather Products & Shoes","Machinery Industry","Marble–Mining",
+      "Marine Vehicles and Equipment","Medical Products – Healthcare – Pharmaceutical",
+      "Metals–Iron–Steel","Paper - Packaging - Printing","Plastic and Rubber Industry",
+      "Sanitary - Cleaning Products","Security Equipments","Services","Sporting Equipments - Materials",
+      "Stationery, Schools and Offices","Textile Products","Tourism","White Goods – Home Appliances"
+    ];
+
+    const allCountries = [
+      {code:'tr',name:'Turkey'},{code:'us',name:'United States'},{code:'de',name:'Germany'},{code:'fr',name:'France'},
+      {code:'it',name:'Italy'},{code:'es',name:'Spain'},{code:'cn',name:'China'},{code:'jp',name:'Japan'},
+      {code:'in',name:'India'},{code:'br',name:'Brazil'},{code:'ru',name:'Russia'},{code:'ca',name:'Canada'},
+      {code:'au',name:'Australia'},{code:'gb',name:'United Kingdom'},{code:'mx',name:'Mexico'}
+    ];
+
     const getRequests = () => JSON.parse(localStorage.getItem("requests") || "[]");
+
     const requestContainer = document.getElementById("requestItems");
-    let visible = 15, activeTab = "all";
+    const searchInput = document.getElementById("searchInput");
+    const categoryList = document.getElementById("categoryList");
+    const countryList = document.getElementById("countryList");
+    const categorySearch = document.getElementById("categorySearch");
+    const countrySearch = document.getElementById("countrySearch");
 
-    /* ✅ Kategori ve ülkeleri json’dan çek */
-    async function loadLists(){
-      const [cat,cou]=await Promise.all([
-        fetch("data/categories.json").then(r=>r.json()).catch(()=>[]),
-        fetch("data/countries.json").then(r=>r.json()).catch(()=>[])
-      ]);
-      renderCats(cat); renderCountries(cou);
-    }
+    let visibleRequests = 15;
+    let activeTab = "all";
+    let selectedCategory = null;
+    let selectedCountry = null;
 
-    function renderCats(arr){
-      const ul = document.getElementById("categoryList");
-      ul.innerHTML = "";
-      arr.slice(0,10).forEach(c=>{
-        const li=document.createElement("li");
-        li.innerHTML=`<a href="#">${c}</a>`;
-        li.onclick=()=>{filterCat=c;renderRequests();};
-        ul.append(li);
+    // ✅ URL parametreleri (orijinal davranış)
+    const params = new URLSearchParams(window.location.search);
+    const urlCategory = params.get("category");
+    const urlCountry = params.get("country");
+    if (urlCategory) selectedCategory = urlCategory;
+    if (urlCountry) selectedCountry = urlCountry;
+
+    // ✅ Kategorileri oluştur (adet sayıları korunur)
+    function renderCategories(requests) {
+      const term = (categorySearch.value || "").toLowerCase();
+      const filtered = categories.filter(c => c.toLowerCase().includes(term));
+      categoryList.innerHTML = "";
+      filtered.forEach(cat => {
+        const count = requests.filter(r => r.category === cat).length;
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="#">${cat}<span class="count">(${count})</span></a>`;
+        li.addEventListener("click", () => {
+          selectedCategory = cat;
+          selectedCountry = null;
+          renderRequests();
+        });
+        categoryList.appendChild(li);
       });
     }
 
-    function renderCountries(arr){
-      const ul = document.getElementById("countryList");
-      ul.innerHTML="";
-      arr.slice(0,10).forEach(c=>{
-        const code=(c.code||c.slice(0,2)).toLowerCase();
-        const name=c.name||c;
-        const li=document.createElement("li");
-        li.innerHTML=`<a href="#"><span><img class="flag" loading="lazy" src="https://flagcdn.com/h20/${code}.png"> ${name}</span></a>`;
-        li.onclick=()=>{filterCountry=name;renderRequests();};
-        ul.append(li);
+    // ✅ Ülkeleri oluştur (bayraklar lazy-load + adet sayıları korunur)
+    function renderCountries(requests) {
+      const term = (countrySearch.value || "").toLowerCase();
+      const filtered = allCountries.filter(c => c.name.toLowerCase().includes(term));
+      countryList.innerHTML = "";
+      filtered.forEach(c => {
+        const count = requests.filter(r => r.country === c.name).length;
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <a href="#">
+            <span style="display:flex;align-items:center;gap:6px;">
+              <img class="flag" src="https://flagcdn.com/h20/${c.code}.png" alt="${c.name}" loading="lazy">
+              ${c.name}
+            </span>
+            <span class="count">(${count})</span>
+          </a>`;
+        li.addEventListener("click", () => {
+          selectedCountry = c.name;
+          selectedCategory = null;
+          renderRequests();
+        });
+        countryList.appendChild(li);
       });
     }
 
-    /* ✅ İlan kartları – tıklanabilir ve mesaj butonlu */
-    function renderRequests(){
-      const reqs = getRequests();
-      const filtered=reqs.filter(r=>activeTab==="all"||r.type===activeTab);
-      requestContainer.innerHTML="";
-      filtered.slice(0,visible).forEach(r=>{
-        const div=document.createElement("div");
-        div.className="request-card";
-        div.innerHTML=`
-          <h5>${r.title}</h5>
-          <p>${r.description||""}</p>
-          <small>${r.country} · ${r.category}</small><br>
-          <button class="msg-btn" onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(r.ownerEmail)}'">Message</button>
+    // ✅ İlanları render et — tıklanınca detay + Message butonu
+    function renderRequests() {
+      const allReq = getRequests();
+      renderCategories(allReq);
+      renderCountries(allReq);
+
+      const term = (searchInput.value || "").toLowerCase();
+      const filtered = allReq.filter(r =>
+        (activeTab === "all" || r.type === activeTab) &&
+        (!selectedCategory || r.category === selectedCategory) &&
+        (!selectedCountry || r.country === selectedCountry) &&
+        ((r.title || "").toLowerCase().includes(term) || (r.description || "").toLowerCase().includes(term))
+      );
+
+      requestContainer.innerHTML = "";
+      filtered.slice(0, visibleRequests).forEach(r => {
+        const div = document.createElement("div");
+        div.className = "request-card";
+
+        // ✅ Kart tıklanınca detay sayfasına git
+        div.onclick = () => {
+          window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}`;
+        };
+
+        // Mesaj butonu: eğer ownerEmail/contactEmail var ise göster
+        const msgTo = r.ownerEmail || r.contactEmail || r.email || "";
+        const msgBtn = msgTo
+          ? `<button class="msg-btn" onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(msgTo)}'">Message</button>`
+          : "";
+
+        div.innerHTML = `
+          <h5>${r.title || ""}</h5>
+          <p>${r.description || ""}</p>
+          <small>${r.country || ""} · ${r.category || ""}</small><br>
+          ${msgBtn}
         `;
-        div.onclick=()=>window.location.href=`request-detail.html?id=${encodeURIComponent(r.id)}`;
-        requestContainer.append(div);
+        requestContainer.appendChild(div);
       });
+
+      document.getElementById("showMoreRequests").style.display =
+        filtered.length > visibleRequests ? "block" : "none";
     }
 
-    document.getElementById("showMoreRequests").onclick=()=>{visible+=10;renderRequests();};
-    document.getElementById("tabAll").onclick=()=>{activeTab="all";renderRequests();};
-    document.getElementById("tabBuy").onclick=()=>{activeTab="buy";renderRequests();};
-    document.getElementById("tabSell").onclick=()=>{activeTab="sell";renderRequests();};
+    // ✅ Etkileşimler (orijinal akış)
+    document.getElementById("showMoreRequests").addEventListener("click", () => {
+      visibleRequests += 10;
+      renderRequests();
+    });
 
-    loadLists().then(renderRequests);
+    searchInput.addEventListener("input", renderRequests);
+
+    ["tabAll","tabBuy","tabSell"].forEach(id=>{
+      document.getElementById(id).addEventListener("click", e=>{
+        document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+        e.target.classList.add("active");
+        activeTab = id==="tabAll" ? "all" : id==="tabBuy" ? "buy" : "sell";
+        renderRequests();
+      });
+    });
+
+    // ✅ İlk render
+    renderRequests();
   </script>
 </body>
 </html>
