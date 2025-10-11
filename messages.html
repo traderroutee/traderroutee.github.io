@@ -5,22 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Messages – Trader Route</title>
 
-  <!-- ✅ SEO -->
   <meta name="description" content="Private chat between Trader Route members. Communicate securely with buyers and suppliers.">
-  <meta name="keywords" content="Trader Route, B2B, messages, trading, buyers, sellers, private chat, e-commerce">
   <meta name="author" content="Trader Route">
   <link rel="icon" href="assets/logos.png" />
-
-  <!-- ✅ EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    (function(){
-      // 🔧 Kendi EmailJS bilgilerinizi girin:
-      emailjs.init("YOUR_PUBLIC_KEY"); // örnek: "4Vg8HnX1wYZAbC"
-      window.emailServiceID = "YOUR_SERVICE_ID"; // örnek: "service_traderroute"
-      window.emailTemplateID = "YOUR_TEMPLATE_ID"; // örnek: "template_notify_message"
-    })();
-  </script>
 
   <style>
     :root{
@@ -52,14 +39,8 @@
       gap:10px;
       cursor:pointer;
     }
-    header img{
-      height:50px;
-    }
-    header .tagline{
-      font-size:14px;
-      color:#555;
-      font-weight:600;
-    }
+    header img{height:50px;}
+    header .tagline{font-size:14px;color:#555;font-weight:600;}
     .chat{
       max-width:900px;
       margin:30px auto;
@@ -139,7 +120,6 @@
   </style>
 </head>
 <body>
-  <!-- ✅ Header -->
   <header>
     <div class="brand" onclick="location.href='index.html'">
       <img src="assets/logos.png" alt="Trader Route Logo" />
@@ -147,7 +127,6 @@
     </div>
   </header>
 
-  <!-- ✅ Chat Layout -->
   <div class="chat">
     <div class="head" id="who">Chat</div>
     <div class="list" id="list"></div>
@@ -159,7 +138,7 @@
   </div>
 
   <script>
-    // === USER SESSION ===
+    // === User Info ===
     const me = JSON.parse(localStorage.getItem("loggedUser") || '{"email":"me@traderroute.com"}');
     const to = new URLSearchParams(location.search).get("to") || "unknown@user.com";
 
@@ -179,7 +158,7 @@
       localStorage.setItem("messages", JSON.stringify(arr));
     }
 
-    // === Render Chat ===
+    // === Render Messages ===
     function render(){
       const all = getMessages();
       list.innerHTML = "";
@@ -196,7 +175,7 @@
       list.scrollTop = list.scrollHeight;
     }
 
-    // === Send Message ===
+    // === Send Message (Local + Server Email Notify) ===
     function sendMessage(){
       const text = msg.value.trim();
       if(!text) return;
@@ -205,26 +184,23 @@
       saveMessages(all);
       msg.value = "";
       render();
-      notifyByEmail(to, text);
-    }
 
-    // === Email Notification (EmailJS) ===
-    function notifyByEmail(target, text){
-      emailjs.send(window.emailServiceID, window.emailTemplateID, {
-        to_email: target,
-        from_email: me.email,
-        message: text,
-      }).then(
-        () => {
-          console.log("📧 Email sent to", target);
-          status.textContent = "Email notification sent successfully ✔";
-          setTimeout(()=>status.textContent="",3000);
-        },
-        (err) => {
-          console.error("❌ Email failed", err);
-          status.textContent = "⚠ Email notification failed";
-        }
-      );
+      // ✅ Send to server (email notification + store)
+      fetch("server/send_message.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ from: me.email, to, text })
+      })
+      .then(res => res.json())
+      .then(d => {
+        console.log("Server response:", d);
+        status.textContent = d.message || "Message sent.";
+        setTimeout(()=>status.textContent="",3000);
+      })
+      .catch(err => {
+        console.error("Send error:", err);
+        status.textContent = "Error sending message.";
+      });
     }
 
     send.onclick = sendMessage;
