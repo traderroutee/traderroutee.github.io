@@ -3,235 +3,397 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Post a Trade Request - TraderRoute</title>
+  <title>Post a Request — Trader Route</title>
 
-  <link rel="icon" href="assets/logo.png" />
-  <link rel="stylesheet" href="style.css" />
+  <!-- 🌐 SEO META TAGS -->
+  <meta name="description" content="Post your trade requests on Trader Route and reach global buyers and sellers easily.">
+  <meta name="keywords" content="Trader Route, post trade, requests, global trade, B2B, e-commerce">
+  <meta name="author" content="Trader Route">
+  <link rel="canonical" href="https://traderroute.com/request-form.html">
+
+  <!-- ⚡ PERFORMANCE -->
+  <link rel="preload" href="assets/logos.png" as="image" />
+  <link rel="icon" href="assets/logos.png" type="image/png" />
 
   <style>
+    :root {
+      --brand-green: #008b6a;
+      --brand-dark: #006b52;
+      --light-bg: #f8f9fa;
+    }
+
     body {
       font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: var(--light-bg);
       margin: 0;
-      background-color: #f5f6f8;
       color: #222;
     }
 
     header {
       background: #fff;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 12px 30px;
-      border-bottom: 1px solid #ddd;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      align-items: center;
+      padding: 14px 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
-    header img { height: 50px; }
+    header img {
+      height: 46px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      color: #555;
+      font-weight: 500;
+    }
 
     nav a {
+      margin: 0 14px;
       text-decoration: none;
-      color: #333;
-      font-weight: 600;
-      margin: 0 15px;
-      transition: 0.3s;
-    }
-    nav a:hover { color: #007bff; }
-
-    main {
-      max-width: 700px;
-      margin: 50px auto;
-      background: #fff;
-      padding: 35px;
-      border-radius: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      color: #222;
+      font-weight: 500;
+      transition: color 0.25s ease;
     }
 
-    h1 {
-      text-align: center;
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 25px;
-      color: #111;
+    nav a:hover {
+      color: var(--brand-green);
     }
 
-    form label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f1f1;
+      border-radius: 20px;
+      padding: 5px 10px;
+    }
+
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      padding: 5px;
       font-size: 14px;
+      width: 150px;
     }
 
-    form input, form select, form textarea {
+    .login-btn, .join-btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: 0.25s;
+    }
+
+    .login-btn {
+      background: #f1f1f1;
+      padding: 7px 14px;
+    }
+
+    .login-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .join-btn {
+      background: var(--brand-green);
+      color: #fff;
+      padding: 8px 15px;
+    }
+
+    .join-btn:hover {
+      background: var(--brand-dark);
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--brand-green);
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 12px;
+    }
+
+    input, select, textarea {
       width: 100%;
       padding: 10px;
-      margin-bottom: 18px;
-      border-radius: 6px;
       border: 1px solid #ccc;
+      border-radius: 6px;
       font-size: 14px;
+      margin-top: 6px;
     }
 
-    form textarea {
+    textarea {
       resize: vertical;
-      height: 100px;
     }
 
-    button {
-      background: #007bff;
+    .btn {
+      background: var(--brand-green);
       color: #fff;
       border: none;
-      padding: 12px 20px;
+      padding: 10px 16px;
       border-radius: 8px;
-      font-weight: 600;
       cursor: pointer;
+      font-weight: 600;
+      transition: 0.25s;
       width: 100%;
-      transition: 0.3s;
+      margin-top: 18px;
     }
 
-    button:hover {
-      background: #005ec4;
+    .btn:hover {
+      background: var(--brand-dark);
     }
 
-    .success-message {
+    .success {
       display: none;
       text-align: center;
-      background: #d4edda;
-      color: #155724;
+      background: var(--brand-green);
+      color: #fff;
       padding: 12px;
       border-radius: 6px;
-      margin-bottom: 20px;
-      border: 1px solid #c3e6cb;
-      font-weight: 600;
+      margin-top: 15px;
+      font-weight: 500;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
-      background: #fff;
+      padding: 25px;
+      color: #777;
       border-top: 1px solid #ddd;
-      color: #555;
       margin-top: 60px;
-    }
-
-    footer img {
-      height: 40px;
-      display: block;
-      margin: 0 auto 10px;
-    }
-
-    @media (max-width: 768px) {
-      main { margin: 30px 15px; padding: 25px; }
+      background: #fff;
     }
   </style>
 </head>
 
 <body>
   <header>
-    <a href="index.html"><img src="assets/logos.png" alt="TraderRoute Logo" /></a>
+    <div class="logo-container">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
     <nav>
       <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
       <a href="requests.html">Requests</a>
-      <a href="register.html">Register</a>
-      <a href="login.html">Login</a>
       <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
     </nav>
+    <div class="header-right" style="display:flex;align-items:center;gap:10px;">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <button style="background:none;border:none;cursor:pointer;">🔍</button>
+      </div>
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+    </div>
   </header>
 
-  <main>
-    <h1>Post a Trade Request</h1>
-
-    <div id="successMsg" class="success-message">
-      ✅ Your request has been successfully posted.
-    </div>
-
+  <div class="container">
+    <h2>Post a New Request</h2>
     <form id="requestForm">
-      <label for="title">Title</label>
-      <input type="text" id="title" placeholder="Enter request title" required />
+      <label>Request Title</label>
+      <input type="text" id="title" required>
 
-      <label for="description">Description</label>
-      <textarea id="description" placeholder="Describe your trade request..." required></textarea>
+      <label>Description</label>
+      <textarea id="description" rows="5" required></textarea>
 
-      <label for="category">Category</label>
+      <label>Category</label>
       <select id="category" required>
-        <option value="">Select Category</option>
+        <option value="">Select a Category</option>
+        <option>Agriculture</option>
+        <option>Apparel & Fashion</option>
+        <option>Automobiles & Motorcycles</option>
+        <option>Beauty & Personal Care</option>
+        <option>Business Services</option>
+        <option>Chemicals</option>
+        <option>Computer Hardware & Software</option>
+        <option>Construction & Real Estate</option>
+        <option>Consumer Electronics</option>
+        <option>Electrical Equipment & Supplies</option>
+        <option>Energy</option>
+        <option>Environment</option>
+        <option>Food & Beverage</option>
+        <option>Furniture</option>
+        <option>Gifts & Crafts</option>
+        <option>Hardware</option>
+        <option>Health & Medical</option>
+        <option>Home & Garden</option>
+        <option>Industrial Machinery</option>
+        <option>Jewelry & Watches</option>
+        <option>Lights & Lighting</option>
+        <option>Luggage, Bags & Cases</option>
+        <option>Mechanical Parts & Fabrication</option>
+        <option>Minerals & Metallurgy</option>
+        <option>Office Supplies</option>
+        <option>Packaging & Printing</option>
+        <option>Security & Protection</option>
+        <option>Service Equipment</option>
+        <option>Sports & Entertainment</option>
+        <option>Telecommunications</option>
+        <option>Textiles & Leather Products</option>
+        <option>Tools</option>
+        <option>Toys & Hobbies</option>
+        <option>Transportation</option>
+        <option>Travel & Tourism</option>
+        <option>Others</option>
       </select>
 
-      <label for="country">Country</label>
+      <label>Country</label>
       <select id="country" required>
-        <option value="">Select Country</option>
+        <option value="">Select a Country</option>
+        <option>Afghanistan</option>
+        <option>Albania</option>
+        <option>Algeria</option>
+        <option>Andorra</option>
+        <option>Angola</option>
+        <option>Argentina</option>
+        <option>Armenia</option>
+        <option>Australia</option>
+        <option>Austria</option>
+        <option>Azerbaijan</option>
+        <option>Bangladesh</option>
+        <option>Belarus</option>
+        <option>Belgium</option>
+        <option>Brazil</option>
+        <option>Bulgaria</option>
+        <option>Canada</option>
+        <option>Chile</option>
+        <option>China</option>
+        <option>Colombia</option>
+        <option>Costa Rica</option>
+        <option>Croatia</option>
+        <option>Czech Republic</option>
+        <option>Denmark</option>
+        <option>Egypt</option>
+        <option>Estonia</option>
+        <option>Finland</option>
+        <option>France</option>
+        <option>Germany</option>
+        <option>Greece</option>
+        <option>Hong Kong</option>
+        <option>Hungary</option>
+        <option>Iceland</option>
+        <option>India</option>
+        <option>Indonesia</option>
+        <option>Iran</option>
+        <option>Iraq</option>
+        <option>Ireland</option>
+        <option>Israel</option>
+        <option>Italy</option>
+        <option>Japan</option>
+        <option>Jordan</option>
+        <option>Kazakhstan</option>
+        <option>Kenya</option>
+        <option>Kuwait</option>
+        <option>Kyrgyzstan</option>
+        <option>Latvia</option>
+        <option>Lebanon</option>
+        <option>Lithuania</option>
+        <option>Luxembourg</option>
+        <option>Malaysia</option>
+        <option>Mexico</option>
+        <option>Monaco</option>
+        <option>Morocco</option>
+        <option>Nepal</option>
+        <option>Netherlands</option>
+        <option>New Zealand</option>
+        <option>Nigeria</option>
+        <option>Norway</option>
+        <option>Pakistan</option>
+        <option>Peru</option>
+        <option>Philippines</option>
+        <option>Poland</option>
+        <option>Portugal</option>
+        <option>Qatar</option>
+        <option>Romania</option>
+        <option>Russia</option>
+        <option>Saudi Arabia</option>
+        <option>Serbia</option>
+        <option>Singapore</option>
+        <option>Slovakia</option>
+        <option>Slovenia</option>
+        <option>South Africa</option>
+        <option>South Korea</option>
+        <option>Spain</option>
+        <option>Sri Lanka</option>
+        <option>Sweden</option>
+        <option>Switzerland</option>
+        <option>Taiwan</option>
+        <option>Thailand</option>
+        <option>Tunisia</option>
+        <option>Turkey</option>
+        <option>Ukraine</option>
+        <option>United Arab Emirates</option>
+        <option>United Kingdom</option>
+        <option>United States</option>
+        <option>Uruguay</option>
+        <option>Uzbekistan</option>
+        <option>Venezuela</option>
+        <option>Vietnam</option>
+        <option>Zambia</option>
       </select>
 
-      <label for="type">Type</label>
+      <label>Request Type</label>
       <select id="type" required>
-        <option value="buy">Buy Request</option>
-        <option value="sell">Sell Request</option>
+        <option value="">Select Type</option>
+        <option>Buy</option>
+        <option>Sell</option>
       </select>
 
-      <button type="submit">Submit Request</button>
+      <button type="submit" class="btn">Submit Request</button>
+      <div class="success" id="successMsg">✅ Your request has been successfully posted.</div>
     </form>
-  </main>
+  </div>
 
   <footer>
-    <img src="assets/logos.png" alt="TraderRoute Logo" />
-    <p>© 2025 TraderRoute. All rights reserved.</p>
+    © 2025 Trader Route — All Rights Reserved.
   </footer>
 
   <script>
-    const categories = [
-      "Agricultural Machinery","Agriculture Industry","Automotive","Baby Products and Accessories",
-      "Chemical Industry","Clothing - Fashion","Commercial Activities","Construction and Building Industry",
-      "Cosmetic Products","Data and Communication Technology","Defense Industry","Electric – Electronic",
-      "Energy Sector","Entertainment Hobbies","Environment and Recycling","Food Industry","Forestry Products",
-      "Furniture","Furniture – Wood Products","Giftware – Promotions","Heating - Cooling - Ventilation",
-      "Horeca - Hospitality Industry","Husbandry Industry","Industrial Products","Jewelry",
-      "Kitchenware–Glassware","Leather Products & Shoes","Machinery Industry","Marble–Mining",
-      "Marine Vehicles and Equipment","Medical Products – Healthcare – Pharmaceutical",
-      "Metals–Iron–Steel","Paper - Packaging - Printing","Plastic and Rubber Industry",
-      "Sanitary - Cleaning Products","Security Equipments","Services","Sporting Equipments - Materials",
-      "Stationery, Schools and Offices","Textile Products","Tourism","White Goods – Home Appliances"
-    ];
-
-    const countries = [
-      "Turkey","United States","Germany","France","Italy","Spain","China","Japan","India","Brazil",
-      "Russia","Canada","Australia","United Kingdom","Netherlands","Sweden","Switzerland","United Arab Emirates","Saudi Arabia","Egypt"
-    ];
-
-    const catSelect = document.getElementById("category");
-    const countrySelect = document.getElementById("country");
-    categories.forEach(cat => {
-      const opt = document.createElement("option");
-      opt.value = cat;
-      opt.textContent = cat;
-      catSelect.appendChild(opt);
-    });
-    countries.forEach(c => {
-      const opt = document.createElement("option");
-      opt.value = c;
-      opt.textContent = c;
-      countrySelect.appendChild(opt);
-    });
-
-    const requestForm = document.getElementById("requestForm");
-    const successMsg = document.getElementById("successMsg");
-
-    function getRequests() {
-      return JSON.parse(localStorage.getItem("requests") || "[]");
-    }
-
-    function saveRequests(requests) {
-      localStorage.setItem("requests", JSON.stringify(requests));
-    }
-
-    requestForm.addEventListener("submit", (e) => {
+    const form = document.getElementById("requestForm");
+    form.addEventListener("submit", function(e) {
       e.preventDefault();
+
       const title = document.getElementById("title").value.trim();
       const description = document.getElementById("description").value.trim();
       const category = document.getElementById("category").value;
       const country = document.getElementById("country").value;
       const type = document.getElementById("type").value;
 
-      if (!title || !description || !category || !country) return;
+      if (!title || !description || !category || !country || !type) {
+        alert("Please fill all fields.");
+        return;
+      }
 
-      const newReq = {
+      if (description.length < 20) {
+        alert("Please provide a more detailed description.");
+        return;
+      }
+
+      const requests = JSON.parse(localStorage.getItem("requests") || "[]");
+      const newRequest = {
+        id: Date.now(),
         title,
         description,
         category,
@@ -240,12 +402,13 @@
         date: new Date().toISOString()
       };
 
-      const requests = getRequests();
-      requests.push(newReq);
-      saveRequests(requests);
+      requests.push(newRequest);
+      localStorage.setItem("requests", JSON.stringify(requests));
 
+      const successMsg = document.getElementById("successMsg");
       successMsg.style.display = "block";
-      requestForm.reset();
+
+      form.reset();
 
       setTimeout(() => {
         successMsg.style.display = "none";
