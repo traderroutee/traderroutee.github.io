@@ -1,59 +1,268 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Pricing — Trader Route</title>
-<link rel="icon" href="assets/logos.png">
-<style>
-  body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f6f8fa}
-  header{display:flex;align-items:center;justify-content:space-between;padding:12px 40px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
-  .container{max-width:1000px;margin:30px auto;padding:0 20px}
-  .plans{display:flex;gap:18px;flex-wrap:wrap}
-  .plan{background:#fff;padding:20px;border-radius:12px;flex:1;min-width:220px;box-shadow:0 6px 18px rgba(0,0,0,0.05)}
-  .price{font-size:28px;font-weight:700;color:#008b6a}
-  .btn{display:inline-block;padding:10px 14px;border-radius:8px;background:#008b6a;color:#fff;text-decoration:none;margin-top:12px}
-  footer{text-align:center;padding:20px;background:#111;color:#eee;margin-top:30px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — Trader Route</title>
+
+  <!-- 🌐 SEO Meta Tags -->
+  <meta name="description" content="Compare Trader Route pricing plans — start for free, upgrade to Pro for premium features, or contact us for enterprise solutions.">
+  <meta name="keywords" content="Trader Route, pricing, plans, B2B, import export, pro membership, enterprise">
+  <meta name="author" content="Trader Route">
+  <link rel="canonical" href="https://traderroute.com/pricing.html">
+
+  <!-- 🔧 Optimization -->
+  <link rel="icon" href="assets/logos.png" type="image/png" />
+  <link rel="preload" href="assets/logos.png" as="image" />
+
+  <style>
+    :root {
+      --brand-green: #008b6a;
+      --brand-dark: #006b52;
+      --light-bg: #f8f9fa;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      background: var(--light-bg);
+      color: #222;
+    }
+
+    /* === HEADER === */
+    header {
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header img {
+      height: 46px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    nav a {
+      margin: 0 14px;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      transition: color 0.25s ease;
+    }
+
+    nav a:hover {
+      color: var(--brand-green);
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #f1f1f1;
+      border-radius: 20px;
+      padding: 5px 10px;
+    }
+
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      padding: 5px;
+      font-size: 14px;
+      width: 150px;
+    }
+
+    .login-btn, .join-btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: 0.25s;
+    }
+
+    .login-btn {
+      background: #f1f1f1;
+      padding: 7px 14px;
+    }
+
+    .login-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .join-btn {
+      background: var(--brand-green);
+      color: #fff;
+      padding: 8px 15px;
+    }
+
+    .join-btn:hover {
+      background: var(--brand-dark);
+    }
+
+    /* === PRICING SECTION === */
+    .pricing-container {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .plan {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 30px;
+      flex: 1 1 300px;
+      max-width: 340px;
+      text-align: center;
+      transition: transform .25s ease;
+    }
+
+    .plan:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    .plan h3 {
+      color: var(--brand-green);
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--brand-green);
+      margin: 10px 0;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    ul li {
+      margin: 8px 0;
+      color: #555;
+    }
+
+    .btn {
+      background: var(--brand-green);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.25s ease;
+    }
+
+    .btn:hover {
+      background: var(--brand-dark);
+      transform: scale(1.05);
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: #fff;
+      text-align: center;
+      padding: 25px;
+      color: #666;
+      border-top: 1px solid #ddd;
+      margin-top: 60px;
+      font-size: 14px;
+    }
+
+    @media(max-width:900px){
+      .pricing-container{flex-direction:column;align-items:center}
+    }
+  </style>
 </head>
+
 <body>
-<header>
-  <img src="assets/logos.png" alt="Trader Route" style="height:48px">
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="companies.html">Companies</a>
-    <a href="requests.html">Requests</a>
-    <a href="pricing.html">Pricing</a>
-  </nav>
-</header>
+  <!-- HEADER -->
+  <header>
+    <div class="logo-container">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
 
-<div class="container">
-  <h1>Pricing Plans</h1>
-  <p>Choose a plan that fits your business needs.</p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
 
-  <div class="plans">
+    <div class="header-right" style="display:flex;align-items:center;gap:10px;">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <button style="background:none;border:none;cursor:pointer;">🔍</button>
+      </div>
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+    </div>
+  </header>
+
+  <!-- PRICING -->
+  <section class="pricing-container">
     <div class="plan">
       <h3>Basic</h3>
-      <div class="price">Free</div>
-      <p>Publish product listings, view public requests, basic support.</p>
-      <a class="btn" href="register.html">Start Free</a>
+      <div class="price">$0</div>
+      <ul>
+        <li>Free registration</li>
+        <li>Access to global requests</li>
+        <li>Limited message access</li>
+      </ul>
+      <button class="btn">Get Started</button>
     </div>
 
     <div class="plan">
-      <h3>Pro</h3>
-      <div class="price">$29 / month</div>
-      <p>Priority listing, access to premium requests, dedicated support.</p>
-      <a class="btn" href="register.html">Get Pro</a>
+      <h3>Pro <span style="background:var(--brand-green);color:#fff;padding:2px 6px;border-radius:6px;font-size:12px;">Popular</span></h3>
+      <div class="price">$29/mo</div>
+      <ul>
+        <li>Unlimited requests</li>
+        <li>Direct messaging with buyers</li>
+        <li>Priority visibility in search</li>
+      </ul>
+      <button class="btn">Upgrade to Pro</button>
     </div>
 
     <div class="plan">
       <h3>Enterprise</h3>
-      <div class="price">Contact Us</div>
-      <p>Custom integrations, bulk uploads, account manager.</p>
-      <a class="btn" href="contact.html">Contact Sales</a>
+      <div class="price">Custom</div>
+      <ul>
+        <li>Dedicated account manager</li>
+        <li>Advanced analytics</li>
+        <li>API integration</li>
+      </ul>
+      <button class="btn">Contact Us</button>
     </div>
-  </div>
-</div>
+  </section>
 
-<footer>© 2025 Trader Route</footer>
+  <footer>
+    © 2025 Trader Route — All Rights Reserved.
+  </footer>
 </body>
 </html>
