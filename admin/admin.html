@@ -41,6 +41,11 @@
     .sidebar{position:static;width:auto}
     .main{margin:0}
   }
+  // ESKİ:
+// const url = kind==='categories' ? 'data/categories.json' : 'data/countries.json';
+
+// YENİ:
+const url = kind==='categories' ? `${DATA_BASE}categories.json` : `${DATA_BASE}countries.json`;
 </style>
 </head>
 <body>
