@@ -69,6 +69,18 @@
 <body>
   <!-- HEADER -->
   <header>
+    <!-- 👤 USER ICON MENU — EKLEME -->
+<div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
+  <img id="userIcon" src="assets/user-icon.png" alt="User"
+       style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+  <div id="userDropdown"
+       style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
+              box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden">
+    <a href="profile.html"   style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+    <a href="messages.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+    <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+  </div>
+</div>
     <div class="brand" onclick="location.href='index.html'">
       <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy" />
       <span class="tagline">The Silk Road of E-Commerce</span>
