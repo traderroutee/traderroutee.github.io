@@ -198,12 +198,18 @@
         return;
       }
 
-      const all=JSON.parse(localStorage.getItem("requests")||"[]");
-      all.push({
-        title, description, category, country, type,
-        user:currentUser.email,
-        date:new Date().toISOString()
-      });
+      const all = JSON.parse(localStorage.getItem("requests") || "[]");
+all.push({
+  id: Date.now(), // ✅ her ilana benzersiz ID eklenir
+  title,
+  description,
+  category,
+  country,
+  type,
+  user: currentUser.email,
+  date: new Date().toISOString()
+});
+    
       localStorage.setItem("requests", JSON.stringify(all));
       status.textContent="Your request has been submitted!";
       status.style.color="green";
