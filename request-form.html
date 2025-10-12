@@ -164,12 +164,6 @@
       <div class="status" id="status"></div>
     </form>
   </section>
-
-  // 📌 Yeni ilan eklendikten hemen sonra ekle
-localStorage.setItem("requests", JSON.stringify(all));
-
-// 🔁 Sayaçları güncellemek için basit bir tetikleme:
-window.dispatchEvent(new Event("storage"));
   
   <footer>© 2025 Trader Route — Global Trade Platform</footer>
 
@@ -178,13 +172,18 @@ window.dispatchEvent(new Event("storage"));
     const form=document.getElementById("requestForm");
     const status=document.getElementById("status");
 
-    form.addEventListener("submit", e=>{
-      e.preventDefault();
-      const title=document.getElementById("title").value.trim();
-      const description=document.getElementById("description").value.trim();
-      const category=document.getElementById("category").value;
-      const country=document.getElementById("country").value;
-      const type=document.getElementById("type").value;
+   form.addEventListener("submit", function(e){
+  e.preventDefault();
+  // ... burada formdan veriler alınır
+  all.push(newRequest);
+  localStorage.setItem("requests", JSON.stringify(all));
+
+  // 🔁 Sayaçları anında güncelle
+  window.dispatchEvent(new Event("storage"));
+
+  alert("Your request has been created!");
+  location.href = "requests.html";
+});
 
       if(!title||!description||!category||!country||!type){
         status.textContent="Please fill all fields.";
