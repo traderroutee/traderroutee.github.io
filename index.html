@@ -79,65 +79,68 @@
     .footer-bottom{text-align:center;background:#000;color:#fff;padding:10px;font-size:13px}
 
     /* === MOBILE === */
-    @media (max-width:900px){
-      .main-section{flex-direction:column;text-align:center}
-      .categories{width:100%}
-      nav{gap:10px}
-    }
-/* === Latest Requests Section === */
-.latest-requests {
-  margin: 60px auto;
-  text-align: center;
+   /* === Latest Requests Table === */
+.requests-table-wrapper {
+  overflow-x: auto;
   max-width: 1100px;
+  margin: 0 auto;
 }
+
+.requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.requests-table th, .requests-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.requests-table th {
+  background: #f5f5f5;
+  font-weight: 700;
+  color: #333;
+}
+
+.requests-table tr:hover {
+  background: #f9f9f9;
+}
+
+.title-col { width: 45%; } /* Request Title geniş tutuldu */
+.title-cell { font-weight: 600; color: #008b6a; }
+
 .latest-requests h2 {
   color: #008b6a;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+  text-align: center;
   font-size: 24px;
 }
-.requests-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  justify-items: center;
-}
-.request-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 20px;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  width: 100%;
-  max-width: 300px;
-}
-.request-card:hover {
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  transform: translateY(-3px);
-}
+
 .view-all {
-  margin-top: 25px;
+  text-align: center;
+  margin-top: 20px;
 }
+
 .view-all button {
   background: #008b6a;
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 10px 20px;
+  padding: 10px 25px;
   cursor: pointer;
   font-weight: 600;
   transition: background 0.3s;
 }
+
 .view-all button:hover {
   background: #006b52;
 }
-    /* === Category Holder (Position Control) === */
-    .cat-holder{position:absolute;transform:translateY(-50%);z-index:5}
-    @media (max-width:900px){
-      .cat-holder{position:static;transform:none;margin-top:-100px;display:flex;justify-content:center}
-      .cat-holder .categories{width:90%}
-    }
   </style>
 </head>
 <body>
@@ -211,10 +214,24 @@
     <button onclick="location.href='requests.html?type=sell'">Seller Offers</button>
     <button onclick="location.href='request-form.html'">Create Free Request</button>
   </div>
-<!-- LATEST REQUESTS SECTION (Yeni eklenti) -->
+<!-- LATEST REQUESTS SECTION (Table Style) -->
 <section class="latest-requests">
   <h2>Latest Trade Requests</h2>
-  <div id="latestRequestsList" class="requests-grid"></div>
+
+  <div class="requests-table-wrapper">
+    <table class="requests-table">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th class="title-col">Request Title</th>
+          <th>Type</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="latestRequestsList"></tbody>
+    </table>
+  </div>
+
   <div class="view-all">
     <button onclick="location.href='requests.html'">View All Requests</button>
   </div>
@@ -229,21 +246,22 @@ document.addEventListener("DOMContentLoaded", function () {
   try { all = JSON.parse(localStorage.getItem("requests") || "[]"); } catch(e) { all = []; }
 
   if (!Array.isArray(all) || all.length === 0) {
-    container.innerHTML = '<p style="text-align:center;color:#666;">No trade requests yet.</p>';
+    container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#666;padding:15px;">No trade requests yet.</td></tr>`;
     return;
   }
 
-  const latest = all.slice(-5).reverse(); // son 5 ilan
+  const latest = all.slice(-5).reverse();
   container.innerHTML = latest.map(req => {
     const id   = encodeURIComponent(req.id || req.title || "");
-    const desc = (req.description || "").slice(0,100) + (req.description?.length>100?"...":"");
+    const desc = (req.title || "Untitled").slice(0, 50) + (req.title?.length > 50 ? "..." : "");
+    const date = req.date || new Date().toLocaleDateString();
     return `
-      <div class="request-card" onclick="location.href='request-detail.html?id=${id}'">
-        <h3>${req.title || "Untitled"}</h3>
-        <p><strong>Type:</strong> ${req.type || "-"}</p>
-        <p><strong>Country:</strong> ${req.country || "-"}</p>
-        <p>${desc}</p>
-      </div>
+      <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
+        <td>${req.country || "-"}</td>
+        <td class="title-cell">${desc}</td>
+        <td>${req.type || "-"}</td>
+        <td>${date}</td>
+      </tr>
     `;
   }).join('');
 });
