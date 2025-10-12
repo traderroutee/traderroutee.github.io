@@ -173,6 +173,8 @@
         const div=document.createElement("div");
         div.className="request-card";
         div.onclick=()=>{
+          const all = JSON.parse(localStorage.getItem("requests") || "[]");
+const visible = all.filter(r => r.approved); // sadece onaylı ilanları göster
   const id = r.id || Date.now(); // ✅ Eğer eski ilanlarda id yoksa geçici üret
   window.location.href = `request-detail.html?id=${encodeURIComponent(id)}&to=${encodeURIComponent(owner)}`;
 };
