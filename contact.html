@@ -1,218 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Discover verified international companies and suppliers on Trader Route. Search by company name, product, or country.">
-  <meta name="keywords" content="Trader Route, Companies, Global Suppliers, Exporters, B2B, International Trade">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact – Trader Route</title>
+
+  <meta name="description" content="Contact Trader Route. Get in touch for business inquiries, partnerships, or support.">
   <meta name="author" content="Trader Route">
-  <title>Trader Route — Verified Companies & Global Partners</title>
-  <link rel="icon" href="assets/logos.png" type="image/png">
-  <link rel="preload" href="assets/logos.png" as="image">
+  <link rel="icon" href="assets/logos.png" />
+
   <style>
-    body {
-      margin: 0;
-      font-family: "Inter", "Segoe UI", Arial, sans-serif;
-      background: #f5f7fa;
-      color: #222;
-    }
+    :root { --green:#008b6a; --green-dark:#006b52; --bg:#f6f8fa; }
+    body { font-family:"Inter","Segoe UI",Arial,sans-serif; margin:0; background:var(--bg); color:#222; }
 
+    /* === HEADER === */
     header {
-      background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      padding: 12px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display:flex; align-items:center; justify-content:space-between;
+      background:#fff; padding:10px 40px; box-shadow:0 2px 8px rgba(0,0,0,.1);
+      position:sticky; top:0; z-index:1000;
     }
+    .logo-container { display:flex; align-items:center; gap:10px; cursor:pointer; }
+    .logo-container img { height:45px; }
+    .logo-text { font-size:15px; color:#555; font-weight:500; }
+    nav { flex:1; display:flex; justify-content:center; align-items:center; gap:20px; }
+    nav a { text-decoration:none; color:#000; font-weight:500; }
+    nav a:hover { color:var(--green); }
+    .header-right {
+      flex:0 0 auto; display:flex; align-items:center; gap:10px;
+      min-width:250px; justify-content:flex-end;
+    }
+    .login-btn,.join-btn {
+      border:none; cursor:pointer; border-radius:6px; font-weight:500; transition:.3s;
+    }
+    .login-btn { background:#f1f1f1; padding:7px 14px; }
+    .login-btn:hover { background:#e0e0e0; }
+    .join-btn { background:var(--green); color:#fff; padding:8px 15px; }
+    .join-btn:hover { background:var(--green-dark); }
 
-    header img {
-      height: 46px;
+    /* === CONTACT SECTION === */
+    .contact-wrapper {
+      max-width:900px;
+      margin:40px auto;
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.08);
+      padding:40px 50px;
     }
-
-    nav a {
-      margin: 0 14px;
-      text-decoration: none;
-      color: #222;
-      font-weight: 500;
-      font-size: 15px;
+    h1 {
+      color:var(--green);
+      text-align:center;
+      font-size:28px;
+      margin-top:0;
     }
-
-    nav a:hover {
-      color: #007bff;
+    .contact-info {
+      text-align:center;
+      color:#555;
+      margin-bottom:30px;
     }
-
-    .search-bar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      padding: 25px;
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      margin: 20px auto;
-      max-width: 1000px;
-      border-radius: 10px;
+    form {
+      display:flex;
+      flex-direction:column;
+      gap:15px;
     }
-
-    input, select {
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-      min-width: 180px;
+    input, textarea {
+      padding:12px 14px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:15px;
+      font-family:inherit;
     }
-
-    button {
-      background: #008b6a;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 18px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.25s;
+    textarea { resize:vertical; min-height:120px; }
+    button[type="submit"] {
+      background:var(--green);
+      color:#fff;
+      border:none;
+      padding:12px;
+      border-radius:8px;
+      font-weight:600;
+      font-size:16px;
+      cursor:pointer;
+      transition:background 0.3s;
     }
-
-    button:hover {
-      background: #006b52;
-    }
-
-    .companies {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto 60px;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-      padding: 18px;
-      transition: 0.25s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 5px 12px rgba(0,0,0,0.08);
-    }
-
-    .card h3 {
-      margin-top: 0;
-      color: #007bff;
-    }
-
-    .card p {
-      font-size: 15px;
-      color: #555;
-    }
+    button[type="submit"]:hover { background:var(--green-dark); }
+    .status { margin-top:10px; font-size:14px; color:#666; text-align:center; }
 
     footer {
-      background: #fff;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      color: #666;
-      border-top: 1px solid #ddd;
+      background:#fff; text-align:center;
+      padding:20px; font-size:14px; color:#666;
+      border-top:1px solid #ddd;
+      margin-top:40px;
     }
 
     @media(max-width:768px){
-      header { flex-direction: column; gap: 10px; }
-      .search-bar { flex-direction: column; padding: 20px; }
-      input, select, button { width: 90%; }
+      header { flex-direction:column; gap:10px; }
+      .contact-wrapper { padding:25px; margin:20px; }
     }
   </style>
 </head>
+
 <body>
+  <!-- ✅ HEADER -->
   <header>
-    <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+    <div class="logo-container" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
+
     <nav>
       <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
       <a href="requests.html">Requests</a>
-      <a href="contact.html">Contact</a>
+      <a href="contact.html" style="color:var(--green);font-weight:700;">Contact</a>
       <a href="pricing.html">Pricing</a>
-      <a href="login.html">Sign In</a>
-      <a href="register.html">Sign Up</a>
     </nav>
+
+    <div class="header-right">
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+
+      <!-- 👤 Kullanıcı Menüsü -->
+      <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
+        <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
+             style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+        <div id="userDropdown"
+             style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
+                    box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+          <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+          <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <section class="search-bar">
-    <input type="text" id="companySearch" placeholder="Search companies by name, country or product...">
-    <select id="countryFilter">
-      <option value="">All Countries</option>
-      <option value="Turkey">Turkey</option>
-      <option value="China">China</option>
-      <option value="Germany">Germany</option>
-      <option value="United States">United States</option>
-      <option value="Italy">Italy</option>
-    </select>
-    <button onclick="filterCompanies()">Search</button>
+  <!-- === CONTACT SECTION === -->
+  <section class="contact-wrapper">
+    <h1>Contact Us</h1>
+    <p class="contact-info">
+      Have a question or partnership idea? Fill out the form below or email us directly at  
+      <strong>support@traderroute.com</strong>.
+    </p>
+
+    <form id="contactForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <input type="text" id="subject" placeholder="Subject" required>
+      <textarea id="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+      <div class="status" id="status"></div>
+    </form>
   </section>
 
-  <section class="companies" id="companiesList">
-    <div class="card">
-      <h3>Global Textiles Co.</h3>
-      <p><strong>Country:</strong> Turkey</p>
-      <p><strong>Products:</strong> Fabrics, Yarn</p>
-    </div>
+  <footer>© 2025 Trader Route — Global Trade Connections</footer>
 
-    <div class="card">
-      <h3>Oceanic Metals Ltd.</h3>
-      <p><strong>Country:</strong> China</p>
-      <p><strong>Products:</strong> Steel, Alloys</p>
-    </div>
-
-    <div class="card">
-      <h3>GreenFoods Export</h3>
-      <p><strong>Country:</strong> Italy</p>
-      <p><strong>Products:</strong> Olive Oil, Pasta, Sauces</p>
-    </div>
-
-    <div class="card">
-      <h3>EuroMachines GmbH</h3>
-      <p><strong>Country:</strong> Germany</p>
-      <p><strong>Products:</strong> Industrial Machinery</p>
-    </div>
-  </section>
-
-  <footer>
-    © 2025 Trader Route — Verified Companies & Global Partners
-  </footer>
-
+  <!-- === JS: Contact Form === -->
   <script>
-    function filterCompanies() {
-      const searchValue = document.getElementById("companySearch").value.toLowerCase();
-      const selectedCountry = document.getElementById("countryFilter").value.toLowerCase();
-      const cards = document.querySelectorAll(".card");
-      let visibleCount = 0;
-
-      cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        const match = (!searchValue || text.includes(searchValue)) &&
-                      (!selectedCountry || text.includes(selectedCountry));
-        card.style.display = match ? "block" : "none";
-        if (match) visibleCount++;
-      });
-
-      if (visibleCount === 0) {
-        document.getElementById("companiesList").insertAdjacentHTML(
-          'beforeend',
-          '<p id="noResults" style="text-align:center;color:#777;">No companies found.</p>'
-        );
-      } else {
-        const msg = document.getElementById("noResults");
-        if (msg) msg.remove();
-      }
-    }
-
-    document.getElementById("companySearch").addEventListener("keyup", e => {
-      if (e.key === "Enter") filterCompanies();
+    const form=document.getElementById("contactForm");
+    const status=document.getElementById("status");
+    form.addEventListener("submit",e=>{
+      e.preventDefault();
+      status.textContent="Sending...";
+      const data={
+        name:form.name?.value||document.getElementById("name").value,
+        email:form.email?.value||document.getElementById("email").value,
+        subject:form.subject?.value||document.getElementById("subject").value,
+        message:form.message?.value||document.getElementById("message").value
+      };
+      console.log("Contact form data:",data);
+      setTimeout(()=>{
+        status.textContent="Message sent successfully! We'll get back to you soon.";
+        form.reset();
+      },1500);
     });
+  </script>
+
+  <!-- === USER MENU CONTROL === -->
+  <script>
+  (function(){
+    const icon=document.getElementById('userIcon');
+    const dropdown=document.getElementById('userDropdown');
+    const loginBtn=document.querySelector("button[onclick*='login.html']");
+    const joinBtn=document.querySelector("button[onclick*='register.html']");
+    const currentUser=JSON.parse(localStorage.getItem('tr_user')||'null');
+    if(currentUser){
+      icon.style.display='inline-block';
+      loginBtn.style.display='none';
+      joinBtn.style.display='none';
+    } else {
+      icon.style.display='none';
+      loginBtn.style.display='';
+      joinBtn.style.display='';
+    }
+    icon?.addEventListener('click',e=>{
+      e.stopPropagation();
+      dropdown.style.display=(dropdown.style.display==='block')?'none':'block';
+    });
+    document.addEventListener('click',e=>{
+      if(!e.target.closest('#userMenuContainer')) dropdown.style.display='none';
+    });
+    window.logoutUser=function(){
+      localStorage.removeItem('tr_user');
+      location.href='index.html';
+    };
+  })();
   </script>
 </body>
 </html>
