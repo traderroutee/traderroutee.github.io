@@ -145,15 +145,16 @@
 
     // ✅ Yeni ilan nesnesi oluştur
     const newRequest = {
-      id: Date.now(),
-      title,
-      description,
-      category,
-      country,
-      type,
-      user: currentUser?.email || "Guest",
-      date: new Date().toISOString()
-    };
+  id: Date.now(),
+  title,
+  description,
+  category,
+  country,
+  type,
+  user: currentUser?.email || "Guest",
+  date: new Date().toISOString(),
+  approved: false // 🟡 Admin onayı olmadan görünmez
+};
 
     // ✅ Kaydet ve güncelle
     requests.push(newRequest);
