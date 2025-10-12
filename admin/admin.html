@@ -119,8 +119,8 @@
     const p = document.getElementById('password').value.trim();
     if (u === 'admin' && p === 'trader2025') {
       loginScreen.style.display = 'none';
-      dashboard.style.display = 'block';
-      showUsers();
+dashboard.style.display = 'block';
+showRequests();
     } else {
       loginError.textContent = 'Invalid username or password!';
     }
