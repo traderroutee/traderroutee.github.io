@@ -175,6 +175,40 @@
     <a class="back" href="requests.html">← Back to Requests</a>
   </main>
 
+  <script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
+  const all = JSON.parse(localStorage.getItem("requests") || "[]");
+  const req = all.find(r => String(r.id) === String(id));
+
+  const container = document.getElementById("requestDetail");
+  if (!req) {
+    container.innerHTML = `<h2 style="color:#007b63;">Request Not Found</h2>`;
+    return;
+  }
+
+  // ISO koddan bayrak bulma
+  const flag = req.country ? `assets/flag/${req.country.toLowerCase()}.png` : 'assets/flag/default.png';
+  const user = req.username || "Unknown User";
+
+  container.innerHTML = `
+    <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
+      <img src="${flag}" onerror="this.src='assets/flag/default.png'" style="width:50px;height:35px;border-radius:4px;object-fit:cover;">
+      <h2 style="margin:0;">${req.title}</h2>
+    </div>
+    <p><strong>Country:</strong> ${req.country}</p>
+    <p><strong>Category:</strong> ${req.category}</p>
+    <p><strong>Posted by:</strong> ${user}</p>
+    <p><strong>Description:</strong><br>${req.description || "-"}</p>
+    <button style="background:#008b6a;color:#fff;padding:10px 18px;border:none;border-radius:6px;cursor:pointer;font-weight:600;margin-top:20px;"
+            onclick="location.href='messages.html?to=${encodeURIComponent(user)}'">
+      Send Message
+    </button>
+  `;
+});
+</script>
+
   <!-- === JS === -->
   <script>
     const urlParams = new URLSearchParams(window.location.search);
