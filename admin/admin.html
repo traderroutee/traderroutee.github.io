@@ -177,6 +177,16 @@
     tbody.appendChild(tr);
   });
 }
+    window.approveRequest = function(id){
+  const all = JSON.parse(localStorage.getItem('requests') || '[]');
+  const index = all.findIndex(r => r.id === id);
+  if(index > -1){
+    all[index].approved = true;
+    localStorage.setItem('requests', JSON.stringify(all));
+    alert('Request approved successfully!');
+    showRequests();
+  }
+};
     const usersTbody = document.getElementById('usersTable');
     const usersMsg = document.getElementById('usersMsg');
     const users = JSON.parse(localStorage.getItem('tr_users') || '[]');
