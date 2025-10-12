@@ -172,7 +172,10 @@
         const owner=r.ownerEmail||r.contactEmail||r.email||"";
         const div=document.createElement("div");
         div.className="request-card";
-        div.onclick=()=>window.location.href=`request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
+        div.onclick=()=>{
+  const id = r.id || Date.now(); // ✅ Eğer eski ilanlarda id yoksa geçici üret
+  window.location.href = `request-detail.html?id=${encodeURIComponent(id)}&to=${encodeURIComponent(owner)}`;
+};
         const msgBtn=owner?`<button class='msg-btn' onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(owner)}'">Message</button>`:"";
         div.innerHTML=`<h5>${r.title||"Untitled Request"}</h5><p>${r.description||""}</p><small>${r.country||""} · ${r.category||""}</small><br>${msgBtn}`;
         requestContainer.appendChild(div);
