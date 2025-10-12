@@ -1,31 +1,43 @@
-/* =============================
-   BASE STYLES
-   ============================= */
+/* =========================
+   TRADER ROUTE GLOBAL STYLES
+   ========================= */
 
-body {
+/* BASE RESET */
+* {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  background-color: #f6f8fa;
+  color: #222;
+  line-height: 1.5;
+}
+
+/* HEADER */
 header {
-  background: #fff;
-  padding: 10px 40px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: nowrap;
+  background: #fff;
+  padding: 10px 40px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .logo-container {
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 }
 
 .logo-container img {
-  height: 42px;
+  height: 45px;
 }
 
 .logo-text {
@@ -35,58 +47,45 @@ header {
 }
 
 nav {
+  flex: 1;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 nav a {
   text-decoration: none;
   color: #000;
   font-weight: 500;
+  transition: color 0.3s;
 }
 
 nav a:hover {
-  color: #008d62;
+  color: #008b6a;
 }
 
+/* HEADER BUTTONS */
 .header-right {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 250px;
+  justify-content: flex-end;
 }
 
-.search-box {
-  display: flex;
-  align-items: center;
-  background: #f1f1f1;
-  border-radius: 20px;
-  padding: 5px 10px;
-}
-
-.search-box input {
+.login-btn, .join-btn {
   border: none;
-  background: none;
-  outline: none;
-  padding: 5px;
-  font-size: 14px;
-  width: 150px;
-}
-
-.search-box button {
-  border: none;
-  background: none;
   cursor: pointer;
-  color: #555;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: .3s;
 }
 
 .login-btn {
   background: #f1f1f1;
-  border: none;
   padding: 7px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
 }
 
 .login-btn:hover {
@@ -94,366 +93,148 @@ nav a:hover {
 }
 
 .join-btn {
-  background: #6c63ff;
-  color: white;
-  border: none;
+  background: #008b6a;
+  color: #fff;
   padding: 8px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
 }
 
 .join-btn:hover {
-  background: #5a53e6;
+  background: #006b52;
 }
 
-/* =============================
-   HERO SECTION
-   ============================= */
-
-.hero {
-  position: relative;
-  height: 500px;
-  background: url("assets/ihracat-haritasi.png") center/cover no-repeat;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding-top: 80px;
-  padding-left: 40px;
-}
-
-.categories {
-  background: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  width: 240px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.categories h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.category-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  margin: 6px 0;
-  color: #444;
-}
-
-.category-item:hover {
-  color: #008d62;
-}
-
-.category-button {
-  background: #000;
-  color: #fff;
-  border: none;
-  width: 100%;
-  padding: 8px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-/* =============================
-   REQUEST BUTTONS SECTION
-   ============================= */
-
-.request-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin: 40px auto;
-  flex-wrap: nowrap;
-  width: 100%;
-  max-width: 900px;
-}
-
-.request-buttons button {
-  background: #008d62;
-  color: white;
-  border: none;
-  padding: 12px 22px;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.3s;
-  flex: 1;
-  min-width: 180px;
-  white-space: nowrap;
-}
-
-.request-buttons button:hover {
-  background: #006c4d;
-}
-
-/* =============================
-   MAIN SECTION
-   ============================= */
-
-.main-section {
-  background: #fff;
-  padding: 60px 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-}
-
-.main-section img {
-  width: 300px;
-  border-radius: 10px;
-}
-
-.main-section h2 {
-  font-size: 24px;
-  margin-bottom: 15px;
-  color: #000;
-}
-
-.main-section p {
-  color: #333;
-  line-height: 1.6;
-  font-size: 15px;
-}
-
-/* =============================
-   SUBSCRIBE SECTION
-   ============================= */
-
-.subscribe-section {
-  background: #f1f1f1;
-  text-align: center;
-  padding: 50px 20px;
-}
-
-.subscribe-section input {
-  padding: 10px;
-  width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-.subscribe-section button {
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* =============================
-   FOOTER
-   ============================= */
-
+/* FOOTER */
 footer {
   background: #fff;
-  display: flex;
-  justify-content: space-around;
-  padding: 40px;
-  font-size: 14px;
-  color: #333;
-  border-top: 1px solid #ddd;
-}
-
-footer div {
-  width: 200px;
-}
-
-footer h4 {
-  margin-bottom: 10px;
-  font-size: 15px;
-  color: #000;
-}
-
-.footer-bottom {
   text-align: center;
-  background: #000;
-  color: #fff;
-  padding: 10px;
-  font-size: 13px;
+  padding: 20px;
+  font-size: 14px;
+  color: #666;
+  border-top: 1px solid #ddd;
+  margin-top: 40px;
 }
 
-/* =============================
-   RESPONSIVE FIXES (KEEP LAYOUT)
-   ============================= */
-
-@media (max-width: 1024px) {
-  header {
-    padding: 10px 20px;
-  }
-
-  .hero {
-    height: 400px;
-    padding-left: 20px;
-  }
-
-  .categories {
-    width: 35%;
-  }
-
-  .request-buttons {
-    gap: 8px;
-  }
-
-  .request-buttons button {
-    padding: 10px 16px;
-    font-size: 14px;
-  }
-
-  .main-section {
-    padding: 40px 20px;
-    gap: 20px;
-  }
-
-  .main-section img {
-    width: 240px;
-  }
+/* SECTIONS AND CONTAINERS */
+section, .container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
-@media (max-width: 768px) {
+/* BUTTONS */
+button {
+  font-family: inherit;
+}
+
+/* RESPONSIVE HEADER */
+@media(max-width: 768px) {
   header {
-    padding: 8px 16px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  nav {
     flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  .logo-container img {
-    height: 36px;
-  }
-
-  .logo-text {
-    font-size: 13px;
-  }
-
-  nav a {
-    font-size: 13px;
-  }
-
-  .search-box input {
-    width: 90px;
-  }
-
-  .hero {
-    height: 350px;
-    padding-top: 60px;
-  }
-
-  .categories {
-    width: 50%;
-  }
-
-  .request-buttons {
-    flex-wrap: nowrap;
-    gap: 6px;
-    justify-content: space-around;
-  }
-
-  .request-buttons button {
-    flex: 1 1 25%;
-    min-width: 70px;
-    font-size: 12px;
-    padding: 8px 10px;
-  }
-
-  .main-section {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .main-section img {
-    width: 200px;
-  }
-
-  footer {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-    padding: 25px;
+    justify-content: center;
   }
 }
 
-@media (max-width: 480px) {
-  .hero {
-    height: 320px;
-  }
+/* =========================
+   === USER MENU INTEGRATION ===
+   ========================= */
 
-  .categories {
-    width: 90%;
-    margin: 0 auto;
-  }
-
-  .request-buttons {
-    flex-wrap: nowrap;
-    gap: 5px;
-    padding: 0 10px;
-  }
-
-  .request-buttons button {
-    flex: 1;
-    font-size: 11px;
-    padding: 7px 5px;
-  }
-
-  .main-section img {
-    width: 160px;
-  }
-
-  footer {
-    padding: 20px;
-  }
-}
-
-/* =============================
-   HAMBURGER MENU STYLES
-   ============================= */
-
-.menu-toggle {
-  display: none;
-  font-size: 26px;
+#userIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   cursor: pointer;
-  color: #000;
+  display: none;
 }
 
-/* Mobil görünüm */
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
+#userMenuContainer {
+  position: relative;
+  display: inline-block;
+  margin-left: 8px;
+}
 
-  nav.nav-menu {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    border-top: 1px solid #ddd;
-    padding: 15px 0;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  }
+#userDropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  width: 180px;
+  z-index: 999;
+  overflow: hidden;
+}
 
-  nav.nav-menu a {
-    padding: 12px;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-  }
+#userDropdown a {
+  display: block;
+  padding: 10px 12px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
 
-  nav.nav-menu.active {
-    display: flex;
-  }
+#userDropdown a:hover {
+  background: #f9f9f9;
+}
 
-  .header-right {
-    display: none;
+/* =========================
+   === COLOR FIX STANDARDIZATION ===
+   ========================= */
+:root {
+  --green: #008b6a;
+  --green-dark: #006b52;
+  --bg: #f6f8fa;
+}
+
+/* =========================
+   === FORMS & INPUTS (GENERAL)
+   ========================= */
+input, select, textarea {
+  font-family: inherit;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 4px rgba(0,139,106,0.3);
+}
+
+/* =========================
+   === SUCCESS & ERROR MESSAGES
+   ========================= */
+.status {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+/* =========================
+   === GLOBAL SPACING FIXES
+   ========================= */
+.wrapper {
+  padding: 40px 50px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  max-width: 900px;
+  margin: 50px auto;
+}
+
+@media(max-width: 768px) {
+  .wrapper {
+    padding: 25px;
+    margin: 20px;
   }
 }
+
+/* =========================
+   === END OF STYLE.CSS FINAL
+   ========================= */
