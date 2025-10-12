@@ -10,123 +10,75 @@
   <link rel="icon" href="assets/logos.png" />
 
   <style>
-    :root{
-      --green:#008b6a;
-      --green-dark:#006b52;
-      --bg:#f6f8fa;
-    }
-    body{
-      font-family:"Inter","Segoe UI",Arial,sans-serif;
-      background:var(--bg);
-      margin:0;
-      color:#222;
-    }
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background:#fff;
-      padding:12px 20px;
-      border-bottom:1px solid #ddd;
-      box-shadow:0 2px 4px rgba(0,0,0,.05);
-      position:sticky;
-      top:0;
-      z-index:10;
-    }
-    header .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      cursor:pointer;
-    }
-    header img{height:50px;}
-    header .tagline{font-size:14px;color:#555;font-weight:600;}
-    .chat{
-      max-width:900px;
-      margin:30px auto;
-      background:#fff;
-      border:1px solid #e5e7eb;
-      border-radius:12px;
-      box-shadow:0 2px 8px rgba(0,0,0,.08);
-      display:flex;
-      flex-direction:column;
-      height:78vh;
-      overflow:hidden;
-    }
-    .head{
-      background:var(--green);
-      color:#fff;
-      padding:14px 18px;
-      font-weight:700;
-    }
-    .list{
-      flex:1;
-      overflow-y:auto;
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .bubble{
-      padding:10px 14px;
-      border-radius:10px;
-      max-width:70%;
-      font-size:14px;
-      line-height:1.4;
-    }
-    .sent{
-      background:var(--green);
-      color:#fff;
-      align-self:flex-end;
-      border-bottom-right-radius:0;
-    }
-    .recv{
-      background:#e9e9e9;
-      color:#111;
-      align-self:flex-start;
-      border-bottom-left-radius:0;
-    }
-    .input{
-      display:flex;
-      gap:10px;
-      padding:14px;
-      border-top:1px solid #e5e7eb;
-    }
-    .input input{
-      flex:1;
-      padding:10px;
-      border:1px solid #ccc;
-      border-radius:6px;
-      font-size:14px;
-    }
-    .input button{
-      background:var(--green);
-      color:#fff;
-      border:none;
-      border-radius:6px;
-      padding:10px 18px;
-      font-weight:700;
-      cursor:pointer;
-    }
-    .input button:hover{
-      background:var(--green-dark);
-    }
-    .status{
-      font-size:12px;
-      color:#6b7280;
-      text-align:center;
-      margin:5px 0;
-    }
+    :root{--green:#008b6a;--green-dark:#006b52;--bg:#f6f8fa;}
+    body{font-family:"Inter","Segoe UI",Arial,sans-serif;background:var(--bg);margin:0;color:#222;}
+    header{display:flex;align-items:center;justify-content:space-between;background:#fff;
+      padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000;}
+    .logo-container{display:flex;align-items:center;gap:10px;cursor:pointer;}
+    .logo-container img{height:45px;}
+    .logo-text{font-size:15px;color:#555;font-weight:500;}
+    nav{flex:1;display:flex;justify-content:center;align-items:center;gap:20px;}
+    nav a{text-decoration:none;color:#000;font-weight:500;}
+    nav a:hover{color:var(--green);}
+    .header-right{flex:0 0 auto;display:flex;align-items:center;gap:10px;min-width:250px;justify-content:flex-end;}
+    .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:500;transition:.3s;}
+    .login-btn{background:#f1f1f1;padding:7px 14px;}
+    .login-btn:hover{background:#e0e0e0;}
+    .join-btn{background:var(--green);color:#fff;padding:8px 15px;}
+    .join-btn:hover{background:var(--green-dark);}
+
+    /* === CHAT === */
+    .chat{max-width:900px;margin:30px auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);display:flex;flex-direction:column;height:78vh;overflow:hidden;}
+    .head{background:var(--green);color:#fff;padding:14px 18px;font-weight:700;}
+    .list{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;}
+    .bubble{padding:10px 14px;border-radius:10px;max-width:70%;font-size:14px;line-height:1.4;}
+    .sent{background:var(--green);color:#fff;align-self:flex-end;border-bottom-right-radius:0;}
+    .recv{background:#e9e9e9;color:#111;align-self:flex-start;border-bottom-left-radius:0;}
+    .input{display:flex;gap:10px;padding:14px;border-top:1px solid #e5e7eb;}
+    .input input{flex:1;padding:10px;border:1px solid #ccc;border-radius:6px;font-size:14px;}
+    .input button{background:var(--green);color:#fff;border:none;border-radius:6px;padding:10px 18px;font-weight:700;cursor:pointer;}
+    .input button:hover{background:var(--green-dark);}
+    .status{font-size:12px;color:#6b7280;text-align:center;margin:5px 0;}
   </style>
 </head>
+
 <body>
+  <!-- ✅ HEADER -->
   <header>
-    <div class="brand" onclick="location.href='index.html'">
-      <img src="assets/logos.png" alt="Trader Route Logo" />
-      <span class="tagline">The Silk Road of E-Commerce</span>
+    <div class="logo-container" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+
+    <div class="header-right">
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+
+      <!-- 👤 Kullanıcı Menüsü -->
+      <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
+        <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
+             style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+        <div id="userDropdown"
+             style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
+                    box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+          <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+          <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+        </div>
+      </div>
     </div>
   </header>
 
+  <!-- ✅ CHAT AREA -->
   <div class="chat">
     <div class="head" id="who">Chat</div>
     <div class="list" id="list"></div>
@@ -137,8 +89,8 @@
     <div class="status" id="status"></div>
   </div>
 
+  <!-- === JS: Messaging System === -->
   <script>
-    // === User Info ===
     const me = JSON.parse(localStorage.getItem("loggedUser") || '{"email":"me@traderroute.com"}');
     const to = new URLSearchParams(location.search).get("to") || "unknown@user.com";
 
@@ -154,11 +106,8 @@
       try { return JSON.parse(localStorage.getItem("messages") || "[]"); }
       catch { return []; }
     }
-    function saveMessages(arr){
-      localStorage.setItem("messages", JSON.stringify(arr));
-    }
+    function saveMessages(arr){ localStorage.setItem("messages", JSON.stringify(arr)); }
 
-    // === Render Messages ===
     function render(){
       const all = getMessages();
       list.innerHTML = "";
@@ -175,7 +124,6 @@
       list.scrollTop = list.scrollHeight;
     }
 
-    // === Send Message (Local + Server Email Notify) ===
     function sendMessage(){
       const text = msg.value.trim();
       if(!text) return;
@@ -184,8 +132,6 @@
       saveMessages(all);
       msg.value = "";
       render();
-
-      // ✅ Send to server (email notification + store)
       fetch("server/send_message.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -207,6 +153,37 @@
     msg.addEventListener("keypress", e=>{ if(e.key==="Enter") sendMessage(); });
     setInterval(render, 4000);
     render();
+  </script>
+
+  <!-- === JS: User Menu === -->
+  <script>
+  (function(){
+    const icon=document.getElementById('userIcon');
+    const dropdown=document.getElementById('userDropdown');
+    const loginBtn=document.querySelector("button[onclick*='login.html']");
+    const joinBtn=document.querySelector("button[onclick*='register.html']");
+    const currentUser=JSON.parse(localStorage.getItem('tr_user')||'null');
+    if(currentUser){
+      icon.style.display='inline-block';
+      loginBtn.style.display='none';
+      joinBtn.style.display='none';
+    } else {
+      icon.style.display='none';
+      loginBtn.style.display='';
+      joinBtn.style.display='';
+    }
+    icon?.addEventListener('click',e=>{
+      e.stopPropagation();
+      dropdown.style.display=(dropdown.style.display==='block')?'none':'block';
+    });
+    document.addEventListener('click',e=>{
+      if(!e.target.closest('#userMenuContainer')) dropdown.style.display='none';
+    });
+    window.logoutUser=function(){
+      localStorage.removeItem('tr_user');
+      location.href='index.html';
+    };
+  })();
   </script>
 </body>
 </html>
