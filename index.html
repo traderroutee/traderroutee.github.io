@@ -159,7 +159,7 @@
   background: #006b52;
   transform: translateY(-2px);
 }
-/* === Enhanced Latest Requests Table with Flags === */
+/* === Country Flag Table Styling (for /assets/flag/ images) === */
 .latest-requests {
   margin: 80px auto;
   text-align: center;
@@ -191,7 +191,7 @@
 }
 
 .requests-table th, .requests-table td {
-  padding: 18px 20px;
+  padding: 20px 22px;
   text-align: left;
   font-size: 15px;
   border-bottom: 1px solid #eee;
@@ -210,12 +210,18 @@
   transition: 0.25s;
 }
 
-.flag-icon {
-  font-size: 20px;
-  margin-right: 8px;
+/* 🏳️ Bayrak Görseli */
+.flag-icon-img {
+  width: 34px;      /* büyük bayrak */
+  height: 24px;
+  border-radius: 3px;
+  object-fit: cover;
+  margin-right: 10px;
+  vertical-align: middle;
+  box-shadow: 0 0 3px rgba(0,0,0,0.25);
 }
 
-.title-col { width: 50%; }  /* Title geniş */
+.title-col { width: 50%; }
 .title-cell {
   font-weight: 600;
   color: #008b6a;
@@ -244,7 +250,6 @@
   background: #006b52;
   transform: translateY(-2px);
 }
-    
   </style>
 </head>
 <body>
@@ -318,7 +323,7 @@
     <button onclick="location.href='requests.html?type=sell'">Seller Offers</button>
     <button onclick="location.href='request-form.html'">Create Free Request</button>
   </div>
-<!-- LATEST REQUESTS SECTION (Modern Table + Flags) -->
+<!-- 🌍 LATEST REQUESTS SECTION (auto flag integration) -->
 <section class="latest-requests">
   <h2>Latest Trade Requests</h2>
 
@@ -354,25 +359,21 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  // Flag emoji haritalama (ülke adlarının İngilizce kısaltmalarına göre)
-  const flagMap = {
-    "Turkey":"🇹🇷", "United States":"🇺🇸", "USA":"🇺🇸", "Germany":"🇩🇪", "France":"🇫🇷", "Italy":"🇮🇹",
-    "Spain":"🇪🇸", "United Kingdom":"🇬🇧", "UK":"🇬🇧", "Netherlands":"🇳🇱", "Belgium":"🇧🇪",
-    "Poland":"🇵🇱", "China":"🇨🇳", "Japan":"🇯🇵", "India":"🇮🇳", "Russia":"🇷🇺",
-    "Brazil":"🇧🇷", "Mexico":"🇲🇽", "Canada":"🇨🇦", "South Korea":"🇰🇷", "Saudi Arabia":"🇸🇦",
-    "Egypt":"🇪🇬", "Nigeria":"🇳🇬", "South Africa":"🇿🇦", "Australia":"🇦🇺", "Argentina":"🇦🇷"
-  };
+  // Flag dosyaları: assets/flag/<ulke-adı>.png
+  // (örneğin Turkey → assets/flag/turkey.png)
+  const normalize = str => str.toLowerCase().replace(/[^a-z]/g, '');
 
   const latest = all.slice(-5).reverse();
   container.innerHTML = latest.map(req => {
     const id   = encodeURIComponent(req.id || req.title || "");
     const desc = (req.title || "Untitled").slice(0, 50) + (req.title?.length > 50 ? "..." : "");
     const date = req.date || new Date().toLocaleDateString();
-    const country = req.country || "-";
-    const flag = flagMap[country] || "🌐";
+    const country = req.country || "Unknown";
+    const flagFile = `assets/flag/${normalize(country)}.png`;
+
     return `
       <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
-        <td><span class="flag-icon">${flag}</span> ${country}</td>
+        <td><img src="${flagFile}" alt="${country}" class="flag-icon-img"> ${country}</td>
         <td class="title-cell">${desc}</td>
         <td>${req.type || "-"}</td>
         <td>${date}</td>
