@@ -143,8 +143,7 @@
     const currentUser = JSON.parse(localStorage.getItem("tr_user") || "null");
     const requests = JSON.parse(localStorage.getItem("requests") || "[]");
 
-    // ✅ Yeni ilan nesnesi oluştur
-    const newRequest = {
+   const newRequest = {
   id: Date.now(),
   title,
   description,
@@ -153,7 +152,7 @@
   type,
   user: currentUser?.email || "Guest",
   date: new Date().toISOString(),
-  approved: false // 🟡 Admin onayı olmadan görünmez
+  approved: false // <<< YENİ: admin onayı olmadan listelenmesin
 };
 
     // ✅ Kaydet ve güncelle
