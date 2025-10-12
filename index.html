@@ -1,20 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trader Route - Global Import & Export Platform</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="assets/logos.png">
+
+  <!-- 🌐 SEO Meta Tags -->
+  <meta name="description" content="Trader Route — the global platform connecting importers and exporters worldwide. Find buyers, suppliers, and grow your business.">
+  <meta name="keywords" content="Trader Route, global trade, import export, buyers, suppliers, B2B, marketplace">
+  <meta name="author" content="Trader Route">
+  <link rel="canonical" href="https://traderroute.com/">
+
+  <!-- 🔧 Optimization -->
+  <link rel="icon" href="assets/logos.png" type="image/png">
+  <link rel="preload" href="assets/ihracat-haritasi.png" as="image">
+  <link rel="preload" href="assets/logos.png" as="image">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* === GENERAL === */
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa}
+
+    /* Header */
+    header{background:#fff;padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);
+           display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1000}
+    .logo-container{display:flex;align-items:center;gap:10px;cursor:pointer}
+    .logo-container img{height:42px}
+    .logo-text{font-size:15px;color:#555;font-weight:500}
+    nav{display:flex;align-items:center;gap:15px;flex:1;justify-content:center}
+    nav a{text-decoration:none;color:#000;font-weight:500;transition:.3s}
+    nav a:hover{color:#007bff}
+    .header-right{display:flex;align-items:center;gap:10px}
+    .search-box{display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px}
+    .search-box input{border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px}
+
+    /* Buttons */
+    .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:500;transition:.3s}
+    .login-btn{background:#f1f1f1;padding:7px 14px}
+    .login-btn:hover{background:#e0e0e0}
+    .join-btn{background:#008b6a;color:#fff;padding:8px 15px}
+    .join-btn:hover{background:#006b52}
+
+    /* === HERO === */
+    .hero{position:relative;height:500px;background:url('assets/ihracat-haritasi.png') center/cover no-repeat;
+          display:flex;align-items:center;justify-content:center;text-align:center}
+    .hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1;border-radius:6px}
+    .hero-content{position:relative;z-index:2;max-width:800px;color:#fff;text-align:center}
+    .hero-content h1{font-size:44px;font-weight:800;margin:0;text-shadow:0 3px 10px rgba(0,0,0,.5)}
+
+    /* === CATEGORY BOX === */
+    .categories{background:#fff;border-radius:10px;padding:15px;width:240px;
+                box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:5}
+    .categories h3{font-size:16px;font-weight:700;margin-bottom:10px}
+    .category-item{display:flex;justify-content:space-between;font-size:14px;margin:5px 0;color:#333;cursor:pointer;transition:.3s}
+    .category-item:hover{color:#008b6a}
+    .category-item span{font-size:12px;color:#888}
+    .category-button{width:100%;background:#008b6a;border:none;color:#fff;padding:8px;border-radius:6px;font-weight:600;cursor:pointer;margin-top:8px}
+    .category-button:hover{background:#006b52}
+
+    /* === MIDDLE BUTTONS === */
+    .middle-buttons{text-align:center;margin:40px 0}
+    .middle-buttons button{background:#008b6a;color:#fff;border:none;padding:10px 18px;border-radius:25px;margin:5px;cursor:pointer;font-weight:600;transition:.3s}
+    .middle-buttons button:hover{background:#006b52}
+
+    /* === MAIN SECTION === */
+    .main-section{background:#fff;padding:60px 40px;display:flex;justify-content:center;align-items:center;gap:40px;border-radius:10px;max-width:1100px;margin:40px auto;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    .main-section img{width:300px;border-radius:10px}
+    .main-section h2{font-size:24px;margin-bottom:10px;color:#000}
+    .main-section p{color:#333;line-height:1.6;font-size:15px}
+    .main-section button{background:#008b6a;border:none;color:#fff;padding:8px 16px;border-radius:5px;font-weight:600;cursor:pointer}
+    .main-section button:hover{background:#006b52}
+
+    /* FOOTER */
+    footer{background:#fff;display:flex;justify-content:space-around;padding:40px;font-size:14px;color:#333;border-top:1px solid #ddd}
+    footer div{width:200px}
+    footer h4{font-size:15px;margin-bottom:10px;color:#000}
+    .footer-bottom{text-align:center;background:#000;color:#fff;padding:10px;font-size:13px}
+
+    /* === MOBILE === */
+    @media (max-width:900px){
+      .main-section{flex-direction:column;text-align:center}
+      .categories{width:100%}
+      nav{gap:10px}
+    }
+
+    /* === Category Holder (Position Control) === */
+    .cat-holder{position:absolute;transform:translateY(-50%);z-index:5}
+    @media (max-width:900px){
+      .cat-holder{position:static;transform:none;margin-top:-100px;display:flex;justify-content:center}
+      .cat-holder .categories{width:90%}
+    }
+  </style>
 </head>
 <body>
+  <!-- Welcome alert (orijinal davranış korunur) -->
+  <script>
+  window.addEventListener('DOMContentLoaded', ()=>{
+    const name = localStorage.getItem('welcome_name');
+    if(name){ alert(`Welcome, ${name}!`); localStorage.removeItem('welcome_name'); }
+  });
+  </script>
 
-  <!-- HEADER -->
+  <!-- ✅ TEK HEADER -->
   <header>
+    <!-- Sol: Logo (anasayfaya gider) -->
     <div class="logo-container" onclick="location.href='index.html'">
-      <img src="assets/logos.png" alt="Trader Route Logo">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
+
+    <!-- Orta: Menü -->
     <nav>
       <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
@@ -22,16 +118,22 @@
       <a href="contact.html">Contact</a>
       <a href="pricing.html">Pricing</a>
     </nav>
+
+    <!-- Sağ: Arama + Giriş + Kullanıcı menüsü -->
     <div class="header-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <button>🔍</button>
+      </div>
       <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
       <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
-      <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
-        <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
-             style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+
+      <img id="userIcon" src="assets/user-icon.png" alt="User Icon" 
+     style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
         <div id="userDropdown"
              style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
                     box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
-          <a href="profile.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
           <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
           <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
         </div>
@@ -40,84 +142,135 @@
   </header>
 
   <!-- HERO -->
-  <section class="hero" style="background:url('assets/banner.jpg') center/cover no-repeat;">
-    <div class="hero-content" style="text-align:center;padding:120px 20px;color:#fff;">
+  <section class="hero">
+    <div class="hero-content">
       <h1>Connecting the World of Import and Export</h1>
-      <p>Find trusted trade partners, expand your business, and grow globally.</p>
-      <button class="join-btn" onclick="location.href='register.html'">Join Trader Route</button>
     </div>
   </section>
 
-  <!-- ✅ LATEST REQUESTS SECTION -->
-  <section class="latest-requests">
-    <h2>Latest Trade Requests</h2>
-    <div id="latestRequestsList" class="requests-grid"></div>
-    <div class="view-all">
-      <button onclick="location.href='requests.html'">View All Requests</button>
+  <!-- CATEGORY BOX -->
+  <section class="cat-holder">
+    <div class="categories">
+      <h3>Categories</h3>
+      <div id="categoryList"></div>
+      <button class="category-button" onclick="location.href='requests.html'">View All Categories</button>
     </div>
   </section>
 
-  <!-- JOIN SECTION -->
-  <section class="join-section" style="text-align:center;padding:60px 20px;">
-    <h2>Join the Global Network</h2>
-    <p>Post your trade requests and connect with international suppliers and buyers today.</p>
-    <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+  <!-- MIDDLE BUTTONS -->
+  <div class="middle-buttons">
+    <button onclick="location.href='requests.html'">All Requests</button>
+    <button onclick="location.href='requests.html?type=buy'">Buyer Requests</button>
+    <button onclick="location.href='requests.html?type=sell'">Seller Offers</button>
+    <button onclick="location.href='request-form.html'">Create Free Request</button>
+  </div>
+
+  <!-- MAIN SECTION -->
+  <section class="main-section">
+    <img src="assets/trader_route_step1.jpeg" alt="Trader Route Step" loading="lazy">
+    <div>
+      <h2>Join Trader Route</h2>
+      <p>For companies aiming for global trade success; find buyers for your products and reach new markets — with Trader Route.</p>
+      <button onclick="location.href='register.html'">Join Now</button>
+    </div>
   </section>
 
   <!-- FOOTER -->
-  <footer>© 2025 Trader Route — Global Trade Platform</footer>
+  <footer>
+    <div><h4>Corporate</h4><p>Export Success Stories</p><p>About Us</p></div>
+    <div><h4>Our Services</h4><p>Free Registration</p><p>Contact Buyers</p></div>
+    <div><h4>Quick Links</h4><p>Company Directory</p><p>Buyer Guide</p></div>
+  </footer>
+  <div class="footer-bottom">© 2025 Trader Route — Connecting Global Trade.</div>
 
-  <!-- === LATEST REQUESTS SCRIPT === -->
+  <!-- Kategoriler (orijinal JS korunur) -->
   <script>
-  document.addEventListener("DOMContentLoaded", ()=>{
-    const container = document.getElementById("latestRequestsList");
-    const all = JSON.parse(localStorage.getItem("requests") || "[]");
-    if(all.length === 0){
-      container.innerHTML = `<p style="text-align:center;color:#666;">No trade requests yet.</p>`;
-      return;
-    }
-    const latest = all.slice(-5).reverse();
-    container.innerHTML = latest.map(req => `
-      <div class="request-card" onclick="location.href='request-detail.html?id=${encodeURIComponent(req.title)}'">
-        <h3>${req.title}</h3>
-        <p><strong>Type:</strong> ${req.type}</p>
-        <p><strong>Country:</strong> ${req.country}</p>
-        <p>${req.description.substring(0, 100)}...</p>
-      </div>
-    `).join('');
-  });
+    const categories = [
+      "Agriculture Machinery","Agriculture Industry","Automotive","Baby Products & Accessories",
+      "Chemical Industry","Fashion & Apparel","Commercial Activities","Construction & Building",
+      "Cosmetics","IT & Communication","Defense Industry","Electrical & Electronics",
+      "Energy Sector","Entertainment & Hobbies","Environment & Recycling","Food Industry",
+      "Forestry Products","Furniture","Gifts & Promotion","HVAC Systems","Hospitality & Tourism",
+      "Livestock","Industrial Products","Jewelry","Kitchenware & Glass","Leather & Footwear",
+      "Machinery Industry","Marble & Mining","Marine Equipment","Medical & Pharmaceutical",
+      "Metals & Steel","Packaging & Printing","Plastics & Rubber","Cleaning Products",
+      "Security Equipment","Services","Sports Equipment","Stationery & Office","Textile Products",
+      "Tourism","Home Appliances"
+    ];
+    const reqs = JSON.parse(localStorage.getItem("requests") || "[]");
+    const list = document.getElementById("categoryList");
+    categories.slice(0, 10).forEach(cat => {
+      const count = reqs.filter(r => r.category === cat).length;
+      const div = document.createElement("div");
+      div.className = "category-item";
+      div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
+      div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
+      list.appendChild(div);
+    });
+
+    (function(){
+      const hero = document.querySelector('.hero');
+      const holder = document.querySelector('.cat-holder');
+      function placeBox(){
+        if(!hero || !holder) return;
+        if (window.innerWidth <= 900){
+          holder.style.position = 'static';
+          holder.style.transform = 'none';
+          holder.style.left = '';
+          holder.style.top = '';
+          return;
+        }
+        const rect = hero.getBoundingClientRect();
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        const scrollX = window.scrollX || document.documentElement.scrollLeft;
+        const top = rect.top + scrollY + rect.height / 2;
+        const left = rect.left + scrollX + Math.max(rect.width * 0.06, 32);
+        holder.style.position = 'absolute';
+        holder.style.top = `${top}px`;
+        holder.style.left = `${left}px`;
+        holder.style.transform = 'translateY(-50%)';
+        holder.style.zIndex = '5';
+        holder.style.marginTop = '0';
+      }
+      placeBox();
+      window.addEventListener('resize', placeBox);
+      window.addEventListener('scroll', placeBox);
+    })();
   </script>
 
-  <!-- === USER MENU SCRIPT === -->
+  <!-- 👤 Kullanıcı menüsü kontrolü (non-destructive) -->
   <script>
   (function(){
-    const icon=document.getElementById('userIcon');
-    const dropdown=document.getElementById('userDropdown');
-    const loginBtn=document.querySelector("button[onclick*='login.html']");
-    const joinBtn=document.querySelector("button[onclick*='register.html']");
-    const currentUser=JSON.parse(localStorage.getItem('tr_user')||'null');
-    if(currentUser){
-      icon.style.display='inline-block';
-      loginBtn.style.display='none';
-      joinBtn.style.display='none';
+    const header   = document.querySelector('header');
+    const icon     = document.getElementById('userIcon');
+    const dropdown = document.getElementById('userDropdown');
+    const loginBtn = header?.querySelector("button[onclick*='login.html']");
+    const joinBtn  = header?.querySelector("button[onclick*='register.html']");
+    const currentUser = JSON.parse(localStorage.getItem('tr_user') || 'null');
+
+    if (currentUser) {
+      if (icon) icon.style.display = 'inline-block';
+      if (loginBtn) loginBtn.style.display = 'none';
+      if (joinBtn)  joinBtn.style.display  = 'none';
     } else {
-      icon.style.display='none';
-      loginBtn.style.display='';
-      joinBtn.style.display='';
+      if (icon) icon.style.display = 'none';
+      if (loginBtn) loginBtn.style.display = '';
+      if (joinBtn)  joinBtn.style.display  = '';
     }
-    icon?.addEventListener('click',e=>{
+
+    icon?.addEventListener('click', (e)=>{
       e.stopPropagation();
-      dropdown.style.display=(dropdown.style.display==='block')?'none':'block';
+      dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
     });
-    document.addEventListener('click',e=>{
-      if(!e.target.closest('#userMenuContainer')) dropdown.style.display='none';
+    document.addEventListener('click', (e)=>{
+      if (!e.target.closest('#userMenuContainer')) dropdown.style.display = 'none';
     });
-    window.logoutUser=function(){
+
+    window.logoutUser = function(){
       localStorage.removeItem('tr_user');
-      location.href='index.html';
+      location.href = 'index.html';
     };
   })();
   </script>
-
 </body>
 </html>
