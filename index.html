@@ -159,6 +159,92 @@
   background: #006b52;
   transform: translateY(-2px);
 }
+/* === Enhanced Latest Requests Table with Flags === */
+.latest-requests {
+  margin: 80px auto;
+  text-align: center;
+  max-width: 1150px;
+}
+
+.latest-requests h2 {
+  color: #007b63;
+  margin-bottom: 25px;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.requests-table-wrapper {
+  overflow-x: auto;
+  max-width: 1150px;
+  margin: 0 auto;
+  border-radius: 14px;
+  box-shadow: 0 4px 22px rgba(0,0,0,0.06);
+}
+
+.requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.requests-table th, .requests-table td {
+  padding: 18px 20px;
+  text-align: left;
+  font-size: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.requests-table th {
+  background: #e8f5f3;
+  color: #007b63;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.requests-table tr:hover {
+  background: #f9fdfc;
+  transition: 0.25s;
+}
+
+.flag-icon {
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+.title-col { width: 50%; }  /* Title geniş */
+.title-cell {
+  font-weight: 600;
+  color: #008b6a;
+  transition: color 0.3s;
+}
+.title-cell:hover { color: #005f46; }
+
+.view-all {
+  margin-top: 30px;
+}
+
+.view-all button {
+  background: #008b6a;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 35px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.view-all button:hover {
+  background: #006b52;
+  transform: translateY(-2px);
+}
+    
   </style>
 </head>
 <body>
@@ -232,7 +318,7 @@
     <button onclick="location.href='requests.html?type=sell'">Seller Offers</button>
     <button onclick="location.href='request-form.html'">Create Free Request</button>
   </div>
-<!-- LATEST REQUESTS SECTION (Modern Table Style) -->
+<!-- LATEST REQUESTS SECTION (Modern Table + Flags) -->
 <section class="latest-requests">
   <h2>Latest Trade Requests</h2>
 
@@ -268,14 +354,25 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
+  // Flag emoji haritalama (ülke adlarının İngilizce kısaltmalarına göre)
+  const flagMap = {
+    "Turkey":"🇹🇷", "United States":"🇺🇸", "USA":"🇺🇸", "Germany":"🇩🇪", "France":"🇫🇷", "Italy":"🇮🇹",
+    "Spain":"🇪🇸", "United Kingdom":"🇬🇧", "UK":"🇬🇧", "Netherlands":"🇳🇱", "Belgium":"🇧🇪",
+    "Poland":"🇵🇱", "China":"🇨🇳", "Japan":"🇯🇵", "India":"🇮🇳", "Russia":"🇷🇺",
+    "Brazil":"🇧🇷", "Mexico":"🇲🇽", "Canada":"🇨🇦", "South Korea":"🇰🇷", "Saudi Arabia":"🇸🇦",
+    "Egypt":"🇪🇬", "Nigeria":"🇳🇬", "South Africa":"🇿🇦", "Australia":"🇦🇺", "Argentina":"🇦🇷"
+  };
+
   const latest = all.slice(-5).reverse();
   container.innerHTML = latest.map(req => {
     const id   = encodeURIComponent(req.id || req.title || "");
     const desc = (req.title || "Untitled").slice(0, 50) + (req.title?.length > 50 ? "..." : "");
     const date = req.date || new Date().toLocaleDateString();
+    const country = req.country || "-";
+    const flag = flagMap[country] || "🌐";
     return `
       <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
-        <td>${req.country || "-"}</td>
+        <td><span class="flag-icon">${flag}</span> ${country}</td>
         <td class="title-cell">${desc}</td>
         <td>${req.type || "-"}</td>
         <td>${date}</td>
