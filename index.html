@@ -164,7 +164,44 @@
     <button onclick="location.href='requests.html?type=sell'">Seller Offers</button>
     <button onclick="location.href='request-form.html'">Create Free Request</button>
   </div>
+<!-- LATEST REQUESTS SECTION (Yeni eklenti) -->
+<section class="latest-requests">
+  <h2>Latest Trade Requests</h2>
+  <div id="latestRequestsList" class="requests-grid"></div>
+  <div class="view-all">
+    <button onclick="location.href='requests.html'">View All Requests</button>
+  </div>
+</section>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const container = document.getElementById("latestRequestsList");
+  if (!container) return;
+
+  let all = [];
+  try { all = JSON.parse(localStorage.getItem("requests") || "[]"); } catch(e) { all = []; }
+
+  if (!Array.isArray(all) || all.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:#666;">No trade requests yet.</p>';
+    return;
+  }
+
+  const latest = all.slice(-5).reverse(); // son 5 ilan
+  container.innerHTML = latest.map(req => {
+    const id   = encodeURIComponent(req.id || req.title || "");
+    const desc = (req.description || "").slice(0,100) + (req.description?.length>100?"...":"");
+    return `
+      <div class="request-card" onclick="location.href='request-detail.html?id=${id}'">
+        <h3>${req.title || "Untitled"}</h3>
+        <p><strong>Type:</strong> ${req.type || "-"}</p>
+        <p><strong>Country:</strong> ${req.country || "-"}</p>
+        <p>${desc}</p>
+      </div>
+    `;
+  }).join('');
+});
+</script>
+<!-- /LATEST REQUESTS SECTION -->
   <!-- MAIN SECTION -->
   <section class="main-section">
     <img src="assets/trader_route_step1.jpeg" alt="Trader Route Step" loading="lazy">
