@@ -24,6 +24,49 @@
            cursor:pointer;font-weight:600;margin-top:20px;width:100%;transition:.3s;}
     button:hover{background:#006b52;}
     .success-msg{display:none;color:#008b6a;text-align:center;margin-top:15px;font-weight:600;}
+
+.type-section {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.type-section label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #222;
+}
+
+.type-options {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.type-options input[type="radio"] {
+  display: none;
+}
+
+.type-options .type-btn {
+  background: #f4f4f4;
+  color: #333;
+  border: 2px solid #008b6a;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.type-options input[type="radio"]:checked + .type-btn {
+  background: #008b6a;
+  color: #fff;
+  box-shadow: 0 0 8px rgba(0,139,106,0.4);
+}
+.type-options .type-btn:hover {
+  background: #e9f8f4;
+}
+    
   </style>
 </head>
 
@@ -69,13 +112,18 @@
       <option value="Brazil">Brazil</option>
     </select>
 
-    <label>Type</label>
-    <div class="radio-group">
-      <label><input type="radio" name="type" value="buy" required> Buy Request</label>
-      <label><input type="radio" name="type" value="sell"> Sell Offer</label>
-    </div>
+   <div class="type-section">
+  <label>Request Type</label>
+  <div class="type-options">
+    <input type="radio" id="buy" name="type" value="buy">
+    <label for="buy" class="type-btn">Buy Request</label>
 
-    <button type="submit">Submit Request</button>
+    <input type="radio" id="sell" name="type" value="sell">
+    <label for="sell" class="type-btn">Sell Offer</label>
+  </div>
+     
+</div>
+   <button type="submit">Submit Request</button>
     <div class="success-msg" id="successMsg">Your request has been created successfully!</div>
   </form>
 
