@@ -18,7 +18,6 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    /* === GENERAL === */
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa}
 
@@ -35,7 +34,6 @@
     .search-box{display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px}
     .search-box input{border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px}
 
-    /* Buttons */
     .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:500;transition:.3s}
     .login-btn{background:#f1f1f1;padding:7px 14px}
     .login-btn:hover{background:#e0e0e0}
@@ -43,14 +41,14 @@
     .join-btn:hover{background:#006b52}
 
     /* === HERO === */
-    .hero{position:relative;height:500px;background:url('assets/ihracat-haritasi.png') center/cover no-repeat;
+    .hero{position:relative;height:520px;background:url('assets/ihracat-haritasi.png') center/cover no-repeat;
           display:flex;align-items:center;justify-content:center;text-align:center}
     .hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1;border-radius:6px}
     .hero-content{position:relative;z-index:2;max-width:800px;color:#fff;text-align:center}
     .hero-content h1{font-size:44px;font-weight:800;margin:0;text-shadow:0 3px 10px rgba(0,0,0,.5)}
 
     /* === CATEGORY BOX === */
-    .categories{background:#fff;border-radius:10px;padding:15px;width:240px;
+    .categories{background:#fff;border-radius:10px;padding:15px;width:260px;
                 box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:5}
     .categories h3{font-size:16px;font-weight:700;margin-bottom:10px}
     .category-item{display:flex;justify-content:space-between;font-size:14px;margin:5px 0;color:#333;cursor:pointer;transition:.3s}
@@ -72,7 +70,6 @@
     .main-section button{background:#008b6a;border:none;color:#fff;padding:8px 16px;border-radius:5px;font-weight:600;cursor:pointer}
     .main-section button:hover{background:#006b52}
 
-    /* FOOTER */
     footer{background:#fff;display:flex;justify-content:space-around;padding:40px;font-size:14px;color:#333;border-top:1px solid #ddd}
     footer div{width:200px}
     footer h4{font-size:15px;margin-bottom:10px;color:#000}
@@ -164,6 +161,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
   </div>
 </section>
 
+<!-- ✅ BAYRAK AKILLI EŞLEŞTİRME -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("latestRequestsList");
@@ -177,23 +175,28 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // ✅ Bayrak eşleştirme (dil bağımsız, kısa kod destekli)
-  const countryToCode = {
-    turkey:'tr', türkiye:'tr', unitedstates:'us', usa:'us', france:'fr', germany:'de',
-    italy:'it', spain:'es', china:'cn', japan:'jp', korea:'kr', brazil:'br', india:'in',
-    unitedkingdom:'gb', england:'gb', canada:'ca', netherlands:'nl', poland:'pl',
-    saudiarabia:'sa', uae:'ae', russia:'ru', egypt:'eg', southafrica:'za', argentina:'ar'
+  const toISO2 = (country) => {
+    const raw = (country || "").trim();
+    const m = raw.match(/\b([A-Z]{2})\b/);
+    if (m) return m[1].toLowerCase();
+    if (/^[A-Za-z]{2}$/.test(raw)) return raw.toLowerCase();
+    const n = raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z]/g,'');
+    const map = {
+      turkey:'tr', türkiye:'tr', unitedstates:'us', usa:'us', france:'fr', germany:'de', italy:'it', spain:'es',
+      china:'cn', japan:'jp', korea:'kr', southkorea:'kr', brazil:'br', india:'in', unitedkingdom:'gb',
+      england:'gb', canada:'ca', netherlands:'nl', poland:'pl', saudiarabia:'sa', uae:'ae', russia:'ru',
+      egypt:'eg', southafrica:'za', argentina:'ar', mexico:'mx', greece:'gr', belgium:'be'
+    };
+    return map[n] || null;
   };
-
-  const normalize = s => (s || '').toLowerCase().replace(/[^a-z]/g,'');
 
   const latest = all.slice(-5).reverse();
   container.innerHTML = latest.map(req => {
     const id = encodeURIComponent(req.id || req.title || "");
     const title = (req.title || "Untitled").slice(0, 60);
     const country = req.country || "Unknown";
-    const code = countryToCode[normalize(country)] || normalize(country);
-    const flagPath = `assets/flag/${code}.png`;
+    const code = toISO2(country);
+    const flagPath = code ? `assets/flag/${code}.png` : `assets/flag/default.png`;
     const type = req.type || "-";
     const date = req.date || new Date().toLocaleDateString();
 
@@ -206,6 +209,43 @@ document.addEventListener("DOMContentLoaded", () => {
       </tr>`;
   }).join('');
 });
+</script>
+
+<!-- ✅ KATEGORİ YERLEŞİM OPTİMİZASYONU (Titremesiz) -->
+<script>
+(function(){
+  const hero = document.querySelector('.hero');
+  const holder = document.querySelector('.cat-holder');
+  if(!hero || !holder) return;
+  let scheduled = false;
+  let last = {top:'', left:'', mode:''};
+
+  function placeBox(){
+    if(window.innerWidth <= 900){
+      if (last.mode !== 'static') {
+        holder.style.position='static';holder.style.transform='none';last.mode='static';
+      }
+      return;
+    }
+    const rect = hero.getBoundingClientRect();
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    const scrollX = window.scrollX || document.documentElement.scrollLeft;
+    const top = Math.round(rect.top + scrollY + rect.height/2);
+    const left = Math.round(rect.left + scrollX + rect.width*0.08);
+    if (last.mode!=='abs' || last.top!==top || last.left!==left){
+      holder.style.position='absolute';
+      holder.style.top=`${top}px`;
+      holder.style.left=`${left}px`;
+      holder.style.transform='translateY(-50%)';
+      holder.style.zIndex='5';
+      last={top,left,mode:'abs'};
+    }
+  }
+
+  function schedule(){ if(scheduled) return; scheduled=true; requestAnimationFrame(()=>{placeBox(); scheduled=false;}); }
+  window.addEventListener('load', placeBox);
+  window.addEventListener('resize', schedule, {passive:true});
+})();
 </script>
 
 <section class="main-section">
@@ -225,41 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="footer-bottom">© 2025 Trader Route — Connecting Global Trade.</div>
 
 <script>
-const categories = [ "Agriculture Machinery","Agriculture Industry","Automotive","Baby Products & Accessories",
-"Chemical Industry","Fashion & Apparel","Commercial Activities","Construction & Building","Cosmetics",
-"IT & Communication","Defense Industry","Electrical & Electronics","Energy Sector","Entertainment & Hobbies",
-"Environment & Recycling","Food Industry","Forestry Products","Furniture","Gifts & Promotion","HVAC Systems",
-"Hospitality & Tourism","Livestock","Industrial Products","Jewelry","Kitchenware & Glass","Leather & Footwear",
-"Machinery Industry","Marble & Mining","Marine Equipment","Medical & Pharmaceutical","Metals & Steel",
-"Packaging & Printing","Plastics & Rubber","Cleaning Products","Security Equipment","Services","Sports Equipment",
-"Stationery & Office","Textile Products","Tourism","Home Appliances"];
-const reqs = JSON.parse(localStorage.getItem("requests") || "[]");
-const list = document.getElementById("categoryList");
-categories.slice(0, 10).forEach(cat => {
-  const count = reqs.filter(r => r.category === cat).length;
-  const div = document.createElement("div");
-  div.className = "category-item";
-  div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
-  div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
-  list.appendChild(div);
-});
-(function(){
-  const hero=document.querySelector('.hero'),holder=document.querySelector('.cat-holder');
-  function placeBox(){
-    if(!hero||!holder)return;
-    if(window.innerWidth<=900){holder.style.position='static';holder.style.transform='none';return;}
-    const rect=hero.getBoundingClientRect(),scrollY=window.scrollY||document.documentElement.scrollTop;
-    const scrollX=window.scrollX||document.documentElement.scrollLeft;
-    const top=rect.top+scrollY+rect.height/2;
-    const left=rect.left+scrollX+Math.max(rect.width*0.06,32);
-    holder.style.position='absolute';holder.style.top=`${top}px`;holder.style.left=`${left}px`;
-    holder.style.transform='translateY(-50%)';holder.style.zIndex='5';
-  }
-  placeBox();window.addEventListener('resize',placeBox);window.addEventListener('scroll',placeBox);
-})();
-</script>
-
-<script>
 (function(){
   const header=document.querySelector('header');
   const icon=document.getElementById('userIcon');
@@ -267,21 +272,11 @@ categories.slice(0, 10).forEach(cat => {
   const loginBtn=header?.querySelector("button[onclick*='login.html']");
   const joinBtn=header?.querySelector("button[onclick*='register.html']");
   const currentUser=JSON.parse(localStorage.getItem('tr_user')||'null');
-
   if(currentUser){icon.style.display='inline-block';loginBtn.style.display='none';joinBtn.style.display='none';}
   else{icon.style.display='none';loginBtn.style.display='';joinBtn.style.display='';}
-
-  icon?.addEventListener('click',e=>{
-    e.stopPropagation();
-    dropdown.style.display=(dropdown.style.display==='block')?'none':'block';
-  });
-  document.addEventListener('click',e=>{
-    if(!e.target.closest('#userMenuContainer')) dropdown.style.display='none';
-  });
-  window.logoutUser=function(){
-    localStorage.removeItem('tr_user');
-    location.href='index.html';
-  };
+  icon?.addEventListener('click',e=>{e.stopPropagation();dropdown.style.display=(dropdown.style.display==='block')?'none':'block';});
+  document.addEventListener('click',e=>{if(!e.target.closest('#userMenuContainer')) dropdown.style.display='none';});
+  window.logoutUser=function(){localStorage.removeItem('tr_user');location.href='index.html';};
 })();
 </script>
 
