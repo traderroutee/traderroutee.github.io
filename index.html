@@ -84,7 +84,54 @@
       .categories{width:100%}
       nav{gap:10px}
     }
-
+/* === Latest Requests Section === */
+.latest-requests {
+  margin: 60px auto;
+  text-align: center;
+  max-width: 1100px;
+}
+.latest-requests h2 {
+  color: #008b6a;
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+.requests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+.request-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  width: 100%;
+  max-width: 300px;
+}
+.request-card:hover {
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transform: translateY(-3px);
+}
+.view-all {
+  margin-top: 25px;
+}
+.view-all button {
+  background: #008b6a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.view-all button:hover {
+  background: #006b52;
+}
     /* === Category Holder (Position Control) === */
     .cat-holder{position:absolute;transform:translateY(-50%);z-index:5}
     @media (max-width:900px){
