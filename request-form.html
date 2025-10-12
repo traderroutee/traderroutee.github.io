@@ -165,6 +165,12 @@
     </form>
   </section>
 
+  // 📌 Yeni ilan eklendikten hemen sonra ekle
+localStorage.setItem("requests", JSON.stringify(all));
+
+// 🔁 Sayaçları güncellemek için basit bir tetikleme:
+window.dispatchEvent(new Event("storage"));
+  
   <footer>© 2025 Trader Route — Global Trade Platform</footer>
 
   <!-- === JS: Request Form === -->
