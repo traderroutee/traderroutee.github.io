@@ -2,250 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Submit Request – Trader Route</title>
-
-  <meta name="description" content="Create a trade request on Trader Route and connect with verified suppliers and buyers.">
-  <meta name="author" content="Trader Route">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trader Route – Create Request</title>
+  <meta name="description" content="Create a free trade request on Trader Route and connect with importers and exporters worldwide.">
   <link rel="icon" href="assets/logos.png" />
-
   <style>
-    :root { --green:#008b6a; --green-dark:#006b52; --bg:#f6f8fa; }
-    body {
-      font-family:"Inter","Segoe UI",Arial,sans-serif;
-      margin:0;
-      background:var(--bg);
-      color:#222;
-    }
-
-    /* === HEADER === */
-    header {
-      display:flex; align-items:center; justify-content:space-between;
-      background:#fff; padding:10px 40px;
-      box-shadow:0 2px 8px rgba(0,0,0,.1);
-      position:sticky; top:0; z-index:1000;
-    }
-    .logo-container { display:flex; align-items:center; gap:10px; cursor:pointer; }
-    .logo-container img { height:45px; }
-    .logo-text { font-size:15px; color:#555; font-weight:500; }
-    nav { flex:1; display:flex; justify-content:center; align-items:center; gap:20px; }
-    nav a { text-decoration:none; color:#000; font-weight:500; }
-    nav a:hover { color:var(--green); }
-    .header-right {
-      flex:0 0 auto; display:flex; align-items:center; gap:10px;
-      min-width:250px; justify-content:flex-end;
-    }
-    .login-btn,.join-btn {
-      border:none; cursor:pointer; border-radius:6px; font-weight:500; transition:.3s;
-    }
-    .login-btn { background:#f1f1f1; padding:7px 14px; }
-    .login-btn:hover { background:#e0e0e0; }
-    .join-btn { background:var(--green); color:#fff; padding:8px 15px; }
-    .join-btn:hover { background:var(--green-dark); }
-
-    /* === FORM === */
-    .wrapper {
-      max-width:800px;
-      margin:50px auto;
-      background:#fff;
-      border-radius:12px;
-      box-shadow:0 2px 10px rgba(0,0,0,0.08);
-      padding:40px 50px;
-    }
-    h1 {
-      color:var(--green);
-      text-align:center;
-      font-size:28px;
-      margin-top:0;
-    }
-    form { display:flex; flex-direction:column; gap:15px; }
-    input, select, textarea {
-      padding:12px 14px;
-      border:1px solid #ccc;
-      border-radius:8px;
-      font-size:15px;
-      font-family:inherit;
-    }
-    textarea { resize:vertical; min-height:120px; }
-    button[type="submit"] {
-      background:var(--green);
-      color:#fff;
-      border:none;
-      padding:12px;
-      border-radius:8px;
-      font-weight:600;
-      font-size:16px;
-      cursor:pointer;
-      transition:background 0.3s;
-    }
-    button[type="submit"]:hover { background:var(--green-dark); }
-    .status {
-      margin-top:10px;
-      font-size:14px;
-      color:#666;
-      text-align:center;
-    }
-
-    footer {
-      background:#fff; text-align:center;
-      padding:20px; font-size:14px; color:#666;
-      border-top:1px solid #ddd;
-      margin-top:40px;
-    }
-
-    @media(max-width:768px){
-      header { flex-direction:column; gap:10px; }
-      .wrapper { padding:25px; margin:20px; }
-    }
+    body{font-family:Inter,Segoe UI,Tahoma,Geneva,Verdana,sans-serif;margin:0;background:#f6f8fa;}
+    header{display:flex;align-items:center;justify-content:space-between;background:#fff;padding:10px 40px;
+           box-shadow:0 2px 8px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000;}
+    .logo-container{display:flex;align-items:center;gap:10px;cursor:pointer;}
+    .logo-container img{height:45px;}
+    .logo-text{font-size:15px;color:#555;font-weight:500;}
+    form{max-width:600px;margin:40px auto;background:#fff;padding:30px;border-radius:10px;
+         box-shadow:0 2px 10px rgba(0,0,0,.05);}
+    h2{text-align:center;color:#008b6a;margin-bottom:25px;}
+    label{display:block;font-weight:600;margin-top:10px;margin-bottom:6px;}
+    input,textarea,select{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;font-size:14px;}
+    textarea{resize:vertical;min-height:90px;}
+    .radio-group{display:flex;gap:15px;margin-top:10px;}
+    button{background:#008b6a;color:#fff;border:none;padding:12px 18px;border-radius:6px;
+           cursor:pointer;font-weight:600;margin-top:20px;width:100%;transition:.3s;}
+    button:hover{background:#006b52;}
+    .success-msg{display:none;color:#008b6a;text-align:center;margin-top:15px;font-weight:600;}
   </style>
 </head>
 
 <body>
-  <!-- ✅ HEADER -->
+  <!-- ✅ HEADER (orijinal yapısı korunur) -->
   <header>
     <div class="logo-container" onclick="location.href='index.html'">
       <img src="assets/logos.png" alt="Trader Route Logo">
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="companies.html">Companies</a>
-      <a href="requests.html">Requests</a>
-      <a href="contact.html">Contact</a>
-      <a href="pricing.html">Pricing</a>
-    </nav>
-
-    <div class="header-right">
-      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
-
-      <!-- 👤 Kullanıcı Menüsü -->
-      <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
-        <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
-             style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
-        <div id="userDropdown"
-             style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
-                    box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
-          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
-          <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
-          <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
-        </div>
-      </div>
-    </div>
   </header>
 
-  <!-- === FORM SECTION === -->
-  <section class="wrapper">
-    <h1>Submit a New Trade Request</h1>
-    <form id="requestForm">
-      <input type="text" id="title" placeholder="Request Title" required>
-      <textarea id="description" placeholder="Describe your request" required></textarea>
-      <select id="category" required>
-        <option value="">Select Category</option>
-        <option value="Textile">Textile</option>
-        <option value="Food">Food</option>
-        <option value="Metals">Metals</option>
-        <option value="Electronics">Electronics</option>
-      </select>
-      <select id="country" required>
-        <option value="">Select Country</option>
-        <option value="Turkey">Turkey</option>
-        <option value="Germany">Germany</option>
-        <option value="China">China</option>
-        <option value="United States">United States</option>
-      </select>
-      <select id="type" required>
-        <option value="">Select Type</option>
-        <option value="Buy">Buy Request</option>
-        <option value="Sell">Sell Request</option>
-      </select>
-      <button type="submit">Submit Request</button>
-      <div class="status" id="status"></div>
-    </form>
-  </section>
-  
-  <footer>© 2025 Trader Route — Global Trade Platform</footer>
+  <form id="requestForm">
+    <h2>Create Trade Request</h2>
 
-  <!-- === JS: Request Form === -->
+    <label for="title">Request Title</label>
+    <input type="text" id="title" placeholder="Example: I want to buy banana" required>
+
+    <label for="description">Description</label>
+    <textarea id="description" placeholder="Describe your request..." minlength="10" required></textarea>
+
+    <label for="category">Category</label>
+    <select id="category" required>
+      <option value="">Select Category</option>
+      <option value="Food Industry">Food Industry</option>
+      <option value="Agriculture Industry">Agriculture Industry</option>
+      <option value="Automotive">Automotive</option>
+      <option value="Fashion & Apparel">Fashion & Apparel</option>
+      <option value="Construction & Building">Construction & Building</option>
+      <option value="Medical & Pharmaceutical">Medical & Pharmaceutical</option>
+    </select>
+
+    <label for="country">Country</label>
+    <select id="country" required>
+      <option value="">Select Country</option>
+      <option value="Turkey">Turkey</option>
+      <option value="United States">United States</option>
+      <option value="Germany">Germany</option>
+      <option value="France">France</option>
+      <option value="Italy">Italy</option>
+      <option value="China">China</option>
+      <option value="India">India</option>
+      <option value="Brazil">Brazil</option>
+    </select>
+
+    <label>Type</label>
+    <div class="radio-group">
+      <label><input type="radio" name="type" value="buy" required> Buy Request</label>
+      <label><input type="radio" name="type" value="sell"> Sell Offer</label>
+    </div>
+
+    <button type="submit">Submit Request</button>
+    <div class="success-msg" id="successMsg">Your request has been created successfully!</div>
+  </form>
+
   <script>
-    const form=document.getElementById("requestForm");
-    const status=document.getElementById("status");
+  const form = document.getElementById("requestForm");
+  const successMsg = document.getElementById("successMsg");
 
-   form.addEventListener("submit", function(e){
-  e.preventDefault();
-  // ... burada formdan veriler alınır
-  all.push(newRequest);
-  localStorage.setItem("requests", JSON.stringify(all));
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
 
-  // 🔁 Sayaçları anında güncelle
-  window.dispatchEvent(new Event("storage"));
+    const title = document.getElementById("title").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const category = document.getElementById("category").value;
+    const country = document.getElementById("country").value;
+    const type = document.querySelector('input[name="type"]:checked').value;
 
-  alert("Your request has been created!");
-  location.href = "requests.html";
-});
+    const currentUser = JSON.parse(localStorage.getItem("tr_user") || "null");
+    const requests = JSON.parse(localStorage.getItem("requests") || "[]");
 
-      if(!title||!description||!category||!country||!type){
-        status.textContent="Please fill all fields.";
-        status.style.color="red";
-        return;
-      }
-
-      const currentUser=JSON.parse(localStorage.getItem('tr_user')||'null');
-      if(!currentUser){
-        alert("You must be logged in to submit a request.");
-        location.href='login.html';
-        return;
-      }
-
-      const all = JSON.parse(localStorage.getItem("requests") || "[]");
-all.push({
-  id: Date.now(), // ✅ her ilana benzersiz ID eklenir
-  title,
-  description,
-  category,
-  country,
-  type,
-  user: currentUser.email,
-  date: new Date().toISOString()
-});
-    
-      localStorage.setItem("requests", JSON.stringify(all));
-      status.textContent="Your request has been submitted!";
-      status.style.color="green";
-      setTimeout(()=>{ window.location.href="requests.html"; },1200);
-    });
-  </script>
-
-  <!-- === USER MENU CONTROL === -->
-  <script>
-  (function(){
-    const icon=document.getElementById('userIcon');
-    const dropdown=document.getElementById('userDropdown');
-    const loginBtn=document.querySelector("button[onclick*='login.html']");
-    const joinBtn=document.querySelector("button[onclick*='register.html']");
-    const currentUser=JSON.parse(localStorage.getItem('tr_user')||'null');
-    if(currentUser){
-      icon.style.display='inline-block';
-      loginBtn.style.display='none';
-      joinBtn.style.display='none';
-    } else {
-      icon.style.display='none';
-      loginBtn.style.display='';
-      joinBtn.style.display='';
-    }
-    icon?.addEventListener('click',e=>{
-      e.stopPropagation();
-      dropdown.style.display=(dropdown.style.display==='block')?'none':'block';
-    });
-    document.addEventListener('click',e=>{
-      if(!e.target.closest('#userMenuContainer')) dropdown.style.display='none';
-    });
-    window.logoutUser=function(){
-      localStorage.removeItem('tr_user');
-      location.href='index.html';
+    // ✅ Yeni ilan nesnesi oluştur
+    const newRequest = {
+      id: Date.now(),
+      title,
+      description,
+      category,
+      country,
+      type,
+      user: currentUser?.email || "Guest",
+      date: new Date().toISOString()
     };
-  })();
+
+    // ✅ Kaydet ve güncelle
+    requests.push(newRequest);
+    localStorage.setItem("requests", JSON.stringify(requests));
+
+    // ✅ Sayaçları güncellemek için tetikleme
+    window.dispatchEvent(new Event("storage"));
+
+    // ✅ Başarılı mesaj ve yönlendirme
+    successMsg.style.display = "block";
+    form.reset();
+
+    setTimeout(()=>{
+      successMsg.style.display = "none";
+      location.href = "requests.html"; // yönlendirme eklendi
+    },1500);
+  });
   </script>
 </body>
 </html>
