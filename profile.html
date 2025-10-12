@@ -1,41 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profile — Trader Route</title>
-<link rel="icon" href="assets/logos.png">
-<style>
-  :root{--green:#008b6a;--green-dark:#006b52;--bg:#f6f8fa;}
-  body{font-family:"Inter","Segoe UI",Arial,sans-serif;margin:0;background:var(--bg);color:#222}
-  header{background:#fff;padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:space-between}
-  .logo-container{display:flex;align-items:center;gap:10px}
-  .logo-container img{height:42px}
-  .logo-text{font-size:15px;color:#555;font-weight:500}
-  nav{display:flex;align-items:center;gap:15px}
-  nav a{text-decoration:none;color:#000;font-weight:500;transition:.3s}
-  nav a:hover{color:#007bff}
-  .header-right{display:flex;align-items:center;gap:10px}
-  .search-box{display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px}
-  .search-box input{border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px}
-  .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:500;transition:.3s}
-  .login-btn{background:#f1f1f1;padding:7px 14px}
-  .login-btn:hover{background:#e0e0e0}
-  .join-btn{background:#008b6a;color:#fff;padding:8px 15px}
-  .join-btn:hover{background:#006b52}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Profile — Trader Route</title>
+  <meta name="description" content="View and manage your Trader Route account profile.">
+  <meta name="author" content="Trader Route">
+  <link rel="icon" href="assets/logos.png" type="image/png" />
 
-  .profile-box{max-width:700px;margin:40px auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.06)}
-  .profile-box h2{margin-top:0;color:var(--green)}
-  .info-line{margin:8px 0;font-size:16px}
-</style>
+  <style>
+    :root{--green:#008b6a;--dark:#006b52;--bg:#f6f8fa;}
+    body{margin:0;font-family:"Inter","Segoe UI",sans-serif;background:var(--bg);color:#222;}
+    header{display:flex;align-items:center;justify-content:space-between;background:#fff;
+           padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000;}
+    .logo-container{display:flex;align-items:center;gap:10px;cursor:pointer;}
+    .logo-container img{height:45px;}
+    .logo-text{font-size:15px;color:#555;font-weight:500;}
+    nav{display:flex;align-items:center;gap:20px;}
+    nav a{text-decoration:none;color:#000;font-weight:500;}
+    nav a:hover{color:var(--green);}
+    .container{max-width:900px;margin:50px auto;padding:20px;}
+    h2{text-align:center;color:var(--green);margin-bottom:25px;}
+
+    /* === Profile Card === */
+    .profile-card{background:#fff;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,0.06);
+                  padding:30px;max-width:700px;margin:0 auto 25px auto;text-align:center;}
+    .profile-avatar{width:90px;height:90px;border-radius:50%;object-fit:cover;
+                    box-shadow:0 2px 6px rgba(0,0,0,0.15);}
+    .profile-name{font-size:22px;font-weight:700;margin:15px 0 8px;}
+    .profile-email{color:#666;font-size:15px;margin-bottom:20px;}
+    .info-grid{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;}
+    .info-box{background:#f8fdfc;border:1px solid #e1f3ee;padding:15px 20px;border-radius:10px;
+              min-width:200px;text-align:center;box-shadow:0 2px 4px rgba(0,0,0,0.05);}
+    .info-box h4{margin:0 0 6px;font-size:15px;color:#007b63;}
+    .info-box p{margin:0;font-size:14px;font-weight:600;color:#111;}
+    .logout-btn{background:#d9534f;color:#fff;border:none;padding:10px 20px;border-radius:8px;
+                font-weight:600;margin-top:25px;cursor:pointer;transition:.25s;}
+    .logout-btn:hover{background:#c9302c;}
+  </style>
 </head>
+
 <body>
-  <!-- HEADER (index.html ile aynı yapı) -->
   <header>
-    <div class="logo-container">
-      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+    <div class="logo-container" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo">
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
+
     <nav>
       <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
@@ -43,83 +54,49 @@
       <a href="contact.html">Contact</a>
       <a href="pricing.html">Pricing</a>
     </nav>
-    <div class="header-right">
-      <div class="search-box">
-        <input type="text" placeholder="Search...">
-        <button>🔍</button>
-      </div>
-      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="join-btn"  onclick="location.href='register.html'">Join Now</button>
-
-      <!-- 👤 USER ICON MENU — EKLEME -->
-      <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
-        <img id="userIcon" src="assets/user-icon.png" alt="User"
-            style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
-        <div id="userDropdown"
-            style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
-                  box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden">
-          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
-          <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
-          <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
-        </div>
-      </div>
-    </div>
   </header>
 
-  <div class="profile-box">
-    <h2>Your Profile</h2>
-    <div id="profileInfo"></div>
+  <div class="container">
+    <h2>My Profile</h2>
+
+    <div class="profile-card" id="profileCard">
+      <img src="assets/user-icon.png" alt="User" class="profile-avatar">
+      <div class="profile-name" id="profileName">-</div>
+      <div class="profile-email" id="profileEmail">-</div>
+
+      <div class="info-grid">
+        <div class="info-box">
+          <h4>Country</h4>
+          <p id="profileCountry">-</p>
+        </div>
+        <div class="info-box">
+          <h4>Business Category</h4>
+          <p id="profileCategory">-</p>
+        </div>
+      </div>
+
+      <button class="logout-btn" onclick="logoutUser()">Logout</button>
+    </div>
   </div>
 
   <script>
-    // Profil bilgileri
-    const user = JSON.parse(localStorage.getItem('tr_user') || 'null');
-    const box  = document.getElementById('profileInfo');
-    if (!user) {
-      box.innerHTML = "You are not logged in. <a href='login.html'>Sign In</a>";
-    } else {
-      box.innerHTML = `
-        <div class='info-line'><b>Name:</b> ${user.name || '-'}</div>
-        <div class='info-line'><b>Email:</b> ${user.email || '-'}</div>
-        <div class='info-line'><b>Company:</b> ${user.company || '-'}</div>
-        <div class='info-line'><b>Country:</b> ${user.country || '-'}</div>
-      `;
-    }
-  </script>
+    // === Load user info ===
+    const user = JSON.parse(localStorage.getItem("tr_user") || "null");
 
-  <!-- USER MENU KONTROL — EKLEME -->
-  <script>
-  (function(){
-    const header = document.querySelector('header');
-    const icon = document.getElementById('userIcon');
-    const dropdown = document.getElementById('userDropdown');
-    const loginBtn = header.querySelector("button[onclick*='login.html']");
-    const joinBtn  = header.querySelector("button[onclick*='register.html']");
-    const currentUser = JSON.parse(localStorage.getItem('tr_user') || 'null');
-
-    if (currentUser) {
-      if (icon) icon.style.display = 'inline-block';
-      if (loginBtn) loginBtn.style.display = 'none';
-      if (joinBtn)  joinBtn.style.display  = 'none';
+    if(!user){
+      alert("You must log in first.");
+      location.href = "login.html";
     } else {
-      if (icon) icon.style.display = 'none';
-      if (loginBtn) loginBtn.style.display = '';
-      if (joinBtn)  joinBtn.style.display  = '';
+      document.getElementById("profileName").textContent = user.name || "-";
+      document.getElementById("profileEmail").textContent = user.email || "-";
+      document.getElementById("profileCountry").textContent = user.country || "Not set";
+      document.getElementById("profileCategory").textContent = user.category || "Not set";
     }
-    if (icon && dropdown) {
-      icon.addEventListener('click', function(e){
-        e.stopPropagation();
-        dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
-      });
-      document.addEventListener('click', function(e){
-        if (!e.target.closest('#userMenuContainer')) dropdown.style.display = 'none';
-      });
+
+    function logoutUser(){
+      localStorage.removeItem("tr_user");
+      location.href = "index.html";
     }
-    window.logoutUser = function(){
-      localStorage.removeItem('tr_user');
-      location.href = 'index.html';
-    };
-  })();
   </script>
 </body>
 </html>
