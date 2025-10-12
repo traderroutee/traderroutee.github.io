@@ -147,6 +147,36 @@
   });
 
   function showUsers(){
+    function showRequests(){
+  const tbody = document.getElementById('requestsTable');
+  tbody.innerHTML = '';
+  const requests = JSON.parse(localStorage.getItem('requests') || '[]');
+
+  if (!requests.length){
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#777;padding:15px;">No requests yet.</td></tr>';
+    return;
+  }
+
+  requests.forEach((r) => {
+    const tr = document.createElement('tr');
+    const date = r.date ? new Date(r.date).toLocaleDateString() : '-';
+    const status = r.approved ? '✅ Approved' : '⏳ Pending';
+    const actionBtn = !r.approved
+      ? `<button class="btn-green" onclick="approveRequest(${r.id})">Approve</button>`
+      : `<button class="btn-outline" disabled>Approved</button>`;
+
+    tr.innerHTML = `
+      <td>${r.title || '-'}</td>
+      <td>${r.type || '-'}</td>
+      <td>${r.user || '-'}</td>
+      <td>${r.country || '-'}</td>
+      <td>${r.category || '-'}</td>
+      <td>${date}</td>
+      <td>${status}<br>${actionBtn}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
     const usersTbody = document.getElementById('usersTable');
     const usersMsg = document.getElementById('usersMsg');
     const users = JSON.parse(localStorage.getItem('tr_users') || '[]');
