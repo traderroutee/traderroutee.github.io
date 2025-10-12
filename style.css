@@ -171,6 +171,9 @@ button {
 
 #userDropdown a {
   display: block;
+ 
+#userDropdown a {
+  display: block;
   padding: 10px 12px;
   color: #333;
   text-decoration: none;
@@ -232,6 +235,38 @@ input:focus, select:focus, textarea:focus {
   .wrapper {
     padding: 25px;
     margin: 20px;
+  }
+}
+
+/* =========================
+   === HERO / BANNER FIX (Eklenti)
+   ========================= */
+.hero, .banner {
+  width: 100%;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  aspect-ratio: 16 / 9; /* Görsel oranını sabit tutar */
+  object-fit: cover;
+}
+
+@media(max-width: 992px) {
+  .hero, .banner {
+    min-height: 320px;
+    background-position: center top;
+  }
+}
+
+@media(max-width: 768px) {
+  .hero, .banner {
+    min-height: 260px;
+  }
+}
+
+@media(max-width: 480px) {
+  .hero, .banner {
+    min-height: 220px;
   }
 }
 
