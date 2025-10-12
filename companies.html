@@ -16,7 +16,6 @@
       background: #f5f7fa;
       color: #222;
     }
-
     header {
       background: #fff;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
@@ -24,12 +23,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-
-    header img {
-      height: 46px;
-    }
-
+    header img { height: 46px; }
     nav a {
       margin: 0 14px;
       text-decoration: none;
@@ -37,11 +35,7 @@
       font-weight: 500;
       font-size: 15px;
     }
-
-    nav a:hover {
-      color: #007bff;
-    }
-
+    nav a:hover { color: #007bff; }
     .search-bar {
       display: flex;
       flex-wrap: wrap;
@@ -55,7 +49,6 @@
       max-width: 1000px;
       border-radius: 10px;
     }
-
     input, select {
       padding: 10px;
       border-radius: 6px;
@@ -63,7 +56,6 @@
       font-size: 15px;
       min-width: 180px;
     }
-
     button {
       background: #008b6a;
       color: #fff;
@@ -74,11 +66,7 @@
       font-weight: 600;
       transition: 0.25s;
     }
-
-    button:hover {
-      background: #006b52;
-    }
-
+    button:hover { background: #006b52; }
     .companies {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -87,7 +75,6 @@
       max-width: 1200px;
       margin: 0 auto 60px;
     }
-
     .card {
       background: #fff;
       border-radius: 10px;
@@ -95,22 +82,12 @@
       padding: 18px;
       transition: 0.25s;
     }
-
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 5px 12px rgba(0,0,0,0.08);
     }
-
-    .card h3 {
-      margin-top: 0;
-      color: #007bff;
-    }
-
-    .card p {
-      font-size: 15px;
-      color: #555;
-    }
-
+    .card h3 { margin-top: 0; color: #007bff; }
+    .card p { font-size: 15px; color: #555; }
     footer {
       background: #fff;
       text-align: center;
@@ -119,7 +96,6 @@
       color: #666;
       border-top: 1px solid #ddd;
     }
-
     @media(max-width:768px){
       header { flex-direction: column; gap: 10px; }
       .search-bar { flex-direction: column; padding: 20px; }
@@ -127,71 +103,51 @@
     }
   </style>
 </head>
-<header style="display:flex;align-items:center;justify-content:space-between;background:#fff;
-               padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000;">
 
-  <!-- Sol: Logo -->
-  <div class="logo-container" style="flex:0 0 auto;display:flex;align-items:center;gap:10px;cursor:pointer;"
-       onclick="location.href='index.html'">
-    <img src="assets/logos.png" alt="Trader Route Logo" style="height:45px;">
-    <span class="logo-text" style="font-size:15px;color:#555;font-weight:500;">
-      The Silk Road of E-Commerce
-    </span>
-  </div>
-
-  <!-- Orta: Menü -->
-  <nav style="flex:1;display:flex;justify-content:center;align-items:center;gap:20px;">
-    <a href="index.html"      style="text-decoration:none;color:#000;font-weight:500;">Home</a>
-    <a href="companies.html"  style="text-decoration:none;color:#000;font-weight:500;">Companies</a>
-    <a href="requests.html"   style="text-decoration:none;color:#000;font-weight:500;">Requests</a>
-    <a href="contact.html"    style="text-decoration:none;color:#000;font-weight:500;">Contact</a>
-    <a href="pricing.html"    style="text-decoration:none;color:#000;font-weight:500;">Pricing</a>
-  </nav>
-
-  <!-- Sağ: Arama + Giriş + Kullanıcı menüsü -->
-  <div class="header-right" style="flex:0 0 auto;display:flex;align-items:center;gap:10px;">
-    <div class="search-box" style="display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px;">
-      <input type="text" placeholder="Search..." 
-             style="border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px;">
-      <button style="background:none;border:none;cursor:pointer;">🔍</button>
-    </div>
-
-    <button class="login-btn" onclick="location.href='login.html'" 
-            style="border:none;cursor:pointer;border-radius:6px;background:#f1f1f1;padding:7px 14px;font-weight:500;">
-      Sign In
-    </button>
-    <button class="join-btn" onclick="location.href='register.html'" 
-            style="border:none;cursor:pointer;border-radius:6px;background:#008b6a;color:#fff;padding:8px 15px;font-weight:500;">
-      Join Now
-    </button>
-
-    <!-- 👤 Kullanıcı İkonu -->
-    <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
-      <img id="userIcon" src="assets/user-icon.png" alt="User"
-           style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
-      <div id="userDropdown"
-           style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
-                  box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
-        <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
-        <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
-        <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
-      </div>
-    </div>
-  </div>
-</header>
-  
 <body>
+  <!-- ✅ TEK HEADER (diğer sayfalarla aynı yapı) -->
   <header>
-    <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+    <div class="logo-container" style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo">
+      <span class="logo-text" style="font-size:15px;color:#555;font-weight:500;">The Silk Road of E-Commerce</span>
+    </div>
+
     <nav>
       <a href="index.html">Home</a>
-      <a href="companies.html">Companies</a>
+      <a href="companies.html" style="color:#008b6a;font-weight:700;">Companies</a>
       <a href="requests.html">Requests</a>
       <a href="contact.html">Contact</a>
       <a href="pricing.html">Pricing</a>
-      <a href="login.html">Sign In</a>
-      <a href="register.html">Sign Up</a>
     </nav>
+
+    <div class="header-right" style="display:flex;align-items:center;gap:10px;">
+      <div class="search-box" style="display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px;">
+        <input type="text" placeholder="Search..." style="border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px;">
+        <button style="background:none;border:none;cursor:pointer;">🔍</button>
+      </div>
+
+      <button class="login-btn" onclick="location.href='login.html'" 
+              style="border:none;cursor:pointer;border-radius:6px;background:#f1f1f1;padding:7px 14px;font-weight:500;">
+        Sign In
+      </button>
+      <button class="join-btn" onclick="location.href='register.html'" 
+              style="border:none;cursor:pointer;border-radius:6px;background:#008b6a;color:#fff;padding:8px 15px;font-weight:500;">
+        Join Now
+      </button>
+
+      <!-- 👤 Kullanıcı Menüsü -->
+      <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
+        <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
+             style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+        <div id="userDropdown"
+             style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
+                    box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+          <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+          <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+        </div>
+      </div>
+    </div>
   </header>
 
   <section class="search-bar">
@@ -208,51 +164,43 @@
   </section>
 
   <section class="companies" id="companiesList">
-    <div class="card">
-      <h3>Global Textiles Co.</h3>
-      <p><strong>Country:</strong> Turkey</p>
-      <p><strong>Products:</strong> Fabrics, Yarn</p>
-    </div>
-
-    <div class="card">
-      <h3>Oceanic Metals Ltd.</h3>
-      <p><strong>Country:</strong> China</p>
-      <p><strong>Products:</strong> Steel, Alloys</p>
-    </div>
-
-    <div class="card">
-      <h3>GreenFoods Export</h3>
-      <p><strong>Country:</strong> Italy</p>
-      <p><strong>Products:</strong> Olive Oil, Pasta, Sauces</p>
-    </div>
-
-    <div class="card">
-      <h3>EuroMachines GmbH</h3>
-      <p><strong>Country:</strong> Germany</p>
-      <p><strong>Products:</strong> Industrial Machinery</p>
-    </div>
+    <div class="card"><h3>Global Textiles Co.</h3><p><strong>Country:</strong> Turkey</p><p><strong>Products:</strong> Fabrics, Yarn</p></div>
+    <div class="card"><h3>Oceanic Metals Ltd.</h3><p><strong>Country:</strong> China</p><p><strong>Products:</strong> Steel, Alloys</p></div>
+    <div class="card"><h3>GreenFoods Export</h3><p><strong>Country:</strong> Italy</p><p><strong>Products:</strong> Olive Oil, Pasta, Sauces</p></div>
+    <div class="card"><h3>EuroMachines GmbH</h3><p><strong>Country:</strong> Germany</p><p><strong>Products:</strong> Industrial Machinery</p></div>
   </section>
 
-  <footer>
-    © 2025 Trader Route — Verified Companies & Global Partners
-  </footer>
+  <footer>© 2025 Trader Route — Verified Companies & Global Partners</footer>
 
   <script>
-    function filterCompanies() {
-      const searchValue = document.getElementById("companySearch").value.toLowerCase();
-      const selectedCountry = document.getElementById("countryFilter").value.toLowerCase();
-      const cards = document.querySelectorAll(".card");
-      cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        const match = (!searchValue || text.includes(searchValue)) &&
-                      (!selectedCountry || text.includes(selectedCountry));
-        card.style.display = match ? "block" : "none";
+    function filterCompanies(){
+      const searchValue=document.getElementById("companySearch").value.toLowerCase();
+      const selectedCountry=document.getElementById("countryFilter").value.toLowerCase();
+      document.querySelectorAll(".card").forEach(card=>{
+        const text=card.textContent.toLowerCase();
+        const match=(!searchValue||text.includes(searchValue))&&(!selectedCountry||text.includes(selectedCountry));
+        card.style.display=match?"block":"none";
       });
     }
-
-    document.getElementById("companySearch").addEventListener("keyup", e => {
-      if (e.key === "Enter") filterCompanies();
+    document.getElementById("companySearch").addEventListener("keyup",e=>{
+      if(e.key==="Enter")filterCompanies();
     });
+  </script>
+
+  <!-- ✅ User Menu Control -->
+  <script>
+  (function(){
+    const icon=document.getElementById('userIcon');
+    const dropdown=document.getElementById('userDropdown');
+    const loginBtn=document.querySelector("button[onclick*='login.html']");
+    const joinBtn=document.querySelector("button[onclick*='register.html']");
+    const currentUser=JSON.parse(localStorage.getItem('tr_user')||'null');
+    if(currentUser){icon.style.display='inline-block';loginBtn.style.display='none';joinBtn.style.display='none';}
+    else{icon.style.display='none';loginBtn.style.display='';joinBtn.style.display='';}
+    icon?.addEventListener('click',e=>{e.stopPropagation();dropdown.style.display=(dropdown.style.display==='block')?'none':'block';});
+    document.addEventListener('click',e=>{if(!e.target.closest('#userMenuContainer'))dropdown.style.display='none';});
+    window.logoutUser=function(){localStorage.removeItem('tr_user');location.href='index.html';};
+  })();
   </script>
 </body>
 </html>
