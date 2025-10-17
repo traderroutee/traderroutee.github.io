@@ -183,7 +183,7 @@ const visible = all.filter(r => r.approved); // sadece onaylı ilanları göster
         div.innerHTML = `
   <h5>${r.title || "Untitled Request"}</h5>
   <p>${r.description || ""}</p>
-  <small>${r.country || ""} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('en-GB')}</small><br>
+  <small>${r.country||""} · ${r.category||""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small><br>
   ${msgBtn}
 `;
         requestContainer.appendChild(div);
