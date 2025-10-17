@@ -42,44 +42,42 @@
     .join-btn{background:#008b6a;color:#fff;padding:8px 15px}
     .join-btn:hover{background:#006b52}
 
- /* === HERO === */
-.hero{
+/* === HERO === */
+.hero {
   position: relative;
-  left: 50%;
-  transform: translateX(-50%); /* ✅ sağ-sol tam hizalama */
-  width: 100vw; /* kenarlara kadar tam */
-  height: 45vh; /* yüksekliği biraz daha kısalttım */
-  background: url('assets/ihracat-haritasi.png') center center / cover no-repeat;
+  width: 100vw; /* ekran genişliğini tamamen kaplar */
+  height: 40vh; /* yüksekliği biraz kısalttık */
+  background: url('assets/ihracat-haritasi.png') center center / 100% 100% no-repeat; /* tam oturur */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   overflow: hidden;
-  margin: 0; /* tüm kenar boşluklarını sıfırla */
+  margin: 0;
 }
 
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.35);
-  z-index:1;
-  border-radius:0;
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .35);
+  z-index: 1;
+  border-radius: 0;
 }
 
-.hero-content{
-  position:relative;
-  z-index:2;
-  max-width:800px;
-  color:#fff;
-  text-align:center;
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  color: #fff;
+  text-align: center;
 }
 
-.hero-content h1{
-  font-size:44px;
-  font-weight:800;
-  margin:0;
-  text-shadow:0 3px 10px rgba(0,0,0,.5);
+.hero-content h1 {
+  font-size: 44px;
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 3px 10px rgba(0,0,0,.5);
 }
     
     /* === CATEGORY BOX === */
