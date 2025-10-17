@@ -212,7 +212,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   <!-- === JS === -->
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
     const requests = JSON.parse(localStorage.getItem("requests") || "[]");
     const req = requests.find(r => r.id === id);
