@@ -13,9 +13,12 @@
 
   <!-- 🔧 Optimization -->
   <link rel="icon" href="assets/logos.png" type="image/png">
+  <link rel="preload" href="assets/ihracat-haritasi.png" as="image">
+  <link rel="preload" href="assets/logos.png" as="image">
   <link rel="stylesheet" href="style.css" />
 
   <style>
+    /* === GENERAL === */
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background:#f8f9fa}
 
@@ -31,45 +34,31 @@
     .header-right{display:flex;align-items:center;gap:10px}
     .search-box{display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px}
     .search-box input{border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px}
+
+    /* Buttons */
     .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:500;transition:.3s}
     .login-btn{background:#f1f1f1;padding:7px 14px}
     .login-btn:hover{background:#e0e0e0}
     .join-btn{background:#008b6a;color:#fff;padding:8px 15px}
     .join-btn:hover{background:#006b52}
 
-    /* === HERO TAM EKRAN === */
-    .hero{
-      position:relative;
-      width:100%;
-      height:100vh; /* Tam ekran yüksekliği */
-      background:url('assets/ihracat-haritasi.png') center center/cover no-repeat;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-    }
-    .hero::after{
-      content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1;
-    }
-    .hero-content{
-      position:relative;z-index:2;color:#fff;text-align:center;max-width:800px;
-    }
-    .hero-content h1{
-      font-size:46px;font-weight:800;margin:0;text-shadow:0 3px 10px rgba(0,0,0,.5)
-    }
-
-    /* === CATEGORY BOX (sola sabitlendi) === */
-    .cat-holder{
-      position:absolute;
-      top:50%;
-      left:5%;
-      transform:translateY(-50%);
-      z-index:5;
-    }
-    .categories{
-      background:#fff;border-radius:10px;padding:15px;width:240px;
-      box-shadow:0 4px 12px rgba(0,0,0,.1);
-    }
+   /* === HERO === */
+.hero{
+  position:relative;
+  height:100vh; /* biraz kısaldı */
+  background:url('assets/ihracat-haritasi.png') center center/115% no-repeat; /* %115 genişlik */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1;border-radius:6px}
+.hero-content{position:relative;z-index:2;max-width:800px;color:#fff;text-align:center}
+.hero-content h1{font-size:44px;font-weight:800;margin:0;text-shadow:0 3px 10px rgba(0,0,0,.5)}
+    
+    /* === CATEGORY BOX === */
+    .categories{background:#fff;border-radius:10px;padding:15px;width:240px;
+                box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:5}
     .categories h3{font-size:16px;font-weight:700;margin-bottom:10px}
     .category-item{display:flex;justify-content:space-between;font-size:14px;margin:5px 0;color:#333;cursor:pointer;transition:.3s}
     .category-item:hover{color:#008b6a}
@@ -81,39 +70,251 @@
     .middle-buttons{text-align:center;margin:40px 0}
     .middle-buttons button{background:#008b6a;color:#fff;border:none;padding:10px 18px;border-radius:25px;margin:5px;cursor:pointer;font-weight:600;transition:.3s}
     .middle-buttons button:hover{background:#006b52}
+
+    /* === MAIN SECTION === */
+    .main-section{background:#fff;padding:60px 40px;display:flex;justify-content:center;align-items:center;gap:40px;border-radius:10px;max-width:1100px;margin:40px auto;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    .main-section img{width:300px;border-radius:10px}
+    .main-section h2{font-size:24px;margin-bottom:10px;color:#000}
+    .main-section p{color:#333;line-height:1.6;font-size:15px}
+    .main-section button{background:#008b6a;border:none;color:#fff;padding:8px 16px;border-radius:5px;font-weight:600;cursor:pointer}
+    .main-section button:hover{background:#006b52}
+
+    /* FOOTER */
+    footer{background:#fff;display:flex;justify-content:space-around;padding:40px;font-size:14px;color:#333;border-top:1px solid #ddd}
+    footer div{width:200px}
+    footer h4{font-size:15px;margin-bottom:10px;color:#000}
+    .footer-bottom{text-align:center;background:#000;color:#fff;padding:10px;font-size:13px}
+
+    /* === MOBILE === */
+/* === Enhanced Latest Requests Table === */
+.latest-requests {
+  margin: 70px auto;
+  text-align: center;
+  max-width: 1150px;
+}
+
+.latest-requests h2 {
+  color: #007b63;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.requests-table-wrapper {
+  overflow-x: auto;
+  max-width: 1150px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.requests-table th, .requests-table td {
+  padding: 16px 18px;
+  text-align: left;
+  font-size: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.requests-table th {
+  background: #f1f6f5;
+  color: #007b63;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.requests-table tr:hover {
+  background: #f9fdfc;
+  transition: 0.25s;
+}
+
+.title-col { width: 50%; }  /* Title geniş */
+.title-cell {
+  font-weight: 600;
+  color: #008b6a;
+  transition: color 0.3s;
+}
+.title-cell:hover { color: #005f46; }
+
+.view-all {
+  margin-top: 30px;
+}
+
+.view-all button {
+  background: #008b6a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.view-all button:hover {
+  background: #006b52;
+  transform: translateY(-2px);
+}
+/* === Country Flag Table Styling (for /assets/flag/ images) === */
+.latest-requests {
+  margin: 80px auto;
+  text-align: center;
+  max-width: 1150px;
+}
+
+.latest-requests h2 {
+  color: #007b63;
+  margin-bottom: 25px;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.requests-table-wrapper {
+  overflow-x: auto;
+  max-width: 1150px;
+  margin: 0 auto;
+  border-radius: 14px;
+  box-shadow: 0 4px 22px rgba(0,0,0,0.06);
+}
+
+.requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.requests-table th, .requests-table td {
+  padding: 20px 22px;
+  text-align: left;
+  font-size: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.requests-table th {
+  background: #e8f5f3;
+  color: #007b63;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.requests-table tr:hover {
+  background: #f9fdfc;
+  transition: 0.25s;
+}
+
+/* 🏳️ Bayrak Görseli */
+.flag-icon-img {
+  width: 34px;      /* büyük bayrak */
+  height: 24px;
+  border-radius: 3px;
+  object-fit: cover;
+  margin-right: 10px;
+  vertical-align: middle;
+  box-shadow: 0 0 3px rgba(0,0,0,0.25);
+}
+
+.title-col { width: 50%; }
+.title-cell {
+  font-weight: 600;
+  color: #008b6a;
+  transition: color 0.3s;
+}
+.title-cell:hover { color: #005f46; }
+
+.view-all {
+  margin-top: 30px;
+}
+
+.view-all button {
+  background: #008b6a;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 35px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.view-all button:hover {
+  background: #006b52;
+  transform: translateY(-2px);
+}
   </style>
 </head>
-
 <body>
-<header>
-  <div class="logo-container" onclick="location.href='index.html'">
-    <img src="assets/logos.png" alt="Trader Route Logo">
-    <span class="logo-text">The Silk Road of E-Commerce</span>
-  </div>
+  <!-- Welcome alert (orijinal davranış korunur) -->
+  <script>
+  window.addEventListener('DOMContentLoaded', ()=>{
+    const name = localStorage.getItem('welcome_name');
+    if(name){ alert(`Welcome, ${name}!`); localStorage.removeItem('welcome_name'); }
+  });
+  </script>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="companies.html">Companies</a>
-    <a href="requests.html">Requests</a>
-    <a href="contact.html">Contact</a>
-    <a href="pricing.html">Pricing</a>
-  </nav>
-
-  <div class="header-right">
-    <div class="search-box">
-      <input type="text" placeholder="Search...">
-      <button>🔍</button>
+  <!-- ✅ TEK HEADER -->
+  <header>
+    <!-- Sol: Logo (anasayfaya gider) -->
+    <div class="logo-container" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
-    <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-    <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
-  </div>
-</header>
 
-<!-- 🌍 HERO + KATEGORİLER -->
-<section class="hero">
-  <div class="hero-content">
-    <h1>Connecting the World of Import and Export</h1>
-  </div>
+    <!-- Orta: Menü -->
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+
+    <!-- Sağ: Arama + Giriş + Kullanıcı menüsü -->
+    <div class="header-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <button>🔍</button>
+      </div>
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+
+      <img id="userIcon" src="assets/user-icon.png" alt="User Icon" 
+     style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+        <div id="userDropdown"
+             style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
+                    box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+          <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+          <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Connecting the World of Import and Export</h1>
+    </div>
+  </section>
+
+  <!-- CATEGORY BOX -->
   <section class="cat-holder">
     <div class="categories">
       <h3>Categories</h3>
@@ -121,27 +322,181 @@
       <button class="category-button" onclick="location.href='requests.html'">View All Categories</button>
     </div>
   </section>
+
+  <!-- MIDDLE BUTTONS -->
+  <div class="middle-buttons">
+    <button onclick="location.href='requests.html'">All Requests</button>
+    <button onclick="location.href='requests.html?type=buy'">Buyer Requests</button>
+    <button onclick="location.href='requests.html?type=sell'">Seller Offers</button>
+    <button onclick="location.href='request-form.html'">Create Free Request</button>
+  </div>
+<!-- 🌍 LATEST REQUESTS SECTION (auto flag integration) -->
+<section class="latest-requests">
+  <h2>Latest Trade Requests</h2>
+
+  <div class="requests-table-wrapper">
+    <table class="requests-table">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th class="title-col">Request Title</th>
+          <th>Type</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="latestRequestsList"></tbody>
+    </table>
+  </div>
+
+  <div class="view-all">
+    <button onclick="location.href='requests.html'">View All Requests</button>
+  </div>
 </section>
 
-<!-- Diğer bölümler sizdeki haliyle aynı kalır -->
 <script>
-const categories = [
-  "Agriculture Machinery","Agriculture Industry","Automotive","Baby Products & Accessories",
-  "Chemical Industry","Fashion & Apparel","Commercial Activities","Construction & Building",
-  "Cosmetics","IT & Communication","Defense Industry","Electrical & Electronics",
-  "Energy Sector","Environment & Recycling","Food Industry","Furniture",
-  "Gifts & Promotion","Industrial Products","Jewelry","Medical & Pharmaceutical"
-];
-const reqs = JSON.parse(localStorage.getItem("requests") || "[]");
-const list = document.getElementById("categoryList");
-categories.slice(0, 10).forEach(cat => {
-  const count = reqs.filter(r => r.category === cat).length;
-  const div = document.createElement("div");
-  div.className = "category-item";
-  div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
-  div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
-  list.appendChild(div);
+document.addEventListener("DOMContentLoaded", function () {
+  const container = document.getElementById("latestRequestsList");
+  if (!container) return;
+
+  let all = [];
+  try { all = JSON.parse(localStorage.getItem("requests") || "[]"); } catch(e) { all = []; }
+
+  if (!Array.isArray(all) || all.length === 0) {
+    container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#777;padding:25px;">No trade requests yet.</td></tr>`;
+    return;
+  }
+
+  // Flag dosyaları: assets/flag/<ulke-adı>.png
+  // (örneğin Turkey → assets/flag/turkey.png)
+  const normalize = str => str.toLowerCase().replace(/[^a-z]/g, '');
+
+  const latest = all.slice(-5).reverse();
+  container.innerHTML = latest.map(req => {
+    const id   = encodeURIComponent(req.id || req.title || "");
+    const desc = (req.title || "Untitled").slice(0, 50) + (req.title?.length > 50 ? "..." : "");
+    const date = req.date || new Date().toLocaleDateString();
+    const country = req.country || "Unknown";
+    const flagFile = `assets/flag/${normalize(country)}.png`;
+
+    return `
+      <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
+        <td><img src="${flagFile}" alt="${country}" class="flag-icon-img"> ${country}</td>
+        <td class="title-cell">${desc}</td>
+        <td>${req.type || "-"}</td>
+        <td>${date}</td>
+      </tr>
+    `;
+  }).join('');
 });
 </script>
+  
+<!-- /LATEST REQUESTS SECTION -->
+  <!-- MAIN SECTION -->
+  <section class="main-section">
+    <img src="assets/trader_route_step1.jpeg" alt="Trader Route Step" loading="lazy">
+    <div>
+      <h2>Join Trader Route</h2>
+      <p>For companies aiming for global trade success; find buyers for your products and reach new markets — with Trader Route.</p>
+      <button onclick="location.href='register.html'">Join Now</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div><h4>Corporate</h4><p>Export Success Stories</p><p>About Us</p></div>
+    <div><h4>Our Services</h4><p>Free Registration</p><p>Contact Buyers</p></div>
+    <div><h4>Quick Links</h4><p>Company Directory</p><p>Buyer Guide</p></div>
+  </footer>
+  <div class="footer-bottom">© 2025 Trader Route — Connecting Global Trade.</div>
+
+  <!-- Kategoriler (orijinal JS korunur) -->
+  <script>
+    const categories = [
+      "Agriculture Machinery","Agriculture Industry","Automotive","Baby Products & Accessories",
+      "Chemical Industry","Fashion & Apparel","Commercial Activities","Construction & Building",
+      "Cosmetics","IT & Communication","Defense Industry","Electrical & Electronics",
+      "Energy Sector","Entertainment & Hobbies","Environment & Recycling","Food Industry",
+      "Forestry Products","Furniture","Gifts & Promotion","HVAC Systems","Hospitality & Tourism",
+      "Livestock","Industrial Products","Jewelry","Kitchenware & Glass","Leather & Footwear",
+      "Machinery Industry","Marble & Mining","Marine Equipment","Medical & Pharmaceutical",
+      "Metals & Steel","Packaging & Printing","Plastics & Rubber","Cleaning Products",
+      "Security Equipment","Services","Sports Equipment","Stationery & Office","Textile Products",
+      "Tourism","Home Appliances"
+    ];
+    const reqs = JSON.parse(localStorage.getItem("requests") || "[]");
+    const list = document.getElementById("categoryList");
+    categories.slice(0, 10).forEach(cat => {
+      const count = reqs.filter(r => r.category === cat).length;
+      const div = document.createElement("div");
+      div.className = "category-item";
+      div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
+      div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
+      list.appendChild(div);
+    });
+
+    (function(){
+      const hero = document.querySelector('.hero');
+      const holder = document.querySelector('.cat-holder');
+      function .cat-holder{
+        if(!hero || !holder) return;
+        if (window.innerWidth <= 900){
+          holder.style.position = 'static';
+          holder.style.transform = 'none';
+          holder.style.left = '';
+          holder.style.top = '';
+          return;
+        }
+        const rect = hero.getBoundingClientRect();
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        const scrollX = window.scrollX || document.documentElement.scrollLeft;
+        const top = rect.top + scrollY + rect.height / 2;
+        const left = rect.left + scrollX + Math.max(rect.width * 0.06, 32);
+        holder.style.position = 'absolute';
+        holder.style.top = `${top}px`;
+        holder.style.left = `${left}px`;
+        holder.style.transform = 'translateY(-50%)';
+        holder.style.zIndex = '5';
+        holder.style.marginTop = '0';
+      }
+      .cat-holder;
+      window.addEventListener('resize', placeBox);
+      window.addEventListener('scroll', placeBox);
+    })();
+  </script>
+
+  <!-- 👤 Kullanıcı menüsü kontrolü (non-destructive) -->
+  <script>
+  (function(){
+    const header   = document.querySelector('header');
+    const icon     = document.getElementById('userIcon');
+    const dropdown = document.getElementById('userDropdown');
+    const loginBtn = header?.querySelector("button[onclick*='login.html']");
+    const joinBtn  = header?.querySelector("button[onclick*='register.html']");
+    const currentUser = JSON.parse(localStorage.getItem('tr_user') || 'null');
+
+    if (currentUser) {
+      if (icon) icon.style.display = 'inline-block';
+      if (loginBtn) loginBtn.style.display = 'none';
+      if (joinBtn)  joinBtn.style.display  = 'none';
+    } else {
+      if (icon) icon.style.display = 'none';
+      if (loginBtn) loginBtn.style.display = '';
+      if (joinBtn)  joinBtn.style.display  = '';
+    }
+
+    icon?.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+    });
+    document.addEventListener('click', (e)=>{
+      if (!e.target.closest('#userMenuContainer')) dropdown.style.display = 'none';
+    });
+
+    window.logoutUser = function(){
+      localStorage.removeItem('tr_user');
+      location.href = 'index.html';
+    };
+  })();
+  </script>
 </body>
 </html>
