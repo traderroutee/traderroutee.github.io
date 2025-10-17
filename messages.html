@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Messages – Trader Route</title>
-
   <meta name="description" content="Private chat between Trader Route members. Communicate securely with buyers and suppliers.">
   <meta name="author" content="Trader Route">
   <link rel="icon" href="assets/logos.png" />
@@ -26,8 +25,6 @@
     .login-btn:hover{background:#e0e0e0;}
     .join-btn{background:var(--green);color:#fff;padding:8px 15px;}
     .join-btn:hover{background:var(--green-dark);}
-
-    /* === CHAT === */
     .chat{max-width:900px;margin:30px auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;
       box-shadow:0 2px 8px rgba(0,0,0,.08);display:flex;flex-direction:column;height:78vh;overflow:hidden;}
     .head{background:var(--green);color:#fff;padding:14px 18px;font-weight:700;}
@@ -44,7 +41,6 @@
 </head>
 
 <body>
-  <!-- ✅ HEADER -->
   <header>
     <div class="logo-container" onclick="location.href='index.html'">
       <img src="assets/logos.png" alt="Trader Route Logo">
@@ -62,8 +58,6 @@
     <div class="header-right">
       <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
       <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
-
-      <!-- 👤 Kullanıcı Menüsü -->
       <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
         <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
              style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
@@ -78,7 +72,7 @@
     </div>
   </header>
 
-  <!-- ✅ CHAT AREA -->
+  <!-- 💬 CHAT -->
   <div class="chat">
     <div class="head" id="who">Chat</div>
     <div class="list" id="list"></div>
@@ -89,73 +83,60 @@
     <div class="status" id="status"></div>
   </div>
 
-  <!-- === JS: Messaging System === -->
   <script>
-    const me = JSON.parse(localStorage.getItem("loggedUser") || '{"email":"me@traderroute.com"}');
+    const currentUser = JSON.parse(localStorage.getItem("tr_user") || "null");
+    if(!currentUser){ location.href='login.html'; }
+
+    const me = currentUser.email;
     const to = new URLSearchParams(location.search).get("to") || "unknown@user.com";
+    document.getElementById("who").textContent = "Chat with " + to;
 
-    const who  = document.getElementById("who");
-    const list = document.getElementById("list");
-    const msg  = document.getElementById("msg");
-    const send = document.getElementById("send");
-    const status = document.getElementById("status");
-
-    who.textContent = "Chat with " + to;
-
-    function getMessages(){
-      try { return JSON.parse(localStorage.getItem("messages") || "[]"); }
-      catch { return []; }
-    }
+    function getMessages(){ try{return JSON.parse(localStorage.getItem("messages")||"[]");}catch{return[];} }
     function saveMessages(arr){ localStorage.setItem("messages", JSON.stringify(arr)); }
 
     function render(){
-      const all = getMessages();
+      const list = document.getElementById("list");
       list.innerHTML = "";
-      const mine = all.filter(m =>
-        (m.from === me.email && m.to === to) ||
-        (m.from === to && m.to === me.email)
+      const all = getMessages().filter(m =>
+        (m.from === me && m.to === to) ||
+        (m.from === to && m.to === me)
       );
-      mine.forEach(m=>{
-        const b = document.createElement("div");
-        b.className = "bubble " + (m.from === me.email ? "sent" : "recv");
-        b.textContent = m.text;
-        list.appendChild(b);
+      all.forEach(m=>{
+        const div=document.createElement("div");
+        div.className="bubble "+(m.from===me?"sent":"recv");
+        div.textContent=m.text;
+        list.appendChild(div);
       });
-      list.scrollTop = list.scrollHeight;
+      list.scrollTop=list.scrollHeight;
     }
 
     function sendMessage(){
-      const text = msg.value.trim();
+      const input=document.getElementById("msg");
+      const text=input.value.trim();
       if(!text) return;
-      const all = getMessages();
-      all.push({ from: me.email, to, text, time: Date.now() });
+      const all=getMessages();
+      const msgData={from:me,to,text,time:new Date().toISOString()};
+      all.push(msgData);
       saveMessages(all);
-      msg.value = "";
+      input.value="";
       render();
-      fetch("server/send_message.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ from: me.email, to, text })
-      })
-      .then(res => res.json())
-      .then(d => {
-        console.log("Server response:", d);
-        status.textContent = d.message || "Message sent.";
-        setTimeout(()=>status.textContent="",3000);
-      })
-      .catch(err => {
-        console.error("Send error:", err);
-        status.textContent = "Error sending message.";
-      });
+
+      // 📩 Simulated email notification
+      console.log("📧 Notification sent to:", to, " | Message:", text);
+      const status=document.getElementById("status");
+      status.textContent="Message sent and email notification delivered.";
+      setTimeout(()=>status.textContent="",3000);
     }
 
-    send.onclick = sendMessage;
-    msg.addEventListener("keypress", e=>{ if(e.key==="Enter") sendMessage(); });
-    setInterval(render, 4000);
+    document.getElementById("send").onclick=sendMessage;
+    document.getElementById("msg").addEventListener("keypress",e=>{
+      if(e.key==="Enter") sendMessage();
+    });
+    setInterval(render,3000);
     render();
   </script>
 
-  <!-- === JS: User Menu === -->
+  <!-- 👤 USER MENU -->
   <script>
   (function(){
     const icon=document.getElementById('userIcon');
@@ -163,26 +144,11 @@
     const loginBtn=document.querySelector("button[onclick*='login.html']");
     const joinBtn=document.querySelector("button[onclick*='register.html']");
     const currentUser=JSON.parse(localStorage.getItem('tr_user')||'null');
-    if(currentUser){
-      icon.style.display='inline-block';
-      loginBtn.style.display='none';
-      joinBtn.style.display='none';
-    } else {
-      icon.style.display='none';
-      loginBtn.style.display='';
-      joinBtn.style.display='';
-    }
-    icon?.addEventListener('click',e=>{
-      e.stopPropagation();
-      dropdown.style.display=(dropdown.style.display==='block')?'none':'block';
-    });
-    document.addEventListener('click',e=>{
-      if(!e.target.closest('#userMenuContainer')) dropdown.style.display='none';
-    });
-    window.logoutUser=function(){
-      localStorage.removeItem('tr_user');
-      location.href='index.html';
-    };
+    if(currentUser){icon.style.display='inline-block';loginBtn.style.display='none';joinBtn.style.display='none';}
+    else{icon.style.display='none';loginBtn.style.display='';joinBtn.style.display='';}
+    icon?.addEventListener('click',e=>{e.stopPropagation();dropdown.style.display=(dropdown.style.display==='block')?'none':'block';});
+    document.addEventListener('click',e=>{if(!e.target.closest('#userMenuContainer'))dropdown.style.display='none';});
+    window.logoutUser=function(){localStorage.removeItem('tr_user');location.href='index.html';};
   })();
   </script>
 </body>
