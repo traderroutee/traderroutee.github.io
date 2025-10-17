@@ -45,39 +45,17 @@
 /* === HERO === */
 .hero {
   position: relative;
-  width: 100vw; /* ekran genişliğini tamamen kaplar */
-  height: 40vh; /* yüksekliği biraz kısalttık */
-  background: url('assets/ihracat-haritasi.png') center center / 100% 100% no-repeat; /* tam oturur */
+  width: 100vw;
+  height: 40vh;
+  background: url('assets/ihracat-haritasi.png') center center / cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   overflow: hidden;
   margin: 0;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, .35);
-  z-index: 1;
-  border-radius: 0;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-  color: #fff;
-  text-align: center;
-}
-
-.hero-content h1 {
-  font-size: 44px;
-  font-weight: 800;
-  margin: 0;
-  text-shadow: 0 3px 10px rgba(0,0,0,.5);
+  margin-left: calc(-50vw + 50%); /* ✅ tam kenara taşır */
+  margin-right: calc(-50vw + 50%); /* ✅ tam kenara taşır */
 }
     
     /* === CATEGORY BOX === */
