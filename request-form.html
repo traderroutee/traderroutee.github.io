@@ -25,53 +25,20 @@
     button:hover{background:#006b52;}
     .success-msg{display:none;color:#008b6a;text-align:center;margin-top:15px;font-weight:600;}
 
-.type-section {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.type-section label {
-  font-weight: 600;
-  font-size: 15px;
-  color: #222;
-}
-
-.type-options {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-.type-options input[type="radio"] {
-  display: none;
-}
-
-.type-options .type-btn {
-  background: #f4f4f4;
-  color: #333;
-  border: 2px solid #008b6a;
-  border-radius: 25px;
-  padding: 10px 25px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.type-options input[type="radio"]:checked + .type-btn {
-  background: #008b6a;
-  color: #fff;
-  box-shadow: 0 0 8px rgba(0,139,106,0.4);
-}
-.type-options .type-btn:hover {
-  background: #e9f8f4;
-}
-    
+    .type-section{text-align:center;margin:20px 0;}
+    .type-section label{font-weight:600;font-size:15px;color:#222;}
+    .type-options{display:flex;justify-content:center;gap:15px;margin-top:10px;}
+    .type-options input[type="radio"]{display:none;}
+    .type-options .type-btn{background:#f4f4f4;color:#333;border:2px solid #008b6a;border-radius:25px;
+                            padding:10px 25px;font-weight:600;cursor:pointer;transition:0.25s;}
+    .type-options input[type="radio"]:checked + .type-btn{
+      background:#008b6a;color:#fff;box-shadow:0 0 8px rgba(0,139,106,0.4);}
+    .type-options .type-btn:hover{background:#e9f8f4;}
   </style>
 </head>
 
 <body>
-  <!-- ✅ HEADER (orijinal yapısı korunur) -->
+  <!-- ✅ HEADER -->
   <header>
     <div class="logo-container" onclick="location.href='index.html'">
       <img src="assets/logos.png" alt="Trader Route Logo">
@@ -91,42 +58,29 @@
     <label for="category">Category</label>
     <select id="category" required>
       <option value="">Select Category</option>
-      <option value="Food Industry">Food Industry</option>
-      <option value="Agriculture Industry">Agriculture Industry</option>
-      <option value="Automotive">Automotive</option>
-      <option value="Fashion & Apparel">Fashion & Apparel</option>
-      <option value="Construction & Building">Construction & Building</option>
-      <option value="Medical & Pharmaceutical">Medical & Pharmaceutical</option>
     </select>
 
     <label for="country">Country</label>
     <select id="country" required>
       <option value="">Select Country</option>
-      <option value="Turkey">Turkey</option>
-      <option value="United States">United States</option>
-      <option value="Germany">Germany</option>
-      <option value="France">France</option>
-      <option value="Italy">Italy</option>
-      <option value="China">China</option>
-      <option value="India">India</option>
-      <option value="Brazil">Brazil</option>
     </select>
 
-   <div class="type-section">
-  <label>Request Type</label>
-  <div class="type-options">
-    <input type="radio" id="buy" name="type" value="buy">
-    <label for="buy" class="type-btn">Buy Request</label>
+    <div class="type-section">
+      <label>Request Type</label>
+      <div class="type-options">
+        <input type="radio" id="buy" name="type" value="buy">
+        <label for="buy" class="type-btn">Buy Request</label>
 
-    <input type="radio" id="sell" name="type" value="sell">
-    <label for="sell" class="type-btn">Sell Offer</label>
-  </div>
-     
-</div>
-   <button type="submit">Submit Request</button>
+        <input type="radio" id="sell" name="type" value="sell">
+        <label for="sell" class="type-btn">Sell Offer</label>
+      </div>
+    </div>
+
+    <button type="submit">Submit Request</button>
     <div class="success-msg" id="successMsg">Your request has been created successfully!</div>
   </form>
 
+  <!-- ✅ YENİ / DÜZENLEME SİSTEMİ -->
   <script>
   const form = document.getElementById("requestForm");
   const successMsg = document.getElementById("successMsg");
@@ -138,128 +92,114 @@
     const description = document.getElementById("description").value.trim();
     const category = document.getElementById("category").value;
     const country = document.getElementById("country").value;
-    const type = document.querySelector('input[name="type"]:checked').value;
+    const type = document.querySelector('input[name="type"]:checked')?.value;
 
     const currentUser = JSON.parse(localStorage.getItem("tr_user") || "null");
     const requests = JSON.parse(localStorage.getItem("requests") || "[]");
 
-   const newRequest = {
-  id: Date.now(),
-  title,
-  description,
-  category,
-  country,
-  type,
-  user: currentUser?.email || "Guest",
-  date: new Date().toISOString(),
-  approved: false // <<< YENİ: admin onayı olmadan listelenmesin
-};
+    const editId = new URLSearchParams(window.location.search).get("edit");
+    if(editId){
+      const idx = requests.findIndex(r => r.id == editId);
+      if(idx !== -1){
+        requests[idx].title = title;
+        requests[idx].description = description;
+        requests[idx].category = category;
+        requests[idx].country = country;
+        requests[idx].type = type;
+        requests[idx].edited = true;
+        localStorage.setItem("requests", JSON.stringify(requests));
+        alert("✅ Request updated successfully!");
+        localStorage.removeItem("edit_request");
+        location.href = "profile.html";
+        return;
+      }
+    }
 
-    // ✅ Kaydet ve güncelle
+    // Yeni ilan ekle
+    const newRequest = {
+      id: Date.now(),
+      title,
+      description,
+      category,
+      country,
+      type,
+      user: currentUser?.email || "Guest",
+      date: new Date().toISOString(),
+      approved: false
+    };
+
     requests.push(newRequest);
     localStorage.setItem("requests", JSON.stringify(requests));
 
-    // ✅ Sayaçları güncellemek için tetikleme
-    window.dispatchEvent(new Event("storage"));
-
-    // ✅ Başarılı mesaj ve yönlendirme
     successMsg.style.display = "block";
     form.reset();
-
     setTimeout(()=>{
       successMsg.style.display = "none";
-      location.href = "requests.html"; // yönlendirme eklendi
+      location.href = "requests.html";
     },1500);
   });
   </script>
-  
- <script>
-   document.addEventListener("DOMContentLoaded", function () {
-  const categorySelect = document.getElementById("category");
-  const countrySelect = document.getElementById("country");
 
-  // 🔹 Kategoriler (tam sizin verdiğiniz liste)
-  const categories = [
-    "Agriculture",
-    "Apparel & Fashion",
-    "Automobiles & Motorcycles",
-    "Beauty & Personal Care",
-    "Business Services",
-    "Chemicals",
-    "Computer Hardware & Software",
-    "Construction & Real Estate",
-    "Consumer Electronics",
-    "Electrical Equipment & Supplies",
-    "Energy",
-    "Environment",
-    "Food & Beverage",
-    "Furniture",
-    "Gifts & Crafts",
-    "Hardware",
-    "Health & Medical",
-    "Home & Garden",
-    "Industrial Machinery",
-    "Jewelry & Watches",
-    "Lights & Lighting",
-    "Luggage, Bags & Cases",
-    "Mechanical Parts & Fabrication",
-    "Minerals & Metallurgy",
-    "Office Supplies",
-    "Packaging & Printing",
-    "Security & Protection",
-    "Service Equipment",
-    "Sports & Entertainment",
-    "Telecommunications",
-    "Textiles & Leather Products",
-    "Tools",
-    "Toys & Hobbies",
-    "Transportation",
-    "Travel & Tourism",
-    "Others"
-  ];
+  <!-- ✅ KATEGORİ & ÜLKE YÜKLEME -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const categorySelect = document.getElementById("category");
+    const countrySelect = document.getElementById("country");
 
-  // 🔹 Ülkeler (tüm dünya)
-  const countries = [
-    "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia",
-    "Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin",
-    "Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi",
-    "Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia",
-    "Comoros","Congo (Brazzaville)","Congo (Kinshasa)","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic",
-    "Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea",
-    "Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany",
-    "Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary",
-    "Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan",
-    "Kenya","Kiribati","Korea, North","Korea, South","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho",
-    "Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives",
-    "Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia",
-    "Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand",
-    "Nicaragua","Niger","Nigeria","North Macedonia","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea",
-    "Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis",
-    "Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia",
-    "Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia",
-    "South Africa","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan",
-    "Tajikistan","Tanzania","Thailand","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan",
-    "Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan",
-    "Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
-  ];
+    const categories = [
+      "Agriculture","Apparel & Fashion","Automobiles & Motorcycles","Beauty & Personal Care",
+      "Business Services","Chemicals","Computer Hardware & Software","Construction & Real Estate",
+      "Consumer Electronics","Electrical Equipment & Supplies","Energy","Environment","Food & Beverage",
+      "Furniture","Gifts & Crafts","Hardware","Health & Medical","Home & Garden","Industrial Machinery",
+      "Jewelry & Watches","Lights & Lighting","Luggage, Bags & Cases","Mechanical Parts & Fabrication",
+      "Minerals & Metallurgy","Office Supplies","Packaging & Printing","Security & Protection",
+      "Service Equipment","Sports & Entertainment","Telecommunications","Textiles & Leather Products",
+      "Tools","Toys & Hobbies","Transportation","Travel & Tourism","Others"
+    ];
 
-  // 🔸 Kategorileri ekle
-  categories.forEach(cat => {
-    const opt = document.createElement("option");
-    opt.value = cat;
-    opt.textContent = cat;
-    categorySelect.appendChild(opt);
+    const countries = [
+      "Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Armenia","Australia","Austria",
+      "Azerbaijan","Bahamas","Bahrain","Bangladesh","Belgium","Brazil","Bulgaria","Cambodia","Cameroon",
+      "Canada","Chile","China","Colombia","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Ecuador",
+      "Egypt","Estonia","Finland","France","Germany","Greece","Hong Kong","Hungary","Iceland","India",
+      "Indonesia","Iran","Iraq","Ireland","Israel","Italy","Japan","Jordan","Kazakhstan","Kenya",
+      "Korea, South","Kuwait","Latvia","Lebanon","Lithuania","Luxembourg","Malaysia","Mexico","Moldova",
+      "Monaco","Mongolia","Morocco","Netherlands","New Zealand","Nigeria","Norway","Oman","Pakistan",
+      "Philippines","Poland","Portugal","Qatar","Romania","Russia","Saudi Arabia","Serbia","Singapore",
+      "Slovakia","Slovenia","South Africa","Spain","Sri Lanka","Sweden","Switzerland","Syria","Taiwan",
+      "Thailand","Tunisia","Turkey","Ukraine","United Arab Emirates","United Kingdom","United States","Vietnam","Zambia","Zimbabwe"
+    ];
+
+    categories.forEach(cat => {
+      const opt = document.createElement("option");
+      opt.value = cat;
+      opt.textContent = cat;
+      categorySelect.appendChild(opt);
+    });
+
+    countries.forEach(cty => {
+      const opt = document.createElement("option");
+      opt.value = cty;
+      opt.textContent = cty;
+      countrySelect.appendChild(opt);
+    });
+
+    // Eğer edit mode varsa, bilgileri yükle
+    const editId = new URLSearchParams(window.location.search).get("edit");
+    if(editId){
+      const editData = JSON.parse(localStorage.getItem("edit_request") || "null");
+      if(editData){
+        document.getElementById("title").value = editData.title || "";
+        document.getElementById("description").value = editData.description || "";
+        document.getElementById("category").value = editData.category || "";
+        document.getElementById("country").value = editData.country || "";
+        if(editData.type === "buy") document.getElementById("buy").checked = true;
+        else if(editData.type === "sell") document.getElementById("sell").checked = true;
+        const header = document.querySelector("h2");
+        if(header) header.textContent = "Edit Trade Request";
+      }
+    }
   });
-
-  // 🔸 Ülkeleri ekle
-  countries.forEach(cty => {
-    const opt = document.createElement("option");
-    opt.value = cty;
-    opt.textContent = cty;
-    countrySelect.appendChild(opt);
-  });
-});
-</script>
-  
+  </script>
 </body>
 </html>
