@@ -174,10 +174,11 @@
         const div=document.createElement("div");
         div.className="request-card";
         div.onclick=()=>{
-          const all = JSON.parse(localStorage.getItem("requests") || "[]");
-const visible = all.filter(r => r.approved); // sadece onaylı ilanları göster
-  const id = r.id || Date.now(); // ✅ Eğer eski ilanlarda id yoksa geçici üret
-  window.location.href = `request-detail.html?id=${encodeURIComponent(id)}&to=${encodeURIComponent(owner)}`;
+  if(!r.id){
+    alert("This request has no valid ID and cannot be opened.");
+    return;
+  }
+  window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
 };
         const msgBtn=owner?`<button class='msg-btn' onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(owner)}'">Message</button>`:"";
         div.innerHTML = `
