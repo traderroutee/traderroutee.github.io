@@ -44,17 +44,18 @@
 
    /* === HERO === */
 .hero{
-  position:relative;
-  width:100%;
-  height:50vh; /* tam ekran yüksekliği */
-  background:url('assets/ihracat-haritasi.png') center center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  overflow:hidden;
+  position: relative;
+  width: 100vw; /* kenarlara kadar */
+  height: 60vh; /* yüksekliği azalttık (50vh yerine 60 daha orantılı) */
+  background: url('assets/ihracat-haritasi.png') center center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  margin: 0; /* varsa boşlukları kaldırır */
 }
-.hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1;border-radius:6px}
+.hero::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:1;border-radius:0px}
 .hero-content{position:relative;z-index:2;max-width:800px;color:#fff;text-align:center}
 .hero-content h1{font-size:44px;font-weight:800;margin:0;text-shadow:0 3px 10px rgba(0,0,0,.5)}
     
