@@ -26,7 +26,7 @@
   .main{margin-left:240px;padding:30px}
   .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
   .header h2{color:var(--brand);margin:0}
-  .btn{padding:8px 12px;border:none;border-radius:6px;cursor:pointer;font-weight:600}
+  .btn{padding:7px 10px;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:13px}
   .btn-primary{background:var(--info);color:#fff}
   .btn-green{background:var(--brand);color:#fff}
   .btn-red{background:var(--danger);color:#fff}
@@ -35,8 +35,8 @@
   table{width:100%;border-collapse:collapse}
   th,td{padding:10px;border-bottom:1px solid #eee;text-align:left}
   thead th{background:#fafafa}
-  #edit-section{display:none;background:#fff;padding:20px;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.1);max-width:700px;margin:20px auto}
-  #edit-section input,#edit-section select,#edit-section textarea{width:100%;margin:6px 0 12px;padding:10px;border:1px solid #ccc;border-radius:6px}
+  .filter-box{margin-bottom:10px;text-align:right}
+  select.filter-select{padding:6px 10px;border-radius:6px;border:1px solid #ccc;font-size:14px}
   @media (max-width:900px){
     .sidebar{position:static;width:auto}
     .main{margin:0}
@@ -74,10 +74,18 @@
 
     <!-- REQUESTS SECTION -->
     <section id="requestsView" class="card">
+      <div class="filter-box">
+        <label for="statusFilter"><b>Filter:</b></label>
+        <select id="statusFilter" class="filter-select">
+          <option value="all">All</option>
+          <option value="approved">Approved</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
       <table>
         <thead>
           <tr>
-            <th>Title</th><th>Type</th><th>User</th><th>Country</th><th>Category</th><th>Date</th><th>Status</th>
+            <th>Title</th><th>Type</th><th>User</th><th>Country</th><th>Category</th><th>Date</th><th>Status / Actions</th>
           </tr>
         </thead>
         <tbody id="requestsTable"></tbody>
@@ -90,12 +98,7 @@
       <table>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Company</th>
-            <th>Country</th>
-            <th>Registered At</th>
+            <th>#</th><th>Name</th><th>Email</th><th>Company</th><th>Country</th><th>Registered At</th>
           </tr>
         </thead>
         <tbody id="usersTable"></tbody>
@@ -111,6 +114,7 @@
   const dashboard = document.getElementById('dashboard');
   const loginBtn = document.getElementById('loginBtn');
   const loginError = document.getElementById('loginError');
+  const filterSelect = document.getElementById('statusFilter');
 
   loginBtn.addEventListener('click', () => {
     const u = document.getElementById('username').value.trim();
@@ -118,7 +122,7 @@
     if (u === 'admin' && p === 'trader2025') {
       loginScreen.style.display = 'none';
       dashboard.style.display = 'block';
-      showRequests(); // ✅ Doğru fonksiyon çağrısı
+      showRequests();
     } else {
       loginError.textContent = 'Invalid username or password!';
     }
@@ -145,14 +149,19 @@
     location.reload();
   });
 
-  // ✅ Requests (ilanlar)
+  // ✅ REQUESTS (ilanlar)
   window.showRequests = function(){
     const tbody = document.getElementById('requestsTable');
     tbody.innerHTML = '';
-    const requests = JSON.parse(localStorage.getItem('requests') || '[]');
+    const all = JSON.parse(localStorage.getItem('requests') || '[]');
+    const filter = filterSelect.value;
+
+    let requests = all;
+    if (filter === 'approved') requests = all.filter(r => r.approved === true);
+    if (filter === 'pending') requests = all.filter(r => !r.approved);
 
     if (!requests.length){
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#777;padding:15px;">No requests yet.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#777;padding:15px;">No requests found.</td></tr>';
       return;
     }
 
@@ -160,10 +169,10 @@
       const tr = document.createElement('tr');
       const date = r.date ? new Date(r.date).toLocaleDateString() : '-';
       const status = r.approved ? '✅ Approved' : '⏳ Pending';
-      const actionBtn = !r.approved
+      const approveBtn = !r.approved
         ? `<button class="btn-green" onclick="approveRequest(${r.id})">Approve</button>`
         : `<button class="btn-outline" disabled>Approved</button>`;
-
+      const deleteBtn = `<button class="btn-red" onclick="deleteRequest(${r.id})">Delete</button>`;
       tr.innerHTML = `
         <td>${r.title || '-'}</td>
         <td>${r.type || '-'}</td>
@@ -171,7 +180,7 @@
         <td>${r.country || '-'}</td>
         <td>${r.category || '-'}</td>
         <td>${date}</td>
-        <td>${status}<br>${actionBtn}</td>
+        <td>${status}<br>${approveBtn} ${deleteBtn}</td>
       `;
       tbody.appendChild(tr);
     });
@@ -189,7 +198,20 @@
     }
   };
 
-  // ✅ Users (üyeler)
+  // 🗑️ Silme fonksiyonu
+  window.deleteRequest = function(id){
+    if(!confirm('Are you sure you want to delete this request?')) return;
+    const all = JSON.parse(localStorage.getItem('requests') || '[]');
+    const updated = all.filter(r => r.id !== id);
+    localStorage.setItem('requests', JSON.stringify(updated));
+    alert('Request deleted successfully!');
+    showRequests();
+  };
+
+  // 🔄 Filtre değiştiğinde listeyi güncelle
+  filterSelect.addEventListener('change', showRequests);
+
+  // ✅ USERS
   window.showUsers = function(){
     const usersTbody = document.getElementById('usersTable');
     const usersMsg = document.getElementById('usersMsg');
