@@ -180,7 +180,12 @@ const visible = all.filter(r => r.approved); // sadece onaylı ilanları göster
   window.location.href = `request-detail.html?id=${encodeURIComponent(id)}&to=${encodeURIComponent(owner)}`;
 };
         const msgBtn=owner?`<button class='msg-btn' onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(owner)}'">Message</button>`:"";
-        div.innerHTML=`<h5>${r.title||"Untitled Request"}</h5><p>${r.description||""}</p><small>${r.country||""} · ${r.category||""}</small><br>${msgBtn}`;
+        div.innerHTML = `
+  <h5>${r.title || "Untitled Request"}</h5>
+  <p>${r.description || ""}</p>
+  <small>${r.country || ""} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('en-GB')}</small><br>
+  ${msgBtn}
+`;
         requestContainer.appendChild(div);
       });
       document.getElementById("showMoreRequests").style.display=filtered.length>visibleRequests?"block":"none";
