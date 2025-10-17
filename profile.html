@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Profile — Trader Route</title>
-  <meta name="description" content="View and manage your Trader Route account profile.">
+  <meta name="description" content="View and manage your Trader Route account profile and messages.">
   <meta name="author" content="Trader Route">
   <link rel="icon" href="assets/logos.png" type="image/png" />
 
@@ -37,6 +37,19 @@
     .logout-btn{background:#d9534f;color:#fff;border:none;padding:10px 20px;border-radius:8px;
                 font-weight:600;margin-top:25px;cursor:pointer;transition:.25s;}
     .logout-btn:hover{background:#c9302c;}
+
+    /* === Inbox === */
+    .inbox-section{background:#fff;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,0.06);
+                   padding:25px;max-width:700px;margin:0 auto;}
+    .inbox-section h3{text-align:center;margin-top:0;color:#007b63;}
+    .message-item{border:1px solid #e5e7eb;border-radius:8px;padding:12px 15px;margin-bottom:10px;
+                  background:#f9fdfc;}
+    .message-item strong{color:#008b6a;}
+    .message-item p{margin:8px 0;font-size:14px;}
+    .reply-btn{background:#008b6a;color:#fff;border:none;padding:6px 12px;border-radius:6px;
+               cursor:pointer;font-size:13px;font-weight:600;transition:.2s;}
+    .reply-btn:hover{background:#006b52;}
+    .no-messages{text-align:center;color:#777;font-size:14px;margin-top:10px;}
   </style>
 </head>
 
@@ -77,12 +90,17 @@
 
       <button class="logout-btn" onclick="logoutUser()">Logout</button>
     </div>
+
+    <!-- 💬 Inbox Section -->
+    <div class="inbox-section">
+      <h3>📨 Inbox</h3>
+      <div id="inboxMessages"></div>
+    </div>
   </div>
 
   <script>
     // === Load user info ===
     const user = JSON.parse(localStorage.getItem("tr_user") || "null");
-
     if(!user){
       alert("You must log in first.");
       location.href = "login.html";
@@ -93,10 +111,38 @@
       document.getElementById("profileCategory").textContent = user.category || "Not set";
     }
 
+    // === Load Inbox Messages ===
+    function renderInbox(){
+      const inboxDiv = document.getElementById("inboxMessages");
+      inboxDiv.innerHTML = "";
+      const all = JSON.parse(localStorage.getItem("messages") || "[]");
+      const myMsgs = all.filter(m => m.to === user.email);
+      if(myMsgs.length === 0){
+        inboxDiv.innerHTML = '<div class="no-messages">No messages yet.</div>';
+        return;
+      }
+      myMsgs.reverse().forEach(msg=>{
+        const div=document.createElement("div");
+        div.className="message-item";
+        div.innerHTML=`
+          <strong>From:</strong> ${msg.from}<br>
+          <p>${msg.text}</p>
+          <button class="reply-btn" onclick="replyTo('${msg.from}')">Reply</button>
+        `;
+        inboxDiv.appendChild(div);
+      });
+    }
+
+    function replyTo(email){
+      location.href = 'messages.html?to=' + encodeURIComponent(email);
+    }
+
     function logoutUser(){
       localStorage.removeItem("tr_user");
       location.href = "index.html";
     }
+
+    renderInbox();
   </script>
 </body>
 </html>
