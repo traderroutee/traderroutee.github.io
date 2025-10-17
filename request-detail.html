@@ -210,29 +210,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 </script>
 
   <!-- === JS === -->
-  <script>
-    const id = urlParams.get("id");
-    const requests = JSON.parse(localStorage.getItem("requests") || "[]");
-    const req = requests.find(r => r.id === id);
-    const titleEl = document.getElementById("title");
-    const metaEl = document.getElementById("meta");
-    const descEl = document.getElementById("description");
-
-    if (req) {
-      titleEl.textContent = req.title || "Untitled Request";
-      descEl.textContent = req.description || "";
-      const flag = req.countryCode || (req.country ? req.country.slice(0,2).toLowerCase() : "");
-      metaEl.innerHTML = `
-        <img src="https://flagcdn.com/h20/${flag}.png" class="flag" alt="">
-        ${req.country || ""} 
-        <span class="chip">${req.category || ""}</span>
-      `;
-    } else {
-      titleEl.textContent = "Request Not Found";
-      descEl.textContent = "This request may have been removed or does not exist.";
-    }
-  </script>
-
+ 
   <!-- === USER MENU CONTROL === -->
   <script>
   (function(){
