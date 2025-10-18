@@ -131,14 +131,7 @@
     requests.push(newRequest);
     localStorage.setItem("requests", JSON.stringify(requests));
 
-    successMsg.style.display = "block";
-    form.reset();
-    setTimeout(()=>{
-      successMsg.style.display = "none";
-      location.href = "requests.html";
-    },1500);
-
-    // ✅ requests.json dosyasını güncelle (tüm cihazlarda aynı ilan görünsün)
+     // ✅ requests.json dosyasını güncelle (tüm cihazlarda aynı ilan görünsün)
 async function saveRequestToServer(newRequest) {
   try {
     const res = await fetch("data/requests.json", { cache: "no-store" });
@@ -165,6 +158,15 @@ async function saveRequestToServer(newRequest) {
 
 // Form kaydının hemen altına bu satırı ekle:
 saveRequestToServer(newRequest);
+
+    successMsg.style.display = "block";
+    form.reset();
+    setTimeout(()=>{
+      successMsg.style.display = "none";
+      location.href = "requests.html";
+    },1500);
+
+
   });
   </script>
 
