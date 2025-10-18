@@ -212,21 +212,63 @@ const user = req.username || "Unknown User";
 const code = countryToCode(req.country || "Unknown");
 const flag = `https://flagcdn.com/h40/${code}.png`;
 
+// 🌍 Otomatik bayrak sistemi (flagcdn.com)
+function countryToCode(name) {
+  const map = {
+    "Turkey":"tr","Austria":"at","United States":"us","Germany":"de","France":"fr",
+    "Italy":"it","Spain":"es","China":"cn","Japan":"jp","India":"in","Brazil":"br",
+    "Russia":"ru","Canada":"ca","Australia":"au","United Kingdom":"gb","UK":"gb",
+    "Netherlands":"nl","Switzerland":"ch","Belgium":"be","Poland":"pl","Mexico":"mx",
+    "Korea":"kr","South Korea":"kr","North Korea":"kp","Saudi Arabia":"sa","Egypt":"eg",
+    "Chile":"cl","Czech Republic":"cz","Denmark":"dk","Finland":"fi","Sweden":"se",
+    "Norway":"no","Portugal":"pt","Greece":"gr","Hungary":"hu","Ireland":"ie",
+    "Argentina":"ar","Indonesia":"id","Malaysia":"my","Singapore":"sg","Thailand":"th",
+    "Philippines":"ph","Pakistan":"pk","Bangladesh":"bd","Vietnam":"vn","UAE":"ae",
+    "Qatar":"qa","Kuwait":"kw","Oman":"om","South Africa":"za","Nigeria":"ng"
+  };
+  if (!name) return "unknown";
+  const key = Object.keys(map).find(k => k.toLowerCase() === name.toLowerCase());
+  return (key ? map[key] : (name.slice(0,2) || "unknown")).toLowerCase();
+}
+
+const user = req.username || "Unknown User";
+const code = countryToCode(req.country || "Unknown");
+const flag = `https://flagcdn.com/h40/${code}.png`;
+
+// 🆕 Modern Kart Görünümü
 container.innerHTML = `
-  <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
-    <img src="${flag}" alt="${req.country}" style="width:50px;height:35px;border-radius:4px;object-fit:cover;border:1px solid #ccc;">
-    <h2 style="margin:0;">${req.title}</h2>
+  <div style="max-width:750px;margin:40px auto;background:#fff;border-radius:14px;
+              box-shadow:0 4px 15px rgba(0,0,0,0.08);padding:35px 45px;
+              display:flex;flex-direction:column;align-items:flex-start;gap:18px;">
+    
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img src="${flag}" alt="${req.country}" style="width:55px;height:38px;border-radius:6px;
+           border:1px solid #ddd;object-fit:cover;">
+      <h1 style="margin:0;font-size:26px;font-weight:800;color:#008b6a;">${req.title}</h1>
+    </div>
+
+    <div style="font-size:16px;color:#333;line-height:1.7;">
+      <p><strong>Country:</strong> ${req.country || "Unknown"}</p>
+      <p><strong>Category:</strong> ${req.category || "Unspecified"}</p>
+      <p><strong>Posted by:</strong> ${user}</p>
+    </div>
+
+    <div style="margin-top:10px;padding:20px;background:#f8f9fa;border-radius:10px;width:100%;">
+      <p style="font-size:15px;line-height:1.7;color:#444;margin:0;">
+        ${req.description || "No description provided."}
+      </p>
+    </div>
+
+    <div style="margin-top:25px;">
+      <button style="background:#008b6a;color:#fff;border:none;border-radius:8px;
+                     padding:12px 28px;font-size:16px;font-weight:600;cursor:pointer;
+                     transition:0.3s;" 
+              onclick="window.location.href='messages.html?to=${encodeURIComponent(req.ownerEmail || req.email || '')}'">
+        Send Message
+      </button>
+    </div>
   </div>
-    <p><strong>Country:</strong> ${req.country}</p>
-    <p><strong>Category:</strong> ${req.category}</p>
-    <p><strong>Posted by:</strong> ${user}</p>
-    <p><strong>Description:</strong><br>${req.description || "-"}</p>
-    <button style="background:#008b6a;color:#fff;padding:10px 18px;border:none;border-radius:6px;cursor:pointer;font-weight:600;margin-top:20px;"
-            onclick="location.href='messages.html?to=${encodeURIComponent(user)}'">
-      Send Message
-    </button>
-  `;
-});
+`;
 </script>
 
   <!-- === JS === -->
