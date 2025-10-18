@@ -175,7 +175,14 @@
   <!-- === JS === -->
   <script>
     let categories=null, allCountries=null;
-    const getRequests=()=>{try{return JSON.parse(localStorage.getItem("requests")||"[]");}catch{return[];}};
+    async function getRequests(){
+  try {
+    const res = await fetch("data/requests.json", {cache: "no-store"});
+    return await res.json();
+  } catch {
+    return JSON.parse(localStorage.getItem("requests") || "[]");
+  }
+}
     const requestContainer=document.getElementById("requestItems"),
           searchInput=document.getElementById("searchInput"),
           categoryList=document.getElementById("categoryList"),
