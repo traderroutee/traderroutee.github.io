@@ -172,7 +172,6 @@
     <h1 id="title">Request Title</h1>
     <div class="meta" id="meta"></div>
     <p class="desc" id="description">Loading request details...</p>
-    <a class="back" href="requests.html">← Back to Requests</a>
     <div id="requestDetail"></div>
   </main>
 
@@ -188,29 +187,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     container.innerHTML = `<h2 style="color:#007b63;">Request Not Found</h2>`;
     return;
   }
-
-  // 🌍 Otomatik bayrak sistemi (flagcdn.com)
-function countryToCode(name) {
-  const map = {
-    "Turkey":"tr","Austria":"at","United States":"us","Germany":"de","France":"fr",
-    "Italy":"it","Spain":"es","China":"cn","Japan":"jp","India":"in","Brazil":"br",
-    "Russia":"ru","Canada":"ca","Australia":"au","United Kingdom":"gb","UK":"gb",
-    "Netherlands":"nl","Switzerland":"ch","Belgium":"be","Poland":"pl","Mexico":"mx",
-    "Korea":"kr","South Korea":"kr","North Korea":"kp","Saudi Arabia":"sa","Egypt":"eg",
-    "Chile":"cl","Czech Republic":"cz","Denmark":"dk","Finland":"fi","Sweden":"se",
-    "Norway":"no","Portugal":"pt","Greece":"gr","Hungary":"hu","Ireland":"ie",
-    "Argentina":"ar","Indonesia":"id","Malaysia":"my","Singapore":"sg","Thailand":"th",
-    "Philippines":"ph","Pakistan":"pk","Bangladesh":"bd","Vietnam":"vn","UAE":"ae",
-    "Qatar":"qa","Kuwait":"kw","Oman":"om","South Africa":"za","Nigeria":"ng"
-  };
-  if (!name) return "unknown";
-  const key = Object.keys(map).find(k => k.toLowerCase() === name.toLowerCase());
-  return (key ? map[key] : (name.slice(0,2) || "unknown")).toLowerCase();
-}
-
-const user = req.username || "Unknown User";
-const code = countryToCode(req.country || "Unknown");
-const flag = `https://flagcdn.com/h40/${code}.png`;
 
 // 🌍 Otomatik bayrak sistemi (flagcdn.com)
 function countryToCode(name) {
