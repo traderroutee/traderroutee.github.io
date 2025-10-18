@@ -400,45 +400,27 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
- // 🌍 Otomatik bayrak sistemi (flagcdn.com)
-function countryToCode(name) {
-  const map = {
-    "Turkey":"tr","Austria":"at","United States":"us","Germany":"de","France":"fr",
-    "Italy":"it","Spain":"es","China":"cn","Japan":"jp","India":"in","Brazil":"br",
-    "Russia":"ru","Canada":"ca","Australia":"au","United Kingdom":"gb","UK":"gb",
-    "Netherlands":"nl","Switzerland":"ch","Belgium":"be","Poland":"pl","Mexico":"mx",
-    "Korea":"kr","Saudi Arabia":"sa","Egypt":"eg"
-  };
-  return (map[name] || (name?.slice(0,2) ?? "unknown")).toLowerCase();
-}
+  // 🌍 Otomatik bayrak sistemi (flagcdn.com)
+  function countryToCode(name) {
+    const map = {
+      "Turkey":"tr","Austria":"at","United States":"us","Germany":"de","France":"fr",
+      "Italy":"it","Spain":"es","China":"cn","Japan":"jp","India":"in","Brazil":"br",
+      "Russia":"ru","Canada":"ca","Australia":"au","United Kingdom":"gb","UK":"gb",
+      "Netherlands":"nl","Switzerland":"ch","Belgium":"be","Poland":"pl","Mexico":"mx",
+      "Korea":"kr","Saudi Arabia":"sa","Egypt":"eg"
+    };
+    return (map[name] || (name?.slice(0,2) ?? "unknown")).toLowerCase();
+  }
 
-const latest = all.slice(-5).reverse();
-container.innerHTML = latest.map(req => {
-  const id   = encodeURIComponent(req.id || req.title || "");
-  const desc = (req.title || "Untitled").slice(0, 50) + (req.title?.length > 50 ? "..." : "");
-  const date = req.date || new Date().toLocaleDateString();
-  const country = req.country || "Unknown";
-  const code = countryToCode(country);
-  const flagFile = `https://flagcdn.com/h20/${code}.png`;
-
-  return `
-    <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
-      <td><img src="${flagFile}" alt="${country}" class="flag-icon-img"> ${country}</td>
-      <td class="title-cell">${desc}</td>
-      <td>${req.type || "-"}</td>
-      <td>${date}</td>
-    </tr>
-  `;
-}).join('');
-  
-
+  // ✅ Tek sürüm – sadece flagcdn kullanır
   const latest = all.slice(-5).reverse();
   container.innerHTML = latest.map(req => {
-    const id   = encodeURIComponent(req.id || req.title || "");
-    const desc = (req.title || "Untitled").slice(0, 50) + (req.title?.length > 50 ? "..." : "");
-    const date = req.date || new Date().toLocaleDateString();
-    const country = req.country || "Unknown";
-    const flagFile = `assets/flag/${normalize(country)}.png`;
+    const id       = encodeURIComponent(req.id || req.title || "");
+    const desc     = (req.title || "Untitled").slice(0, 50) + (req.title?.length > 50 ? "..." : "");
+    const date     = req.date || new Date().toLocaleDateString();
+    const country  = req.country || "Unknown";
+    const code     = countryToCode(country);
+    const flagFile = `https://flagcdn.com/h20/${code}.png`;
 
     return `
       <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
