@@ -275,34 +275,36 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* =========================
-   === FULL WIDTH & CENTER FIX ===
+   === FULL WIDTH (NO MARGIN) FIX ===
    ========================= */
 html, body {
+  margin: 0;
+  padding: 0;
   width: 100%;
   overflow-x: hidden;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-/* Ana içerik ortalansın */
 main, section, .container {
   width: 100%;
-  max-width: 1366px; /* Ekran genişliğini dengele */
-  margin: 0 auto;
-  padding: 0 20px;
-  box-sizing: border-box;
+  max-width: none !important;
+  margin: 0;
+  padding: 0;
 }
 
-/* Categories kutusu da tam ortada dursun */
+/* Banner ve arka plan tam genişlikte */
+.hero, .banner {
+  width: 100vw !important;
+  margin: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Categories kutusunu sabit solda tutmak için */
 .categories-box {
   position: absolute;
-  left: 50%;
-  transform: translateX(-600px); /* ortalama ayarı, istersen 500-650 arasında değiştir */
+  left: 50px; /* istersen 30px veya 0px yapabilirsin */
+  top: 100px; /* haritaya göre ayarla */
+  transform: none;
 }
 
 /* =========================
