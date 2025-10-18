@@ -275,5 +275,36 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* =========================
+   === FULL WIDTH & CENTER FIX ===
+   ========================= */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Ana içerik ortalansın */
+main, section, .container {
+  width: 100%;
+  max-width: 1366px; /* Ekran genişliğini dengele */
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Categories kutusu da tam ortada dursun */
+.categories-box {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-600px); /* ortalama ayarı, istersen 500-650 arasında değiştir */
+}
+
+/* =========================
    === END OF STYLE.CSS FINAL
    ========================= */
