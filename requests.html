@@ -275,6 +275,8 @@ const toCode = name => {
     categorySearch.addEventListener("input",renderRequests);
     countrySearch.addEventListener("input",renderRequests);
     (async function(){await ensureCategories();await ensureCountries();renderRequests();})();
+    // 🔄 LocalStorage değiştiğinde otomatik yenile
+window.addEventListener("storage", renderRequests);
   </script>
 
   <!-- 👤 Kullanıcı menü kontrolü -->
