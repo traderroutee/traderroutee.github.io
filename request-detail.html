@@ -189,15 +189,34 @@ document.addEventListener("DOMContentLoaded", ()=>{
     return;
   }
 
-  // ISO koddan bayrak bulma
-  const flag = req.country ? `assets/flag/${req.country.toLowerCase()}.png` : 'assets/flag/default.png';
-  const user = req.username || "Unknown User";
+  // 🌍 Otomatik bayrak sistemi (flagcdn.com)
+function countryToCode(name) {
+  const map = {
+    "Turkey":"tr","Austria":"at","United States":"us","Germany":"de","France":"fr",
+    "Italy":"it","Spain":"es","China":"cn","Japan":"jp","India":"in","Brazil":"br",
+    "Russia":"ru","Canada":"ca","Australia":"au","United Kingdom":"gb","UK":"gb",
+    "Netherlands":"nl","Switzerland":"ch","Belgium":"be","Poland":"pl","Mexico":"mx",
+    "Korea":"kr","South Korea":"kr","North Korea":"kp","Saudi Arabia":"sa","Egypt":"eg",
+    "Chile":"cl","Czech Republic":"cz","Denmark":"dk","Finland":"fi","Sweden":"se",
+    "Norway":"no","Portugal":"pt","Greece":"gr","Hungary":"hu","Ireland":"ie",
+    "Argentina":"ar","Indonesia":"id","Malaysia":"my","Singapore":"sg","Thailand":"th",
+    "Philippines":"ph","Pakistan":"pk","Bangladesh":"bd","Vietnam":"vn","UAE":"ae",
+    "Qatar":"qa","Kuwait":"kw","Oman":"om","South Africa":"za","Nigeria":"ng"
+  };
+  if (!name) return "unknown";
+  const key = Object.keys(map).find(k => k.toLowerCase() === name.toLowerCase());
+  return (key ? map[key] : (name.slice(0,2) || "unknown")).toLowerCase();
+}
 
-  container.innerHTML = `
-    <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
-      <img src="${flag}" onerror="this.src='assets/flag/default.png'" style="width:50px;height:35px;border-radius:4px;object-fit:cover;">
-      <h2 style="margin:0;">${req.title}</h2>
-    </div>
+const user = req.username || "Unknown User";
+const code = countryToCode(req.country || "Unknown");
+const flag = `https://flagcdn.com/h40/${code}.png`;
+
+container.innerHTML = `
+  <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;">
+    <img src="${flag}" alt="${req.country}" style="width:50px;height:35px;border-radius:4px;object-fit:cover;border:1px solid #ccc;">
+    <h2 style="margin:0;">${req.title}</h2>
+  </div>
     <p><strong>Country:</strong> ${req.country}</p>
     <p><strong>Category:</strong> ${req.category}</p>
     <p><strong>Posted by:</strong> ${user}</p>
