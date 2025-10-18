@@ -137,6 +137,34 @@
       successMsg.style.display = "none";
       location.href = "requests.html";
     },1500);
+
+    // ✅ requests.json dosyasını güncelle (tüm cihazlarda aynı ilan görünsün)
+async function saveRequestToServer(newRequest) {
+  try {
+    const res = await fetch("data/requests.json", { cache: "no-store" });
+    const data = await res.json();
+
+    // Yeni ilanı mevcut JSON'a ekle
+    data.push(newRequest);
+
+    // Güncel JSON içeriğini hazırla
+    const updated = JSON.stringify(data, null, 2);
+
+    // ⚠️ GitHub Pages yazma izni vermez. Bu istek, PHP veya Node.js API'ye gönderilmeli.
+    await fetch("https://api.traderroute.com/save-request", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: updated
+    });
+
+    console.log("✅ Request successfully synced with server!");
+  } catch (err) {
+    console.error("⚠️ Sync failed:", err);
+  }
+}
+
+// Form kaydının hemen altına bu satırı ekle:
+saveRequestToServer(newRequest);
   });
   </script>
 
