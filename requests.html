@@ -90,6 +90,17 @@
     .sidebar{width:100%;order:2}
     .content{order:1}
   }
+    
+.flag-icon-img {
+  width: 22px;
+  height: 14px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+  object-fit: cover;
+}
+    
 </style>
 </head>
 
@@ -183,40 +194,59 @@
     function renderCountries(reqs){const t=(countrySearch.value||"").toLowerCase();const d=(allCountries||[]).filter(c=>c.name.toLowerCase().includes(t));countryList.innerHTML="";d.forEach(c=>{const n=reqs.filter(r=>r.country===c.name).length;const li=document.createElement("li");li.innerHTML=`<a href="#"><span style="display:flex;align-items:center;gap:6px;"><img class='flag' src='https://flagcdn.com/h20/${c.code}.png' alt='${c.name}' loading='lazy'>${c.name}</span><span class='count'>(${n})</span></a>`;li.onclick=e=>{e.preventDefault();selectedCountry=c.name;selectedCategory=null;renderRequests();};countryList.appendChild(li);});}
 
     function renderRequests(){
-      const all=getRequests();
-      renderCategories(all);renderCountries(all);
-      const term=(searchInput.value||"").toLowerCase();
-      const filtered = all.filter(r =>
-  r.approved === true &&                                    // <<< YENİ: sadece onaylı ilanlar
-  (activeTab === "all" || r.type === activeTab) &&
-  (!selectedCategory || r.category === selectedCategory) &&
-  (!selectedCountry || r.country === selectedCountry) &&
-  ((r.title || "").toLowerCase().includes(term) || (r.description || "").toLowerCase().includes(term))
-);
-      requestContainer.innerHTML="";
-      [...filtered].reverse().slice(0,visibleRequests).forEach(r=>{
-        const owner=r.ownerEmail||r.contactEmail||r.email||"";
-        const div=document.createElement("div");
-        div.className="request-card";
-        div.onclick=()=>{
-  if(!r.id){
-    alert("This request has no valid ID and cannot be opened.");
-    return;
-  }
-  window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
-};
-        const msgBtn=owner?`<button class='msg-btn' onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(owner)}'">Message</button>`:"";
-        div.innerHTML = `
-  <h5>${r.title || "Untitled Request"}</h5>
-  <p>${r.description || ""}</p>
-  <small>${r.country||""} · ${r.category||""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small><br>
-  ${msgBtn}
-`;
-        requestContainer.appendChild(div);
-      });
-      document.getElementById("showMoreRequests").style.display=filtered.length>visibleRequests?"block":"none";
-    }
+  const all = getRequests();
+  renderCategories(all);
+  renderCountries(all);
 
+  const term = (searchInput.value || "").toLowerCase();
+  const filtered = all.filter(r =>
+    r.approved === true &&
+    (activeTab === "all" || r.type === activeTab) &&
+    (!selectedCategory || r.category === selectedCategory) &&
+    (!selectedCountry || r.country === selectedCountry) &&
+    ((r.title || "").toLowerCase().includes(term) || (r.description || "").toLowerCase().includes(term))
+  );
+
+  requestContainer.innerHTML = "";
+  [...filtered].reverse().slice(0, visibleRequests).forEach(r => {
+    const owner = r.ownerEmail || r.contactEmail || r.email || "";
+    const div = document.createElement("div");
+    div.className = "request-card";
+    div.onclick = () => {
+      if(!r.id){
+        alert("This request has no valid ID and cannot be opened.");
+        return;
+      }
+      window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
+    };
+
+    // 🌍 Otomatik bayrak sistemi
+    const countryCodeMap = {
+      "Turkey":"tr","Austria":"at","United States":"us","Germany":"de","France":"fr",
+      "Italy":"it","Spain":"es","China":"cn","Japan":"jp","India":"in","Brazil":"br",
+      "Russia":"ru","Canada":"ca","Australia":"au","United Kingdom":"gb","UK":"gb",
+      "Netherlands":"nl","Switzerland":"ch","Belgium":"be","Poland":"pl","Mexico":"mx",
+      "Korea":"kr","Saudi Arabia":"sa","Egypt":"eg"
+    };
+    const toCode = name => (countryCodeMap[name] || (name?.slice(0,2) ?? "unknown")).toLowerCase();
+    const code = toCode(r.country || "Unknown");
+    const flagImg = `<img src="https://flagcdn.com/h20/${code}.png" alt="${r.country}" class="flag-icon-img">`;
+
+    const msgBtn = owner
+      ? `<button class='msg-btn' onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(owner)}'">Message</button>`
+      : "";
+
+    div.innerHTML = `
+      <h5>${r.title || "Untitled Request"}</h5>
+      <p>${r.description || ""}</p>
+      <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small><br>
+      ${msgBtn}
+    `;
+    requestContainer.appendChild(div);
+  });
+
+  document.getElementById("showMoreRequests").style.display = filtered.length > visibleRequests ? "block" : "none";
+}
     document.getElementById("tabAll").onclick=()=>{activeTab="all";setActive("tabAll");renderRequests();};
     document.getElementById("tabBuy").onclick=()=>{activeTab="buy";setActive("tabBuy");renderRequests();};
     document.getElementById("tabSell").onclick=()=>{activeTab="sell";setActive("tabSell");renderRequests();};
