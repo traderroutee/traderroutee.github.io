@@ -251,7 +251,6 @@ function renderRequests(allData){
     // 🌍 Otomatik bayrak sistemi (tek merkezli flags.js)
 const flagImg = `<img src="${getFlagURL(r.country, 20)}" alt="${r.country}" class="flag-icon-img">`;
     
-    const flagImg = `<img src="${getFlagURL(r.country, 20)}" alt="${r.country}" class="flag-icon-img">`;
 
     const msgBtn = owner
       ? `<button class='msg-btn' onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(owner)}'">Message</button>`
