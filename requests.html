@@ -179,7 +179,7 @@
 // 🌍 Verileri hem localStorage'dan hem sunucudan oku
 async function getRequests() {
   try {
-    const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests?t=" + Date.now(), { cache: "no-store" });
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(), { cache: "no-store" });
     if (res.ok) {
       const data = await res.json();
       return Array.isArray(data) ? data : [];
