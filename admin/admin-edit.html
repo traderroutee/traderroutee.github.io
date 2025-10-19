@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Request - Trader Route Admin</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f4f4; }
+    .container { max-width:700px; margin:50px auto; background:white; padding:30px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+    h2 { text-align:center; color:#0a5827; }
+    label { display:block; margin-top:15px; font-weight:bold; }
+    input, textarea, select {
+      width:100%; padding:10px; margin-top:5px; border:1px solid #ccc; border-radius:5px;
+    }
+    button {
+      background:#0a5827; color:#fff; border:none;
+      padding:10px 15px; border-radius:5px; cursor:pointer; margin-top:20px;
+    }
+    button:hover { background:#0e7030; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Edit Request</h2>
+    <form id="editForm">
+      <label>Title</label>
+      <input type="text" id="title">
+
+      <label>Description</label>
+      <textarea id="description" rows="4"></textarea>
+
+      <label>Country</label>
+      <input type="text" id="country">
+
+      <label>Category</label>
+      <input type="text" id="category">
+
+      <label>Type</label>
+      <select id="type">
+        <option value="buy">Buy</option>
+        <option value="sell">Sell</option>
+      </select>
+
+      <label>Status</label>
+      <select id="approved">
+        <option value="false">Pending</option>
+        <option value="true">Approved</option>
+      </select>
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+
+  <script>
+    const id = new URLSearchParams(window.location.search).get("id");
+
+    async function loadData() {
+      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests", { cache: "no-store" });
+      const data = await res.json();
+      const req = data.find(r => String(r.id) === String(id));
+      if (!req) return alert("Request not found");
+
+      document.getElementById("title").value = req.title || "";
+      document.getElementById("description").value = req.description || "";
+      document.getElementById("country").value = req.country || "";
+      document.getElementById("category").value = req.category || "";
+      document.getElementById("type").value = req.type || "buy";
+      document.getElementById("approved").value = req.approved ? "true" : "false";
+    }
+
+    document.getElementById("editForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const updated = {
+        title: document.getElementById("title").value,
+        description: document.getElementById("description").value,
+        country: document.getElementById("country").value,
+        category: document.getElementById("category").value,
+        type: document.getElementById("type").value,
+        approved: document.getElementById("approved").value === "true"
+      };
+
+      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/edit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": "TRADER2025"
+        },
+        body: JSON.stringify({ id: Number(id), updated })
+      });
+
+      if (res.ok) {
+        alert("Changes saved ✅");
+        window.location.href = "admin.html";
+      } else {
+        alert("Failed to update ❌");
+      }
+    });
+
+    loadData();
+  </script>
+</body>
+</html>
