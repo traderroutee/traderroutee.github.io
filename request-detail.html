@@ -200,7 +200,7 @@
 };
 
 const code = countryMap[req.country] || "default";
-document.getElementById("flagImage").src = `assets/flag/${code}.png`;
+document.getElementById("flagImage").src = `assets/flags/${code}.png`;
       } catch (e) {
         document.getElementById("reqDescription").textContent = "Error loading request details.";
       }
