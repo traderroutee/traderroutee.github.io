@@ -403,7 +403,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // ✅ En son 5 ilan
-    const latest = all.slice(-5).reverse();
+    const latest = all.filter(r => r.approved).slice(-5).reverse();
 
     function countryToCode(name) {
       const map = {
