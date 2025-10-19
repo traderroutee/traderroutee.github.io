@@ -60,7 +60,8 @@ window.getFlagCode = function(country) {
 };
 
 // 🌐 URL üretici
-window.getFlagURL = function(country, size = 40) {
+window.getFlagURL = function(country, size = 20) {
   const code = getFlagCode(country);
-  return `https://flagcdn.com/h${size}/${code}.png`;
+  if (!code || code === "unknown") return "assets/flag/default.png";
+  return `assets/flag/${code}.png`; // ✅ burada "flag" tekil olmalı
 };
