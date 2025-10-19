@@ -7,129 +7,97 @@
   <link rel="icon" href="assets/logos.png">
   <meta name="description" content="Detailed view of trade requests on Trader Route. Connect directly with buyers or sellers worldwide.">
 
-  <style>
-    :root {
-      --green: #008b6a;
-      --green-dark: #006b52;
-      --bg: #f6f8fa;
-    }
-    body {
-      font-family: "Inter","Segoe UI",Arial,sans-serif;
-      margin: 0;
-      background: var(--bg);
-      color: #222;
-    }
+ <style>
+/* === MODERN DETAIL PAGE STYLE === */
+.detail-container {
+  max-width: 1000px;
+  margin: 50px auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 50px 60px;
+  line-height: 1.7;
+}
 
-    /* === HEADER === */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #fff;
-      padding: 10px 40px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-    }
-    .logo-container img { height: 45px; }
-    .logo-text { font-size: 15px; color: #555; font-weight: 500; }
-    nav {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
-    nav a {
-      text-decoration: none;
-      color: #000;
-      font-weight: 500;
-    }
-    nav a:hover { color: var(--green); }
+.detail-container h1 {
+  font-size: 32px;
+  color: #024b34;
+  margin-bottom: 20px;
+  border-bottom: 3px solid #008b6a;
+  padding-bottom: 12px;
+}
 
-    .header-right {
-      flex: 0 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 250px;
-      justify-content: flex-end;
-    }
-    .login-btn, .join-btn {
-      border: none;
-      cursor: pointer;
-      border-radius: 6px;
-      font-weight: 500;
-      transition: .3s;
-    }
-    .login-btn {
-      background: #f1f1f1;
-      padding: 7px 14px;
-    }
-    .login-btn:hover { background: #e0e0e0; }
-    .join-btn {
-      background: var(--green);
-      color: #fff;
-      padding: 8px 15px;
-    }
-    .join-btn:hover { background: var(--green-dark); }
+.detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 30px;
+}
 
-    /* === CONTENT === */
-    main {
-      max-width: 800px;
-      margin: 40px auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,.08);
-      padding: 30px;
-    }
-    h1 {
-      margin-top: 0;
-      color: var(--green);
-    }
-    .meta {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-    .desc {
-      font-size: 15px;
-      line-height: 1.6;
-      color: #333;
-    }
-    .back {
-      display: inline-block;
-      margin-top: 25px;
-      text-decoration: none;
-      color: var(--green);
-      font-weight: 600;
-    }
-    .back:hover { text-decoration: underline; }
+.detail-meta img {
+  width: 55px;
+  height: 38px;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 0 3px rgba(0,0,0,0.2);
+}
 
-    .flag {
-      width: 24px;
-      height: 16px;
-      border: 1px solid #ccc;
-      margin-right: 6px;
-      object-fit: cover;
-    }
-    .chip {
-      display: inline-block;
-      background: #f1f1f1;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 13px;
-      color: #555;
-      margin-left: 5px;
-    }
-  </style>
+.detail-meta span {
+  background: #f2f8f6;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.detail-description {
+  font-size: 18px;
+  color: #222;
+  background: #f9f9f9;
+  padding: 25px 30px;
+  border-left: 5px solid #008b6a;
+  border-radius: 10px;
+  margin-bottom: 40px;
+  min-height: 180px;
+}
+
+.message-area {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.message-area button {
+  background: #008b6a;
+  color: #fff;
+  border: none;
+  padding: 16px 50px;
+  font-size: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.message-area button:hover {
+  background: #006b52;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 700px) {
+  .detail-container {
+    padding: 30px 20px;
+  }
+  .detail-container h1 {
+    font-size: 24px;
+  }
+  .detail-description {
+    font-size: 16px;
+  }
+}
+</style>
+
 </head>
 
 <body>
