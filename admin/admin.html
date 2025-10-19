@@ -52,43 +52,48 @@
   </div>
 
   <script>
-    const table = document.getElementById("requestsTable");
-    const statusFilter = document.getElementById("statusFilter");
+const tableBody = document.getElementById("requestsTable");
+const statusFilter = document.getElementById("statusFilter");
 
-    function showRequests(){
-     async function showRequests() {
-  // worker GET (/requests) endpoint
+async function showRequests() {
   const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests", { cache: "no-store" });
-  const all = res.ok ? await res.json() : JSON.parse(localStorage.getItem("requests") || "[]");
+  const all = res.ok ? await res.json() : [];
 
-  // şimdi tabloyu doldurun; örnek basit yapı:
-  const tbody = document.getElementById("adminRequestsBody");
-  tbody.innerHTML = "";
-  all.slice().reverse().forEach(r => {
+  // filtre uygula
+  const filter = statusFilter.value;
+  const filtered = all.filter(r => {
+    if (filter === "approved") return r.approved === true;
+    if (filter === "pending") return !r.approved;
+    return true;
+  });
+
+  // tabloyu temizle
+  tableBody.innerHTML = "";
+
+  if (filtered.length === 0) {
+    tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#777;">No requests found.</td></tr>`;
+    return;
+  }
+
+  // tabloyu doldur
+  filtered.slice().reverse().forEach(r => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${r.id}</td>
       <td>${r.title}</td>
+      <td>${r.user}</td>
       <td>${r.country}</td>
       <td>${r.category}</td>
-      <td>${r.approved ? "✅" : "⏳ Pending"}</td>
+      <td class="status">${r.approved ? "✅ Approved" : "⏳ Pending"}</td>
       <td>
-        <button onclick="approveRequest(${r.id})">Approve</button>
-        <button onclick="editRequestForm(${r.id})">Edit</button>
-        <button onclick="deleteRequest(${r.id})">Delete</button>
+        ${!r.approved ? `<button class="approve" onclick="approveRequest(${r.id})">Approve</button>` : ""}
+        <button class="delete" onclick="deleteRequest(${r.id})">Delete</button>
       </td>
     `;
-    tbody.appendChild(tr);
+    tableBody.appendChild(tr);
   });
 }
 
-
-      if(filtered.length === 0){
-        table.innerHTML = "<tr><td colspan='6' style='text-align:center;color:#777;'>No requests for this filter.</td></tr>";
-      }
-    }
-
-   async function approveRequest(id) {
+async function approveRequest(id) {
   if (!confirm("Approve this request?")) return;
   const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/approve", {
     method: "POST",
@@ -96,14 +101,14 @@
     body: JSON.stringify({ id })
   });
   if (res.ok) {
-    alert("Approved");
+    alert("Approved ✅");
     showRequests();
   } else {
-    alert("Approval failed");
+    alert("Approval failed ❌");
   }
 }
 
-  async function deleteRequest(id) {
+async function deleteRequest(id) {
   if (!confirm("Delete this request?")) return;
   const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/delete", {
     method: "POST",
@@ -111,30 +116,15 @@
     body: JSON.stringify({ id })
   });
   if (res.ok) {
-    alert("Deleted");
+    alert("Deleted 🗑️");
     showRequests();
   } else {
-    alert("Delete failed");
+    alert("Delete failed ❌");
   }
 }
 
-    async function saveEditedRequest(id, updated) {
-  // updated: { title, description, country, category, ... } — approved değerini koru veya set edebilirsiniz
-  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/edit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
-    body: JSON.stringify({ id, updated })
-  });
-  if (res.ok) {
-    alert("Saved");
-    showRequests();
-  } else {
-    alert("Save failed");
-  }
-}
-
-    statusFilter.addEventListener("change", showRequests);
-    showRequests();
-  </script>
+statusFilter.addEventListener("change", showRequests);
+showRequests();
+</script>
 </body>
 </html>
