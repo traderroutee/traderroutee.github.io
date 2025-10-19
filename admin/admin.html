@@ -56,9 +56,8 @@ const tableBody = document.getElementById("requestsTable");
 const statusFilter = document.getElementById("statusFilter");
 
 async function showRequests() {
-  const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests", {
-  const all = res.ok ? await res.json() : [];
-
+  const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests");
+const all = res.ok ? await res.json() : [];
   // filtre uygula
   const filter = statusFilter.value;
   const filtered = all.filter(r => {
@@ -127,16 +126,14 @@ async function deleteRequest(id) {
 statusFilter.addEventListener("change", showRequests);
 showRequests();
 
-    async function editRequest(id) {
-  // mevcut verileri çek
-  const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests", {
+   async function editRequest(id) {
+  const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests");
   const all = res.ok ? await res.json() : [];
   const req = all.find(r => r.id === id);
   if (!req) return alert("Request not found.");
 
-  // düzenleme penceresi oluştur
   const newTitle = prompt("Edit Title:", req.title || "");
-  if (newTitle === null) return; // vazgeçtiyse çık
+  if (newTitle === null) return;
   const newDesc = prompt("Edit Description:", req.description || "");
   const newCountry = prompt("Edit Country:", req.country || "");
   const newCategory = prompt("Edit Category:", req.category || "");
@@ -149,13 +146,13 @@ showRequests();
   };
 
   const editRes = await fetch("https://traderroute-api.traderroute.workers.dev/edit", {
-  method: "POST",
-  headers: { 
-    "Content-Type": "application/json",
-    "x-api-key": "TRADER2025"
-  },
-  body: JSON.stringify({ id, updated })
-});
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      "x-api-key": "TRADER2025"
+    },
+    body: JSON.stringify({ id, updated })
+  });
 
   if (editRes.ok) {
     alert("Request updated ✅");
