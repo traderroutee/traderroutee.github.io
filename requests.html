@@ -216,7 +216,6 @@ const countryCodeMap = {
 };
 
 // 🇺🇳 Eğer bulunamazsa, ülke adını normalize eder (örneğin “Czechia” → “cz”)
-const toCode = name => {
   if (!name) return "unknown";
   const key = Object.keys(countryCodeMap).find(k => k.toLowerCase() === name.toLowerCase());
   if (key) return countryCodeMap[key];
