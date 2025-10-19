@@ -104,8 +104,10 @@ async function showRequests() {
 
   } catch (err) {
     console.error("Error loading requests:", err);
+    document.addEventListener("DOMContentLoaded", showRequests);
   }
 }
+  
 
 async function approveRequest(id) {
   if (!confirm("Approve this request?")) return;
