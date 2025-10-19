@@ -56,41 +56,55 @@ const tableBody = document.getElementById("requestsTable");
 const statusFilter = document.getElementById("statusFilter");
 
 async function showRequests() {
-  const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests");
-const all = res.ok ? await res.json() : [];
-  // filtre uygula
-  const filter = statusFilter.value;
-  const filtered = all.filter(r => {
-    if (filter === "approved") return r.approved === true;
-    if (filter === "pending") return !r.approved;
-    return true;
-  });
+  try {
+    const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests");
+    const all = res.ok ? await res.json() : [];
+    const tableBody = document.getElementById("requestsTable");
 
-  // tabloyu temizle
-  tableBody.innerHTML = "";
+    // Tablonun içini temizle
+    tableBody.innerHTML = "";
 
-  if (filtered.length === 0) {
-    tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#777;">No requests found.</td></tr>`;
-    return;
+    // Normalize et (bazı kayıtlarda approved string veya undefined)
+    const normalized = all.map(r => ({
+      ...r,
+      approved: r.approved === true || r.approved === "true"
+    }));
+
+    // Filtre uygula
+    const filter = statusFilter.value;
+    const filtered = normalized.filter(r => {
+      if (filter === "approved") return r.approved === true;
+      if (filter === "pending") return !r.approved;
+      return true;
+    });
+
+    // Boşsa mesaj göster
+    if (filtered.length === 0) {
+      tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#777;">No requests found.</td></tr>`;
+      return;
+    }
+
+    // Verileri ters sırayla tabloya ekle
+    filtered.slice().reverse().forEach(r => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${r.title || "-"}</td>
+        <td>${r.user || "-"}</td>
+        <td>${r.country || "-"}</td>
+        <td>${r.category || "-"}</td>
+        <td class="status">${r.approved ? "✅ Approved" : "⏳ Pending"}</td>
+        <td>
+          ${!r.approved ? `<button class="approve" onclick="approveRequest(${r.id})">Approve</button>` : ""}
+          <button onclick="window.location.href='admin-edit.html?id=${r.id}'">Edit</button>
+          <button class="delete" onclick="deleteRequest(${r.id})">Delete</button>
+        </td>
+      `;
+      tableBody.appendChild(tr);
+    });
+
+  } catch (err) {
+    console.error("Error loading requests:", err);
   }
-
-  // tabloyu doldur
-  filtered.slice().reverse().forEach(r => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-  <td>${r.title}</td>
-  <td>${r.user}</td>
-  <td>${r.country}</td>
-  <td>${r.category}</td>
-  <td class="status">${r.approved ? "✅ Approved" : "⏳ Pending"}</td>
-  <td>
-    ${!r.approved ? `<button class="approve" onclick="approveRequest(${r.id})">Approve</button>` : ""}
-    <button onclick="window.location.href='admin-edit.html?id=${r.id}'">Edit</button>
-    <button class="delete" onclick="deleteRequest(${r.id})">Delete</button>
-  </td>
-`;
-    tableBody.appendChild(tr);
-  });
 }
 
 async function approveRequest(id) {
@@ -128,7 +142,7 @@ showRequests();
 
    async function editRequest(id) {
   const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests");
-  const all = res.ok ? await res.json() : [];
+const all = res.ok ? await res.json() : [];
   const req = all.find(r => r.id === id);
   if (!req) return alert("Request not found.");
 
