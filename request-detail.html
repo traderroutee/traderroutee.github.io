@@ -179,7 +179,13 @@
 document.addEventListener("DOMContentLoaded", ()=>{
   const params = new URLSearchParams(location.search);
   const id = params.get("id"); // 🔹 eksik satır eklendi
-  const all = JSON.parse(localStorage.getItem("requests") || "[]");
+  // Eğer localStorage'da veri yoksa sunucudan çek
+const req = all.find(r => String(r.id) === String(id));
+if (!req) {
+  const res = await fetch(`https://divine-hill-9557.traderroutee.workers.dev/requests`);
+  const data = await res.json();
+  found = data.find(r => String(r.id) === String(id));
+}
   const req = all.find(r => String(r.id) === String(id));
 
   const container = document.getElementById("requestDetail");
