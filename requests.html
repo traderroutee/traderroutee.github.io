@@ -216,11 +216,12 @@ const countryCodeMap = {
 };
 
 // 🇺🇳 Eğer bulunamazsa, ülke adını normalize eder (örneğin “Czechia” → “cz”)
+  function toCode(name) {
   if (!name) return "unknown";
   const key = Object.keys(countryCodeMap).find(k => k.toLowerCase() === name.toLowerCase());
   if (key) return countryCodeMap[key];
   return (name.slice(0,2) || "unknown").toLowerCase();
-};
+}
 
     async function ensureCategories(){if(categories)return;try{const r=await fetch("data/categories.json",{cache:"no-store"});categories=await r.json();}catch{categories=[];}}
     async function ensureCountries(){if(allCountries)return;try{const r=await fetch("data/countries.json",{cache:"no-store"});const a=await r.json();allCountries=a.map(it=>({name:it.name||it,code:(it.code||countryCodeMap[it.name||it]||toCode(it.name||it)).toLowerCase()}));}catch{allCountries=[];}}
