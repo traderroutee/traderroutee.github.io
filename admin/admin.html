@@ -56,7 +56,7 @@ const tableBody = document.getElementById("requestsTable");
 const statusFilter = document.getElementById("statusFilter");
 
 async function showRequests() {
-  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests", { cache: "no-store" });
+  const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests")
   const all = res.ok ? await res.json() : [];
 
   // filtre uygula
@@ -96,7 +96,7 @@ async function showRequests() {
 
 async function approveRequest(id) {
   if (!confirm("Approve this request?")) return;
-  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/approve", {
+  const res = await fetch("https://traderroute-api.traderroute.workers.dev/approve")
     method: "POST",
     headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
     body: JSON.stringify({ id })
@@ -111,7 +111,7 @@ async function approveRequest(id) {
 
 async function deleteRequest(id) {
   if (!confirm("Delete this request?")) return;
-  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/delete", {
+  const res = await fetch("https://traderroute-api.traderroute.workers.dev/delete")
     method: "POST",
     headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
     body: JSON.stringify({ id })
@@ -129,7 +129,7 @@ showRequests();
 
     async function editRequest(id) {
   // mevcut verileri çek
-  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests", { cache: "no-store" });
+  const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests")
   const all = res.ok ? await res.json() : [];
   const req = all.find(r => r.id === id);
   if (!req) return alert("Request not found.");
@@ -148,7 +148,7 @@ showRequests();
     category: newCategory.trim()
   };
 
-  const editRes = await fetch("https://divine-hill-9557.traderroutee.workers.dev/edit", {
+  const editRes = await fetch("https://traderroute-api.traderroute.workers.dev/edit")
     method: "POST",
     headers: { 
       "Content-Type": "application/json",
