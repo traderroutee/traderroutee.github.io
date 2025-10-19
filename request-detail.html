@@ -177,45 +177,33 @@
 
  <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  // URL parametresinden id al
   const params = new URLSearchParams(location.search);
-  const idParam = params.get("id");
-
+  const id = params.get("id");
   const titleEl = document.getElementById("title");
-  const metaEl  = document.getElementById("meta");
-  const descEl  = document.getElementById("description");
-  const boxEl   = document.getElementById("requestDetail");
+  const metaEl = document.getElementById("meta");
+  const descEl = document.getElementById("description");
+  const btnEl = document.getElementById("messageBtn");
 
-  // 1) LocalStorage'dan oku (varsa)
   let all = [];
-  try { all = JSON.parse(localStorage.getItem("requests") || "[]"); } catch (e) {}
+  try {
+    all = JSON.parse(localStorage.getItem("requests") || "[]");
+  } catch {}
 
-  // 2) Boşsa sunucudan çek
   if (!Array.isArray(all) || all.length === 0) {
     try {
-     const res = await fetch(
-  "https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(),
-  { cache: "no-store" }
-);
+      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(), { cache: "no-store" });
       if (res.ok) all = await res.json();
-    } catch (_) {}
+    } catch {}
   }
 
-  // 3) İlgili kaydı bul
-  const matchById = (r, id) => String(r.id) === String(id);
-  const matchByEncoded = (r, id) => encodeURIComponent(r.id || r.title || "") === id;
-
-  let req = all.find(r => matchById(r, idParam)) || all.find(r => matchByEncoded(r, idParam));
+  const req = all.find(r => String(r.id) === String(id));
   if (!req) {
-    boxEl.innerHTML = "<h2 style='color:#d9534f'>Request not found.</h2>";
+    titleEl.textContent = "Request not found.";
+    descEl.textContent = "";
     return;
   }
 
-  // 4) Başlık & açıklama
-  titleEl.textContent = req.title || "Request";
-  descEl.textContent  = req.description || "No description provided.";
-
-  // 5) Bayrak helper
+  // Ülke kodu dönüştürme
   function countryToCode(name) {
     const map = {
       "Turkey":"tr","Austria":"at","United States":"us","Germany":"de","France":"fr",
@@ -229,29 +217,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const country = req.country || "Unknown";
-  const code    = countryToCode(country);
-  const flagUrl = `https://flagcdn.com/h40/${code}.png`;
-  const user    = req.user || req.owner || req.ownerEmail || req.email || "-";
-  const dateStr = req.date ? new Date(req.date).toLocaleDateString() : "-";
+  const flagUrl = `https://flagcdn.com/h40/${countryToCode(country)}.png`;
+  const category = req.category || "Unspecified";
+  const date = req.date ? new Date(req.date).toLocaleDateString() : "-";
 
-  // 6) Üst meta bilgileri
+  titleEl.textContent = req.title || "Untitled Request";
+  descEl.textContent = req.description || "No description available.";
+
   metaEl.innerHTML = `
-    <img src="${flagUrl}" alt="${country}" style="width:40px;height:28px;border-radius:4px;vertical-align:middle;margin-right:8px;">
-    <strong>Country:</strong> ${country} &nbsp; | &nbsp;
-    <strong>Category:</strong> ${req.category || "Unspecified"} &nbsp; | &nbsp;
-    <strong>Date:</strong> ${dateStr}
+    <img src="${flagUrl}" alt="${country}" style="width:42px;height:30px;border-radius:4px;margin-right:8px;">
+    <span><strong>Country:</strong> ${country}</span> &nbsp; | &nbsp;
+    <span><strong>Category:</strong> ${category}</span> &nbsp; | &nbsp;
+    <span><strong>Date:</strong> ${date}</span>
   `;
 
-  // 7) Alt içerik (buton dahil)
-  boxEl.innerHTML = `
-    <div style="margin-top:25px;">
-      <button style="background:#008b6a;color:#fff;border:none;border-radius:8px;
-                     padding:12px 28px;font-size:16px;font-weight:600;cursor:pointer;"
-              onclick="window.location.href='messages.html?to=${encodeURIComponent(req.ownerEmail || req.email || '')}'">
-        Send Message
-      </button>
-    </div>
-  `;
+  const ownerEmail = req.ownerEmail || req.email || "";
+  btnEl.onclick = () => {
+    if (ownerEmail) {
+      window.location.href = 'messages.html?to=' + encodeURIComponent(ownerEmail);
+    } else {
+      alert("Contact information unavailable.");
+    }
+  };
 });
 </script>
 
