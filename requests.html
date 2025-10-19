@@ -8,6 +8,7 @@
   <meta name="keywords" content="Trader Route, requests, buy, sell, B2B, marketplace, global trade, import, export">
   <meta name="author" content="Trader Route">
   <link rel="icon" href="assets/logos.png" />
+  
   <script src="assets/flags.js"></script>
 
   <style>
@@ -202,19 +203,6 @@ async function getRequests() {
           countrySearch=document.getElementById("countrySearch");
     let visibleRequests=15, activeTab="all", selectedCategory=null, selectedCountry=null;
 
-   // 🌍 Genişletilmiş ülke kod eşleştirmesi
-const countryCodeMap = {
-  "Turkey":"tr","Austria":"at","United States":"us","Germany":"de","France":"fr",
-  "Italy":"it","Spain":"es","China":"cn","Japan":"jp","India":"in","Brazil":"br",
-  "Russia":"ru","Canada":"ca","Australia":"au","United Kingdom":"gb","UK":"gb",
-  "Netherlands":"nl","Switzerland":"ch","Belgium":"be","Poland":"pl","Mexico":"mx",
-  "Korea":"kr","South Korea":"kr","North Korea":"kp","Saudi Arabia":"sa","Egypt":"eg",
-  "Chile":"cl","China":"cn","Czech Republic":"cz","Denmark":"dk","Finland":"fi",
-  "Sweden":"se","Norway":"no","Portugal":"pt","Greece":"gr","Hungary":"hu",
-  "Ireland":"ie","Argentina":"ar","Indonesia":"id","Malaysia":"my","Singapore":"sg",
-  "Thailand":"th","Philippines":"ph","Pakistan":"pk","Bangladesh":"bd","Vietnam":"vn",
-  "UAE":"ae","Qatar":"qa","Kuwait":"kw","Oman":"om","South Africa":"za","Nigeria":"ng"
-};
 
 // 🇺🇳 Eğer bulunamazsa, ülke adını normalize eder (örneğin “Czechia” → “cz”)
   function toCode(name) {
@@ -263,9 +251,7 @@ function renderRequests(allData){
     // 🌍 Otomatik bayrak sistemi (tek merkezli flags.js)
 const flagImg = `<img src="${getFlagURL(r.country, 20)}" alt="${r.country}" class="flag-icon-img">`;
     
-    const toCode = name => (countryCodeMap[name] || (name?.slice(0,2) ?? "unknown")).toLowerCase();
-    const code = toCode(r.country || "Unknown");
-    const flagImg = `<img src="https://flagcdn.com/h20/${code}.png" alt="${r.country}" class="flag-icon-img">`;
+    const flagImg = `<img src="${getFlagURL(r.country, 20)}" alt="${r.country}" class="flag-icon-img">`;
 
     const msgBtn = owner
       ? `<button class='msg-btn' onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(owner)}'">Message</button>`
