@@ -128,20 +128,16 @@
       approved: false
     };
 
-    requests.push(newRequest);
-    localStorage.setItem("requests", JSON.stringify(requests));
-    saveRequestToServer(newRequest);
-
-
-// Form kaydının hemen altına bu satırı ekle:
+  requests.push(newRequest);
+localStorage.setItem("requests", JSON.stringify(requests));
 saveRequestToServer(newRequest);
 
-    successMsg.style.display = "block";
-    form.reset();
-    setTimeout(()=>{
-      successMsg.style.display = "none";
-      location.href = "requests.html";
-    },1500);
+successMsg.style.display = "block";
+form.reset();
+setTimeout(()=>{
+  successMsg.style.display = "none";
+  location.href = "requests.html";
+},1500);
 
     // 🌍 Sunucuya kaydetme (Requests.json güncelleme)
 
