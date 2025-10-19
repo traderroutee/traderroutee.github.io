@@ -156,6 +156,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       alert("Contact information unavailable.");
     }
+    // Hero başlık otomatik olarak ilan başlığıyla güncellenir
+setTimeout(() => {
+  const heroTitle = document.getElementById("heroTitle");
+  const reqTitle = document.getElementById("title");
+  if (heroTitle && reqTitle) heroTitle.textContent = reqTitle.textContent;
+}, 800);
   };
 });
 </script>
