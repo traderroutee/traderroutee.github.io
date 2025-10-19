@@ -86,7 +86,7 @@ async function showRequests() {
   <td class="status">${r.approved ? "✅ Approved" : "⏳ Pending"}</td>
   <td>
     ${!r.approved ? `<button class="approve" onclick="approveRequest(${r.id})">Approve</button>` : ""}
-    <td><button onclick="window.location.href='admin-edit.html?id=${r.id}'">Edit</button></td>
+    <button onclick="window.location.href='admin-edit.html?id=${r.id}'">Edit</button></td>
     <button class="delete" onclick="deleteRequest(${r.id})">Delete</button>
   </td>
 `;
