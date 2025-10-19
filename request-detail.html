@@ -164,7 +164,7 @@
         document.getElementById("reqDescription").textContent = req.description || "No description provided.";
 
         const flag = req.country ? `assets/flag/${req.country.toLowerCase().slice(0,2)}.png` : "assets/flag/default.png";
-        document.getElementById("flagImage").src = flag;
+document.getElementById("flagImage").src = flag;
       } catch (e) {
         document.getElementById("reqDescription").textContent = "Error loading request details.";
       }
