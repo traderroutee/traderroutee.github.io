@@ -248,12 +248,12 @@ const toCode = name => {
 
   const term = (searchInput.value || "").toLowerCase();
   const filtered = all.filter(r =>
-    r.approved === true
-    (activeTab === "all" || r.type === activeTab) &&
-    (!selectedCategory || r.category === selectedCategory) &&
-    (!selectedCountry || r.country === selectedCountry) &&
-    ((r.title || "").toLowerCase().includes(term) || (r.description || "").toLowerCase().includes(term))
-  );
+  r.approved === true &&
+  (activeTab === "all" || r.type === activeTab) &&
+  (!selectedCategory || r.category === selectedCategory) &&
+  (!selectedCountry || r.country === selectedCountry) &&
+  ((r.title || "").toLowerCase().includes(term) || (r.description || "").toLowerCase().includes(term))
+);
 
   requestContainer.innerHTML = "";
   [...filtered].reverse().slice(0, visibleRequests).forEach(r => {
