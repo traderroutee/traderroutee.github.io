@@ -175,14 +175,36 @@
   <!-- === JS === -->
   <script>
     let categories=null, allCountries=null;
-    async function getRequests(){
+
+// 🌍 Verileri hem localStorage'dan hem sunucudan oku
+async function getRequests(){
   try {
-    const res = await fetch("data/requests.json", {cache: "no-store"});
-    return await res.json();
-  } catch {
+    // 1️⃣ LocalStorage'daki mevcut veriler
+    let localData = JSON.parse(localStorage.getItem("requests") || "[]");
+
+    // 2️⃣ Cloudflare Worker'dan (sunucudan) çek
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/?t=" + Date.now(), { cache: "no-store" });
+    if (res.ok) {
+      const serverData = await res.json();
+
+      // 3️⃣ Birleştir ve tekrarlananları kaldır
+      const merged = [...localData, ...serverData].filter(
+        (v, i, a) => a.findIndex(t => t.id === v.id) === i
+      );
+
+      // 4️⃣ Güncel veriyi kaydet
+      localStorage.setItem("requests", JSON.stringify(merged));
+      return merged;
+    } else {
+      console.warn("⚠️ Server data load failed, showing local only");
+      return localData;
+    }
+  } catch (err) {
+    console.error("⚠️ Server connection error:", err);
     return JSON.parse(localStorage.getItem("requests") || "[]");
   }
 }
+    
     const requestContainer=document.getElementById("requestItems"),
           searchInput=document.getElementById("searchInput"),
           categoryList=document.getElementById("categoryList"),
