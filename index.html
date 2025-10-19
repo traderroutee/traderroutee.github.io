@@ -429,15 +429,7 @@ container.innerHTML = latest.map(req => {
   `;
 }).join('');
 
-      return `
-        <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
-          <td><img src="${flagFile}" alt="${country}" class="flag-icon-img"> ${country}</td>
-          <td class="title-cell">${desc}</td>
-          <td>${req.type || "-"}</td>
-          <td>${date}</td>
-        </tr>
-      `;
-    }).join('');
+    
 
   } catch (err) {
     console.error(err);
