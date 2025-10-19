@@ -102,11 +102,10 @@ async function showRequests() {
       tableBody.appendChild(tr);
     });
 
-  statusFilter.addEventListener("change", showRequests);
-document.addEventListener("DOMContentLoaded", showRequests);
+  } catch (err) {
+    console.error("Error loading requests:", err);
   }
 }
-  
 
 async function approveRequest(id) {
   if (!confirm("Approve this request?")) return;
@@ -138,12 +137,9 @@ async function deleteRequest(id) {
   }
 }
 
-statusFilter.addEventListener("change", showRequests);
-showRequests();
-
-   async function editRequest(id) {
+async function editRequest(id) {
   const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests");
-const all = res.ok ? await res.json() : [];
+  const all = res.ok ? await res.json() : [];
   const req = all.find(r => r.id === id);
   if (!req) return alert("Request not found.");
 
@@ -176,7 +172,10 @@ const all = res.ok ? await res.json() : [];
     alert("Update failed ❌");
   }
 }
-    
-</script>
+
+// ——— SADECE SON DÜZELTME (fonksiyon dışına taşındı) ———
+statusFilter.addEventListener("change", showRequests);
+document.addEventListener("DOMContentLoaded", showRequests);
+  </script>
 </body>
 </html>
