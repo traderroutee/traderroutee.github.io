@@ -177,14 +177,17 @@
 
  <script>
 document.addEventListener("DOMContentLoaded", ()=>{
-  const params = new URLSearchParams(location.search);
-  const id = params.get("id"); // 🔹 eksik satır eklendi
-  // Eğer localStorage'da veri yoksa sunucudan çek
-const req = all.find(r => String(r.id) === String(id));
+ const params = new URLSearchParams(location.search);
+const id = params.get("id");
+
+let req = null;
+let all = JSON.parse(localStorage.getItem("requests") || "[]");
+req = all.find(r => String(r.id) === String(id));
+
 if (!req) {
-  const res = await fetch(`https://divine-hill-9557.traderroutee.workers.dev/requests`);
+  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
   const data = await res.json();
-  found = data.find(r => String(r.id) === String(id));
+  req = data.find(r => String(r.id) === String(id));
 }
   const req = all.find(r => String(r.id) === String(id));
 
