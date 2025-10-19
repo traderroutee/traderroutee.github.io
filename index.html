@@ -404,7 +404,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // ✅ En son 5 ilan
    const latest = all
-  .filter(r => r.approved === true)
+  .filter(r => r.approved === true || r.approved === "true")
   .slice(-5)
   .reverse();
 
