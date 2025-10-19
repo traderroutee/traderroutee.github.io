@@ -102,9 +102,8 @@ async function showRequests() {
       tableBody.appendChild(tr);
     });
 
-  } catch (err) {
-    console.error("Error loading requests:", err);
-    document.addEventListener("DOMContentLoaded", showRequests);
+  statusFilter.addEventListener("change", showRequests);
+document.addEventListener("DOMContentLoaded", showRequests);
   }
 }
   
