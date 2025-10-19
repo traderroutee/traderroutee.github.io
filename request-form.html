@@ -166,6 +166,24 @@ saveRequestToServer(newRequest);
       location.href = "requests.html";
     },1500);
 
+    // 🌍 Sunucuya kaydetme (Requests.json güncelleme)
+async function saveRequestToServer(newRequest) {
+  try {
+    const res = await fetch("https://www.traderroute.com/save-request.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newRequest)
+    });
+    if (res.ok) {
+      console.log("✅ Saved to Requests.json");
+    } else {
+      console.warn("⚠️ Server response not OK");
+    }
+  } catch (err) {
+    console.error("❌ Could not save:", err);
+  }
+}
+
 
   });
   </script>
