@@ -193,10 +193,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 2) Boşsa sunucudan çek
   if (!Array.isArray(all) || all.length === 0) {
     try {
-      const res = await fetch(
-        "https://traderroute-api.traderroute.workers.dev/requests?t=" + Date.now(),
-        { cache: "no-store" }
-      );
+     const res = await fetch(
+  "https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(),
+  { cache: "no-store" }
+);
       if (res.ok) all = await res.json();
     } catch (_) {}
   }
