@@ -215,9 +215,32 @@ async function getRequests() {
     async function ensureCategories(){if(categories)return;try{const r=await fetch("data/categories.json",{cache:"no-store"});categories=await r.json();}catch{categories=[];}}
     async function ensureCountries(){if(allCountries)return;try{const r=await fetch("data/countries.json",{cache:"no-store"});const a=await r.json();allCountries=a.map(it=>({name:it.name||it,code:(it.code||countryCodeMap[it.name||it]||toCode(it.name||it)).toLowerCase()}));}catch{allCountries=[];}}
 
-    function renderCategories(reqs){const t=(categorySearch.value||"").toLowerCase();const d=(categories||[]).filter(c=>c.toLowerCase().includes(t));categoryList.innerHTML="";d.forEach(cat=>{const c=reqs.filter(r=>r.category===cat).length;const li=document.createElement("li");li.innerHTML=`<a href="#">${cat}<span class='count'>(${c})</span></a>`;li.onclick=e=>{e.preventDefault();selectedCategory=cat;selectedCountry=null;renderRequests();};categoryList.appendChild(li);});}
-    function renderCountries(reqs){const t=(countrySearch.value||"").toLowerCase();const d=(allCountries||[]).filter(c=>c.name.toLowerCase().includes(t));countryList.innerHTML="";d.forEach(c=>{const n=reqs.filter(r=>r.country===c.name).length;const li=document.createElement("li");li.innerHTML=`<a href="#"><span style="display:flex;align-items:center;gap:6px;"><img class='flag' src='https://flagcdn.com/h20/${c.code}.png' alt='${c.name}' loading='lazy'>${c.name}</span><span class='count'>(${n})</span></a>`;li.onclick=e=>{e.preventDefault();selectedCountry=c.name;selectedCategory=null;renderRequests();};countryList.appendChild(li);});}
+function renderCountries(reqs) {
+  const t = (countrySearch.value || "").toLowerCase();
+  const d = (allCountries || []).filter(c => c.name.toLowerCase().includes(t));
 
+  countryList.innerHTML = "";
+  d.forEach(c => {
+    const n = reqs.filter(r => r.country === c.name).length;
+    const flagImg = getFlagURL(c.name, 20); // ✅ Yeni bayrak sistemi
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <a href="#">
+        <span style="display:flex;align-items:center;gap:6px;">
+          <img class='flag' src='${flagImg}' alt='${c.name}' loading='lazy'>
+          ${c.name}
+        </span>
+        <span class='count'>(${n})</span>
+      </a>`;
+    li.onclick = e => {
+      e.preventDefault();
+      selectedCountry = c.name;
+      selectedCategory = null;
+      renderRequests();
+    };
+    countryList.appendChild(li);
+  });
+}
     let allRequestsData = [];
 
 function renderRequests(allData){
