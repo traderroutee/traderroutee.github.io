@@ -236,7 +236,7 @@ const toCode = name => {
 
   const term = (searchInput.value || "").toLowerCase();
   const filtered = all.filter(r =>
-  (r.approved == true || r.approved === undefined) &&
+  r.approved === true
   (activeTab === "all" || r.type === activeTab) &&
   (!selectedCategory || r.category === selectedCategory) &&
   (!selectedCountry || r.country === selectedCountry) &&
