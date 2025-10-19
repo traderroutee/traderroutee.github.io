@@ -183,7 +183,7 @@ async function getRequests(){
     let localData = JSON.parse(localStorage.getItem("requests") || "[]");
 
     // 2️⃣ Cloudflare Worker'dan (sunucudan) çek
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/?t=" + Date.now(), { cache: "no-store" });
+const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(), { cache: "no-store" });
     if (res.ok) {
       const serverData = await res.json();
 
