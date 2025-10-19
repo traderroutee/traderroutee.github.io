@@ -62,6 +62,6 @@ window.getFlagCode = function(country) {
 // 🌐 URL üretici
 window.getFlagURL = function(country, size = 20) {
   const code = getFlagCode(country);
-  if (!code || code === "unknown") return "assets/flag/default.png";
-  return `assets/flag/${code}.png`; // ✅ burada "flag" tekil olmalı
+  if (!code || code === "unknown") return "assets/flags/default.png";
+  return `assets/flag/${code}.png`; // ✅ burada "flags" tekil olmalı
 };
