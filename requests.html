@@ -259,14 +259,9 @@ function renderRequests(allData){
       window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
     };
 
-    // 🌍 Otomatik bayrak sistemi
-    const countryCodeMap = {
-      "Turkey":"tr","Austria":"at","United States":"us","Germany":"de","France":"fr",
-      "Italy":"it","Spain":"es","China":"cn","Japan":"jp","India":"in","Brazil":"br",
-      "Russia":"ru","Canada":"ca","Australia":"au","United Kingdom":"gb","UK":"gb",
-      "Netherlands":"nl","Switzerland":"ch","Belgium":"be","Poland":"pl","Mexico":"mx",
-      "Korea":"kr","Saudi Arabia":"sa","Egypt":"eg"
-    };
+    // 🌍 Otomatik bayrak sistemi (tek merkezli flags.js)
+const flagImg = `<img src="${getFlagURL(r.country, 20)}" alt="${r.country}" class="flag-icon-img">`;
+    
     const toCode = name => (countryCodeMap[name] || (name?.slice(0,2) ?? "unknown")).toLowerCase();
     const code = toCode(r.country || "Unknown");
     const flagImg = `<img src="https://flagcdn.com/h20/${code}.png" alt="${r.country}" class="flag-icon-img">`;
