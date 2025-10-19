@@ -43,44 +43,43 @@
 
 <body>
   <!-- ✅ HEADER -->
-  <header>
-    <section class="hero-section">
+ <header>
+  <div class="logo-container" onclick="location.href='index.html'">
+    <img src="assets/logos.png" alt="Trader Route Logo">
+    <span class="logo-text">The Silk Road of E-Commerce</span>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html" style="color:var(--green);font-weight:700;">Requests</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html">Pricing</a>
+  </nav>
+
+  <div class="header-right">
+    <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+    <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+    <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
+      <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
+           style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+      <div id="userDropdown"
+           style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
+                  box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+        <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+        <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+        <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ✅ HERO BÖLÜMÜ HEADER'DAN SONRA GELMELİ -->
+<section class="hero-section">
   <div class="hero-overlay">
     <h1 id="heroTitle">Request Details</h1>
   </div>
 </section>
-    <div class="logo-container" onclick="location.href='index.html'">
-      <img src="assets/logos.png" alt="Trader Route Logo">
-      <span class="logo-text">The Silk Road of E-Commerce</span>
-    </div>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="companies.html">Companies</a>
-      <a href="requests.html" style="color:var(--green);font-weight:700;">Requests</a>
-      <a href="contact.html">Contact</a>
-      <a href="pricing.html">Pricing</a>
-    </nav>
-
-    <div class="header-right">
-      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
-
-      <!-- 👤 Kullanıcı Menüsü -->
-      <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
-        <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
-             style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
-        <div id="userDropdown"
-             style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
-                    box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
-          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
-          <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
-          <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
-        </div>
-      </div>
-    </div>
-  </header>
-
   <!-- === MAIN CONTENT === -->
   <main>
   <div class="detail-container">
