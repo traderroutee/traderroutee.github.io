@@ -230,9 +230,10 @@ const toCode = name => {
     function renderCountries(reqs){const t=(countrySearch.value||"").toLowerCase();const d=(allCountries||[]).filter(c=>c.name.toLowerCase().includes(t));countryList.innerHTML="";d.forEach(c=>{const n=reqs.filter(r=>r.country===c.name).length;const li=document.createElement("li");li.innerHTML=`<a href="#"><span style="display:flex;align-items:center;gap:6px;"><img class='flag' src='https://flagcdn.com/h20/${c.code}.png' alt='${c.name}' loading='lazy'>${c.name}</span><span class='count'>(${n})</span></a>`;li.onclick=e=>{e.preventDefault();selectedCountry=c.name;selectedCategory=null;renderRequests();};countryList.appendChild(li);});}
 
     let allRequestsData = [];
-    
-   function renderRequests(allData){
-  const all = allData || [];
+
+function renderRequests(allData){
+  if (allData) allRequestsData = allData;
+  const all = allRequestsData || [];
   renderCategories(all);
   renderCountries(all);
 
