@@ -406,20 +406,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // ✅ En son 5 ilan
-   // ✅ En son 5 onaylı ilanı getir
-// ✅ En son 5 ilan
 const latest = all
   .filter(r => r.approved === true || r.approved === "true")
   .slice(-5)
   .reverse();
 
-// 🌐 Tabloyu oluştur (sadece bu! Fonksiyon yok, fazlalık yok)
+// 🌐 Liste oluştur
 container.innerHTML = latest.map(req => {
   const id       = encodeURIComponent(req.id || req.title || "");
   const desc     = (req.title || "Untitled").slice(0, 50) + (req.title?.length > 50 ? "..." : "");
   const date     = req.date ? new Date(req.date).toLocaleDateString() : "-";
   const country  = req.country || "Unknown";
-  const flagFile = getFlagURL(country, 40); // flags.js
+  const flagFile = getFlagURL(country, 40);
 
   return `
     <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
