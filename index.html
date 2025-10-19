@@ -406,13 +406,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // ✅ En son 5 ilan
-   const latest = all
+   // ✅ En son 5 onaylı ilanı getir
+const latest = all
   .filter(r => r.approved === true || r.approved === "true")
   .slice(-5)
   .reverse();
 
-    function countryToCode(name) {
-     // 🌐 Liste oluştur
+// 🌐 Tabloyu oluştur
 container.innerHTML = latest.map(req => {
   const id       = encodeURIComponent(req.id || req.title || "");
   const desc     = (req.title || "Untitled").slice(0, 50) + (req.title?.length > 50 ? "..." : "");
