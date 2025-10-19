@@ -79,16 +79,17 @@ async function showRequests() {
   filtered.slice().reverse().forEach(r => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${r.title}</td>
-      <td>${r.user}</td>
-      <td>${r.country}</td>
-      <td>${r.category}</td>
-      <td class="status">${r.approved ? "✅ Approved" : "⏳ Pending"}</td>
-      <td>
-        ${!r.approved ? `<button class="approve" onclick="approveRequest(${r.id})">Approve</button>` : ""}
-        <button class="delete" onclick="deleteRequest(${r.id})">Delete</button>
-      </td>
-    `;
+  <td>${r.title}</td>
+  <td>${r.user}</td>
+  <td>${r.country}</td>
+  <td>${r.category}</td>
+  <td class="status">${r.approved ? "✅ Approved" : "⏳ Pending"}</td>
+  <td>
+    ${!r.approved ? `<button class="approve" onclick="approveRequest(${r.id})">Approve</button>` : ""}
+    <button class="edit" onclick="editRequest(${r.id})">Edit</button>
+    <button class="delete" onclick="deleteRequest(${r.id})">Delete</button>
+  </td>
+`;
     tableBody.appendChild(tr);
   });
 }
@@ -125,6 +126,45 @@ async function deleteRequest(id) {
 
 statusFilter.addEventListener("change", showRequests);
 showRequests();
+
+    async function editRequest(id) {
+  // mevcut verileri çek
+  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests", { cache: "no-store" });
+  const all = res.ok ? await res.json() : [];
+  const req = all.find(r => r.id === id);
+  if (!req) return alert("Request not found.");
+
+  // düzenleme penceresi oluştur
+  const newTitle = prompt("Edit Title:", req.title || "");
+  if (newTitle === null) return; // vazgeçtiyse çık
+  const newDesc = prompt("Edit Description:", req.description || "");
+  const newCountry = prompt("Edit Country:", req.country || "");
+  const newCategory = prompt("Edit Category:", req.category || "");
+
+  const updated = {
+    title: newTitle.trim(),
+    description: newDesc.trim(),
+    country: newCountry.trim(),
+    category: newCategory.trim()
+  };
+
+  const editRes = await fetch("https://divine-hill-9557.traderroutee.workers.dev/edit", {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      "x-api-key": "TRADER2025" // Worker’daki admin key
+    },
+    body: JSON.stringify({ id, updated })
+  });
+
+  if (editRes.ok) {
+    alert("Request updated ✅");
+    showRequests();
+  } else {
+    alert("Update failed ❌");
+  }
+}
+    
 </script>
 </body>
 </html>
