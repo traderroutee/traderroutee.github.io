@@ -177,32 +177,19 @@
     let categories=null, allCountries=null;
 
 // 🌍 Verileri hem localStorage'dan hem sunucudan oku
-async function getRequests(){
+async function getRequests() {
   try {
-    // 1️⃣ LocalStorage'daki mevcut veriler
-    let localData = JSON.parse(localStorage.getItem("requests") || "[]");
-
-    // 2️⃣ Cloudflare Worker'dan (sunucudan) çek
-const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests?t=" + Date.now(), { cache: "no-store" });
-
+    const res = await fetch("https://traderroute-api.traderroute.workers.dev/requests?t=" + Date.now(), { cache: "no-store" });
     if (res.ok) {
-      const serverData = await res.json();
-
-      // 3️⃣ Birleştir ve tekrarlananları kaldır
-      const merged = [...localData, ...serverData].filter(
-        (v, i, a) => a.findIndex(t => t.id === v.id) === i
-      );
-
-      // 4️⃣ Güncel veriyi kaydet
-      localStorage.setItem("requests", JSON.stringify(merged));
-      return merged;
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
     } else {
-      console.warn("⚠️ Server data load failed, showing local only");
-      return localData;
+      console.warn("⚠️ Server data load failed");
+      return [];
     }
   } catch (err) {
     console.error("⚠️ Server connection error:", err);
-    return JSON.parse(localStorage.getItem("requests") || "[]");
+    return [];
   }
 }
     
