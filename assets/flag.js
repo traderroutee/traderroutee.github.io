@@ -27,9 +27,9 @@
   };
 
   // ✅ Tek ve güvenli sürüm
-  window.getFlagURL = function(country, size = 20){
-    if (!country) return "assets/flag/default.png";
-    const code = (countryCodeMap[country] || country.slice(0,2) || "unknown").toLowerCase();
-    return `assets/flag/${code}.png`; // klasör tekil: assets/flag/
-  };
+ window.getFlagURL = function(country, size = 20) {
+  if (!country) return "assets/flag/default.png";
+  const code = (window.countryCodeMap[country] || country.slice(0,2) || "unknown").toLowerCase();
+  return `assets/flag/${code}.png`;
+};
 })();
