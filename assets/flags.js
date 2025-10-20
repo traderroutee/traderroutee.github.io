@@ -1,7 +1,5 @@
-// assets/flags.js
-// Trader Route – Universal Flag Helper (tek merkez)
-(function(){
-  // Ülke → kod haritası (örnekler; siz zamanla genişletebilirsiniz)
+// assets/flags.js  ✅ Tek merkezli ve çakışmasız sürüm
+(function () {
   window.countryCodeMap = {
     "Afghanistan":"af","Albania":"al","Algeria":"dz","Andorra":"ad","Angola":"ao",
     "Argentina":"ar","Armenia":"am","Australia":"au","Austria":"at","Azerbaijan":"az",
@@ -28,15 +26,10 @@
     "Uzbekistan":"uz","Venezuela":"ve","Vietnam":"vn"
   };
 
-  // Ülke adını koda çevir
-  window.getFlagURL = function(country, size=20){
-  const code = (countryCodeMap[country] || country.slice(0,2) || "unknown").toLowerCase();
-  return `assets/flag/${code}.png`;  // ✅ Dikkat: flag → tekil
-};
-
-  // Bayrak URL (klasör: assets/flag/  → tekil)
-  window.getFlagURL = function(country, size){
-    const code = getFlagCode(country);
-    return `assets/flag/${code}.png`;
+  // ✅ Tek ve güvenli sürüm
+  window.getFlagURL = function(country, size = 20){
+    if (!country) return "assets/flag/default.png";
+    const code = (countryCodeMap[country] || country.slice(0,2) || "unknown").toLowerCase();
+    return `assets/flag/${code}.png`; // klasör tekil: assets/flag/
   };
 })();
