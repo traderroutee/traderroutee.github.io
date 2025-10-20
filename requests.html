@@ -241,6 +241,29 @@ function renderCountries(reqs) {
     countryList.appendChild(li);
   });
 }
+
+    function renderCategories(reqs) {
+  const t = (categorySearch.value || "").toLowerCase();
+  const d = (categories || []).filter(c => c.toLowerCase().includes(t));
+
+  categoryList.innerHTML = "";
+  d.forEach(cat => {
+    const c = reqs.filter(r => r.category === cat).length;
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <a href="#">
+        <span>${cat}</span>
+        <span class="count">(${c})</span>
+      </a>`;
+    li.onclick = e => {
+      e.preventDefault();
+      selectedCategory = cat;
+      selectedCountry = null;
+      renderRequests();
+    };
+    categoryList.appendChild(li);
+  });
+}
     let allRequestsData = [];
 
 function renderRequests(allData){
