@@ -29,13 +29,10 @@
   };
 
   // Ülke adını koda çevir
-  window.getFlagCode = function(country){
-    if(!country) return "unknown";
-    const byKey = countryCodeMap[country];
-    if (byKey) return byKey;
-    // örn. "Czech Republic" → "cz" tipinde basit fallback
-    return (country.slice(0,2) || "unknown").toLowerCase();
-  };
+  window.getFlagURL = function(country, size=20){
+  const code = (countryCodeMap[country] || country.slice(0,2) || "unknown").toLowerCase();
+  return `assets/flag/${code}.png`;  // ✅ Dikkat: flag → tekil
+};
 
   // Bayrak URL (klasör: assets/flag/  → tekil)
   window.getFlagURL = function(country, size){
