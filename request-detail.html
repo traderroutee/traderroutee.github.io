@@ -207,19 +207,18 @@ setTimeout(() => {
   }
 
   const code =
-    (countryMap[req.country.trim()] ||
-     req.country.slice(0, 2) ||
-     "xx").toLowerCase();
+  (countryMap[req.country?.trim()] ||
+   req.country?.slice(0,2) ||
+   "xx").toLowerCase();
 
-  const flagURL = `https://flagcdn.com/w60/${code}.png`;
+const flagURL = req.country
+  ? `https://flagcdn.com/w60/${code}.png`
+  : "https://flagcdn.com/w60/xx.png";
 
-  const flagImg = document.getElementById("flagImage");
-  flagImg.src = flagURL;
-  flagImg.onerror = function () {
-    this.src = "https://flagcdn.com/w60/xx.png";
-  };
-}, 800); // 0.8 saniye bekle, veri geldikten sonra bayrağı yükle
- 
+document.getElementById("flagImage").src = flagURL;
+document.getElementById("flagImage").onerror = function() {
+  this.src = "https://flagcdn.com/w60/xx.png";
+};
   </script>
 </body>
 </html>
