@@ -102,7 +102,17 @@
   </header>
 
   <!-- 💬 CHAT -->
-  <div class="chat">
+ <!-- 💬 MESAJ SAYFASI ANA YAPI -->
+<div class="chat-wrapper">
+  
+  <!-- 👥 SOL TARAF: KİŞİLER LİSTESİ -->
+  <div id="userListPanel" style="width:280px;border-right:1px solid #ddd;background:#f9f9f9;overflow-y:auto;display:flex;flex-direction:column;">
+    <div style="padding:12px;font-weight:700;color:#008b6a;border-bottom:1px solid #ddd;">Inbox</div>
+    <div id="userList" style="flex:1;padding:10px;"></div>
+  </div>
+
+  <!-- 💬 SAĞ TARAF: CHAT -->
+  <div class="chat" style="flex:1;">
     <div class="head" id="who">Chat</div>
     <div class="list" id="list"></div>
     <div class="input">
@@ -111,11 +121,8 @@
     </div>
     <div class="status" id="status"></div>
   </div>
-   <!-- 👥 SOL TARAF: KİŞİLER LİSTESİ -->
-  <div id="userListPanel" style="width:280px;border-right:1px solid #ddd;background:#f9f9f9;overflow-y:auto;display:flex;flex-direction:column;">
-    <div style="padding:12px;font-weight:700;color:#008b6a;border-bottom:1px solid #ddd;">Inbox</div>
-    <div id="userList" style="flex:1;padding:10px;"></div>
-  </div>
+
+</div>
 
   <script>
     const currentUser = JSON.parse(localStorage.getItem("tr_user") || "null");
@@ -274,7 +281,9 @@ function openChat(email, divEl) {
   list.scrollTop = list.scrollHeight;
 
   // Başlık güncelle
-  document.getElementById("who").textContent = "Chat with " + email;
+  const u = JSON.parse(localStorage.getItem("all_users") || "[]").find(x => x.email === email);
+const displayName = u ? u.name : email.split("@")[0];
+document.getElementById("who").textContent = "Chat with " + displayName;
 }
 </script>
   
