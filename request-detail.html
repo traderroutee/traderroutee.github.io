@@ -199,13 +199,22 @@
   "Venezuela": "ve", "Vietnam": "vn", "Yemen": "ye", "Zambia": "zm", "Zimbabwe": "zw"
 };
 
-const code = (countryMap[req.country] || req.country.slice(0,2) || "xx").toLowerCase();
-document.getElementById("flagImage").src = `https://flagcdn.com/w60/${code}.png`;
-      } catch (e) {
-        document.getElementById("reqDescription").textContent = "Error loading request details.";
-      }
-    }
-    loadRequestDetail();
+const code =
+  (countryMap[req.country?.trim()] ||
+   req.country?.slice(0,2) ||
+   "xx").toLowerCase();
+
+      loadRequestDetail();
+        
+const flagURL = req.country
+  ? `https://flagcdn.com/w60/${code}.png`
+  : "https://flagcdn.com/w60/xx.png";
+
+document.getElementById("flagImage").src = flagURL;
+document.getElementById("flagImage").onerror = function() {
+  this.src = "https://flagcdn.com/w60/xx.png";
+};
+ 
   </script>
 </body>
 </html>
