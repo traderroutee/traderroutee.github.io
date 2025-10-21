@@ -199,8 +199,8 @@
   "Venezuela": "ve", "Vietnam": "vn", "Yemen": "ye", "Zambia": "zm", "Zimbabwe": "zw"
 };
 
-const code = countryMap[req.country] || "default";
-document.getElementById("flagImage").src = `assets/flags/${code}.png`;
+const code = (countryMap[req.country] || req.country.slice(0,2) || "xx").toLowerCase();
+document.getElementById("flagImage").src = `https://flagcdn.com/w80/${code}.png`;
       } catch (e) {
         document.getElementById("reqDescription").textContent = "Error loading request details.";
       }
