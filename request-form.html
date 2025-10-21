@@ -132,8 +132,8 @@
       type,
       user: currentUser?.email || "Guest",
       date: new Date().toISOString(),
-      approved: false
-      images: uploadedImageUrls, // eklenen resimlerin URL’leri
+      approved: false,
+images: uploadedImageUrls, // eklenen resimlerin URL’leri
     };
 
   requests.push(newRequest);
@@ -291,7 +291,7 @@ async function uploadImage(file){
   return json.url;
 }
 
-document.getElementById('image').addEventListener('change', async (e)=>{
+document.getElementById('imageUpload').addEventListener('change', async (e)=>{
   const f = e.target.files[0];
   if(!f) return;
   try{
