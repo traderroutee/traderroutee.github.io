@@ -26,10 +26,20 @@
     "Uzbekistan":"uz","Venezuela":"ve","Vietnam":"vn"
   };
 
-  // ✅ Tek ve güvenli sürüm
- window.getFlagURL = function(country, size = 20) {
-  if (!country) return "assets/flag/default.png";
-  const code = (window.countryCodeMap[country] || country.slice(0,2) || "unknown").toLowerCase();
-  return `assets/flag/${code}.png`;
+  // CDN tabanlı bayrak URL üretimi (yerel dosya gerekmez)
+window.getFlagURL = function (country, size = 20) {
+  if (!country) {
+    // 1x1 şeffaf piksel (404 görmemek için)
+    return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+  }
+
+  const code = (window.countryCodeMap[country] || country.slice(0, 2) || "xx").toLowerCase();
+
+  // FlagCDN width preset’leri
+  const preset = { 20: "w20", 24: "w24", 32: "w32", 40: "w40" };
+  const w = preset[size] || "w20";
+
+  // Örn: https://flagcdn.com/w20/tr.png
+  return `https://flagcdn.com/${w}/${code}.png`;
 };
 })();
