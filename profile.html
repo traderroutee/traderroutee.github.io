@@ -79,21 +79,34 @@
 </head>
 
 <body>
+
   <header>
-    <div class="logo-container" onclick="location.href='index.html'">
-      <img src="assets/logos.png" alt="Trader Route Logo">
-      <span class="logo-text">The Silk Road of E-Commerce</span>
-    </div>
+  <div class="logo-container" onclick="location.href='index.html'">
+    <img src="assets/logos.png" alt="Trader Route Logo">
+    <span class="logo-text">The Silk Road of E-Commerce</span>
+  </div>
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="companies.html">Companies</a>
-      <a href="requests.html">Requests</a>
-      <a href="contact.html">Contact</a>
-      <a href="pricing.html">Pricing</a>
-    </nav>
-  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html">Requests</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html">Pricing</a>
+  </nav>
 
+  <!-- 📩 Messages Button -->
+  <div id="messageIconContainer" style="position:relative;margin-right:25px;">
+    <a href="messages.html" id="messageIconLink" style="text-decoration:none;color:inherit;">
+      <img src="assets/email.png" alt="Messages" style="width:25px;height:25px;cursor:pointer;">
+      <span id="messageBadge"
+            style="position:absolute;top:-5px;right:-8px;
+            background:red;color:white;font-size:11px;
+            border-radius:50%;padding:2px 5px;display:none;">
+      </span>
+    </a>
+  </div>
+</header>
+  
   <div class="container">
     <h2>My Profile</h2>
 
@@ -328,5 +341,25 @@ function deleteMyRequest(id){
     renderInbox();
     renderListings();
   </script>
+
+  <script>
+// === Mesaj bildirimi kontrolü ===
+(function(){
+  const badge = document.getElementById("messageBadge");
+  const user = JSON.parse(localStorage.getItem("tr_user") || "null");
+  if(!user || !badge) return;
+
+  const allMessages = JSON.parse(localStorage.getItem("tr_messages") || "[]");
+  const unread = allMessages.filter(m => m.to === user.email && !m.read);
+
+  if(unread.length > 0){
+    badge.textContent = unread.length;
+    badge.style.display = "inline-block";
+  } else {
+    badge.style.display = "none";
+  }
+})();
+</script>
+  
 </body>
 </html>
