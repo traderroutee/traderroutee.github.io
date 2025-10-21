@@ -37,6 +37,33 @@
     .input button{background:var(--green);color:#fff;border:none;border-radius:6px;padding:10px 18px;font-weight:700;cursor:pointer;}
     .input button:hover{background:var(--green-dark);}
     .status{font-size:12px;color:#6b7280;text-align:center;margin:5px 0;}
+
+    <style>
+  .chat-wrapper {
+    display: flex;
+    height: 80vh;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 30px auto;
+    max-width: 900px;
+  }
+  #userListPanel div.user-item {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 15px;
+  }
+  #userListPanel div.user-item:hover {
+    background: #f1f9f5;
+  }
+  #userListPanel div.user-item.active {
+    background: #dff6ee;
+    font-weight: 600;
+  }
+</style>
   </style>
 </head>
 
@@ -81,6 +108,11 @@
       <button id="send">Send</button>
     </div>
     <div class="status" id="status"></div>
+  </div>
+   <!-- 👥 SOL TARAF: KİŞİLER LİSTESİ -->
+  <div id="userListPanel" style="width:280px;border-right:1px solid #ddd;background:#f9f9f9;overflow-y:auto;display:flex;flex-direction:column;">
+    <div style="padding:12px;font-weight:700;color:#008b6a;border-bottom:1px solid #ddd;">Inbox</div>
+    <div id="userList" style="flex:1;padding:10px;"></div>
   </div>
 
   <script>
@@ -151,5 +183,98 @@
     window.logoutUser=function(){localStorage.removeItem('tr_user');location.href='index.html';};
   })();
   </script>
+
+  <script>
+// === TÜM KULLANICILARI KAYDETME (MEVCUT VE YENİLER) ===
+(function(){
+  const current = JSON.parse(localStorage.getItem("tr_user") || "null");
+  if(!current) return;
+  
+  // Daha önce kayıtlı "all_users" listesi var mı kontrol et
+  const allUsers = JSON.parse(localStorage.getItem("all_users") || "[]");
+  const exists = allUsers.some(u => u.email === current.email);
+
+  // Yoksa mevcut kullanıcıyı listeye ekle
+  if(!exists){
+    allUsers.push({
+      name: current.name || "Unknown User",
+      email: current.email
+    });
+    localStorage.setItem("all_users", JSON.stringify(allUsers));
+  }
+})();
+</script>
+  
+
+  <script>
+// === KULLANICI LİSTESİ OLUŞTURMA ===
+document.addEventListener("DOMContentLoaded", () => {
+  const currentUser = JSON.parse(localStorage.getItem("tr_user") || "null");
+  if (!currentUser) return;
+
+  const messages = JSON.parse(localStorage.getItem("messages") || "[]");
+  const allUsers = JSON.parse(localStorage.getItem("all_users") || "[]"); // varsa kayıtlı kullanıcı listesi
+  const userListDiv = document.getElementById("userList");
+  
+  // Size mesaj atan kişileri bulun
+  const senders = [...new Set(
+    messages
+      .filter(m => m.to === currentUser.email || m.from === currentUser.email)
+      .map(m => m.from === currentUser.email ? m.to : m.from)
+  )];
+
+  if (senders.length === 0) {
+    userListDiv.innerHTML = `<div style="color:#777;text-align:center;margin-top:20px;">No conversations yet.</div>`;
+    return;
+  }
+
+  senders.forEach(email => {
+    // isim bulmaya çalış
+    const u = allUsers.find(x => x.email === email);
+    const displayName = u ? u.name : email.split("@")[0]; // isim yoksa geçici olarak mail'in baş kısmı
+    const div = document.createElement("div");
+    div.className = "user-item";
+    div.textContent = displayName;
+    div.onclick = () => openChat(email, div);
+    userListDiv.appendChild(div);
+  });
+});
+
+function openChat(email, divEl) {
+  // aktif kullanıcı vurgusu
+  document.querySelectorAll("#userList .user-item").forEach(d => d.classList.remove("active"));
+  divEl.classList.add("active");
+
+  // konuşma alanını güncelle
+  const currentUser = JSON.parse(localStorage.getItem("tr_user") || "null");
+  const all = JSON.parse(localStorage.getItem("messages") || "[]");
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  const filtered = all.filter(m =>
+    (m.from === currentUser.email && m.to === email) ||
+    (m.from === email && m.to === currentUser.email)
+  );
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div style="color:#777;text-align:center;margin-top:20px;">No messages yet with this user.</div>`;
+    return;
+  }
+
+  filtered.forEach(m => {
+    const bubble = document.createElement("div");
+    bubble.className = "bubble " + (m.from === currentUser.email ? "sent" : "recv");
+    bubble.textContent = m.text;
+    list.appendChild(bubble);
+  });
+
+  // Scroll'u alta çek
+  list.scrollTop = list.scrollHeight;
+
+  // Başlık güncelle
+  document.getElementById("who").textContent = "Chat with " + email;
+}
+</script>
+  
 </body>
 </html>
