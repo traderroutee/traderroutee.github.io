@@ -207,15 +207,17 @@ setTimeout(() => {
   }
 
   // ✅ Request yüklendikten sonra bayrağı ayarla (güvenli sürüm)
-const rawCountry = (req.country || "").trim();
-const code = (countryMap[rawCountry] || rawCountry.slice(0, 2) || "xx").toLowerCase();
+  const rawCountry = (req.country || "").trim();
+  const code = (countryMap[rawCountry] || rawCountry.slice(0, 2) || "xx").toLowerCase();
 
-const flagImg = document.getElementById("flagImage");
-flagImg.src = `https://flagcdn.com/w60/${code}.png`;
-flagImg.onerror = function () {
-  this.onerror = null;
-  this.src = "https://flagcdn.com/w60/xx.png";
-};
-  </script>
+  const flagImg = document.getElementById("flagImage");
+  flagImg.src = `https://flagcdn.com/w60/${code}.png`;
+  flagImg.onerror = function () {
+    this.onerror = null;
+    this.src = "https://flagcdn.com/w60/xx.png";
+  };
+}, 800); // ← burada 800 ms bekleme ve parantez kapatma var!
+        
+</script>
 </body>
 </html>
