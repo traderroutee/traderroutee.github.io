@@ -199,21 +199,26 @@
   "Venezuela": "ve", "Vietnam": "vn", "Yemen": "ye", "Zambia": "zm", "Zimbabwe": "zw"
 };
 
-const code =
-  (countryMap[req.country?.trim()] ||
-   req.country?.slice(0,2) ||
-   "xx").toLowerCase();
+// Wait until request data is loaded
+setTimeout(() => {
+  if (!req || !req.country) {
+    document.getElementById("flagImage").src = "https://flagcdn.com/w60/xx.png";
+    return;
+  }
 
-      loadRequestDetail();
-        
-const flagURL = req.country
-  ? `https://flagcdn.com/w60/${code}.png`
-  : "https://flagcdn.com/w60/xx.png";
+  const code =
+    (countryMap[req.country.trim()] ||
+     req.country.slice(0, 2) ||
+     "xx").toLowerCase();
 
-document.getElementById("flagImage").src = flagURL;
-document.getElementById("flagImage").onerror = function() {
-  this.src = "https://flagcdn.com/w60/xx.png";
-};
+  const flagURL = `https://flagcdn.com/w60/${code}.png`;
+
+  const flagImg = document.getElementById("flagImage");
+  flagImg.src = flagURL;
+  flagImg.onerror = function () {
+    this.src = "https://flagcdn.com/w60/xx.png";
+  };
+}, 800); // 0.8 saniye bekle, veri geldikten sonra bayrağı yükle
  
   </script>
 </body>
