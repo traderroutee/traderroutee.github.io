@@ -152,14 +152,19 @@
       <strong>support@traderroute.com</strong>.
     </p>
 
-    <form id="contactForm">
-      <input type="text" id="name" placeholder="Your Name" required>
-      <input type="email" id="email" placeholder="Your Email" required>
-      <input type="text" id="subject" placeholder="Subject" required>
-      <textarea id="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-      <div class="status" id="status"></div>
-    </form>
+    <form action="https://formsubmit.co/traderroutee@gmail.com" method="POST">
+  <!-- Gizli ayarlar -->
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_subject" value="New message from Trader Route!">
+  <input type="hidden" name="_template" value="table">
+
+  <!-- Form alanları -->
+  <input type="text" name="name" placeholder="Your Name" required>
+  <input type="email" name="email" placeholder="Your Email" required>
+  <textarea name="message" placeholder="Your Message" required></textarea>
+
+  <button type="submit">Send Message</button>
+</form>
   </section>
 
   <footer>© 2025 Trader Route — Global Trade Connections</footer>
