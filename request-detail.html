@@ -200,7 +200,7 @@
 };
 
 const code = (countryMap[req.country] || req.country.slice(0,2) || "xx").toLowerCase();
-document.getElementById("flagImage").src = `https://flagcdn.com/w80/${code}.png`;
+document.getElementById("flagImage").src = `https://flagcdn.com/w60/${code}.png`;
       } catch (e) {
         document.getElementById("reqDescription").textContent = "Error loading request details.";
       }
