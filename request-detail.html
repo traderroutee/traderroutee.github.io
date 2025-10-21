@@ -145,78 +145,39 @@
     <button class="send-message" onclick="alert('Message system coming soon!')">Send Message</button>
   </div>
 
-  <script>
-  async function loadRequestDetail() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-    if (!id) return;
+ <script src="assets/flag.js"></script>
+<script>
+async function loadRequestDetail() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
+  if (!id) return;
 
-    try {
-      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(), { cache: "no-store" });
-      const all = await res.json();
-      const req = all.find(r => String(r.id) === String(id));
-      if (!req) return;
+  try {
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now());
+    const all = await res.json();
+    const req = all.find(r => String(r.id) === String(id));
+    if (!req) return;
 
-      document.getElementById("reqTitle").textContent    = req.title     || "Untitled Request";
-      document.getElementById("reqCountry").textContent  = req.country   || "Unknown";
-      document.getElementById("reqCategory").textContent = req.category  || "Unspecified";
-      document.getElementById("reqDate").textContent     = req.date ? new Date(req.date).toLocaleDateString() : "-";
-      document.getElementById("reqDescription").textContent = req.description || "No description provided.";
+    document.getElementById("reqTitle").textContent = req.title || "Untitled Request";
+    document.getElementById("reqCountry").textContent = req.country || "-";
+    document.getElementById("reqCategory").textContent = req.category || "-";
+    document.getElementById("reqDate").textContent = req.date ? new Date(req.date).toLocaleDateString() : "-";
+    document.getElementById("reqDescription").textContent = req.description || "No description provided.";
 
-      const countryMap = {
-        "Afghanistan": "af", "Albania": "al", "Algeria": "dz", "Andorra": "ad",
-        "Angola": "ao", "Argentina": "ar", "Armenia": "am", "Australia": "au",
-        "Austria": "at", "Azerbaijan": "az", "Bahamas": "bs", "Bahrain": "bh",
-        "Bangladesh": "bd", "Belarus": "by", "Belgium": "be", "Belize": "bz",
-        "Benin": "bj", "Bolivia": "bo", "Bosnia and Herzegovina": "ba",
-        "Botswana": "bw", "Brazil": "br", "Bulgaria": "bg", "Burkina Faso": "bf",
-        "Cambodia": "kh", "Cameroon": "cm", "Canada": "ca", "Chile": "cl",
-        "China": "cn", "Colombia": "co", "Costa Rica": "cr", "Croatia": "hr",
-        "Cuba": "cu", "Cyprus": "cy", "Czech Republic": "cz", "Denmark": "dk",
-        "Dominican Republic": "do", "Ecuador": "ec", "Egypt": "eg", "Estonia": "ee",
-        "Ethiopia": "et", "Finland": "fi", "France": "fr", "Georgia": "ge",
-        "Germany": "de", "Ghana": "gh", "Greece": "gr", "Guatemala": "gt",
-        "Hong Kong": "hk", "Hungary": "hu", "Iceland": "is", "India": "in",
-        "Indonesia": "id", "Iran": "ir", "Iraq": "iq", "Ireland": "ie",
-        "Israel": "il", "Italy": "it", "Japan": "jp", "Jordan": "jo",
-        "Kazakhstan": "kz", "Kenya": "ke", "Kuwait": "kw", "Kyrgyzstan": "kg",
-        "Laos": "la", "Latvia": "lv", "Lebanon": "lb", "Libya": "ly",
-        "Lithuania": "lt", "Luxembourg": "lu", "Malaysia": "my", "Maldives": "mv",
-        "Malta": "mt", "Mexico": "mx", "Moldova": "md", "Monaco": "mc",
-        "Mongolia": "mn", "Montenegro": "me", "Morocco": "ma", "Myanmar": "mm",
-        "Nepal": "np", "Netherlands": "nl", "New Zealand": "nz", "Nigeria": "ng",
-        "North Korea": "kp", "Norway": "no", "Oman": "om", "Pakistan": "pk",
-        "Palestine": "ps", "Panama": "pa", "Paraguay": "py", "Peru": "pe",
-        "Philippines": "ph", "Poland": "pl", "Portugal": "pt", "Qatar": "qa",
-        "Romania": "ro", "Russia": "ru", "Saudi Arabia": "sa", "Serbia": "rs",
-        "Singapore": "sg", "Slovakia": "sk", "Slovenia": "si", "Somalia": "so",
-        "South Africa": "za", "South Korea": "kr", "Spain": "es", "Sri Lanka": "lk",
-        "Sudan": "sd", "Sweden": "se", "Switzerland": "ch", "Syria": "sy",
-        "Taiwan": "tw", "Tajikistan": "tj", "Tanzania": "tz", "Thailand": "th",
-        "Tunisia": "tn", "Turkey": "tr", "Turkmenistan": "tm", "Uganda": "ug",
-        "Ukraine": "ua", "United Arab Emirates": "ae", "United Kingdom": "gb",
-        "United States": "us", "Uruguay": "uy", "Uzbekistan": "uz",
-        "Venezuela": "ve", "Vietnam": "vn", "Yemen": "ye", "Zambia": "zm", "Zimbabwe": "zw"
-      };
-
-      // Request yüklendikten sonra bayrağı ayarla (güvenli sürüm)
-      const rawCountry = (req.country || "").trim();
-      const code = (countryMap[rawCountry] || rawCountry.slice(0, 2) || "xx").toLowerCase();
-
-      const flagImg = document.getElementById("flagImage");
-      flagImg.src = `https://flagcdn.com/w60/${code}.png`;
-      flagImg.onerror = function () {
-        this.onerror = null;
-        this.src = "https://flagcdn.com/w60/xx.png";
-      };
-
-    } catch (err) {
-      console.error("Error loading request detail:", err);
-    }
+    // ✅ Flag.js fonksiyonunu kullan
+    const flagFile = getFlagURL(req.country, 60);
+    const flagImg = document.getElementById("flagImage");
+    flagImg.src = flagFile;
+    flagImg.onerror = function () {
+      this.onerror = null;
+      this.src = "assets/flag/default.png";
+    };
+  } catch (err) {
+    console.error("Error loading request detail:", err);
   }
+}
 
-  // ✅ Fonksiyonu çağır
-  loadRequestDetail();
+loadRequestDetail();
 </script>
 </body>
 </html>
