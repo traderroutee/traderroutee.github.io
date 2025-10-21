@@ -133,6 +133,7 @@
       user: currentUser?.email || "Guest",
       date: new Date().toISOString(),
       approved: false
+      images: uploadedImageUrls, // eklenen resimlerin URL’leri
     };
 
   requests.push(newRequest);
