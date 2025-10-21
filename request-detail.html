@@ -127,7 +127,7 @@
   <!-- ✅ Request Detail -->
   <div class="request-detail-container">
     <div class="request-header">
-      <img id="flagImage" class="flag" src="assets/flag/default.png" alt="Flag">
+      <img id="flagImage" class="flag" src="https://flagcdn.com/w60/xx.png" alt="Flag">
       <div>
         <h2 id="reqTitle" class="request-title">Loading...</h2>
         <div class="request-meta">
@@ -206,8 +206,16 @@ setTimeout(() => {
     return;
   }
 
-  const code = (countryMap[req.country] || req.country.slice(0,2) || "xx").toLowerCase();
-document.getElementById("flagImage").src = `https://flagcdn.com/w80/${code}.png`;
+  // ✅ Request yüklendikten sonra bayrağı ayarla (güvenli sürüm)
+const rawCountry = (req.country || "").trim();
+const code = (countryMap[rawCountry] || rawCountry.slice(0, 2) || "xx").toLowerCase();
+
+const flagImg = document.getElementById("flagImage");
+flagImg.src = `https://flagcdn.com/w60/${code}.png`;
+flagImg.onerror = function () {
+  this.onerror = null;
+  this.src = "https://flagcdn.com/w60/xx.png";
+};
   </script>
 </body>
 </html>
