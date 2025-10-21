@@ -233,5 +233,49 @@ async function saveRequestToServer(newRequest) {
     }
   });
   </script>
+
+  <script>
+// === Image Upload Preview & Cloudflare Upload ===
+const imageInput = document.getElementById("imageUpload");
+const preview = document.getElementById("imagePreview");
+let uploadedImageUrls = [];
+
+imageInput?.addEventListener("change", async (e) => {
+  const files = Array.from(e.target.files).slice(0, 3); // max 3 image
+  preview.innerHTML = "";
+  uploadedImageUrls = [];
+
+  for (const file of files) {
+    // Önizleme
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = document.createElement("img");
+      img.src = ev.target.result;
+      img.style.width = "80px";
+      img.style.height = "80px";
+      img.style.objectFit = "cover";
+      img.style.border = "1px solid #ccc";
+      img.style.borderRadius = "6px";
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+
+    // Cloudflare Worker'a yükleme
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/upload", {
+        method: "POST",
+        body: formData
+      });
+      const data = await res.json();
+      if (data.url) uploadedImageUrls.push(data.url);
+    } catch (err) {
+      console.error("Upload failed:", err);
+    }
+  }
+});
+</script>
+  
 </body>
 </html>
