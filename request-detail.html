@@ -206,19 +206,8 @@ setTimeout(() => {
     return;
   }
 
-  const code =
-  (countryMap[req.country?.trim()] ||
-   req.country?.slice(0,2) ||
-   "xx").toLowerCase();
-
-const flagURL = req.country
-  ? `https://flagcdn.com/w60/${code}.png`
-  : "https://flagcdn.com/w60/xx.png";
-
-document.getElementById("flagImage").src = flagURL;
-document.getElementById("flagImage").onerror = function() {
-  this.src = "https://flagcdn.com/w60/xx.png";
-};
+  const code = (countryMap[req.country] || req.country.slice(0,2) || "xx").toLowerCase();
+document.getElementById("flagImage").src = `https://flagcdn.com/w80/${code}.png`;
   </script>
 </body>
 </html>
