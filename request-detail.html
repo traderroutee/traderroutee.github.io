@@ -181,6 +181,36 @@ loadRequestDetail();
 </script>
 
   <script>
+function openChat() {
+  // 1️⃣ URL'deki id parametresini al (örnek: ?id=12345)
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
+  if (!id) return alert("Request not found.");
+
+  // 2️⃣ Sunucudan tüm ilanları çek (Cloudflare Worker)
+  fetch("https://divine-hill-9557.traderroutee.workers.dev/requests")
+    .then(res => res.json())
+    .then(all => {
+      // 3️⃣ Gelen veriler arasında bu sayfadaki id'ye ait ilanı bul
+      const req = all.find(r => String(r.id) === String(id));
+
+      // 4️⃣ İlan sahibi yoksa uyarı ver
+      if (!req || !req.user) {
+        alert("User not found for this request.");
+        return;
+      }
+
+      // 5️⃣ İlan sahibinin e-posta adresini al ve mesaj sayfasına yönlendir
+      location.href = "messages.html?to=" + encodeURIComponent(req.user);
+    })
+    .catch(() => {
+      // 6️⃣ Eğer bağlantı sorunu varsa kullanıcıyı bilgilendir
+      alert("Error loading request info. Please try again later.");
+    });
+}
+</script>
+
+  <script>
 // === Kullanıcı oturumu kontrolü ve ikon gösterimi ===
 (function() {
   const icon = document.getElementById('userIcon');
