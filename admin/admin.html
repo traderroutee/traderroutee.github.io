@@ -147,29 +147,33 @@
   }
 
   // --- USERS ---
-  async function showUsers(){
-    try{
-      const res=await fetch("https://divine-hill-9557.traderroutee.workers.dev/users");
-      const users=res.ok?await res.json():[];
-      const body=document.getElementById("usersTable");
-      body.innerHTML="";
-      if(users.length===0){
-        body.innerHTML=`<tr><td colspan="6" style="text-align:center;color:#777;">No users found.</td></tr>`;
-        return;
-      }
-      users.slice().reverse().forEach(u=>{
-        const tr=document.createElement("tr");
-        tr.innerHTML=`
-          <td>${u.name||"-"}</td>
-          <td>${u.surname||"-"}</td>
-          <td>${u.company||"-"}</td>
-          <td>${u.email||"-"}</td>
-          <td>${u.phone||"-"}</td>
-          <td>${u.country||"-"}</td>`;
-        body.appendChild(tr);
-      });
-    }catch(err){console.error("Error loading users:",err);}
+function showUsers() {
+  try {
+    const saved = localStorage.getItem("tr_users");
+    const users = saved ? JSON.parse(saved) : [];
+    const body = document.getElementById("usersTable");
+    body.innerHTML = "";
+
+    if (users.length === 0) {
+      body.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#777;">No users found.</td></tr>`;
+      return;
+    }
+
+    users.slice().reverse().forEach(u => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${u.name || "-"}</td>
+        <td>${u.surname || "-"}</td>
+        <td>${u.company || "-"}</td>
+        <td>${u.email || "-"}</td>
+        <td>${u.phone || "-"}</td>
+        <td>${u.country || "-"}</td>`;
+      body.appendChild(tr);
+    });
+  } catch (err) {
+    console.error("Error loading users:", err);
   }
+}
 
   statusFilter.addEventListener("change",showRequests);
   document.addEventListener("DOMContentLoaded",showRequests);
