@@ -5,12 +5,26 @@
   <title>Admin Panel — Trader Route</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body{font-family:"Inter","Segoe UI",sans-serif;margin:0;background:#f8f9fa;color:#222;}
+    body{margin:0;font-family:"Inter","Segoe UI",sans-serif;background:#f8f9fa;color:#222;display:flex;min-height:100vh;}
     header{background:#008b6a;color:#fff;padding:15px 25px;font-size:22px;font-weight:700;}
-    .container{max-width:1200px;margin:30px auto;padding:20px;background:#fff;border-radius:10px;
-              box-shadow:0 4px 12px rgba(0,0,0,.08);}
+    .sidebar{
+      width:230px;background:#007b63;color:#fff;display:flex;flex-direction:column;
+      padding:20px 0;box-shadow:2px 0 8px rgba(0,0,0,.1);position:fixed;top:0;bottom:0;left:0;
+    }
+    .sidebar h2{margin:0 20px 20px;font-size:20px;}
+    .sidebar a{
+      color:#fff;text-decoration:none;padding:12px 20px;display:block;font-weight:500;
+    }
+    .sidebar a:hover,.sidebar a.active{background:#009879;}
+    main{
+      flex:1;margin-left:230px;padding:25px;
+    }
+    .container{
+      background:#fff;border-radius:10px;padding:25px;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
     table{width:100%;border-collapse:collapse;margin-top:20px;}
-    th,td{padding:12px 15px;border-bottom:1px solid #eee;text-align:left;}
+    th,td{padding:10px 14px;border-bottom:1px solid #eee;text-align:left;}
     th{background:#f1f1f1;color:#007b63;}
     tr:hover{background:#f9fdfc;}
     button{cursor:pointer;border:none;border-radius:5px;font-weight:600;padding:6px 10px;}
@@ -18,164 +32,147 @@
     .approve:hover{background:#006b52;}
     .delete{background:#d9534f;color:#fff;}
     .delete:hover{background:#c9302c;}
-    .status{font-weight:700;}
-    .filter-bar{margin-bottom:15px;display:flex;justify-content:space-between;align-items:center;}
-    select{padding:8px 12px;border:1px solid #ccc;border-radius:6px;font-size:14px;}
+    select{padding:6px 10px;border:1px solid #ccc;border-radius:6px;}
+    .filter-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
   </style>
 </head>
-
 <body>
-  <header>Admin Panel</header>
-  <div class="container">
-    <div class="filter-bar">
-      <h2>All Requests</h2>
-      <select id="statusFilter">
-        <option value="all">All</option>
-        <option value="approved">Approved</option>
-        <option value="pending">Pending</option>
-      </select>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>User</th>
-          <th>Country</th>
-          <th>Category</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="requestsTable"></tbody>
-    </table>
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="#" id="tabRequests" class="active">All Requests</a>
+    <a href="#" id="tabUsers">Registered Users</a>
   </div>
 
+  <main>
+    <!-- Requests -->
+    <section id="requestsSection" class="container">
+      <div class="filter-bar">
+        <h2>All Requests</h2>
+        <select id="statusFilter">
+          <option value="all">All</option>
+          <option value="approved">Approved</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th><th>User</th><th>Country</th><th>Category</th><th>Status</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="requestsTable"></tbody>
+      </table>
+    </section>
+
+    <!-- Users -->
+    <section id="usersSection" class="container" style="display:none;">
+      <h2>Registered Users</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th><th>Surname</th><th>Company</th><th>Email</th><th>Phone</th><th>Country</th>
+          </tr>
+        </thead>
+        <tbody id="usersTable"></tbody>
+      </table>
+    </section>
+  </main>
+
   <script>
-const tableBody = document.getElementById("requestsTable");
-const statusFilter = document.getElementById("statusFilter");
+  const tabRequests=document.getElementById("tabRequests");
+  const tabUsers=document.getElementById("tabUsers");
+  const reqSec=document.getElementById("requestsSection");
+  const usrSec=document.getElementById("usersSection");
 
-async function showRequests() {
-  try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
-    const all = res.ok ? await res.json() : [];
-    const tableBody = document.getElementById("requestsTable");
+  // --- TAB switching ---
+  tabRequests.onclick=()=>{tabRequests.classList.add("active");tabUsers.classList.remove("active");
+    reqSec.style.display="block";usrSec.style.display="none";showRequests();}
+  tabUsers.onclick=()=>{tabUsers.classList.add("active");tabRequests.classList.remove("active");
+    reqSec.style.display="none";usrSec.style.display="block";showUsers();}
 
-    // Tablonun içini temizle
-    tableBody.innerHTML = "";
+  // --- REQUESTS ---
+  const tableBody=document.getElementById("requestsTable");
+  const statusFilter=document.getElementById("statusFilter");
 
-    // Normalize et (bazı kayıtlarda approved string veya undefined)
-    const normalized = all.map(r => ({
-      ...r,
-      approved: r.approved === true || r.approved === "true"
-    }));
+  async function showRequests(){
+    try{
+      const res=await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
+      const all=res.ok?await res.json():[];
+      tableBody.innerHTML="";
+      const normalized=all.map(r=>({...r,approved:r.approved===true||r.approved==="true"}));
+      const filter=statusFilter.value;
+      const filtered=normalized.filter(r=>{
+        if(filter==="approved")return r.approved===true;
+        if(filter==="pending")return!r.approved;
+        return true;
+      });
+      if(filtered.length===0){
+        tableBody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:#777;">No requests found.</td></tr>`;
+        return;
+      }
+      filtered.slice().reverse().forEach(r=>{
+        const tr=document.createElement("tr");
+        tr.innerHTML=`
+          <td>${r.title||"-"}</td>
+          <td>${r.user||"-"}</td>
+          <td>${r.country||"-"}</td>
+          <td>${r.category||"-"}</td>
+          <td>${r.approved?"✅ Approved":"⏳ Pending"}</td>
+          <td>
+            ${!r.approved?`<button class="approve" onclick="approveRequest(${r.id})">Approve</button>`:""}
+            <button onclick="window.location.href='admin-edit.html?id=${r.id}'">Edit</button>
+            <button class="delete" onclick="deleteRequest(${r.id})">Delete</button>
+          </td>`;
+        tableBody.appendChild(tr);
+      });
+    }catch(err){console.error("Error loading requests:",err);}
+  }
 
-    // Filtre uygula
-    const filter = statusFilter.value;
-    const filtered = normalized.filter(r => {
-      if (filter === "approved") return r.approved === true;
-      if (filter === "pending") return !r.approved;
-      return true;
+  async function approveRequest(id){
+    if(!confirm("Approve this request?"))return;
+    const res=await fetch("https://divine-hill-9557.traderroutee.workers.dev/approve",{
+      method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
+      body:JSON.stringify({id})
     });
+    if(res.ok){alert("Approved ✅");showRequests();}else alert("Approval failed ❌");
+  }
 
-    // Boşsa mesaj göster
-    if (filtered.length === 0) {
-      tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#777;">No requests found.</td></tr>`;
-      return;
-    }
-
-    // Verileri ters sırayla tabloya ekle
-    filtered.slice().reverse().forEach(r => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${r.title || "-"}</td>
-        <td>${r.user || "-"}</td>
-        <td>${r.country || "-"}</td>
-        <td>${r.category || "-"}</td>
-        <td class="status">${r.approved ? "✅ Approved" : "⏳ Pending"}</td>
-        <td>
-          ${!r.approved ? `<button class="approve" onclick="approveRequest(${r.id})">Approve</button>` : ""}
-          <button onclick="window.location.href='admin-edit.html?id=${r.id}'">Edit</button>
-          <button class="delete" onclick="deleteRequest(${r.id})">Delete</button>
-        </td>
-      `;
-      tableBody.appendChild(tr);
+  async function deleteRequest(id){
+    if(!confirm("Delete this request?"))return;
+    const res=await fetch("https://divine-hill-9557.traderroutee.workers.dev/delete",{
+      method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
+      body:JSON.stringify({id})
     });
-
-  } catch (err) {
-    console.error("Error loading requests:", err);
+    if(res.ok){alert("Deleted 🗑️");showRequests();}else alert("Delete failed ❌");
   }
-}
 
-async function approveRequest(id) {
-  if (!confirm("Approve this request?")) return;
-  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/approve", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
-    body: JSON.stringify({ id })
-  });
-  if (res.ok) {
-    alert("Approved ✅");
-    showRequests();
-  } else {
-    alert("Approval failed ❌");
+  // --- USERS ---
+  async function showUsers(){
+    try{
+      const res=await fetch("https://divine-hill-9557.traderroutee.workers.dev/users");
+      const users=res.ok?await res.json():[];
+      const body=document.getElementById("usersTable");
+      body.innerHTML="";
+      if(users.length===0){
+        body.innerHTML=`<tr><td colspan="6" style="text-align:center;color:#777;">No users found.</td></tr>`;
+        return;
+      }
+      users.slice().reverse().forEach(u=>{
+        const tr=document.createElement("tr");
+        tr.innerHTML=`
+          <td>${u.name||"-"}</td>
+          <td>${u.surname||"-"}</td>
+          <td>${u.company||"-"}</td>
+          <td>${u.email||"-"}</td>
+          <td>${u.phone||"-"}</td>
+          <td>${u.country||"-"}</td>`;
+        body.appendChild(tr);
+      });
+    }catch(err){console.error("Error loading users:",err);}
   }
-}
 
-async function deleteRequest(id) {
-  if (!confirm("Delete this request?")) return;
-  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/delete", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
-    body: JSON.stringify({ id })
-  });
-  if (res.ok) {
-    alert("Deleted 🗑️");
-    showRequests();
-  } else {
-    alert("Delete failed ❌");
-  }
-}
-
-async function editRequest(id) {
-  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
-  const all = res.ok ? await res.json() : [];
-  const req = all.find(r => r.id === id);
-  if (!req) return alert("Request not found.");
-
-  const newTitle = prompt("Edit Title:", req.title || "");
-  if (newTitle === null) return;
-  const newDesc = prompt("Edit Description:", req.description || "");
-  const newCountry = prompt("Edit Country:", req.country || "");
-  const newCategory = prompt("Edit Category:", req.category || "");
-
-  const updated = {
-    title: newTitle.trim(),
-    description: newDesc.trim(),
-    country: newCountry.trim(),
-    category: newCategory.trim()
-  };
-
-  const editRes = await fetch("https://divine-hill-9557.traderroutee.workers.dev/edit", {
-    method: "POST",
-    headers: { 
-      "Content-Type": "application/json",
-      "x-api-key": "TRADER2025"
-    },
-    body: JSON.stringify({ id, updated })
-  });
-
-  if (editRes.ok) {
-    alert("Request updated ✅");
-    showRequests();
-  } else {
-    alert("Update failed ❌");
-  }
-}
-
-// ——— SADECE SON DÜZELTME (fonksiyon dışına taşındı) ———
-statusFilter.addEventListener("change", showRequests);
-document.addEventListener("DOMContentLoaded", showRequests);
+  statusFilter.addEventListener("change",showRequests);
+  document.addEventListener("DOMContentLoaded",showRequests);
   </script>
 </body>
 </html>
