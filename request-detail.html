@@ -179,5 +179,33 @@ async function loadRequestDetail() {
 
 loadRequestDetail();
 </script>
+
+  <script>
+// === Kullanıcı oturumu kontrolü ve ikon gösterimi ===
+(function() {
+  const icon = document.getElementById('userIcon');
+  const dropdown = document.getElementById('userDropdown');
+  const loginBtn = document.querySelector("button[onclick*='login.html']");
+  const joinBtn = document.querySelector("button[onclick*='register.html']");
+  const currentUser = JSON.parse(localStorage.getItem('tr_user') || 'null');
+
+  if (currentUser) {
+    // Giriş yapılmış kullanıcı varsa
+    if (icon) icon.style.display = 'inline-block';
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (joinBtn) joinBtn.style.display = 'none';
+  } else {
+    // Giriş yapılmamışsa
+    if (icon) icon.style.display = 'none';
+    if (loginBtn) loginBtn.style.display = '';
+    if (joinBtn) joinBtn.style.display = '';
+  }
+
+  // Profil menüsü aç/kapat
+  icon?.addEventListener('click', () => {
+    dropdown.classList.toggle('active');
+  });
+})();
+</script>
 </body>
 </html>
