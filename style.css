@@ -113,8 +113,8 @@ footer {
   margin-top: 40px;
 }
 
-/* SECTIONS AND CONTAINERS */
-section, .container {
+/* SECTIONS AND CONTAINERS — hero/bannner hariç */
+section:not(.hero):not(.banner), .container {
   width: 100%;
   margin: 0 auto;
   max-width: 1200px;
