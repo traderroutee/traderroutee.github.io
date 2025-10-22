@@ -182,11 +182,16 @@ function showUsers() {
 async function togglePremium(id, currentStatus) {
   if (currentStatus) {
     if (!confirm("Remove premium status for this request?")) return;
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/premium", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
-      body: JSON.stringify({ id, isPremium: false, premiumUntil: null })
-    });
+    const res = await fetch(
+  "https://divine-hill-9557.traderroutee.workers.dev/premium?t=" + Date.now(),
+  {
+    cache: "no-store",
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
+    body: JSON.stringify({ id, isPremium: false, premiumUntil: null })
+  }
+);
+    
     if (res.ok) {
       alert("Premium removed ❌");
       showRequests();
@@ -200,11 +205,16 @@ async function togglePremium(id, currentStatus) {
   const until = new Date(date);
   if (isNaN(until)) { alert("Invalid date format."); return; }
 
-  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/premium", {
+  const res = await fetch(
+  "https://divine-hill-9557.traderroutee.workers.dev/premium?t=" + Date.now(),
+  {
+    cache: "no-store",
     method: "POST",
     headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
     body: JSON.stringify({ id, isPremium: true, premiumUntil: until.toISOString() })
-  });
+  }
+);
+  
   if (res.ok) {
     alert("Premium added ✅");
     showRequests();
