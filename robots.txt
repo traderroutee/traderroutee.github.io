@@ -1,0 +1,24 @@
+# Trader Route - robots.txt
+# Purpose: Control search engine crawling and indexing
+
+User-agent: *
+Disallow: /admin/
+Disallow: /test/
+Allow: /
+
+# Crawl delay (Google ignores this, but useful for other bots)
+Crawl-delay: 5
+
+# Sitemap location
+Sitemap: https://traderroute.com/sitemap.xml
+
+# Extra instructions for clarity
+User-agent: Googlebot
+Disallow: /private/
+Allow: /
+
+User-agent: Bingbot
+Disallow: /private/
+Allow: /
+
+# End of file
