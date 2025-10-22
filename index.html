@@ -457,7 +457,7 @@ html, body{
 </section>
 
 <script>
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded",  () {
   const container = document.getElementById("latestRequestsList");
   if (!container) return;
 
@@ -596,6 +596,8 @@ loadCategories();
     })();
   </script>
 
+  
+
   <!-- 👤 Kullanıcı menüsü kontrolü (non-destructive) -->
   <script>
   (function(){
@@ -660,6 +662,60 @@ loadCategories();
     badge.style.display = "none";
   }
 })();
+
+  <script>
+async function loadRequests() {
+  const response = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
+  const requests = await response.json();
+
+  const today = new Date();
+  const premium = requests.filter(r => r.isPremium && new Date(r.premiumUntil) >= today);
+  const normal = requests.filter(r => !r.isPremium || new Date(r.premiumUntil) < today);
+
+  // Premium ilanlar en üstte
+  const sorted = [...premium, ...normal].slice(0, 5);
+
+  const container = document.getElementById("latestRequests");
+  container.innerHTML = "";
+
+  sorted.forEach(req => {
+    const div = document.createElement("div");
+    div.className = "request-item";
+    div.style.border = req.isPremium ? "3px solid #FFD700" : "1px solid #ccc";
+    div.style.borderRadius = "8px";
+    div.style.padding = "10px";
+    div.style.position = "relative";
+    div.style.background = req.isPremium ? "#fffbe6" : "#fff";
+
+    if (req.isPremium) {
+      const badge = document.createElement("div");
+      badge.textContent = "⭐ Premium Listing";
+      badge.style.position = "absolute";
+      badge.style.top = "8px";
+      badge.style.right = "10px";
+      badge.style.background = "#FFD700";
+      badge.style.color = "#000";
+      badge.style.fontSize = "12px";
+      badge.style.fontWeight = "bold";
+      badge.style.padding = "3px 8px";
+      badge.style.borderRadius = "4px";
+      div.appendChild(badge);
+    }
+
+    div.innerHTML += `
+      <h3>${req.title}</h3>
+      <p><b>Country:</b> ${req.country}</p>
+      <p><b>Category:</b> ${req.category}</p>
+      <a href="request-detail.html?id=${req.id}" class="btn">View Details</a>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", loadRequests);
+</script>
+
 </script>
 
 </body>
