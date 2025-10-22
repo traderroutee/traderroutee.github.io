@@ -457,60 +457,87 @@ html, body{
 </section>
 
 <script>
-document.addEventListener("DOMContentLoaded",  () {
+document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("latestRequestsList");
   if (!container) return;
 
   container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#777;padding:25px;">Loading...</td></tr>`;
 
   try {
-    // 🌍 Cloudflare Worker API URL (senin endpointinle değiştir)
-    const response = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
-    if (!response.ok) throw new Error("API connection failed");
-
-    const all = await response.json();
+    const resp = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
+    if (!resp.ok) throw new Error("API connection failed: " + resp.status);
+    const all = await resp.json();
 
     if (!Array.isArray(all) || all.length === 0) {
       container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#777;padding:25px;">No trade requests yet.</td></tr>`;
       return;
     }
 
-    // ✅ En son 5 ilan
-const latest = all
-  .filter(r => r.approved === true || r.approved === "true" || r.approved === undefined)
-  .slice(-5)
-  .reverse();
+    // Normalize fields and dates safely
+    const today = new Date();
+    const withDates = all.map(r => {
+      return {
+        ...r,
+        // ensure date fields exist and premiumUntil parseable
+        _dateObj: r.date ? new Date(r.date) : null,
+        _premiumUntilObj: (r.isPremium && r.premiumUntil) ? new Date(r.premiumUntil) : null
+      };
+    });
 
-// 🌐 Liste oluştur
-container.innerHTML = latest.map(req => {
-  const id       = encodeURIComponent(req.id || req.title || "");
-  const desc     = (req.title || "Untitled").slice(0, 50) + (req.title?.length > 50 ? "..." : "");
-  const date     = req.date ? new Date(req.date).toLocaleDateString() : "-";
-  const country  = req.country || "Unknown";
-  const flagFile = getFlagURL(country, 40);
+    // Premium olan ve süresi geçmemiş olanlar
+    const premium = withDates.filter(r => r.isPremium && r._premiumUntilObj && r._premiumUntilObj >= today);
 
-  return `
-    <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
-      <td>
-  <img src="${flagFile}" alt="${country}" class="flag-icon-img"
-     onerror="this.onerror=null;this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='">
-  ${country}
-</td>
-      <td class="title-cell">${desc}</td>
-      <td>${req.type || "-"}</td>
-      <td>${date}</td>
-    </tr>
-  `;
-}).join('');
+    // Normal ilanlar (veya süresi geçmiş premiumlar)
+    const normal = withDates.filter(r => !(r.isPremium && r._premiumUntilObj && r._premiumUntilObj >= today));
 
-    
+    // Önce premium, sonra normal; toplamda 5 göster
+    const merged = [...premium, ...normal].slice(0, 5);
+
+    // Eğer hiç premium yoksa sadece son 5 normal (orijinal davranışın benzeri)
+    // Render tablo satırları
+    container.innerHTML = merged.map(req => {
+      const id = encodeURIComponent(req.id || req.title || "");
+      const titleRaw = req.title || "Untitled";
+      const titleShort = titleRaw.length > 60 ? titleRaw.slice(0, 57) + "..." : titleRaw;
+      const dateStr = req._dateObj ? req._dateObj.toLocaleDateString() : "-";
+      const country = req.country || "Unknown";
+      const flagFile = (typeof getFlagURL === "function") ? getFlagURL(country, 40) : "assets/flag/default.png";
+      const isPremium = !!(req.isPremium && req._premiumUntilObj && req._premiumUntilObj >= today);
+
+      // premium için ekstra görsel işareti ekle (küçük)
+      const premiumBadge = isPremium ? `<div style="display:inline-block;background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-weight:700;margin-left:8px;font-size:12px;">⭐ Premium</div>` : "";
+
+      return `
+        <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
+          <td style="vertical-align:middle;">
+            <img src="${flagFile}" alt="${country}" class="flag-icon-img"
+                 onerror="this.onerror=null;this.src='assets/flag/default.png'">
+            ${country}
+          </td>
+          <td class="title-cell" style="vertical-align:middle;">
+            <div style="${isPremium ? 'border-left:4px solid #FFD700;padding-left:10px;' : ''}">
+              ${titleShort}
+              ${premiumBadge}
+            </div>
+          </td>
+          <td style="vertical-align:middle;">${req.type || "-"}</td>
+          <td style="vertical-align:middle;">${dateStr}</td>
+        </tr>
+      `;
+    }).join("");
+
+    // Eğer merged boş ise bilgilendirme göster
+    if (merged.length === 0) {
+      container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#777;padding:25px;">No visible requests (maybe awaiting approval).</td></tr>`;
+    }
 
   } catch (err) {
-    console.error(err);
+    console.error("Load requests error:", err);
     container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#d9534f;padding:25px;">Connection error — unable to load requests.</td></tr>`;
   }
 });
 </script>
+
   
 <!-- /LATEST REQUESTS SECTION -->
   <!-- MAIN SECTION -->
@@ -663,59 +690,7 @@ loadCategories();
   }
 })();
 
-  <script>
-async function loadRequests() {
-  const response = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
-  const requests = await response.json();
-
-  const today = new Date();
-  const premium = requests.filter(r => r.isPremium && new Date(r.premiumUntil) >= today);
-  const normal = requests.filter(r => !r.isPremium || new Date(r.premiumUntil) < today);
-
-  // Premium ilanlar en üstte
-  const sorted = [...premium, ...normal].slice(0, 5);
-
-  const container = document.getElementById("latestRequests");
-  container.innerHTML = "";
-
-  sorted.forEach(req => {
-    const div = document.createElement("div");
-    div.className = "request-item";
-    div.style.border = req.isPremium ? "3px solid #FFD700" : "1px solid #ccc";
-    div.style.borderRadius = "8px";
-    div.style.padding = "10px";
-    div.style.position = "relative";
-    div.style.background = req.isPremium ? "#fffbe6" : "#fff";
-
-    if (req.isPremium) {
-      const badge = document.createElement("div");
-      badge.textContent = "⭐ Premium Listing";
-      badge.style.position = "absolute";
-      badge.style.top = "8px";
-      badge.style.right = "10px";
-      badge.style.background = "#FFD700";
-      badge.style.color = "#000";
-      badge.style.fontSize = "12px";
-      badge.style.fontWeight = "bold";
-      badge.style.padding = "3px 8px";
-      badge.style.borderRadius = "4px";
-      div.appendChild(badge);
-    }
-
-    div.innerHTML += `
-      <h3>${req.title}</h3>
-      <p><b>Country:</b> ${req.country}</p>
-      <p><b>Category:</b> ${req.category}</p>
-      <a href="request-detail.html?id=${req.id}" class="btn">View Details</a>
-    `;
-
-    container.appendChild(div);
-  });
-}
-
-document.addEventListener("DOMContentLoaded", loadRequests);
-</script>
-
+  
 </script>
 
 </body>
