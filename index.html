@@ -484,14 +484,20 @@ document.addEventListener("DOMContentLoaded", async function () {
       };
     });
 
-    // Premium olan ve süresi geçmemiş olanlar
-    const premium = withDates.filter(r => r.isPremium && r._premiumUntilObj && r._premiumUntilObj >= today);
+    // 1) Tarihe göre (yeni → eski) sıralama yardımcı fonksiyonu
+const descByDate = (a, b) => (b._dateObj?.getTime() || 0) - (a._dateObj?.getTime() || 0);
 
-    // Normal ilanlar (veya süresi geçmiş premiumlar)
-    const normal = withDates.filter(r => !(r.isPremium && r._premiumUntilObj && r._premiumUntilObj >= today));
+// 2) Premium aktif olanları ve normal ilanları ayır + KENDİ İÇİNDE TARİHE GÖRE SIRALA
+const premium = withDates
+  .filter(r => r.isPremium && r._premiumUntilObj && r._premiumUntilObj >= today)
+  .sort(descByDate);
 
-    // Önce premium, sonra normal; toplamda 5 göster
-    const merged = [...premium, ...normal].slice(0, 5);
+const normal = withDates
+  .filter(r => !(r.isPremium && r._premiumUntilObj && r._premiumUntilObj >= today))
+  .sort(descByDate);
+
+// 3) Önce premium (yeni → eski), ardından normal (yeni → eski); toplam 5 göster
+const merged = [...premium, ...normal].slice(0, 5);
 
     // Eğer hiç premium yoksa sadece son 5 normal (orijinal davranışın benzeri)
     // Render tablo satırları
