@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premium Requests — Trader Route</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo"><a href="index.html">Trader Route</a></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="requests.html" class="active">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+  </header>
+
+  <section class="content" style="padding: 20px 10%; min-height:80vh;">
+    <h2 style="color:#007157; margin-bottom: 20px;">⭐ Premium Requests</h2>
+    <div id="premiumList" class="request-list"></div>
+  </section>
+
+  <script src="assets/flag.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", async function() {
+    const container = document.getElementById("premiumList");
+    container.innerHTML = `<p style="text-align:center;color:#777;">Loading...</p>`;
+    try {
+      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
+      const data = await res.json();
+      const today = new Date();
+      const descByDate = (a,b) => (new Date(b.date) - new Date(a.date));
+      const premium = data
+        .filter(r => r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today)
+        .sort(descByDate);
+
+      if (premium.length === 0) {
+        container.innerHTML = `<p style="text-align:center;color:#777;">No active premium requests found.</p>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      premium.forEach(r => {
+        const owner = r.ownerEmail || r.contactEmail || r.email || "";
+        const div = document.createElement("div");
+        div.className = "request-card";
+        div.style.border = "2px solid #FFD700";
+        div.style.background = "#fffbe6";
+        div.style.marginBottom = "15px";
+        div.style.cursor = "pointer";
+        div.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
+        const flagImg = `<img src="${getFlagURL(r.country, 20)}"
+          alt="${r.country}" class="flag-icon-img"
+          onerror="this.onerror=null;this.src='assets/flag/default.png'">`;
+        div.innerHTML = `
+          <h4>${r.title || "Untitled"} <span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span></h4>
+          <p>${r.description || ""}</p>
+          <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
+        `;
+        container.appendChild(div);
+      });
+    } catch(err) {
+      container.innerHTML = `<p style="text-align:center;color:red;">Failed to load data.</p>`;
+    }
+  });
+  </script>
+</body>
+</html>
