@@ -390,6 +390,33 @@ main, section, .container {
   transform: translateY(-2px);
 }
 
+/* === Middle Buttons - Enhanced Style === */
+.middle-buttons {
+  text-align: center;
+  margin: 40px 0 20px 0;
+}
+
+.middle-buttons button {
+  background: #008b6a;
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  margin: 6px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.middle-buttons button:hover {
+  background: #006b52;
+  transform: translateY(-2px);
+}
+
+
 
 /* =========================
    === END OF STYLE.CSS FINAL
