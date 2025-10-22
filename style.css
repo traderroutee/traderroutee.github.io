@@ -1,9 +1,13 @@
 /* =========================
-   TRADER ROUTE GLOBAL STYLES (CLEAN)
+   TRADER ROUTE GLOBAL STYLES
    ========================= */
 
 /* BASE RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: "Inter", "Segoe UI", Arial, sans-serif;
@@ -14,100 +18,263 @@ body {
 
 /* HEADER */
 header {
-  display: flex; align-items: center; justify-content: space-between;
-  background: #fff; padding: 10px 40px; box-shadow: 0 2px 8px rgba(0,0,0,.1);
-  position: sticky; top: 0; z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 10px 40px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
-.logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.logo-container img { height: 45px; }
-.logo-text { font-size: 15px; color: #555; font-weight: 500; }
 
-nav { flex: 1; display: flex; justify-content: center; align-items: center; gap: 20px; }
-nav a { text-decoration: none; color: #000; font-weight: 500; transition: color .3s; }
-nav a:hover { color: #008b6a; }
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.logo-container img {
+  height: 45px;
+}
+
+.logo-text {
+  font-size: 15px;
+  color: #555;
+  font-weight: 500;
+}
+
+nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #008b6a;
+}
 
 /* HEADER BUTTONS */
-.header-right { display: flex; align-items: center; gap: 10px; min-width: 250px; justify-content: flex-end; }
-.login-btn, .join-btn { border: none; cursor: pointer; border-radius: 6px; font-weight: 500; transition: .3s; }
-.login-btn { background: #f1f1f1; padding: 7px 14px; }
-.login-btn:hover { background: #e0e0e0; }
-.join-btn { background: #008b6a; color: #fff; padding: 8px 15px; }
-.join-btn:hover { background: #006b52; }
+.header-right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 250px;
+  justify-content: flex-end;
+}
 
-/* FOOTER (genel) */
-footer { background: #fff; text-align: center; padding: 20px; font-size: 14px; color: #666; border-top: 1px solid #ddd; margin-top: 40px; }
+.login-btn, .join-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: .3s;
+}
 
-/* SECTIONS AND CONTAINERS – merkezi genişlik */
-section, .container { width: 100%; margin: 0 auto; max-width: 1200px; }
+.login-btn {
+  background: #f1f1f1;
+  padding: 7px 14px;
+}
+
+.login-btn:hover {
+  background: #e0e0e0;
+}
+
+.join-btn {
+  background: #008b6a;
+  color: #fff;
+  padding: 8px 15px;
+}
+
+.join-btn:hover {
+  background: #006b52;
+}
+
+/* FOOTER */
+footer {
+  background: #fff;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #666;
+  border-top: 1px solid #ddd;
+  margin-top: 40px;
+}
+
+/* SECTIONS AND CONTAINERS */
+section, .container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
 
 /* BUTTONS */
-button { font-family: inherit; }
+button {
+  font-family: inherit;
+}
 
 /* RESPONSIVE HEADER */
-@media (max-width: 768px) {
-  header { flex-direction: column; gap: 10px; }
-  nav { flex-wrap: wrap; justify-content: center; }
+@media(max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
-/* USER MENU */
-#userIcon { width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: none; }
-#userMenuContainer { position: relative; display: inline-block; margin-left: 8px; }
+/* =========================
+   === USER MENU INTEGRATION ===
+   ========================= */
+
+#userIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+}
+
+#userMenuContainer {
+  position: relative;
+  display: inline-block;
+  margin-left: 8px;
+}
+
 #userDropdown {
-  display: none; position: absolute; right: 0; top: 45px; background: #fff;
-  border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,.12);
-  width: 180px; z-index: 999; overflow: hidden;
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  width: 180px;
+  z-index: 999;
+  overflow: hidden;
 }
-#userDropdown a { display: block; padding: 10px 12px; color: #333; text-decoration: none; border-bottom: 1px solid #eee; }
-#userDropdown a:hover { background: #f9f9f9; }
 
-/* THEME VARS */
-:root { --green:#008b6a; --green-dark:#006b52; --bg:#f6f8fa; }
+#userDropdown a {
+  display: block;
+  padding: 10px 12px;
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
 
-/* FORMS */
+#userDropdown a:hover {
+  background: #f9f9f9;
+}
+
+/* =========================
+   === COLOR FIX STANDARDIZATION ===
+   ========================= */
+:root {
+  --green: #008b6a;
+  --green-dark: #006b52;
+  --bg: #f6f8fa;
+}
+
+/* =========================
+   === FORMS & INPUTS (GENERAL)
+   ========================= */
 input, select, textarea {
-  font-family: inherit; outline: none; border: 1px solid #ccc; border-radius: 8px; padding: 10px 12px;
-  transition: border-color .2s, box-shadow .2s;
+  font-family: inherit;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-input:focus, select:focus, textarea:focus { border-color: var(--green); box-shadow: 0 0 4px rgba(0,139,106,.3); }
 
-/* STATUS */
-.status { text-align: center; font-size: 14px; color: #555; }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 4px rgba(0,139,106,0.3);
+}
 
-/* WRAPPER */
+/* =========================
+   === SUCCESS & ERROR MESSAGES
+   ========================= */
+.status {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+/* =========================
+   === GLOBAL SPACING FIXES
+   ========================= */
 .wrapper {
-  padding: 40px 50px; background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.08);
-  max-width: 900px; margin: 50px auto;
+  padding: 40px 50px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  max-width: 900px;
+  margin: 50px auto;
 }
-@media (max-width: 768px) { .wrapper { padding: 25px; margin: 20px; } }
 
-/* HERO/BANNER – GENEL (detay stil index.css içinde) */
+@media(max-width: 768px) {
+  .wrapper {
+    padding: 25px;
+    margin: 20px;
+  }
+}
+
+/* =========================
+   === HERO / BANNER FIX (Eklenti)
+   ========================= */
 .hero, .banner {
-  width: 100%; min-height: 400px;
-  background-size: cover; background-position: center center; background-repeat: no-repeat;
-  aspect-ratio: 16 / 9; object-fit: cover;
+  width: 100%;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
-@media (min-width:1200px){ .hero, .banner { min-height: 550px; } }
-@media (max-width:992px){ .hero, .banner { min-height: 320px; background-position: center top; } }
-@media (max-width:768px){ .hero, .banner { min-height: 260px; } }
-@media (max-width:480px){ .hero, .banner { min-height: 220px; } }
 
-/* === TABLE / REQUESTS (GENEL, çakışmasız) === */
-.requests-table-wrapper { max-width: 1250px; margin: 0 auto; }
-.requests-table { width: 100%; border-collapse: collapse; background: #fff; }
-.requests-table th, .requests-table td { padding: 18px 22px; font-size: 17px; vertical-align: middle; border-bottom: 1px solid #e0e0e0; }
-.requests-table tr:last-child { border-bottom: none; }
-
-/* Bayrak */
-.flag-icon-img { width: 42px; height: 28px; margin-right: 10px; vertical-align: middle; border-radius: 4px; box-shadow: 0 0 3px rgba(0,0,0,.25); }
-
-/* Middle buttons (genel) */
-.middle-buttons { text-align: center; margin: 40px 0 20px; }
-.middle-buttons button {
-  background: var(--green); color: #fff; border: none; padding: 14px 28px; margin: 6px;
-  border-radius: 30px; font-weight: 700; font-size: 18px; letter-spacing: .3px; cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,.15); transition: all .3s ease;
+/* Masaüstü ekranlarda banner'ı büyüt */
+@media(min-width: 1200px) {
+  .hero, .banner {
+    min-height: 550px; /* artırıldı */
+  }
 }
-.middle-buttons button:hover { background: var(--green-dark); transform: translateY(-2px); }
 
-/* Premium vurgusu */
-.requests-table tr.premium-row { background: #fffbe6; border-bottom: 1px solid #f2e0a5; }
+@media(max-width: 992px) {
+  .hero, .banner {
+    min-height: 320px;
+    background-position: center top;
+  }
+}
+
+@media(max-width: 768px) {
+  .hero, .banner {
+    min-height: 260px;
+  }
+}
+
+@media(max-width: 480px) {
+  .hero, .banner {
+    min-height: 220px;
+  }
+}
+
+
+/* =========================
+   === END OF STYLE.CSS FINAL
+   ========================= */
