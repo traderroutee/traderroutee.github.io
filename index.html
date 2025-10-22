@@ -595,13 +595,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       html += `
         <tr onclick="location.href='request-detail.html?id=${id}'" 
     style="cursor:pointer;border-bottom:1px solid #e5e5e5;background-color:#fff;">
-          <td style="padding:10px;vertical-align:middle;white-space:nowrap;">
+         <td style="padding:24px 20px;vertical-align:middle;white-space:nowrap;"> … </td>
             <img src="${flagFile}" alt="${country}" class="flag-icon-img">
             <span style="font-weight:500;">${country}</span>
           </td>
-          <td style="padding:10px;vertical-align:middle;">${titleShort}</td>
-          <td style="padding:10px;vertical-align:middle;">${req.type || "-"}</td>
-          <td style="padding:10px;vertical-align:middle;">${dateStr}</td>
+          <td style="padding:24px 20px;vertical-align:middle;">${titleShort}</td>
+<td style="padding:24px 20px;vertical-align:middle;">${req.type || "-"}</td>
+<td style="padding:24px 20px;vertical-align:middle;">${dateStr}</td>
         </tr>
       `;
     });
