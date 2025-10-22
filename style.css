@@ -315,14 +315,6 @@ main, section, .container {
   padding: 22px 26px !important;
   font-size: 17px !important;
 }
-.flag-icon-img {
-  width: 36px !important;
-  height: 24px !important;
-  margin-right: 12px !important;
-  vertical-align: middle;
-  border-radius: 4px;
-  box-shadow: 0 0 3px rgba(0,0,0,0.25);
-}
 
 .requests-table td span, .requests-table td, .requests-table th {
   font-size: 17px !important;
@@ -341,14 +333,20 @@ main, section, .container {
   vertical-align: middle;
 }
 
-/* Bayrak hizalama */
+/* ✅ Bayrak hizalama - Final sürüm */
 .flag-icon-img {
-  width: 38px !important;
-  height: 26px !important;
-  margin-right: 14px !important;
-  vertical-align: middle;
+  width: 42px !important;
+  height: 28px !important;
+  margin-right: 10px !important;
+  vertical-align: middle !important;
   border-radius: 4px;
   box-shadow: 0 0 3px rgba(0,0,0,0.25);
+}
+
+.requests-table td,
+.requests-table th {
+  font-size: 18px !important;
+  line-height: 1.6 !important;
 }
 
 /* Premium ve normal ayırıcı çizgiler */
