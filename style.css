@@ -307,6 +307,24 @@ main, section, .container {
   transform: none;
 }
 
+/* === Trader Route - Enhanced Table Layout === */
+.requests-table-wrapper {
+  max-width: 1250px !important;
+}
+.requests-table th, .requests-table td {
+  padding: 22px 26px !important;
+  font-size: 17px !important;
+}
+.flag-icon-img {
+  width: 36px !important;
+  height: 24px !important;
+  margin-right: 12px !important;
+  vertical-align: middle;
+  border-radius: 4px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.25);
+}
+
+
 /* =========================
    === END OF STYLE.CSS FINAL
    ========================= */
