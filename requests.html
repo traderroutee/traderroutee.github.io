@@ -431,7 +431,7 @@ function renderRequests(allData) {
     premiumBtn.style.padding = "10px 20px";
     premiumBtn.style.borderRadius = "6px";
     premiumBtn.style.cursor = "pointer";
-    premiumBtn.onclick = () => alert("All premium requests will be listed here soon."); // ileride ayrı sayfa açılacak
+    premiumBtn.onclick = () => window.location.href = "premium.html";
     premiumBox.appendChild(premiumBtn);
 
     requestContainer.appendChild(premiumBox);
@@ -472,7 +472,7 @@ function renderRequests(allData) {
   allBtn.style.padding = "10px 20px";
   allBtn.style.borderRadius = "6px";
   allBtn.style.cursor = "pointer";
-  allBtn.onclick = () => alert("All requests will be listed here soon."); // ileride ayrı sayfa açılacak
+  allBtn.onclick = () => window.location.href = "all-requests.html";
   normalBox.appendChild(allBtn);
 
   requestContainer.appendChild(normalBox);
