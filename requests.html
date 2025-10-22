@@ -369,6 +369,51 @@ const flagImg = `<img src="${getFlagURL(r.country, 20)}"
 window.addEventListener("storage", renderRequests);
   </script>
 
+  <!-- Structured Data for Trader Route Requests -->
+<script>
+function generateRequestSchema(request) {
+  return {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": request.title || "Trade Request",
+    "description": request.description || "International trade request listed on Trader Route platform.",
+    "brand": {
+      "@type": "Organization",
+      "name": "Trader Route"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "price": request.price || "Negotiable",
+      "availability": "https://schema.org/InStock",
+      "url": `https://traderroute.com/request-detail.html?id=${request.id}`,
+      "seller": {
+        "@type": "Organization",
+        "name": request.company || "Trader Route Member",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": request.country || "Unknown"
+        }
+      }
+    }
+  };
+}
+
+// Embed schema dynamically for all requests
+fetch('https://divine-hill-9557.traderroutee.workers.dev/requests')
+  .then(res => res.json())
+  .then(data => {
+    const approvedRequests = data.filter(r => r.approved);
+    const schemas = approvedRequests.map(r => generateRequestSchema(r));
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(schemas, null, 2);
+    document.head.appendChild(script);
+  })
+  .catch(err => console.error("Schema generation error:", err));
+</script>
+  
+
   <!-- 👤 Kullanıcı menü kontrolü -->
   <script>
   (function(){
