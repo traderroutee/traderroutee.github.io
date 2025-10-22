@@ -414,6 +414,109 @@ main, section, .container {
   transform: translateY(-2px);
 }
 
+/* =========================================
+   TRADER ROUTE PART 10 – INDEX FIX OVERRIDES
+   ========================================= */
+
+/* HERO AREA FIX */
+.hero {
+  width: 100vw !important;
+  min-height: 550px !important;
+  background: url("assets/ihracat-haritasi.png") center center/cover no-repeat !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+}
+.hero::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(0,0,0,0.3) !important;
+  z-index: 1 !important;
+}
+.hero-content {
+  position: relative !important;
+  z-index: 2 !important;
+  text-align: center !important;
+  color: #fff !important;
+}
+.hero-content h1 {
+  font-size: 48px !important;
+  font-weight: 800 !important;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.6) !important;
+}
+
+/* CATEGORY BOX POSITION */
+.cat-holder {
+  position: absolute !important;
+  left: 50px !important;
+  top: 120px !important;
+  z-index: 10 !important;
+}
+.categories {
+  width: 250px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12) !important;
+  border-radius: 10px !important;
+}
+
+/* MIDDLE BUTTONS (All Requests, Buyer Requests, etc.) */
+.middle-buttons {
+  text-align: center !important;
+  margin: 40px auto 20px auto !important;
+}
+.middle-buttons button {
+  background: #008b6a !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 30px !important;
+  padding: 16px 36px !important;
+  margin: 6px !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: 0.3s ease !important;
+  box-shadow: 0 5px 14px rgba(0,0,0,0.15) !important;
+}
+.middle-buttons button:hover {
+  background: #006b52 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* FLAG ICON FIX */
+.flag-icon-img {
+  width: 46px !important;
+  height: 30px !important;
+  border-radius: 4px !important;
+  margin-right: 10px !important;
+  vertical-align: middle !important;
+  box-shadow: 0 0 3px rgba(0,0,0,0.25) !important;
+}
+
+/* TABLE FONT SIZE FIX */
+.requests-table th, .requests-table td {
+  font-size: 18px !important;
+  padding: 20px 26px !important;
+  vertical-align: middle !important;
+}
+
+/* PREMIUM ROW HIGHLIGHT */
+.requests-table tr.premium-row {
+  background: #fffbe6 !important;
+  border-bottom: 1px solid #f2e0a5 !important;
+}
+
+/* FOOTER ALIGNMENT */
+footer {
+  background: #fff !important;
+  text-align: center !important;
+  padding: 30px !important;
+  border-top: 1px solid #ddd !important;
+}
+
+
 
 
 /* =========================
