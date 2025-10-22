@@ -366,6 +366,7 @@ function renderCountries(reqs) {
 function renderRequests(allData) {
   if (allData) allRequestsData = allData;
   const all = allRequestsData || [];
+
   renderCategories(all);
   renderCountries(all);
 
@@ -378,29 +379,35 @@ function renderRequests(allData) {
     ((r.title || "").toLowerCase().includes(term) || (r.description || "").toLowerCase().includes(term))
   );
 
-  // === Premium filtreleme ===
   const today = new Date();
-  const premium = filtered.filter(r => r.isPremium && new Date(r.premiumUntil) >= today);
-  const normal = filtered.filter(r => !r.isPremium || new Date(r.premiumUntil) < today);
+  const descByDate = (a, b) => (new Date(b.date) - new Date(a.date));
+
+  // Premium süresi aktif olanları üstte, diğerlerini alta al
+  const premium = filtered
+    .filter(r => r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today)
+    .sort(descByDate);
+  const normal = filtered
+    .filter(r => !r.isPremium || !r.premiumUntil || new Date(r.premiumUntil) < today)
+    .sort(descByDate);
+
+  // Önce aktif premiumlar, sonra normaller (her ikisi de kendi tarihine göre)
   const combined = [...premium, ...normal];
 
   requestContainer.innerHTML = "";
 
-  combined.reverse().slice(0, visibleRequests).forEach(r => {
+  combined.slice(0, visibleRequests).forEach(r => {
     const owner = r.ownerEmail || r.contactEmail || r.email || "";
+    const isPremium = r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today;
+
     const div = document.createElement("div");
     div.className = "request-card";
-    div.style.border = r.isPremium ? "2px solid #FFD700" : "1px solid #e3e3e3";
-    div.style.background = r.isPremium ? "#fffbe6" : "#fff";
+    div.style.border = isPremium ? "2px solid #FFD700" : "1px solid #e3e3e3";
+    div.style.background = isPremium ? "#fffbe6" : "#fff";
     div.onclick = () => {
-      if (!r.id) {
-        alert("This request has no valid ID and cannot be opened.");
-        return;
-      }
+      if (!r.id) return alert("This request has no valid ID.");
       window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
     };
 
-    // 🌍 Bayrak
     const flagImg = `<img src="${getFlagURL(r.country, 20)}"
       alt="${r.country}" class="flag-icon-img"
       onerror="this.onerror=null;this.src='assets/flag/default.png'">`;
@@ -409,8 +416,7 @@ function renderRequests(allData) {
       ? `<button class='msg-btn' onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(owner)}'">Message</button>`
       : "";
 
-    // ⭐ Premium etiketi
-    const premiumBadge = r.isPremium && new Date(r.premiumUntil) >= today
+    const premiumBadge = isPremium
       ? `<span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span>`
       : "";
 
