@@ -212,36 +212,48 @@ async function togglePremium(id, currentStatus) {
 }
 
 // === Mevcut tabloyu genişlet (premium butonları ekle) ===
-const oldShowRequests = showRequests;
+const originalShowRequests = showRequests;
 showRequests = async function() {
-  await oldShowRequests();
+  await originalShowRequests(); // önce tabloyu getir
+
+  // şimdi butonları ekle
   const rows = document.querySelectorAll("#requestsTable tr");
   rows.forEach(row => {
-    const idMatch = row.innerHTML.match(/approveRequest\((\d+)\)/) || row.innerHTML.match(/admin-edit\.html\?id=(\d+)/);
+    const idMatch =
+      row.innerHTML.match(/approveRequest\((\d+)\)/) ||
+      row.innerHTML.match(/admin-edit\.html\?id=(\d+)/);
     if (!idMatch) return;
     const id = parseInt(idMatch[1]);
     const btns = row.querySelector("td:last-child");
     if (!btns) return;
 
+    // ⭐ Premium ekleme
     const premiumBtn = document.createElement("button");
     premiumBtn.textContent = "⭐ Add Premium";
     premiumBtn.style.background = "#FFD700";
     premiumBtn.style.color = "#000";
     premiumBtn.style.marginLeft = "5px";
+    premiumBtn.style.fontWeight = "600";
     premiumBtn.onclick = () => togglePremium(id, false);
 
+    // ❌ Premium kaldırma
     const removeBtn = document.createElement("button");
     removeBtn.textContent = "❌ Remove Premium";
     removeBtn.style.background = "#888";
     removeBtn.style.color = "#fff";
     removeBtn.style.marginLeft = "5px";
+    removeBtn.style.fontWeight = "600";
     removeBtn.onclick = () => togglePremium(id, true);
 
-    // Duplicate kontrolü
+    // Tekrarlanmasın diye kontrol et
     if (!btns.querySelector("button[style*='#FFD700']")) btns.appendChild(premiumBtn);
     if (!btns.querySelector("button[style*='#888']")) btns.appendChild(removeBtn);
   });
 };
+
+// Sayfa yüklendiğinde çalıştır
+document.addEventListener("DOMContentLoaded", showRequests);
+
 
   </script>
 </body>
