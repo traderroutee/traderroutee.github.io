@@ -433,28 +433,7 @@ html, body{
     <button onclick="location.href='requests.html?type=sell'">Seller Offers</button>
     <button onclick="location.href='request-form.html'">Create Free Request</button>
   </div>
-<!-- 🌍 LATEST REQUESTS SECTION (auto flag integration) -->
-<section class="latest-requests">
-  <h2>Latest Trade Requests</h2>
 
-  <div class="requests-table-wrapper">
-    <table class="requests-table">
-      <thead>
-        <tr>
-          <th>Country</th>
-          <th class="title-col">Request Title</th>
-          <th>Type</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody id="latestRequestsList"></tbody>
-    </table>
-  </div>
-
-  <div class="view-all">
-    <button onclick="location.href='requests.html'">View All Requests</button>
-  </div>
-</section>
 
 <script>
 document.addEventListener("DOMContentLoaded", async function () {
