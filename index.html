@@ -488,8 +488,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     // 🕒 En yeni → En eski sıralama
     const descByDate = (a, b) => (b._dateObj?.getTime() || 0) - (a._dateObj?.getTime() || 0);
 
-    // 🔝 En yeni 5 ilanı seç (premium sıralamayı etkilemez)
-    const merged = withDates.sort(descByDate).slice(0, 5);
+    // Premium süresi devam edenleri ayır
+const premium = withDates
+  .filter(r => r.isPremium && r._premiumUntilObj && r._premiumUntilObj >= today)
+  .sort(descByDate);
+const normal = withDates
+  .filter(r => !r.isPremium || !r._premiumUntilObj || r._premiumUntilObj < today)
+  .sort(descByDate);
+const merged = [...premium, ...normal].slice(0, 5);
 
     // 🧱 Tabloda ilanları render et
     container.innerHTML = merged.map(req => {
