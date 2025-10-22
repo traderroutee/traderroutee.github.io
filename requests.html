@@ -382,7 +382,7 @@ function renderRequests(allData) {
   const today = new Date();
   const descByDate = (a, b) => (new Date(b.date) - new Date(a.date));
 
-  // Premium süresi aktif olanları üstte, diğerlerini alta al
+  // === Premium ve normal ilanları ayır
   const premium = filtered
     .filter(r => r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today)
     .sort(descByDate);
@@ -390,46 +390,92 @@ function renderRequests(allData) {
     .filter(r => !r.isPremium || !r.premiumUntil || new Date(r.premiumUntil) < today)
     .sort(descByDate);
 
-  // Önce aktif premiumlar, sonra normaller (her ikisi de kendi tarihine göre)
-  const combined = [...premium, ...normal];
-
+  // === Konteynerleri temizle
   requestContainer.innerHTML = "";
 
-  combined.slice(0, visibleRequests).forEach(r => {
-    const owner = r.ownerEmail || r.contactEmail || r.email || "";
-    const isPremium = r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today;
+  // === 1) Premium alanı oluştur
+  if (premium.length > 0) {
+    const premiumBox = document.createElement("div");
+    premiumBox.className = "premium-box";
+    premiumBox.innerHTML = `<h3 style="margin-bottom:10px;color:#007157;">⭐ Premium Requests</h3>`;
+    
+    premium.slice(0, 5).forEach(r => {
+      const owner = r.ownerEmail || r.contactEmail || r.email || "";
+      const div = document.createElement("div");
+      div.className = "request-card";
+      div.style.border = "2px solid #FFD700";
+      div.style.background = "#fffbe6";
+      div.style.cursor = "pointer";
+      div.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
 
+      const flagImg = `<img src="${getFlagURL(r.country, 20)}"
+        alt="${r.country}" class="flag-icon-img"
+        onerror="this.onerror=null;this.src='assets/flag/default.png'">`;
+
+      div.innerHTML = `
+        <h5>${r.title || "Untitled Request"} <span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span></h5>
+        <p>${r.description || ""}</p>
+        <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
+      `;
+      premiumBox.appendChild(div);
+    });
+
+    // View all premium button
+    const premiumBtn = document.createElement("button");
+    premiumBtn.textContent = "View All Premium Requests";
+    premiumBtn.style.display = "block";
+    premiumBtn.style.margin = "15px auto";
+    premiumBtn.style.background = "#007157";
+    premiumBtn.style.color = "#fff";
+    premiumBtn.style.border = "none";
+    premiumBtn.style.padding = "10px 20px";
+    premiumBtn.style.borderRadius = "6px";
+    premiumBtn.style.cursor = "pointer";
+    premiumBtn.onclick = () => alert("All premium requests will be listed here soon."); // ileride ayrı sayfa açılacak
+    premiumBox.appendChild(premiumBtn);
+
+    requestContainer.appendChild(premiumBox);
+  }
+
+  // === 2) Normal ilanları listele
+  const normalBox = document.createElement("div");
+  normalBox.className = "normal-box";
+  normal.slice(0, 10).forEach(r => {
+    const owner = r.ownerEmail || r.contactEmail || r.email || "";
     const div = document.createElement("div");
     div.className = "request-card";
-    div.style.border = isPremium ? "2px solid #FFD700" : "1px solid #e3e3e3";
-    div.style.background = isPremium ? "#fffbe6" : "#fff";
-    div.onclick = () => {
-      if (!r.id) return alert("This request has no valid ID.");
-      window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
-    };
+    div.style.border = "1px solid #e3e3e3";
+    div.style.background = "#fff";
+    div.style.cursor = "pointer";
+    div.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
 
     const flagImg = `<img src="${getFlagURL(r.country, 20)}"
       alt="${r.country}" class="flag-icon-img"
       onerror="this.onerror=null;this.src='assets/flag/default.png'">`;
 
-    const msgBtn = owner
-      ? `<button class='msg-btn' onclick="event.stopPropagation();window.location.href='messages.html?to=${encodeURIComponent(owner)}'">Message</button>`
-      : "";
-
-    const premiumBadge = isPremium
-      ? `<span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span>`
-      : "";
-
     div.innerHTML = `
-      <h5>${r.title || "Untitled Request"} ${premiumBadge}</h5>
+      <h5>${r.title || "Untitled Request"}</h5>
       <p>${r.description || ""}</p>
-      <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small><br>
-      ${msgBtn}
+      <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
     `;
-    requestContainer.appendChild(div);
+    normalBox.appendChild(div);
   });
 
-  document.getElementById("showMoreRequests").style.display = filtered.length > visibleRequests ? "block" : "none";
+  // View all requests button
+  const allBtn = document.createElement("button");
+  allBtn.textContent = "View All Requests";
+  allBtn.style.display = "block";
+  allBtn.style.margin = "15px auto";
+  allBtn.style.background = "#007157";
+  allBtn.style.color = "#fff";
+  allBtn.style.border = "none";
+  allBtn.style.padding = "10px 20px";
+  allBtn.style.borderRadius = "6px";
+  allBtn.style.cursor = "pointer";
+  allBtn.onclick = () => alert("All requests will be listed here soon."); // ileride ayrı sayfa açılacak
+  normalBox.appendChild(allBtn);
+
+  requestContainer.appendChild(normalBox);
 }
     
     document.getElementById("tabAll").onclick=()=>{activeTab="all";setActive("tabAll");renderRequests();};
