@@ -521,7 +521,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       html += `
       <div class="premium-box" style="background:#fffef7;border:1px solid #f1e08b;border-radius:12px;padding:18px 25px;margin-bottom:35px;box-shadow:0 0 10px rgba(0,0,0,0.05);">
         <h3 style="text-align:center;color:#007157;margin-bottom:15px;font-size:20px;">⭐ Premium Requests</h3>
-        <table style="width:100%;border-collapse:collapse;font-size:17px;">
+        <table style="width:100%;border-collapse:collapse;font-size:19px; line-height:1.9;">
           <thead>
             <tr style="background:#f9f9f9;">
               <th style="text-align:left;padding:10px;">Country</th>
@@ -542,18 +542,18 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         html += `
           <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;background-color:#fffbe6;border-bottom:1px solid #f2e0a5;">
-            <td style="padding:10px;vertical-align:middle;white-space:nowrap;">
+            <td style="padding:24px 20px;vertical-align:middle;white-space:nowrap;">
               <img src="${flagFile}" alt="${country}" class="flag-icon-img">
               <span style="font-weight:500;">${country}</span>
             </td>
-            <td style="padding:10px;vertical-align:middle;">
+            <td style="padding:24px 20px;vertical-align:middle;">...</td>
               <div style="border-left:4px solid #FFD700;padding-left:10px;">
                 ${titleShort}
                 <span style="background:#FFD700;color:#000;padding:3px 7px;border-radius:5px;font-size:13px;font-weight:700;margin-left:6px;">⭐ Premium</span>
               </div>
             </td>
-            <td style="padding:10px;vertical-align:middle;">${req.type || "-"}</td>
-            <td style="padding:10px;vertical-align:middle;">${dateStr}</td>
+            <td style="padding:24px 20px;vertical-align:middle;">${req.type || "-"}</td>
+            <td style="padding:24px 20px;vertical-align:middle;">${dateStr}</td>
           </tr>
         `;
       });
@@ -573,7 +573,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // === Normal ilanlar ===
     html += `
       <div style="background:#fff;border:1px solid #ddd;border-radius:12px;padding:18px 25px;box-shadow:0 0 8px rgba(0,0,0,0.05);">
-        <table style="width:100%;border-collapse:collapse;font-size:17px;">
+       <table style="width:100%;border-collapse:collapse;font-size:19px; line-height:1.9;">
           <thead>
             <tr style="background:#f9f9f9;">
               <th style="text-align:left;padding:10px;">Country</th>
