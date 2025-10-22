@@ -189,7 +189,7 @@ async function togglePremium(id, currentStatus) {
     cache: "no-store",
     method: "POST",
     headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
-    body: JSON.stringify({ id, isPremium: true, premiumUntil: until.toISOString() })
+    body: JSON.stringify({ id, isPremium: false, premiumUntil: null })
   }
 );
 
