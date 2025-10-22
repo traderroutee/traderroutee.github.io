@@ -328,6 +328,69 @@ main, section, .container {
   font-size: 17px !important;
 }
 
+/* === Trader Route - Final Layout Adjustments === */
+.requests-table-wrapper {
+  max-width: 1250px !important;
+  margin: 0 auto !important;
+}
+
+.requests-table th,
+.requests-table td {
+  padding: 24px 28px !important;
+  font-size: 18px !important;
+  vertical-align: middle;
+}
+
+/* Bayrak hizalama */
+.flag-icon-img {
+  width: 38px !important;
+  height: 26px !important;
+  margin-right: 14px !important;
+  vertical-align: middle;
+  border-radius: 4px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.25);
+}
+
+/* Premium ve normal ayırıcı çizgiler */
+.requests-table tr {
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+.requests-table tr:last-child {
+  border-bottom: none !important;
+}
+
+/* Premium satırları sarı tonla vurgula */
+.requests-table tr.premium-row {
+  background: #fffbe6 !important;
+  border-bottom: 1px solid #f2e0a5 !important;
+}
+
+/* Genel yazı ve font */
+.requests-table td span,
+.requests-table td,
+.requests-table th {
+  font-size: 17px !important;
+  letter-spacing: 0.3px;
+}
+
+/* Tek “View All Requests” butonu belirgin */
+.view-all button {
+  background: #008b6a !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 10px;
+  padding: 16px 42px !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 5px 14px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+.view-all button:hover {
+  background: #006b52 !important;
+  transform: translateY(-2px);
+}
+
+
 /* =========================
    === END OF STYLE.CSS FINAL
    ========================= */
