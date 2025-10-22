@@ -369,14 +369,14 @@ const flagImg = `<img src="${getFlagURL(r.country, 20)}"
 window.addEventListener("storage", renderRequests);
   </script>
 
-  <!-- Structured Data for Trader Route Requests -->
+ <!-- Dynamic Product/Offer Schema for Trader Route -->
 <script>
 function generateRequestSchema(request) {
   return {
     "@context": "https://schema.org/",
     "@type": "Product",
     "name": request.title || "Trade Request",
-    "description": request.description || "International trade request listed on Trader Route platform.",
+    "description": request.description || "International trade request on Trader Route platform.",
     "brand": {
       "@type": "Organization",
       "name": "Trader Route"
@@ -399,20 +399,39 @@ function generateRequestSchema(request) {
   };
 }
 
-// Embed schema dynamically for all requests
-fetch('https://divine-hill-9557.traderroutee.workers.dev/requests')
-  .then(res => res.json())
-  .then(data => {
-    const approvedRequests = data.filter(r => r.approved);
-    const schemas = approvedRequests.map(r => generateRequestSchema(r));
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(schemas, null, 2);
-    document.head.appendChild(script);
-  })
-  .catch(err => console.error("Schema generation error:", err));
+function updateSchema() {
+  fetch('https://divine-hill-9557.traderroutee.workers.dev/requests')
+    .then(res => res.json())
+    .then(data => {
+      const approved = data.filter(r => r.approved);
+      const schemas = approved.map(r => generateRequestSchema(r));
+      
+      // Remove old schema
+      document.querySelectorAll('script[type="application/ld+json"]').forEach(el => {
+        if (el.textContent.includes('"@type": "Product"')) el.remove();
+      });
+
+      // Insert new schema
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(schemas, null, 2);
+      document.head.appendChild(script);
+    })
+    .catch(err => console.error("Schema update error:", err));
+}
+
+// Run on page load
+updateSchema();
+
+// Re-run automatically when a new request is added
+window.addEventListener('storage', e => {
+  if (e.key === 'new_request_added') {
+    console.log("New request detected, updating schema...");
+    updateSchema();
+  }
+});
 </script>
-  
+
 
   <!-- 👤 Kullanıcı menü kontrolü -->
   <script>
