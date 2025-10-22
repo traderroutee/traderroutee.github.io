@@ -572,52 +572,55 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // === Normal ilanlar ===
     html += `
-      <div style="background:#fff;border:1px solid #ddd;border-radius:12px;padding:18px 25px;box-shadow:0 0 8px rgba(0,0,0,0.05);">
-      <table class="requests-table">
-  <thead>
-    <tr>
-      <th>Country</th>
-      <th class="title-col">Request Title</th>
-      <th>Type</th>
-      <th>Date</th>
-    </tr>
-          </thead>
-          <tbody>
-    `;
-
-    normal.slice(0, 10).forEach(req => {
-      const id = encodeURIComponent(req.id || req.title || "");
-      const country = req.country || "Unknown";
-      const flagFile = (typeof getFlagURL === "function") ? getFlagURL(country, 40) : "assets/flag/default.png";
-      const titleShort = (req.title || "Untitled").slice(0, 85);
-      const dateStr = req._dateObj ? req._dateObj.toLocaleDateString() : "-";
-
-      html += `
-        <tr onclick="location.href='request-detail.html?id=${id}'" 
-    style="cursor:pointer;border-bottom:1px solid #e5e5e5;background-color:#fff;">
-         <td style="padding:24px 20px;vertical-align:middle;white-space:nowrap;"> … </td>
-            <img src="${flagFile}" alt="${country}" class="flag-icon-img">
-            <span style="font-weight:500;">${country}</span>
-          </td>
-          <td style="padding:24px 20px;vertical-align:middle;">${titleShort}</td>
-<td style="padding:24px 20px;vertical-align:middle;">${req.type || "-"}</td>
-<td style="padding:24px 20px;vertical-align:middle;">${dateStr}</td>
+     // === Normal ilanlar ===
+html += `
+      
+  <div style="background:#fff;border:1px solid #ddd;border-radius:12px;padding:18px 25px;box-shadow:0 0 8px rgba(0,0,0,0.05);">
+    <table class="requests-table">
+      <thead>
+        <tr>
+          <th>COUNTRY</th>
+          <th class="title-col">REQUEST TITLE</th>
+          <th>TYPE</th>
+          <th>DATE</th>
         </tr>
-      `;
-    });
+      </thead>
+      <tbody>
+        ${normal.slice(0, 3).map(req => {
+          const id       = req.id;
+          const country  = req.country || "Unknown";
+          const flagFile = (typeof getFlagUrl === "function") ? getFlagUrl(country, 40) : "assets/flag/default.png";
+          const titleStr = (req.title || "").trim();
+          const titleShort = titleStr ? titleStr.slice(0, 85) : "...";
+          const typeStr  = req.type || "-";
+          const dateStr  = (req._dateObj && req._dateObj.toLocaleDateString) ? req._dateObj.toLocaleDateString() : (req.date || "-");
 
-    html += `
-          </tbody>
-        </table>
-        <div style="text-align:center;margin-top:20px;">
-          <button onclick="window.location.href='all-requests.html'" 
-            style="background:#007157;color:#fff;border:none;padding:12px 32px;border-radius:8px;font-weight:600;font-size:16px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,0.15);transition:0.3s;">
-            View All Requests
-          </button>
-        </div>
-      </div>
+          return `
+            <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
+              <td class="country-cell" style="padding:24px 20px;vertical-align:middle;">
+                <img src="${flagFile}" alt="${country}" class="flag-icon-img">
+                <span style="font-weight:500;">${country}</span>
+              </td>
+              <td style="padding:24px 20px;vertical-align:middle;">
+                ${titleShort}
+              </td>
+              <td style="padding:24px 20px;vertical-align:middle;">${typeStr}</td>
+              <td style="padding:24px 20px;vertical-align:middle;">${dateStr}</td>
+            </tr>
+          `;
+        }).join("")}
+      </tbody>
+    </table>
+
+    <div style="text-align:center;margin-top:15px;">
+      <button onclick="window.location.href='all-requests.html'"
+        style="background:#007157;color:#fff;border:none;padding:11px 32px;border-radius:8px;font-weight:600;font-size:16px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.15);transition:.3s;">
+        View All Requests
+      </button>
     </div>
-    `;
+  </div>
+`;
+
 
     wrapper.innerHTML = html;
 
