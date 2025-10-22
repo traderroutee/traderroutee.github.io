@@ -177,6 +177,74 @@ function showUsers() {
 
   statusFilter.addEventListener("change",showRequests);
   document.addEventListener("DOMContentLoaded",showRequests);
+
+    <script>
+// === PREMIUM (DOPING) YÖNETİMİ ===
+async function togglePremium(id, currentStatus) {
+  if (currentStatus) {
+    if (!confirm("Remove premium status for this request?")) return;
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/premium", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
+      body: JSON.stringify({ id, isPremium: false, premiumUntil: null })
+    });
+    if (res.ok) {
+      alert("Premium removed ❌");
+      showRequests();
+    } else alert("Failed to remove premium.");
+    return;
+  }
+
+  // Add premium
+  const date = prompt("Enter premium end date (YYYY-MM-DD):", new Date(Date.now() + 7*24*3600*1000).toISOString().split('T')[0]);
+  if (!date) return;
+  const until = new Date(date);
+  if (isNaN(until)) { alert("Invalid date format."); return; }
+
+  const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/premium", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
+    body: JSON.stringify({ id, isPremium: true, premiumUntil: until.toISOString() })
+  });
+  if (res.ok) {
+    alert("Premium added ✅");
+    showRequests();
+  } else alert("Failed to add premium ❌");
+}
+
+// === Mevcut tabloyu genişlet (premium butonları ekle) ===
+const oldShowRequests = showRequests;
+showRequests = async function() {
+  await oldShowRequests();
+  const rows = document.querySelectorAll("#requestsTable tr");
+  rows.forEach(row => {
+    const idMatch = row.innerHTML.match(/approveRequest\((\d+)\)/) || row.innerHTML.match(/admin-edit\.html\?id=(\d+)/);
+    if (!idMatch) return;
+    const id = parseInt(idMatch[1]);
+    const btns = row.querySelector("td:last-child");
+    if (!btns) return;
+
+    const premiumBtn = document.createElement("button");
+    premiumBtn.textContent = "⭐ Add Premium";
+    premiumBtn.style.background = "#FFD700";
+    premiumBtn.style.color = "#000";
+    premiumBtn.style.marginLeft = "5px";
+    premiumBtn.onclick = () => togglePremium(id, false);
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "❌ Remove Premium";
+    removeBtn.style.background = "#888";
+    removeBtn.style.color = "#fff";
+    removeBtn.style.marginLeft = "5px";
+    removeBtn.onclick = () => togglePremium(id, true);
+
+    // Duplicate kontrolü
+    if (!btns.querySelector("button[style*='#FFD700']")) btns.appendChild(premiumBtn);
+    if (!btns.querySelector("button[style*='#888']")) btns.appendChild(removeBtn);
+  });
+};
+</script>
+
   </script>
 </body>
 </html>
