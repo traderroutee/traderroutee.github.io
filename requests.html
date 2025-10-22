@@ -432,6 +432,18 @@ window.addEventListener('storage', e => {
 });
 </script>
 
+  <!-- Auto notify Google when new requests are added -->
+<script>
+window.addEventListener('storage', e => {
+  if (e.key === 'new_request_added') {
+    fetch(`https://www.google.com/ping?sitemap=https://traderroute.com/sitemap.xml`)
+      .then(()=>console.log("🔔 Google notified about new content."))
+      .catch(err => console.error("Ping error:", err));
+  }
+});
+</script>
+  
+
 
   <!-- 👤 Kullanıcı menü kontrolü -->
   <script>
