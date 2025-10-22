@@ -227,7 +227,7 @@ html, body{
   transition: 0.25s;
 }
 
-.title-col { width: 50%; }  /* Title geniş */
+.title-col { width: 60%; }  /* Title geniş */
 .title-cell {
   font-weight: 600;
   color: #008b6a;
@@ -288,9 +288,9 @@ html, body{
 }
 
 .requests-table th, .requests-table td {
-  padding: 20px 22px;
+  padding: 22px 24px;
   text-align: left;
-  font-size: 15px;
+  font-size: 17px;      /* yazı büyütüldü */
   border-bottom: 1px solid #eee;
 }
 
@@ -309,13 +309,14 @@ html, body{
 
 /* 🏳️ Bayrak Görseli */
 .flag-icon-img {
-  width: 34px;      /* büyük bayrak */
-  height: 24px;
-  border-radius: 3px;
+  width: 40px;          /* biraz daha büyük */
+  height: 26px;
+  border-radius: 4px;
   object-fit: cover;
-  margin-right: 10px;
+  margin-right: 8px;
   vertical-align: middle;
-  box-shadow: 0 0 3px rgba(0,0,0,0.25);
+  transform: translateY(2px); /* hizalamayı aşağı alır */
+  box-shadow: 0 0 4px rgba(0,0,0,0.25);
 }
 
 .title-col { width: 50%; }
