@@ -451,18 +451,45 @@ html, body{
   <!-- 🌍 LATEST REQUESTS SECTION (auto flag integration, restored) -->
 <section class="latest-requests">
   <div class="requests-table-wrapper">
-   <table class="requests-table">
-      <tr style="background:#f9f9f9;">
-        <th style="text-align:left;padding:10px;">Country</th>
-        <th style="text-align:left;padding:10px;">Request Title</th>
-        <th style="text-align:left;padding:10px;">Type</th>
-        <th style="text-align:left;padding:10px;">Date</th>
-      </tr>
-      </thead>
-      <tbody id="latestRequestsList">
-        <!-- dynamic data loads here -->
-      </tbody>
-    </table>
+  <table class="requests-table">
+  <thead>
+    <tr style="background:#f9f9f9;">
+      <th style="text-align:left;padding:10px;">Country</th>
+      <th style="text-align:left;padding:10px;">Request Title</th>
+      <th style="text-align:left;padding:10px;">Type</th>
+      <th style="text-align:left;padding:10px;">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${premium.slice(0, 3).map(req => {
+      const id = req.id;
+      const country = req.country || "Unknown";
+      const flagFile = (typeof getFlagUrl === "function")
+        ? getFlagUrl(country, 40)
+        : "assets/flag/default.png";
+      const titleShort = (req.title || "").trim().slice(0, 80);
+      const dateStr = req.date || "-";
+      const typeStr = req.type || "-";
+
+      return `
+        <tr class="premium-row" onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;background-color:#fffbe6;border-bottom:1px solid #f2e0a5;">
+          <td style="padding:10px;vertical-align:middle;white-space:nowrap;">
+            <img src="${flagFile}" alt="${country}" class="flag-icon-img">
+            <span style="font-weight:500;">${country}</span>
+          </td>
+          <td style="padding:10px;vertical-align:middle;">
+            <div style="border-left:4px solid #FFD700;padding-left:10px;">
+              ${titleShort}
+              <span style="background:#FFD700;color:#000;padding:3px 7px;border-radius:5px;font-size:13px;font-weight:700;margin-left:6px;">⭐ Premium</span>
+            </div>
+          </td>
+          <td style="padding:10px;vertical-align:middle;">${typeStr}</td>
+          <td style="padding:10px;vertical-align:middle;">${dateStr}</td>
+        </tr>
+      `;
+    }).join("")}
+  </tbody>
+</table>
   </div>
 </section>
 
