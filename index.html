@@ -457,90 +457,158 @@ html, body{
 </section>
 
 <script>
-document.addEventListener("DOMContentLoaded", async function () {
+
+  document.addEventListener("DOMContentLoaded", async function () {
   const container = document.getElementById("latestRequestsList");
   if (!container) return;
 
+  // Geçici yükleme görünümü
   container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#777;padding:25px;">Loading...</td></tr>`;
 
   try {
-    // 🔗 İlan verilerini getir
-    const resp = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(), { cache: "no-store" });
+    const resp = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
     if (!resp.ok) throw new Error("API connection failed: " + resp.status);
     const all = await resp.json();
 
-    // 🔍 Veri yoksa mesaj göster
     if (!Array.isArray(all) || all.length === 0) {
       container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#777;padding:25px;">No trade requests yet.</td></tr>`;
       return;
     }
 
-    // 🧭 Tarihleri ve premium bilgilerini normalize et
     const today = new Date();
-    const withDates = all.map(r => {
-      return {
-        ...r,
-        _dateObj: r.date ? new Date(r.date) : null,
-        _premiumUntilObj: (r.isPremium && r.premiumUntil) ? new Date(r.premiumUntil) : null
-      };
-    });
+    const withDates = all.map(r => ({
+      ...r,
+      _dateObj: r.date ? new Date(r.date) : null,
+      _premiumUntilObj: r.premiumUntil ? new Date(r.premiumUntil) : null
+    }));
 
-    // 🕒 En yeni → En eski sıralama
+    // === Premium ve normal ayır
     const descByDate = (a, b) => (b._dateObj?.getTime() || 0) - (a._dateObj?.getTime() || 0);
+    const premium = withDates
+      .filter(r => r.isPremium && r._premiumUntilObj && r._premiumUntilObj >= today)
+      .sort(descByDate);
+    const normal = withDates
+      .filter(r => !r.isPremium || !r._premiumUntilObj || r._premiumUntilObj < today)
+      .sort(descByDate);
 
-    // Premium süresi devam edenleri ayır
-const premium = withDates
-  .filter(r => r.isPremium && r._premiumUntilObj && r._premiumUntilObj >= today)
-  .sort(descByDate);
-const normal = withDates
-  .filter(r => !r.isPremium || !r._premiumUntilObj || r._premiumUntilObj < today)
-  .sort(descByDate);
-const merged = [...premium, ...normal].slice(0, 5);
+    // === Konteyneri temizle ve yapı oluştur
+    const table = container.closest("table");
+    const wrapper = table.parentElement;
 
-    // 🧱 Tabloda ilanları render et
-    container.innerHTML = merged.map(req => {
+    // Yeni premium tablo
+    let html = "";
+
+    if (premium.length > 0) {
+      html += `
+      <div class="premium-box" style="margin-bottom:25px;">
+        <h3 style="color:#007157; margin-bottom:10px;">⭐ Premium Requests</h3>
+        <table class="latest-table" style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr style="background:#f5f5f5;">
+              <th>Country</th>
+              <th>Request Title</th>
+              <th>Type</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      premium.slice(0, 5).forEach(req => {
+        const id = encodeURIComponent(req.id || req.title || "");
+        const country = req.country || "Unknown";
+        const flagFile = (typeof getFlagURL === "function") ? getFlagURL(country, 40) : "assets/flag/default.png";
+        const isPremium = !!(req.isPremium && req._premiumUntilObj && req._premiumUntilObj >= today);
+        const titleRaw = req.title || "Untitled";
+        const titleShort = titleRaw.length > 60 ? titleRaw.slice(0, 57) + "..." : titleRaw;
+        const dateStr = req._dateObj ? req._dateObj.toLocaleDateString() : "-";
+        const premiumBadge = isPremium ? `<div style="display:inline-block;background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-weight:700;margin-left:8px;font-size:12px;">⭐ Premium</div>` : "";
+
+        html += `
+          <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;background-color:#fffbe6;">
+            <td style="vertical-align:middle;">
+              <img src="${flagFile}" alt="${country}" class="flag-icon-img"
+                   onerror="this.onerror=null;this.src='assets/flag/default.png'">
+              ${country}
+            </td>
+            <td style="vertical-align:middle;">
+              <div style="border-left:4px solid #FFD700;padding-left:10px;">${titleShort} ${premiumBadge}</div>
+            </td>
+            <td style="vertical-align:middle;">${req.type || "-"}</td>
+            <td style="vertical-align:middle;">${dateStr}</td>
+          </tr>
+        `;
+      });
+
+      html += `
+          </tbody>
+        </table>
+        <div style="text-align:center; margin-top:15px;">
+          <button onclick="window.location.href='premium.html'" 
+            style="background:#007157;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;">
+            View All Premium Requests
+          </button>
+        </div>
+      </div>
+      `;
+    }
+
+    // === Normal ilanlar tablosu
+    html += `
+      <h3 style="color:#007157; margin-bottom:10px;">Latest Trade Requests</h3>
+      <table class="latest-table" style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr style="background:#f5f5f5;">
+            <th>Country</th>
+            <th>Request Title</th>
+            <th>Type</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    normal.slice(0, 10).forEach(req => {
       const id = encodeURIComponent(req.id || req.title || "");
+      const country = req.country || "Unknown";
+      const flagFile = (typeof getFlagURL === "function") ? getFlagURL(country, 40) : "assets/flag/default.png";
       const titleRaw = req.title || "Untitled";
       const titleShort = titleRaw.length > 60 ? titleRaw.slice(0, 57) + "..." : titleRaw;
       const dateStr = req._dateObj ? req._dateObj.toLocaleDateString() : "-";
-      const country = req.country || "Unknown";
-      const flagFile = (typeof getFlagURL === "function") ? getFlagURL(country, 40) : "assets/flag/default.png";
-      const isPremium = !!(req.isPremium && req._premiumUntilObj && req._premiumUntilObj >= today);
 
-      // ⭐ Premium etiketi (sadece görsel vurgu)
-      const premiumBadge = isPremium
-        ? `<div style="display:inline-block;background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-weight:700;margin-left:8px;font-size:12px;">⭐ Premium</div>`
-        : "";
-
-      return `
-        <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;">
+      html += `
+        <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;background:#fff;">
           <td style="vertical-align:middle;">
             <img src="${flagFile}" alt="${country}" class="flag-icon-img"
                  onerror="this.onerror=null;this.src='assets/flag/default.png'">
             ${country}
           </td>
-          <td class="title-cell" style="vertical-align:middle;">
-            <div style="${isPremium ? 'border-left:4px solid #FFD700;padding-left:10px;' : ''}">
-              ${titleShort}
-              ${premiumBadge}
-            </div>
-          </td>
+          <td style="vertical-align:middle;">${titleShort}</td>
           <td style="vertical-align:middle;">${req.type || "-"}</td>
           <td style="vertical-align:middle;">${dateStr}</td>
         </tr>
       `;
-    }).join("");
+    });
 
-    // 📨 Hiç ilan yoksa bilgilendirme göster
-    if (merged.length === 0) {
-      container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#777;padding:25px;">No visible requests (maybe awaiting approval).</td></tr>`;
-    }
+    html += `
+        </tbody>
+      </table>
+      <div style="text-align:center; margin-top:15px;">
+        <button onclick="window.location.href='all-requests.html'" 
+          style="background:#007157;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;">
+          View All Requests
+        </button>
+      </div>
+    `;
+
+    wrapper.innerHTML = html;
 
   } catch (err) {
     console.error("Load requests error:", err);
     container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#d9534f;padding:25px;">Connection error — unable to load requests.</td></tr>`;
   }
 });
+
 </script>
 
   
