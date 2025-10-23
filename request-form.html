@@ -294,32 +294,7 @@ imageInput?.addEventListener("change", async (e) => {
 });
 </script>
 
-  <script>
-async function uploadImage(file){
-  const fd = new FormData();
-  fd.append('file', file);
-  const res = await fetch('https://divine-hill-9557.traderroutee.workers.dev/upload', {
-    method: 'POST',
-    body: fd
-  });
-  const json = await res.json();
-  if(!res.ok) throw new Error(json.error || 'Upload fail');
-  return json.url;
-}
-
-document.getElementById('imageUpload').addEventListener('change', async (e)=>{
-  const f = e.target.files[0];
-  if(!f) return;
-  try{
-    const url = await uploadImage(f);
-    console.log('Image URL:', url);
-    // Bu satırda örneğin form verinize imageUrl olarak ekleyebilirsiniz:
-    document.querySelector('input[name="imageUrl"]').value = url;
-  }catch(err){
-    alert(err.message);
-  }
-});
-</script>
+  
   
 </body>
 </html>
