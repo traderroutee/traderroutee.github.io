@@ -182,9 +182,37 @@ async function loadRequestDetail() {
 if (req.imageUrl || (req.images && req.images.length > 0)) {
   const imgUrl = req.imageUrl || req.images[0];
   const img = document.createElement("img");
+  img.id = "reqImage";
   img.src = imgUrl;
   img.alt = "Request Image";
-  img.style = "display:block;max-width:100%;margin-top:20px;border-radius:10px;";
+  img.style = "display:block;max-width:300px;margin-top:20px;border-radius:10px;cursor:pointer;transition:transform 0.2s;";
+  img.addEventListener('click', () => {
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.cursor = 'zoom-out';
+    overlay.style.zIndex = '9999';
+
+    const bigImg = document.createElement('img');
+    bigImg.src = img.src;
+    bigImg.style.maxWidth = '90%';
+    bigImg.style.maxHeight = '90%';
+    bigImg.style.borderRadius = '10px';
+    bigImg.style.boxShadow = '0 0 25px rgba(255,255,255,0.4)';
+
+    overlay.appendChild(bigImg);
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', () => overlay.remove());
+  });
+
   document.querySelector(".request-detail-container").appendChild(img);
 }
 
