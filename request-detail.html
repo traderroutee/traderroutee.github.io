@@ -177,6 +177,16 @@ async function loadRequestDetail() {
     document.getElementById("reqCategory").textContent = req.category || "-";
     document.getElementById("reqDate").textContent = req.date ? new Date(req.date).toLocaleDateString() : "-";
     document.getElementById("reqDescription").textContent = req.description || "No description provided.";
+   
+    // ✅ Resim varsa göster
+if (req.imageUrl || (req.images && req.images.length > 0)) {
+  const imgUrl = req.imageUrl || req.images[0];
+  const img = document.createElement("img");
+  img.src = imgUrl;
+  img.alt = "Request Image";
+  img.style = "display:block;max-width:100%;margin-top:20px;border-radius:10px;";
+  document.querySelector(".request-detail-container").appendChild(img);
+}
 
     // ✅ Flag.js fonksiyonunu kullan
     const flagFile = getFlagURL(req.country, 60);
