@@ -523,10 +523,10 @@ if (premium.length > 0) {
 
     html += `
       <tr onclick="location.href='request-detail.html?id=${id}'" style="cursor:pointer;background-color:#fffbe6;border-bottom:1px solid #f2e0a5;">
-        <td style="padding:18px 20px;vertical-align:middle;white-space:nowrap;">
-          <img src="${flagFile}" alt="${country}" class="flag-icon-img">
-          <span style="font-weight:500;">${country}</span>
-        </td>
+       <td style="padding:18px 20px;vertical-align:middle;white-space:nowrap;display:flex;align-items:center;gap:10px;">
+  <img src="${flagFile}" alt="${country}" style="width:38px;height:26px;object-fit:cover;border-radius:4px;vertical-align:middle;">
+  <span style="font-weight:400;color:#555;">${country}</span>
+</td>
         <td style="padding:18px 20px;vertical-align:middle;">
           <div style="border-left:4px solid #FFD700;padding-left:10px;">
             ${titleShort}
