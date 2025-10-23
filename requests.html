@@ -528,7 +528,8 @@ function generateRequestSchema(request) {
 }
 
 function updateSchema() {
-  fetch('https://divine-hill-9557.traderroutee.workers.dev/requests')
+  fetch('https://divine-hill-9557.traderroutee.workers.dev')
+
     .then(res => res.json())
     .then(data => {
       const approved = data.filter(r => r.approved);
