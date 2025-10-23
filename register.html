@@ -253,9 +253,19 @@ countrySelect.addEventListener("change",()=>{
       users.push(user);
       localStorage.setItem("tr_users",JSON.stringify(users));
       localStorage.setItem("tr_user",JSON.stringify(user));
+      // === Cloudflare Worker'a kullanıcı kaydet ===
+try {
+  await fetch("https://divine-hill-9557.traderroutee.workers.dev/users", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user)
+  });
+} catch (err) {
+  console.error("User upload failed:", err);
+}
 
-      localStorage.setItem("welcome_name",name);
-      window.location.href="index.html";
+localStorage.setItem("welcome_name", name);
+window.location.href = "index.html";
     }
   </script>
 </body>
