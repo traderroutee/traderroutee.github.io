@@ -124,14 +124,14 @@
 
   /* === LAYOUT (FULL WIDTH) === */
   .container{
-    width:100%;
-    max-width:none;
-    margin:0;
-    padding:30px 50px;
-    display:flex;
-    gap:20px;
-    box-sizing:border-box;
-  }
+  width:100%;
+  max-width:1250px; /* ekranın ortasında sabitle */
+  margin:40px auto;
+  padding:20px 30px;
+  display:flex;
+  gap:25px;
+  box-sizing:border-box;
+}
   .sidebar{
     width:300px;
     background:#fff;
@@ -185,7 +185,14 @@
   vertical-align: middle;
   object-fit: cover;
 }
-  
+    
+  #tabFree {
+  background: var(--green);
+  color: #fff;
+}
+#tabFree:hover {
+  background: var(--green-dark);
+}
     
 </style>
 </head>
