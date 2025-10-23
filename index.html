@@ -578,11 +578,13 @@ if (premium.length > 0) {
       html += `
         <tr onclick="location.href='request-detail.html?id=${id}'" 
     style="cursor:pointer;border-bottom:1px solid #e5e5e5;background-color:#fff;">
-          <td style="padding:10px;vertical-align:middle;white-space:nowrap;">
-            <img src="${flagFile}" alt="${country}" style="width:38px;height:26px;object-fit:cover;margin-right:10px;vertical-align:middle;border-radius:4px;">
-            <span style="font-weight:500;">${country}</span>
-          </td>
-          <td style="padding:18px 20px;vertical-align:middle;font-size:18px;font-weight:500;">${titleShort}</td>
+          <td style="padding:16px 20px;vertical-align:middle;white-space:nowrap;display:flex;align-items:center;gap:10px;">
+  <img src="${flagFile}" alt="${country}" style="width:38px;height:26px;object-fit:cover;border-radius:4px;vertical-align:middle;">
+  <span style="font-weight:400;color:#555;">${country}</span>
+</td>
+<td style="padding:16px 20px;vertical-align:middle;font-weight:400;color:#555;">${titleShort}</td>
+<td style="padding:16px 20px;vertical-align:middle;font-weight:400;color:#555;">${req.type || "-"}</td>
+<td style="padding:16px 20px;vertical-align:middle;font-weight:400;color:#555;">${dateStr}</td>
           <td style="padding:10px;vertical-align:middle;">${req.type || "-"}</td>
           <td style="padding:10px;vertical-align:middle;">${dateStr}</td>
         </tr>
