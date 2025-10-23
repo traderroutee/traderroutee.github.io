@@ -135,6 +135,17 @@ button {
     flex-wrap: wrap;
     justify-content: center;
   }
+  nav a {
+    font-size: 14px;
+    padding: 4px;
+  }
+  .search-box input {
+    width: 100px;
+  }
+  .header-right {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 /* =========================
