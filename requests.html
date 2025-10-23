@@ -278,7 +278,7 @@
 // 🌍 Verileri hem localStorage'dan hem sunucudan oku
 async function getRequests() {
   try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev?t=" + Date.now(), { cache: "no-store" });
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now());
 
     if (res.ok) {
       const data = await res.json();
@@ -528,7 +528,7 @@ function generateRequestSchema(request) {
 }
 
 function updateSchema() {
-  fetch('https://divine-hill-9557.traderroutee.workers.dev')
+  fetch("https://divine-hill-9557.traderroutee.workers.dev/requests")
 
     .then(res => res.json())
     .then(data => {
