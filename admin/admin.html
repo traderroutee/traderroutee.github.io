@@ -100,11 +100,12 @@
 
       const all=res.ok?await res.json():[];
       tableBody.innerHTML="";
-      const normalized=all.map(r=>({...r,approved:r.approved===true||r.approved==="true"}));
+      const normalized = all.map(r => ({ ...r, approved: r.approved === true || r.approved === "true" }));
+
       const filter=statusFilter.value;
       const filtered=normalized.filter(r=>{
         if(filter==="approved")return r.approved===true;
-        if(filter==="pending")return!r.approved;
+        if(filter==="pending")return r.approved===false;
         return true;
       });
       if(filtered.length===0){
