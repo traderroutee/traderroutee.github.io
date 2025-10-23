@@ -179,6 +179,7 @@ async function loadRequestDetail() {
     document.getElementById("reqDescription").textContent = req.description || "No description provided.";
    
     // ✅ Resim varsa göster (küçük + tıklayınca büyür)
+    await new Promise(r => setTimeout(r, 100)); // DOM yüklenmesini bekle
 const container = document.querySelector(".request-detail-container");
 if (req && (req.imageUrl || (req.images && req.images.length > 0))) {
   const imgUrl = req.imageUrl || req.images[0];
