@@ -151,8 +151,8 @@
   // --- USERS ---
 function showUsers() {
   try {
-    const saved = localStorage.getItem("tr_users");
-    const users = saved ? JSON.parse(saved) : [];
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/users");
+const users = await res.json();
     const body = document.getElementById("usersTable");
     body.innerHTML = "";
 
