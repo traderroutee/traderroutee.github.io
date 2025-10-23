@@ -74,6 +74,36 @@
     "postalCode": "34000"
   }
 }
+
+  @media (max-width: 900px) {
+  /* Kategori kutusunu mobilde ortala ve statik konumla */
+  .cat-holder {
+    position: static !important;
+    transform: none !important;
+    width: 92%;
+    margin: 10px auto;
+  }
+
+  /* Hero alanını orantılı küçült */
+  .hero {
+    height: auto;
+    max-height: 350px;
+    background-position: center;
+    background-size: cover;
+  }
+
+  /* Ana sayfadaki orta butonlar (varsa) dik hizalansın */
+  .middle-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+  .middle-buttons button {
+    width: 90%;
+    font-size: 15px;
+  }
+}
 </script>  
 </head>
 
