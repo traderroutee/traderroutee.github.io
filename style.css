@@ -135,9 +135,11 @@ button {
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  /* ⬇️ BUNLARI EKLEYİN */
   nav a {
     font-size: 14px;
-    padding: 4px;
+    padding: 4px 0;
   }
   .search-box input {
     width: 100px;
