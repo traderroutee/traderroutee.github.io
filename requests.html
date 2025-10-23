@@ -170,29 +170,55 @@
   #showMoreRequests{background:var(--green);color:#fff;border:none;border-radius:6px;padding:10px 15px;cursor:pointer;font-weight:600;margin:20px auto;display:block;}
   #showMoreRequests:hover{background:var(--green-dark);}
 
-  @media(max-width:900px){
-    .container{flex-direction:column;padding:20px;}
-    .sidebar{width:100%;order:2}
-    .content{order:1}
+ @media(max-width:900px){
+  /* Ana yerleşim: side-bar alta, içerik üste */
+  .container{
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
   }
-    
-.flag-icon-img {
-  width: 22px;
-  height: 14px;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  margin-right: 6px;
-  vertical-align: middle;
-  object-fit: cover;
+  .content{
+    order: 1;
+    width: 100%;
+  }
+  .sidebar{
+    order: 2;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  /* İlan kartları tam genişlik ve daha rahat satır */
+  .request-card{
+    width: 100%;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+
+  /* Kategori/ülke listelerinde uzun metin sarılsın */
+  .category-list li,
+  .country-list li {
+    word-wrap: break-word;
+    line-height: 1.4;
+  }
+
+  /* Sekmeler (All / Buy / Sell / Free) taşmasın */
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tabs button {
+    flex: 1 1 45%;
+    font-size: 14px;
+  }
+
+  /* Arama barı biraz nefes alsın */
+  .search-bar input {
+    width: 100%;
+    font-size: 14px;
+  }
 }
-    
-  #tabFree {
-  background: var(--green);
-  color: #fff;
-}
-#tabFree:hover {
-  background: var(--green-dark);
-}
+
     
 </style>
 </head>
