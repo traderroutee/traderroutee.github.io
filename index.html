@@ -348,6 +348,107 @@ html, body{
   transform: translateY(-2px);
 }
 
+    /* === RESPONSIVE FIX FOR MOBILE VIEW === */
+@media (max-width: 900px) {
+  /* Genel container düzeni */
+  .container {
+    flex-direction: column;
+    padding: 15px;
+    gap: 20px;
+  }
+
+  /* Sidebar alta geçsin */
+  .sidebar {
+    width: 100%;
+    order: 2;
+  }
+
+  .content {
+    order: 1;
+    padding: 15px;
+  }
+
+  /* İlan kartlarını tam genişlikte göster */
+  .request-card {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  /* Kategori kutusunu düzgün hizala */
+  .cat-holder,
+  .categories {
+    position: static !important;
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  /* Tab butonları alt alta gelsin */
+  .tabs {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tabs button {
+    flex: 1 1 45%;
+    font-size: 14px;
+  }
+
+  /* Hero alanı orantılı küçülsün */
+  .hero {
+    height: auto;
+    max-height: 340px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero-content h1 {
+    font-size: 22px;
+    line-height: 1.3;
+  }
+
+  /* Tabloyu kart görünümüne çevir */
+  .requests-table,
+  .requests-table thead,
+  .requests-table tbody,
+  .requests-table th,
+  .requests-table td,
+  .requests-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .requests-table tr {
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background: #fff;
+    padding: 10px;
+  }
+
+  .requests-table td {
+    padding: 6px 0;
+    text-align: left;
+  }
+
+  .requests-table th {
+    display: none;
+  }
+
+  /* Butonları dik hizala */
+  .middle-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .middle-buttons button {
+    width: 90%;
+    font-size: 15px;
+  }
+}
+
+
    
   </style>
 </head>
