@@ -465,9 +465,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#777;padding:25px;">Loading...</td></tr>`;
 
   try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
-    if (!resp.ok) throw new Error("API connection failed: " + resp.status);
-    const all = await resp.json();
+   const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
+if (!res.ok) throw new Error("API connection failed: " + res.status);
+const all = await res.json();
 
     if (!Array.isArray(all) || all.length === 0) {
       container.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#777;padding:25px;">No trade requests yet.</td></tr>`;
@@ -651,8 +651,7 @@ if (premium.length > 0) {
 async function loadCategories() {
   try {
     const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
-
-    const all = await response.json();
+const all = await res.json();
 
     categories.slice(0, 10).forEach(cat => {
       const count = all.filter(r => r.category === cat).length;
