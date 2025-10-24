@@ -148,34 +148,38 @@
     if(res.ok){alert("Deleted 🗑️");showRequests();}else alert("Delete failed ❌");
   }
 
-  // --- USERS ---
-function showUsers() {
+ <script>
+async function loadUsers() {
   try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/users");
-const users = await res.json();
-    const body = document.getElementById("usersTable");
-    body.innerHTML = "";
+    const res = await fetch('https://divine-hill-9557.traderroutee.workers.dev/users');
+    const users = await res.json();
+
+    const tbody = document.getElementById('usersTable');
+    tbody.innerHTML = '';
 
     if (users.length === 0) {
-      body.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#777;">No users found.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#777;">No users found.</td></tr>`;
       return;
     }
 
     users.slice().reverse().forEach(u => {
-      const tr = document.createElement("tr");
+      const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${u.name || "-"}</td>
-        <td>${u.surname || "-"}</td>
-        <td>${u.company || "-"}</td>
-        <td>${u.email || "-"}</td>
-        <td>${u.phone || "-"}</td>
-        <td>${u.country || "-"}</td>`;
-      body.appendChild(tr);
+        <td>${u.name || ''}</td>
+        <td>${u.email || ''}</td>
+        <td>${u.company || ''}</td>
+        <td>${u.phone || ''}</td>
+        <td>${u.country || ''}</td>
+      `;
+      tbody.appendChild(tr);
     });
   } catch (err) {
-    console.error("Error loading users:", err);
+    console.error('Users load failed:', err);
   }
 }
+document.addEventListener('DOMContentLoaded', loadUsers);
+</script>
+
 
   statusFilter.addEventListener("change",showRequests);
   document.addEventListener("DOMContentLoaded",showRequests);
