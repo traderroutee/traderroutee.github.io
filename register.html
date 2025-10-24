@@ -229,18 +229,17 @@ countrySelect.addEventListener("change",()=>{
 });
 
 
-    // === Register logic ===
-    function doRegister(){
-      const name=document.getElementById("name").value.trim();
-      const email=document.getElementById("email").value.trim().toLowerCase();
-      const company=document.getElementById("company").value.trim();
-      const country=document.getElementById("country").value;
-      const category=document.getElementById("category").value;
-      const password=document.getElementById("password").value.trim();
-
-      const code=document.getElementById("countryCode").value;
-      const phone=document.getElementById("phoneNumber").value.trim();
-      const phoneFull=(code && phone)?`${code} ${phone}`:"";
+   // === Register logic ===
+async function doRegister(){
+  const name=document.getElementById("name").value.trim();
+  const email=document.getElementById("email").value.trim().toLowerCase();
+  const company=document.getElementById("company").value.trim();
+  const country=document.getElementById("country").value;
+  const category=document.getElementById("category").value;
+  const password=document.getElementById("password").value.trim();
+  const code=document.getElementById("countryCode").value;
+  const phone=document.getElementById("phoneNumber").value.trim();
+  const phoneFull=`${code} ${phone}`.trim();
 
       if(!name||!email||!password||!country||!category){
         alert("Please fill all required fields.");return;
@@ -253,6 +252,7 @@ countrySelect.addEventListener("change",()=>{
       users.push(user);
       localStorage.setItem("tr_users",JSON.stringify(users));
       localStorage.setItem("tr_user",JSON.stringify(user));
+      
       // === Cloudflare Worker'a kullanıcı kaydet ===
 try {
   await fetch("https://divine-hill-9557.traderroutee.workers.dev/users", {
