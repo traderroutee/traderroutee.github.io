@@ -96,7 +96,12 @@
 
   async function showRequests(){
     try{
-      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(), { cache: "no-store" });
+      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now());
+const data = await res.json();
+
+// Yeni Worker artık doğrudan dizi döndürüyor, record içinde değil
+const requests = Array.isArray(data) ? data : (data.record || []);
+renderRequests(requests);
 
       const all=res.ok?await res.json():[];
       tableBody.innerHTML="";
