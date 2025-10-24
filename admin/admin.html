@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Admin Panel — Trader Route</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body{margin:0;font-family:"Inter","Segoe UI",sans-serif;background:#f8f9fa;color:#222;display:flex;min-height:100vh;}
     header{background:#008b6a;color:#fff;padding:15px 25px;font-size:22px;font-weight:700;}
-    .sidebar{width:230px;background:#007b63;color:#fff;display:flex;flex-direction:column;
-      padding:20px 0;box-shadow:2px 0 8px rgba(0,0,0,.1);position:fixed;top:0;bottom:0;left:0;}
+    .sidebar{
+      width:230px;background:#007b63;color:#fff;display:flex;flex-direction:column;
+      padding:20px 0;box-shadow:2px 0 8px rgba(0,0,0,.1);position:fixed;top:0;bottom:0;left:0;
+    }
     .sidebar h2{margin:0 20px 20px;font-size:20px;}
-    .sidebar a{color:#fff;text-decoration:none;padding:12px 20px;display:block;font-weight:500;}
+    .sidebar a{
+      color:#fff;text-decoration:none;padding:12px 20px;display:block;font-weight:500;
+    }
     .sidebar a:hover,.sidebar a.active{background:#009879;}
-    main{flex:1;margin-left:230px;padding:25px;}
-    .container{background:#fff;border-radius:10px;padding:25px;box-shadow:0 4px 12px rgba(0,0,0,.08);}
+    main{
+      flex:1;margin-left:230px;padding:25px;
+    }
+    .container{
+      background:#fff;border-radius:10px;padding:25px;
+      box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
     table{width:100%;border-collapse:collapse;margin-top:20px;}
     th,td{padding:10px 14px;border-bottom:1px solid #eee;text-align:left;}
     th{background:#f1f1f1;color:#007b63;}
@@ -35,6 +44,7 @@
   </div>
 
   <main>
+    <!-- Requests -->
     <section id="requestsSection" class="container">
       <div class="filter-bar">
         <h2>All Requests</h2>
@@ -54,6 +64,7 @@
       </table>
     </section>
 
+    <!-- Users -->
     <section id="usersSection" class="container" style="display:none;">
       <h2>Registered Users</h2>
       <table>
@@ -67,168 +78,235 @@
     </section>
   </main>
 
-  <!-- 1. script -->
-  <script data-cfasync="false">
+  <script>
   const tabRequests=document.getElementById("tabRequests");
   const tabUsers=document.getElementById("tabUsers");
   const reqSec=document.getElementById("requestsSection");
   const usrSec=document.getElementById("usersSection");
 
+  // --- TAB switching ---
   tabRequests.onclick=()=>{tabRequests.classList.add("active");tabUsers.classList.remove("active");
     reqSec.style.display="block";usrSec.style.display="none";showRequests();}
   tabUsers.onclick=()=>{tabUsers.classList.add("active");tabRequests.classList.remove("active");
     reqSec.style.display="none";usrSec.style.display="block";showUsers();}
 
+  // --- REQUESTS ---
   const tableBody=document.getElementById("requestsTable");
   const statusFilter=document.getElementById("statusFilter");
 
 async function showRequests() {
   try {
-    const res = await fetch("https://www.traderroute.com/requests?t=" + Date.now(), {
-      method: "GET",headers:{"Content-Type":"application/json","Accept":"application/json"},mode:"cors"
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      mode: "cors"
     });
+
     if (!res.ok) {
-      console.error("Fetch failed:", res.status);
-      tableBody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:#777;">Failed to load (${res.status})</td></tr>`;
+      console.error("Fetch failed with status:", res.status);
+      tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#777;">Failed to load data (${res.status})</td></tr>`;
       return;
     }
-    const data=await res.json();
-    const all=Array.isArray(data)?data:(data.record||[]);
-    if(!Array.isArray(all)||all.length===0){
-      tableBody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:#777;">No requests found.</td></tr>`;
+
+    const data = await res.json();
+    const all = Array.isArray(data) ? data : (data.record || []);
+
+    if (!Array.isArray(all) || all.length === 0) {
+      tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#777;">No requests found.</td></tr>`;
       return;
     }
-    tableBody.innerHTML="";
-    const normalized=all.map(r=>({...r,approved:r.approved===true||r.approved==="true"}));
-    const filter=statusFilter.value;
-    const filtered=normalized.filter(r=>{
-      if(filter==="approved")return r.approved===true;
-      if(filter==="pending")return r.approved===false;
+
+    tableBody.innerHTML = "";
+
+    const normalized = all.map(r => ({
+      ...r,
+      approved: r.approved === true || r.approved === "true"
+    }));
+
+    const filter = statusFilter.value;
+    const filtered = normalized.filter(r => {
+      if (filter === "approved") return r.approved === true;
+      if (filter === "pending") return r.approved === false;
       return true;
     });
-    filtered.slice().reverse().forEach(r=>{
-      const tr=document.createElement("tr");
-      tr.innerHTML=`
-        <td>${r.title||"-"}</td>
-        <td>${r.user||"-"}</td>
-        <td>${r.country||"-"}</td>
-        <td>${r.category||"-"}</td>
-        <td>${r.approved?"✅ Approved":"⏳ Pending"}</td>
+
+    filtered.slice().reverse().forEach(r => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${r.title || "-"}</td>
+        <td>${r.user || "-"}</td>
+        <td>${r.country || "-"}</td>
+        <td>${r.category || "-"}</td>
+        <td>${r.approved ? "✅ Approved" : "⏳ Pending"}</td>
         <td>
-          ${!r.approved?`<button class="approve" onclick="approveRequest(${r.id})">Approve</button>`:""}
+          ${!r.approved ? `<button class="approve" onclick="approveRequest(${r.id})">Approve</button>` : ""}
           <button onclick="window.location.href='admin-edit.html?id=${r.id}'">Edit</button>
           <button class="delete" onclick="deleteRequest(${r.id})">Delete</button>
         </td>`;
       tableBody.appendChild(tr);
     });
-  }catch(err){
-    console.error("Error loading requests:",err);
-    tableBody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:red;">Error loading data</td></tr>`;
+
+  } catch (err) {
+    console.error("Error loading requests:", err);
+    tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:red;">Error loading data</td></tr>`;
   }
 }
 
-async function approveRequest(id){
-  if(!confirm("Approve this request?"))return;
-  const res=await fetch("https://www.traderroute.com/approve",{
-    method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},body:JSON.stringify({id})
-  });
-  if(res.ok){alert("Approved ✅");showRequests();}else alert("Approval failed ❌");
-}
+ 
 
-async function deleteRequest(id){
-  if(!confirm("Delete this request?"))return;
-  const res=await fetch("https://www.traderroute.com/delete",{
-    method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},body:JSON.stringify({id})
-  });
-  if(res.ok){alert("Deleted 🗑️");showRequests();}else alert("Delete failed ❌");
-}
 
-statusFilter.addEventListener("change",showRequests);
-document.addEventListener("DOMContentLoaded",showRequests);
-
-// === Premium Yönetimi ===
-async function togglePremium(id,currentStatus){
-  if(currentStatus){
-    if(!confirm("Remove premium status?"))return;
-    const res=await fetch("https://www.traderroute.com/premium?t="+Date.now(),{
-      cache:"no-store",method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
-      body:JSON.stringify({id,isPremium:false,premiumUntil:null})
+  async function approveRequest(id){
+    if(!confirm("Approve this request?"))return;
+    const res=await fetch("https://divine-hill-9557.traderroutee.workers.dev/approve",{
+      method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
+      body:JSON.stringify({id})
     });
-    if(res.ok){alert("Premium removed ❌");showRequests();}else alert("Failed ❌");
+    if(res.ok){alert("Approved ✅");showRequests();}else alert("Approval failed ❌");
+  }
+
+  async function deleteRequest(id){
+    if(!confirm("Delete this request?"))return;
+    const res=await fetch("https://divine-hill-9557.traderroutee.workers.dev/delete",{
+      method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
+      body:JSON.stringify({id})
+    });
+    if(res.ok){alert("Deleted 🗑️");showRequests();}else alert("Delete failed ❌");
+  }
+
+
+  statusFilter.addEventListener("change",showRequests);
+  document.addEventListener("DOMContentLoaded",showRequests);
+
+// === PREMIUM (DOPING) YÖNETİMİ ===
+async function togglePremium(id, currentStatus) {
+  if (currentStatus) {
+    if (!confirm("Remove premium status for this request?")) return;
+   const res = await fetch(
+  "https://divine-hill-9557.traderroutee.workers.dev/premium?t=" + Date.now(),
+  {
+    cache: "no-store",
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
+    body: JSON.stringify({ id, isPremium: false, premiumUntil: null })
+  }
+);
+
+if (res.ok) {
+  
+      alert("Premium removed ❌");
+      showRequests();
+    } else alert("Failed to remove premium.");
     return;
   }
-  const date=prompt("Enter premium end date (YYYY-MM-DD):",new Date(Date.now()+7*24*3600*1000).toISOString().split('T')[0]);
-  if(!date)return;
-  const until=new Date(date);
-  if(isNaN(until)){alert("Invalid date.");return;}
-  const res=await fetch("https://www.traderroute.com/premium?t="+Date.now(),{
-    cache:"no-store",method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
-    body:JSON.stringify({id,isPremium:true,premiumUntil:until.toISOString()})
-  });
-  if(res.ok){alert("Premium added ✅");showRequests();}else alert("Failed ❌");
+
+  // Add premium
+  const date = prompt("Enter premium end date (YYYY-MM-DD):", new Date(Date.now() + 7*24*3600*1000).toISOString().split('T')[0]);
+  if (!date) return;
+  const until = new Date(date);
+  if (isNaN(until)) { alert("Invalid date format."); return; }
+
+   const res = await fetch(
+  "https://divine-hill-9557.traderroutee.workers.dev/premium?t=" + Date.now(),
+  {
+    cache: "no-store",
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
+    body: JSON.stringify({ id, isPremium: true, premiumUntil: until.toISOString() })
+  }
+);
+
+if (res.ok) {
+  
+    alert("Premium added ✅");
+    showRequests();
+  } else alert("Failed to add premium ❌");
 }
 
-const originalShowRequests=showRequests;
-showRequests=async function(){
-  await originalShowRequests();
-  const rows=document.querySelectorAll("#requestsTable tr");
-  rows.forEach(row=>{
-    const idMatch=row.innerHTML.match(/approveRequest\((\d+)\)/)||row.innerHTML.match(/admin-edit\.html\?id=(\d+)/);
-    if(!idMatch)return;
-    const id=parseInt(idMatch[1]);
-    const btns=row.querySelector("td:last-child");
-    if(!btns)return;
-    const premiumBtn=document.createElement("button");
-    premiumBtn.textContent="⭐ Add Premium";
-    premiumBtn.style.background="#FFD700";
-    premiumBtn.style.color="#000";
-    premiumBtn.style.marginLeft="5px";
-    premiumBtn.style.fontWeight="600";
-    premiumBtn.onclick=()=>togglePremium(id,false);
-    const removeBtn=document.createElement("button");
-    removeBtn.textContent="❌ Remove Premium";
-    removeBtn.style.background="#888";
-    removeBtn.style.color="#fff";
-    removeBtn.style.marginLeft="5px";
-    removeBtn.style.fontWeight="600";
-    removeBtn.onclick=()=>togglePremium(id,true);
-    if(!btns.querySelector("button[style*='#FFD700']"))btns.appendChild(premiumBtn);
-    if(!btns.querySelector("button[style*='#888']"))btns.appendChild(removeBtn);
+// === Mevcut tabloyu genişlet (premium butonları ekle) ===
+const originalShowRequests = showRequests;
+showRequests = async function() {
+  await originalShowRequests(); // önce tabloyu getir
+
+  // şimdi butonları ekle
+  const rows = document.querySelectorAll("#requestsTable tr");
+  rows.forEach(row => {
+    const idMatch =
+      row.innerHTML.match(/approveRequest\((\d+)\)/) ||
+      row.innerHTML.match(/admin-edit\.html\?id=(\d+)/);
+    if (!idMatch) return;
+    const id = parseInt(idMatch[1]);
+    const btns = row.querySelector("td:last-child");
+    if (!btns) return;
+
+    // ⭐ Premium ekleme
+    const premiumBtn = document.createElement("button");
+    premiumBtn.textContent = "⭐ Add Premium";
+    premiumBtn.style.background = "#FFD700";
+    premiumBtn.style.color = "#000";
+    premiumBtn.style.marginLeft = "5px";
+    premiumBtn.style.fontWeight = "600";
+    premiumBtn.onclick = () => togglePremium(id, false);
+
+    // ❌ Premium kaldırma
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "❌ Remove Premium";
+    removeBtn.style.background = "#888";
+    removeBtn.style.color = "#fff";
+    removeBtn.style.marginLeft = "5px";
+    removeBtn.style.fontWeight = "600";
+    removeBtn.onclick = () => togglePremium(id, true);
+
+    // Tekrarlanmasın diye kontrol et
+    if (!btns.querySelector("button[style*='#FFD700']")) btns.appendChild(premiumBtn);
+    if (!btns.querySelector("button[style*='#888']")) btns.appendChild(removeBtn);
   });
 };
 
-document.addEventListener("DOMContentLoaded",showRequests);
-</script>
+// Sayfa yüklendiğinde çalıştır
+document.addEventListener("DOMContentLoaded", showRequests);
+    </script>
 
-  <!-- 2. script -->
-  <script data-cfasync="false">
+   <script>
 async function showUsers(){
-  try{
-    const res=await fetch('https://www.traderroute.com/users?t='+Date.now(),{cache:'no-store'});
-    const users=res.ok?await res.json():[];
-    const tbody=document.getElementById('usersTable');
-    if(!tbody)return;
-    if(users.length===0){
-      tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:#777;">No users found.</td></tr>';
+  try {
+    const res = await fetch('https://divine-hill-9557.traderroutee.workers.dev/users?t=' + Date.now(), { cache: 'no-store' });
+    const users = res.ok ? await res.json() : [];
+
+    const tbody = document.getElementById('usersTable');
+    if (!tbody) return;
+
+    if (users.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#777;">No users found.</td></tr>';
       return;
     }
-    tbody.innerHTML='';
-    users.forEach(u=>{
-      const name=(u.name||'').trim();
-      const parts=name.split(' ');
-      const first=parts[0]||'';const last=parts.slice(1).join(' ')||'';
-      const tr=document.createElement('tr');
-      tr.innerHTML=`
+
+    tbody.innerHTML = '';
+    users.forEach(u => {
+      const name = (u.name || '').trim();
+      const parts = name.split(' ');
+      const first = parts[0] || '';
+      const last  = parts.slice(1).join(' ') || '';
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
         <td>${first}</td>
         <td>${last}</td>
-        <td>${u.company||''}</td>
-        <td>${u.email||''}</td>
-        <td>${u.phone||''}</td>
-        <td>${u.country||''}</td>`;
+        <td>${u.company || ''}</td>
+        <td>${u.email || ''}</td>
+        <td>${u.phone || ''}</td>
+        <td>${u.country || ''}</td>
+      `;
       tbody.appendChild(tr);
     });
-  }catch(err){console.error('Users load failed:',err);}
+  } catch (err) {
+    console.error('Users load failed:', err);
+  }
 }
 </script>
+
+  
 </body>
 </html>
