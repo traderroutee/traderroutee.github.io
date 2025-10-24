@@ -229,44 +229,52 @@ countrySelect.addEventListener("change",()=>{
 });
 
 
-   // === Register logic ===
-async function doRegister(){
-  const name=document.getElementById("name").value.trim();
-  const email=document.getElementById("email").value.trim().toLowerCase();
-  const company=document.getElementById("company").value.trim();
-  const country=document.getElementById("country").value;
-  const category=document.getElementById("category").value;
-  const password=document.getElementById("password").value.trim();
-  const code=document.getElementById("countryCode").value;
-  const phone=document.getElementById("phoneNumber").value.trim();
-  const phoneFull=`${code} ${phone}`.trim();
+   // ... (üstte ülkeler, kategoriler ve telefon kodlarını dolduran kodlar aynı kalsın)
 
-      if(!name||!email||!password||!country||!category){
-        alert("Please fill all required fields.");return;
-      }
+  // === Register logic ===
+  async function doRegister(){
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const company = document.getElementById("company").value.trim();
+    const country = document.getElementById("country").value;
+    const category = document.getElementById("category").value;
+    const password = document.getElementById("password").value.trim();
 
-      let users=JSON.parse(localStorage.getItem("tr_users")||"[]");
-      if(users.find(u=>u.email===email)){alert("This email is already registered.");return;}
+    const code  = document.getElementById("countryCode").value;
+    const phone = document.getElementById("phoneNumber").value.trim();
+    const phoneFull = (code && phone) ? `${code} ${phone}` : "";
 
-      const user={name,email,company,country,category,password,phone:phoneFull,created:new Date().toISOString()};
-      users.push(user);
-      localStorage.setItem("tr_users",JSON.stringify(users));
-      localStorage.setItem("tr_user",JSON.stringify(user));
-      
-      // === Cloudflare Worker'a kullanıcı kaydet ===
-try {
-  await fetch("https://divine-hill-9557.traderroutee.workers.dev/users", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
-  });
-} catch (err) {
-  console.error("User upload failed:", err);
-}
-
-localStorage.setItem("welcome_name", name);
-window.location.href = "index.html";
+    if (!name || !email || !password || !country || !category) {
+      alert("Please fill all required fields.");
+      return;
     }
+
+    // localStorage'a kaydet
+    let users = JSON.parse(localStorage.getItem("tr_users") || "[]");
+    if (users.find(u => u.email === email)) {
+      alert("This email is already registered.");
+      return;
+    }
+    const user = { name, email, company, country, category, password, phone: phoneFull, created: new Date().toISOString() };
+    users.push(user);
+    localStorage.setItem("tr_users", JSON.stringify(users));
+    localStorage.setItem("tr_user", JSON.stringify(user));
+
+    // Cloudflare Worker'a POST
+    try {
+      await fetch("https://divine-hill-9557.traderroutee.workers.dev/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user)
+      });
+    } catch (err) {
+      console.error("User upload failed:", err);
+      // burada hata olsa da kullanıcı kaydını yerelde tutuyoruz; istersen alert verebilirsin
+    }
+
+    localStorage.setItem("welcome_name", name);
+    window.location.href = "index.html";
+  }
   </script>
 </body>
 </html>
