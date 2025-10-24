@@ -96,7 +96,9 @@
 
 async function showRequests() {
   try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(), {
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests", {
+  cache: "no-store"
+});
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -272,7 +274,9 @@ document.addEventListener("DOMContentLoaded", showRequests);
    <script>
 async function showUsers(){
   try {
-    const res = await fetch('https://divine-hill-9557.traderroutee.workers.dev/users?t=' + Date.now(), { cache: 'no-store' });
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests", {
+  cache: "no-store"
+});
     const users = res.ok ? await res.json() : [];
 
     const tbody = document.getElementById('usersTable');
