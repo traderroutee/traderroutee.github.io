@@ -148,38 +148,6 @@
     if(res.ok){alert("Deleted 🗑️");showRequests();}else alert("Delete failed ❌");
   }
 
- <script>
-async function loadUsers() {
-  try {
-    const res = await fetch('https://divine-hill-9557.traderroutee.workers.dev/users');
-    const users = await res.json();
-
-    const tbody = document.getElementById('usersTable');
-    tbody.innerHTML = '';
-
-    if (users.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#777;">No users found.</td></tr>`;
-      return;
-    }
-
-    users.slice().reverse().forEach(u => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${u.name || ''}</td>
-        <td>${u.email || ''}</td>
-        <td>${u.company || ''}</td>
-        <td>${u.phone || ''}</td>
-        <td>${u.country || ''}</td>
-      `;
-      tbody.appendChild(tr);
-    });
-  } catch (err) {
-    console.error('Users load failed:', err);
-  }
-}
-document.addEventListener('DOMContentLoaded', loadUsers);
-</script>
-
 
   statusFilter.addEventListener("change",showRequests);
   document.addEventListener("DOMContentLoaded",showRequests);
