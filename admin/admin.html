@@ -97,15 +97,14 @@
 async function showRequests() {
   try {
     const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  },
+  mode: "cors",
   cache: "no-store"
 });
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      mode: "cors"
-    });
 
     if (!res.ok) {
       console.error("Fetch failed with status:", res.status);
