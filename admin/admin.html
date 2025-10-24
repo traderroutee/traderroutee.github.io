@@ -96,7 +96,7 @@
 
 async function showRequests() {
   try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(), {
+    const res = await fetch("https://www.traderroute.com/requests?t=" + Date.now(), {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -160,7 +160,7 @@ async function showRequests() {
 
   async function approveRequest(id){
     if(!confirm("Approve this request?"))return;
-    const res=await fetch("https://divine-hill-9557.traderroutee.workers.dev/approve",{
+    const res=await fetch(""https://www.traderroute.com/approve" + Date.now(),{
       method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
       body:JSON.stringify({id})
     });
@@ -169,7 +169,7 @@ async function showRequests() {
 
   async function deleteRequest(id){
     if(!confirm("Delete this request?"))return;
-    const res=await fetch("https://divine-hill-9557.traderroutee.workers.dev/delete",{
+    const res=await fetch(""https://www.traderroute.com/delete" + Date.now(),{
       method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
       body:JSON.stringify({id})
     });
@@ -185,7 +185,7 @@ async function togglePremium(id, currentStatus) {
   if (currentStatus) {
     if (!confirm("Remove premium status for this request?")) return;
    const res = await fetch(
-  "https://divine-hill-9557.traderroutee.workers.dev/premium?t=" + Date.now(),
+  "https://www.traderroute.com/premium?t=" + Date.now(),
   {
     cache: "no-store",
     method: "POST",
@@ -209,7 +209,7 @@ if (res.ok) {
   if (isNaN(until)) { alert("Invalid date format."); return; }
 
    const res = await fetch(
-  "https://divine-hill-9557.traderroutee.workers.dev/premium?t=" + Date.now(),
+  "https://www.traderroute.com/premium?t=" + Date.now(),
   {
     cache: "no-store",
     method: "POST",
@@ -272,7 +272,7 @@ document.addEventListener("DOMContentLoaded", showRequests);
    <script>
 async function showUsers(){
   try {
-    const res = await fetch('https://divine-hill-9557.traderroutee.workers.dev/users?t=' + Date.now(), { cache: 'no-store' });
+    const res = await fetch("https://www.traderroute.com/users?t=' + Date.now(), { cache: 'no-store' });
     const users = res.ok ? await res.json() : [];
 
     const tbody = document.getElementById('usersTable');
