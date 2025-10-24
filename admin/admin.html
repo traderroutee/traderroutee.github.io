@@ -96,10 +96,18 @@
 
  async function showRequests() {
   try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now());
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now(), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      mode: "cors"
+    });
+
     const data = await res.json();
 
-    // Yeni Worker JSON'u doğrudan veya {record:[...]} biçiminde döndürebilir
+    // JSONBin bazen {record:[...]} döndürüyor
     const all = Array.isArray(data) ? data : (data.record || []);
     tableBody.innerHTML = "";
 
