@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", showRequests);
    <script>
 async function showUsers(){
   try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests", {
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/users", {
   cache: "no-store"
 });
     const users = res.ok ? await res.json() : [];
