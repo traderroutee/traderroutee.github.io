@@ -241,28 +241,33 @@ showRequests = async function() {
 document.addEventListener("DOMContentLoaded", showRequests);
     </script>
 
-    <script>
-async function loadUsers() {
+   <script>
+async function showUsers(){
   try {
-    const res = await fetch('https://divine-hill-9557.traderroutee.workers.dev/users');
-    const users = await res.json();
+    const res = await fetch('https://divine-hill-9557.traderroutee.workers.dev/users?t=' + Date.now(), { cache: 'no-store' });
+    const users = res.ok ? await res.json() : [];
 
-    // Tablonuzda <tbody id="usersBody"> varsa onu kullanır,
-    // yoksa ilk <table> içindeki <tbody>'yi seçer.
-    const tbody =
-      document.getElementById('usersBody') ||
-      document.querySelector('table tbody');
+    const tbody = document.getElementById('usersTable');
+    if (!tbody) return;
 
-    if (!tbody) return; // tablo yoksa sessizce çık
+    if (users.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#777;">No users found.</td></tr>';
+      return;
+    }
 
     tbody.innerHTML = '';
-
     users.forEach(u => {
+      const name = (u.name || '').trim();
+      const parts = name.split(' ');
+      const first = parts[0] || '';
+      const last  = parts.slice(1).join(' ') || '';
+
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${u.name || ''}</td>
-        <td>${u.email || ''}</td>
+        <td>${first}</td>
+        <td>${last}</td>
         <td>${u.company || ''}</td>
+        <td>${u.email || ''}</td>
         <td>${u.phone || ''}</td>
         <td>${u.country || ''}</td>
       `;
@@ -272,9 +277,8 @@ async function loadUsers() {
     console.error('Users load failed:', err);
   }
 }
-document.addEventListener('DOMContentLoaded', loadUsers);
+</script>
 
-
-  </script>
+  
 </body>
 </html>
