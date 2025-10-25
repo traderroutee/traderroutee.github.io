@@ -280,10 +280,10 @@ imageInput?.addEventListener("change", async (e) => {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/upload", {
-        method: "POST",
-        body: formData
-      });
+      const res = await fetch("https://api.traderroute.com/upload", {
+  method: "POST",
+  body: formData
+});
       const data = await res.json();
       if (data.url) uploadedImageUrls.push(data.url);
     } catch (err) {
