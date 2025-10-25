@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   container.innerHTML = `<p style="text-align:center;color:#777;">Loading...</p>`;
 
   try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
+    const res = await fetch("https://api.traderroute.com/requests");
     const data = await res.json();
 
     const today = new Date();
