@@ -78,56 +78,154 @@
   <!-- === JS === -->
   <script src="assets/flag.js"></script>
 
-  <!-- FETCH PREMIUM REQUESTS -->
-  <script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    const container = document.getElementById("premiumList");
-    if (!container) {   // ✅ Güvenlik kontrolü eklendi
-      console.error("premiumList elementi bulunamadı.");
+ <!-- FETCH PREMIUM REQUESTS (hata-tolerant, production-ready) -->
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+  const container = document.getElementById("premiumList");
+  if (!container) {
+    console.error("premiumList elementi bulunamadı.");
+    return;
+  }
+
+  const now = () => new Date();
+  const renderEmpty = (msg) => {
+    container.innerHTML = `<p style="text-align:center;color:#999;">${msg}</p>`;
+  };
+
+  container.innerHTML = "<p style='text-align:center;color:#777;'>Loading premium requests…</p>";
+
+  // Helper: güvenli flag URL
+  const safeFlag = (country, size = 20) => {
+    try {
+      return (typeof getFlagURL === "function") ? getFlagURL(country, size) : "assets/flag/default.png";
+    } catch (e) {
+      return "assets/flag/default.png";
+    }
+  };
+
+  // Helper: premium filtreleyici
+  const filterPremium = (arr) => {
+    const today = now();
+    return (arr || []).filter(r => r && (r.isPremium === true || r.isPremium === "true") && r.premiumUntil && new Date(r.premiumUntil) >= today);
+  };
+
+  // 1) Deneme: uzak API
+  async function tryApi() {
+    try {
+      const res = await fetch("https://api.traderroute.com/requests", { cache: "no-store" });
+      // CORS veya 4xx/5xx gelirse res.ok false olabilir
+      if (!res.ok) {
+        console.warn("API returned non-ok:", res.status, res.statusText);
+        return null;
+      }
+      const data = await res.json();
+      if (!Array.isArray(data)) {
+        console.warn("API returned non-array payload.");
+        return null;
+      }
+      return data;
+    } catch (err) {
+      console.warn("API fetch failed:", err && err.message ? err.message : err);
+      return null;
+    }
+  }
+
+  // 2) Deneme: local data dosyası (data/requests.json)
+  async function tryLocalFile() {
+    try {
+      const res = await fetch("data/requests.json", { cache: "no-store" });
+      if (!res.ok) {
+        console.info("local data file not available:", res.status);
+        return null;
+      }
+      const data = await res.json();
+      if (!Array.isArray(data)) return null;
+      return data;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  // 3) Deneme: localStorage
+  function tryLocalStorage() {
+    try {
+      const raw = localStorage.getItem("tr_requests") || "[]";
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  // Render fonksiyonu
+  function renderPremiumList(list) {
+    container.innerHTML = "";
+    if (!list || list.length === 0) {
+      renderEmpty("No active premium requests found.");
       return;
     }
-    container.innerHTML = "<p style='text-align:center;color:#777;'>Loading premium requests…</p>";
-    try {
-      const res = await fetch("https://api.traderroute.com/requests");
-      const data = await res.json();
-      const today = new Date();
-      const premium = data.filter(r =>
-        r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today);
-      if (!premium.length) {
-        container.innerHTML = "<p style='text-align:center;color:#999;'>No active premium requests found.</p>";
-        return;
-      }
-      container.innerHTML = "";
-      premium.forEach(r => {
-        const owner = r.ownerEmail || r.contactEmail || r.email || "";
-        const card = document.createElement("div");
-        card.className = "request-card";
-        card.style.border = "2px solid #FFD700";
-        card.style.background = "#fffbe6";
-        card.style.marginBottom = "15px";
-        card.style.cursor = "pointer";
-        card.onclick = () => window.location.href =
-          `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
-        const flagUrl = (typeof getFlagURL === "function") ? getFlagURL(r.country, 20) : "assets/flag/default.png";
-        const flagImg = `<img src="${flagUrl}" alt="${r.country}"
-              onerror="this.src='assets/flag/default.png'"
-              class="flag-icon-img" style="margin-right:6px;">`;
-        card.innerHTML = `
-          <h4>${r.title || "Untitled"} 
-            <span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span>
-          </h4>
-          <p>${r.description || ""}</p>
-          <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
-        `;
-        container.appendChild(card);
-      });
-    } catch (err) {
-      console.error(err);
-      container.innerHTML = "<p style='text-align:center;color:red;'>Failed to load premium requests.</p>";
-    }
-  });
-  </script>
+    list.forEach(r => {
+      const owner = r.ownerEmail || r.contactEmail || r.email || "";
+      const card = document.createElement("div");
+      card.className = "request-card";
+      card.style.border = "2px solid #FFD700";
+      card.style.background = "#fffbe6";
+      card.style.marginBottom = "15px";
+      card.style.cursor = "pointer";
+      card.onclick = () => window.location.href =
+        `request-detail.html?id=${encodeURIComponent(r.id || r.title || "")}&to=${encodeURIComponent(owner)}`;
 
+      const flagUrl = safeFlag(r.country, 20);
+      const flagImg = `<img src="${flagUrl}" alt="${r.country || ''}" onerror="this.src='assets/flag/default.png'" class="flag-icon-img" style="margin-right:6px;">`;
+
+      const dateStr = r.date ? (new Date(r.date)).toLocaleDateString('tr-TR') : "-";
+      const title = r.title || "Untitled";
+      const desc = r.description ? `<p>${r.description}</p>` : "";
+
+      card.innerHTML = `
+        <h4 style="margin:6px 0 8px 0;">${title}
+          <span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span>
+        </h4>
+        ${desc}
+        <small style="color:#555;">${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${dateStr}</small>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  // === MAIN: sıralı denemeler ===
+  // 1. API
+  let data = await tryApi();
+  let premium = data ? filterPremium(data) : [];
+
+  // 2. Eğer API yok veya premium yok -> local data file
+  if ((!data || data.length === 0) || premium.length === 0) {
+    const localFileData = await tryLocalFile();
+    if (localFileData && localFileData.length) {
+      if (!data) data = localFileData; // yalnızca api yoksa overwrite etme
+      premium = premium.concat(filterPremium(localFileData)).filter((v, i, a) => a.indexOf(v) === i);
+    }
+  }
+
+  // 3. localStorage fallback (son çare)
+  if (premium.length === 0) {
+    const ls = tryLocalStorage();
+    if (ls && ls.length) {
+      premium = filterPremium(ls);
+    }
+  }
+
+  // 4. Eğer hala yoksa -> kullanıcıyı bilgilendir ve console uyarısı göster
+  if (!premium || premium.length === 0) {
+    console.info("No premium entries found from API/local file/localStorage. If you expect premium items, check the API (Cloudflare Worker) and data format (isPremium/premiumUntil).");
+    renderEmpty("No active premium requests found. Eğer burada ilan olması gerekiyorsa API (https://api.traderroute.com/requests) veya data/requests.json dosyanızı kontrol edin.");
+    return;
+  }
+
+  // Son: render et
+  renderPremiumList(premium);
+});
+</script>
   <!-- USER MENU -->
   <script>
   (function () {
