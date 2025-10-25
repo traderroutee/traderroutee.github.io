@@ -106,8 +106,14 @@
   const form = document.getElementById("requestForm");
   const successMsg = document.getElementById("successMsg");
 
-  form.addEventListener("submit", function(e){
-    e.preventDefault();
+  form.addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  // Eğer yükleme hala sürüyorsa beklet
+  if (document.querySelectorAll("#imagePreview img").length !== uploadedImageUrls.length) {
+    alert("⏳ Lütfen resimlerin yüklenmesini bekleyin...");
+    return;
+  }
 
     const title = document.getElementById("title").value.trim();
     const description = document.getElementById("description").value.trim();
