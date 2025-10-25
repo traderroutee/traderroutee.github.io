@@ -2,63 +2,248 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>All Requests — Trader Route</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>All Trade Requests | Trader Route</title>
+  <meta name="description" content="Browse all import and export trade requests, including premium and regular listings." />
+  <link rel="icon" href="assets/logos.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body { background: #f6f8fa; font-family: "Inter", Arial, sans-serif; margin: 0; color: #222; }
+
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      background: #fff; padding: 10px 40px; box-shadow: 0 2px 8px rgba(0,0,0,.1);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .logo-container img { height: 45px; }
+    nav { display: flex; gap: 20px; }
+    nav a { text-decoration: none; color: #000; font-weight: 500; }
+    nav a:hover { color: #008b6a; }
+
+    .tabs { display: flex; justify-content: center; gap: 10px; background: #fff; padding: 10px; }
+    .tabs button {
+      background: #eee; border: none; padding: 8px 16px;
+      border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s;
+    }
+    .tabs button.active, .tabs button:hover { background: #008b6a; color: #fff; }
+
+    .container {
+      display: flex; gap: 20px; padding: 20px 40px; align-items: flex-start;
+    }
+    .sidebar {
+      width: 250px; background: #fff; padding: 15px; border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .sidebar h4 { margin-top: 0; color: #006b52; }
+    .sidebar input {
+      width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 10px;
+    }
+    .sidebar ul { list-style: none; padding: 0; margin: 0; max-height: 300px; overflow-y: auto; }
+    .sidebar li { margin: 4px 0; }
+    .sidebar a { text-decoration: none; color: #333; display: flex; justify-content: space-between; }
+    .sidebar a:hover { color: #008b6a; }
+
+    .content {
+      flex: 1; background: #fff; border-radius: 8px; padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+      font-size: 18px; font-weight: 700; color: #006b52;
+      margin: 10px 0; border-bottom: 2px solid #008b6a1a; padding-bottom: 5px;
+    }
+
+    .request-card {
+      border-radius: 8px; padding: 15px; margin-bottom: 15px;
+      background: #fff; transition: 0.2s; cursor: pointer;
+      border: 1px solid #ddd;
+    }
+    .request-card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .request-card h5 { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
+    .request-card p { margin: 0 0 4px; font-size: 14px; color: #444; }
+    .request-card small { color: #666; }
+
+    .premium-card {
+      border: 2px solid #ffd700 !important;
+      background: #fffbe6 !important;
+    }
+    .premium-badge {
+      background: #ffd700; color: #000; padding: 3px 6px;
+      border-radius: 4px; font-size: 12px; margin-left: 6px;
+    }
+
+    #searchInput {
+      width: 100%; max-width: 420px; padding: 10px; border-radius: 6px;
+      border: 1px solid #ccc; font-size: 14px; margin-bottom: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .container { flex-direction: column; padding: 15px; }
+      .sidebar { width: 100%; order: 2; }
+      .content { order: 1; }
+    }
+  </style>
 </head>
+
 <body>
   <header>
-    <div class="logo"><a href="index.html">Trader Route</a></div>
+    <div class="logo-container" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route" />
+      <span style="font-size:14px;color:#555;">The Silk Road of E-Commerce</span>
+    </div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="requests.html" class="active">Requests</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html">Requests</a>
       <a href="contact.html">Contact</a>
       <a href="pricing.html">Pricing</a>
     </nav>
   </header>
 
-  <section class="content" style="padding: 20px 10%; min-height:80vh;">
-    <h2 style="color:#007157; margin-bottom: 20px;">All Requests</h2>
-    <div id="allList" class="request-list"></div>
-  </section>
+  <div class="tabs">
+    <button class="active">All Requests</button>
+    <button onclick="filterType('buy')">Buy Requests</button>
+    <button onclick="filterType('sell')">Sell Requests</button>
+    <button onclick="location.href='request-form.html'">Free Request</button>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <h4>Categories</h4>
+      <input type="text" id="categorySearch" placeholder="Search category">
+      <ul id="categoryList"></ul>
+
+      <h4>Countries</h4>
+      <input type="text" id="countrySearch" placeholder="Search country">
+      <ul id="countryList"></ul>
+    </div>
+
+    <div class="content">
+      <input type="text" id="searchInput" placeholder="Search all requests...">
+      <div id="premiumSection">
+        <div class="section-title">⭐ Premium Requests</div>
+        <div id="premiumRequests"></div>
+      </div>
+      <div id="normalSection">
+        <div class="section-title">All Requests</div>
+        <div id="normalRequests"></div>
+      </div>
+    </div>
+  </div>
 
   <script src="assets/flag.js"></script>
   <script>
-  document.addEventListener("DOMContentLoaded", async function() {
-    const container = document.getElementById("allList");
-    container.innerHTML = `<p style="text-align:center;color:#777;">Loading...</p>`;
-    try {
-      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
-      const data = await res.json();
-      const today = new Date();
-      const descByDate = (a,b) => (new Date(b.date) - new Date(a.date));
-      const sorted = data.sort(descByDate);
-      container.innerHTML = "";
-      sorted.forEach(r => {
-        const owner = r.ownerEmail || r.contactEmail || r.email || "";
-        const isPremium = r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today;
-        const div = document.createElement("div");
-        div.className = "request-card";
-        div.style.border = isPremium ? "2px solid #FFD700" : "1px solid #e3e3e3";
-        div.style.background = isPremium ? "#fffbe6" : "#fff";
-        div.style.marginBottom = "15px";
-        div.style.cursor = "pointer";
-        div.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
-        const flagImg = `<img src="${getFlagURL(r.country, 20)}"
-          alt="${r.country}" class="flag-icon-img"
-          onerror="this.onerror=null;this.src='assets/flag/default.png'">`;
-        const premiumBadge = isPremium ? `<span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span>` : "";
-        div.innerHTML = `
-          <h4>${r.title || "Untitled"} ${premiumBadge}</h4>
-          <p>${r.description || ""}</p>
-          <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
-        `;
-        container.appendChild(div);
-      });
-    } catch(err) {
-      container.innerHTML = `<p style="text-align:center;color:red;">Failed to load data.</p>`;
+    let categories = [], allCountries = [];
+    let allRequestsData = [];
+    let selectedCategory = null, selectedCountry = null;
+    let activeType = null;
+
+    async function getRequests() {
+      try {
+        const res = await fetch("https://api.traderroute.com/requests?t=" + Date.now());
+        const data = await res.json();
+        return Array.isArray(data) ? data : (data.record || data.data || []);
+      } catch { return []; }
     }
-  });
+
+    async function ensureCategories() {
+      if (categories.length) return;
+      try {
+        const res = await fetch("data/categories.json");
+        categories = await res.json();
+      } catch {}
+    }
+
+    async function ensureCountries() {
+      if (allCountries.length) return;
+      try {
+        const res = await fetch("data/countries.json");
+        const arr = await res.json();
+        allCountries = arr.map(it => ({ name: it.name || it, code: (it.code || "").toLowerCase() }));
+      } catch {}
+    }
+
+    function renderCategories(reqs) {
+      const t = (categorySearch.value || "").toLowerCase();
+      const d = categories.filter(c => c.toLowerCase().includes(t));
+      categoryList.innerHTML = "";
+      d.forEach(cat => {
+        const count = reqs.filter(r => r.category === cat).length;
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="#">${cat}<span>(${count})</span></a>`;
+        li.onclick = e => { e.preventDefault(); selectedCategory = cat; selectedCountry = null; renderRequests(); };
+        categoryList.appendChild(li);
+      });
+    }
+
+    function renderCountries(reqs) {
+      const t = (countrySearch.value || "").toLowerCase();
+      const d = allCountries.filter(c => c.name.toLowerCase().includes(t));
+      countryList.innerHTML = "";
+      d.forEach(c => {
+        const count = reqs.filter(r => r.country === c.name).length;
+        const flagImg = getFlagURL(c.name, 20);
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="#"><span style="display:flex;align-items:center;gap:6px;"><img class='flag' src='${flagImg}' alt='${c.name}' loading='lazy'>${c.name}</span><span>(${count})</span></a>`;
+        li.onclick = e => { e.preventDefault(); selectedCountry = c.name; selectedCategory = null; renderRequests(); };
+        countryList.appendChild(li);
+      });
+    }
+
+    function filterType(type) { activeType = type; renderRequests(); }
+
+    function renderRequests(data) {
+      if (data) allRequestsData = data;
+      const all = allRequestsData || [];
+      const today = new Date();
+      const filtered = all.filter(r =>
+        (!selectedCategory || r.category === selectedCategory) &&
+        (!selectedCountry || r.country === selectedCountry) &&
+        ((r.title || "").toLowerCase().includes(searchInput.value.toLowerCase()) ||
+         (r.description || "").toLowerCase().includes(searchInput.value.toLowerCase())) &&
+        (!activeType || r.type === activeType)
+      );
+
+      const premium = filtered.filter(r => r.isPremium && new Date(r.premiumUntil) >= today);
+      const normal = filtered.filter(r => !r.isPremium || new Date(r.premiumUntil) < today);
+
+      renderCategories(filtered);
+      renderCountries(filtered);
+
+      const premiumBox = document.getElementById("premiumRequests");
+      const normalBox = document.getElementById("normalRequests");
+      premiumBox.innerHTML = ""; normalBox.innerHTML = "";
+
+      premium.forEach(r => premiumBox.appendChild(createCard(r, true)));
+      normal.forEach(r => normalBox.appendChild(createCard(r, false)));
+
+      if (!premium.length) premiumBox.innerHTML = "<p style='color:#999;'>No active premium requests.</p>";
+      if (!normal.length) normalBox.innerHTML = "<p style='color:#999;'>No regular requests found.</p>";
+    }
+
+    function createCard(r, isPremium) {
+      const div = document.createElement("div");
+      div.className = "request-card" + (isPremium ? " premium-card" : "");
+      const flagImg = `<img src="${getFlagURL(r.country, 20)}" alt="${r.country}" style="margin-right:6px;">`;
+      const badge = isPremium ? `<span class="premium-badge">⭐ Premium</span>` : "";
+      div.innerHTML = `
+        <h5>${r.title || "Untitled"} ${badge}</h5>
+        <p>${r.description || ""}</p>
+        <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
+      `;
+      div.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(r.user || "")}`;
+      return div;
+    }
+
+    document.getElementById("searchInput").addEventListener("input", () => renderRequests());
+
+    (async function init() {
+      await Promise.all([ensureCategories(), ensureCountries()]);
+      const data = await getRequests();
+      renderRequests(data);
+    })();
   </script>
 </body>
 </html>
