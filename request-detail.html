@@ -108,35 +108,56 @@
 
   <!-- ✅ Header ana sayfadakiyle birebir aynı -->
   <header>
-    <div class="logo-container" onclick="location.href='index.html'">
-      <img src="assets/logos.png" alt="Trader Route Logo">
-      <span class="logo-text">The Silk Road of E-Commerce</span>
+  <!-- Sol: Logo -->
+  <div class="logo-container" onclick="location.href='index.html'">
+    <img src="assets/logos.png" alt="Trader Route Logo">
+    <span class="logo-text">The Silk Road of E-Commerce</span>
+  </div>
+
+  <!-- Orta: Menü -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html" style="color:var(--green);font-weight:700;">Requests</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html">Pricing</a>
+  </nav>
+
+  <!-- Sağ: Arama + Mesaj + Giriş/Kayıt + Kullanıcı menüsü -->
+  <div class="header-right">
+    <div class="search-box">
+      <input type="text" placeholder="Search...">
+      <button>🔍</button>
     </div>
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="companies.html">Companies</a>
-      <a href="requests.html" style="color:var(--green);font-weight:700;">Requests</a>
-      <a href="contact.html">Contact</a>
-      <a href="pricing.html">Pricing</a>
-    </nav>
+    <!-- 📩 Messages Button + badge -->
+    <div id="messageIconContainer" style="position:relative;margin-left:15px;">
+      <a href="messages.html" id="messageIconLink" style="text-decoration:none;color:inherit;">
+        <img src="assets/email.png" alt="Messages" style="width:25px;height:25px;cursor:pointer;">
+        <span id="messageBadge"
+              style="position:absolute;top:-5px;right:-8px;background:red;color:white;font-size:11px;border-radius:50%;padding:2px 5px;display:none;">
+        </span>
+      </a>
+    </div>
 
-    <div class="header-right">
-      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
-      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
-      <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
-        <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
-             style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
-        <div id="userDropdown"
-             style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
-                    box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
-          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
-          <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
-          <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
-        </div>
+    <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+    <button class="join-btn"  onclick="location.href='register.html'">Join Now</button>
+
+    <!-- Kullanıcı menüsü -->
+    <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
+      <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
+           style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+      <div id="userDropdown"
+           style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
+                  box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+        <a href="profile.html"   style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+        <a href="messages.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+        <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
       </div>
     </div>
-  </header>
+  </div>
+</header>
+
 
   <!-- ✅ Request Detail -->
   <div class="request-detail-container">
