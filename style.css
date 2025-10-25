@@ -57,6 +57,12 @@ nav {
 nav a {
   font-size: 18px !important;
   font-weight: 600;
+  color: #000 !important;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--green) !important;
 }
 
 nav a:hover {
