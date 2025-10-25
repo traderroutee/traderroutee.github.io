@@ -312,6 +312,27 @@ function openChat() {
     dropdown.classList.toggle('active');
   });
 })();
+    <!-- ... diğer scriptleriniz burada bitiyor ... -->
+
+<script>
+// === Mesaj bildirimi (unread badge) ===
+(function(){
+  const badge = document.getElementById("messageBadge");
+  const user  = JSON.parse(localStorage.getItem("tr_user") || "null");
+  if(!user || !badge) return;
+
+  const allMessages = JSON.parse(localStorage.getItem("tr_messages") || "[]");
+  const unread = allMessages.filter(m => m.to === user.email && !m.read);
+
+  if (unread.length > 0) {
+    badge.textContent = unread.length;
+    badge.style.display = "inline-block";
+  } else {
+    badge.style.display = "none";
+  }
+})();
 </script>
+
 </body>
 </html>
+
