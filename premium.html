@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trader Route – Premium Requests</title>
-  <link rel="icon" href="assets/logos.png" type="image/png" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Premium Requests — Trader Route</title>
+  <link rel="icon" href="assets/logos.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- HEADER (değiştirmedik) -->
   <header>
     <div class="logo-container" onclick="location.href='index.html'">
-      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy" />
+      <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
       <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
 
@@ -26,27 +26,22 @@
 
     <div class="header-right">
       <div class="search-box">
-        <input type="text" placeholder="Search..." />
+        <input type="text" placeholder="Search...">
         <button>🔍</button>
       </div>
 
       <div id="messageIconContainer" style="position:relative;margin-left:15px;">
         <a href="messages.html" id="messageIconLink" style="text-decoration:none;color:inherit;">
           <img src="assets/email.png" alt="Messages" style="width:25px;height:25px;cursor:pointer;">
-          <span id="messageBadge"
-                style="position:absolute;top:-5px;right:-8px;background:red;color:white;font-size:11px;border-radius:50%;padding:2px 5px;display:none;">
-          </span>
+          <span id="messageBadge" style="position:absolute;top:-5px;right:-8px;background:red;color:white;font-size:11px;border-radius:50%;padding:2px 5px;display:none;"></span>
         </a>
       </div>
 
       <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
       <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
 
-      <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
-           style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
-      <div id="userDropdown"
-           style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
-                  box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+      <img id="userIcon" src="assets/user-icon.png" alt="User Icon" style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+      <div id="userDropdown" style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
         <a href="profile.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
         <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
         <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
@@ -54,239 +49,194 @@
     </div>
   </header>
 
-  <!-- HERO -->
-<section class="hero" style="
-  position: relative;
-  width: 100vw;
-  height: 470px;
-  background: url('assets/ihracat-haritasi.png') center center / 115% no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  overflow: hidden;
-">
-  <div style="position: relative; z-index: 2; color: #fff;">
-    <h1 style="font-size: 46px; font-weight: 800; margin: 0; text-shadow: 0 3px 10px rgba(0,0,0,0.5);">
-      ⭐ Premium Trade Requests
-    </h1>
-  </div>
-  <div style="content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.35); z-index: 1;"></div>
-</section>
+  <!-- === TABS (requests sayfası ile aynı görünüm) === -->
+  <div class="tabs">
+    <button class="active" id="tabAll">All Requests</button>
+    <button id="tabBuy">Buy Requests</button>
+    <button id="tabSell">Sell Requests</button>
+    <button id="tabFree" onclick="location.href='request-form.html'">Free Request</button>
+  </div> <!-- tabs -->
+  <!-- (Sekmeler sadece premium altındaki type filtrelemesini yapacak) --> :contentReference[oaicite:2]{index=2}
 
-  <!-- MIDDLE BUTTONS -->
-  <div class="middle-buttons">
-    <button onclick="location.href='requests.html'">All Requests</button>
-    <button onclick="location.href='requests.html?type=buy'">Buy Requests</button>
-    <button onclick="location.href='requests.html?type=sell'">Sell Requests</button>
-    <button onclick="location.href='request-form.html'">Free Request</button>
-  </div>
+  <!-- === LAYOUT (sol filtreler + içerik) === -->
+  <div class="container">
+    <div class="sidebar">
+      <h4>Categories</h4>
+      <input type="text" class="category-search" id="categorySearch" placeholder="Search category.">
+      <ul class="category-list" id="categoryList"></ul>
 
-  <!-- PREMIUM LIST -->
-  <section class="content" style="padding:20px 10%;min-height:80vh;">
-    <h2 style="text-align:center;margin-bottom:25px;">⭐ Premium Requests</h2>
-    <div id="premiumList"></div>
-  </section>
+      <h4>Countries</h4>
+      <input type="text" class="country-search" id="countrySearch" placeholder="Search country.">
+      <ul class="country-list" id="countryList"></ul>
+    </div>
+
+    <div class="content">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search requests.">
+      </div>
+      <div id="requestItems"></div>
+    </div>
+  </div> <!-- container --> :contentReference[oaicite:3]{index=3}
 
   <!-- === JS === -->
   <script src="assets/flag.js"></script>
 
- <!-- FETCH PREMIUM REQUESTS (hata-tolerant, production-ready) -->
-<script>
-document.addEventListener("DOMContentLoaded", async function () {
-  const container = document.getElementById("premiumList");
-  if (!container) {
-    console.error("premiumList elementi bulunamadı.");
-    return;
-  }
-
-  const now = () => new Date();
-  const renderEmpty = (msg) => {
-    container.innerHTML = `<p style="text-align:center;color:#999;">${msg}</p>`;
-  };
-
-  container.innerHTML = "<p style='text-align:center;color:#777;'>Loading premium requests…</p>";
-
-  // Helper: güvenli flag URL
-  const safeFlag = (country, size = 20) => {
-    try {
-      return (typeof getFlagURL === "function") ? getFlagURL(country, size) : "assets/flag/default.png";
-    } catch (e) {
-      return "assets/flag/default.png";
-    }
-  };
-
-  // Helper: premium filtreleyici
-  const filterPremium = (arr) => {
-    const today = now();
-    return (arr || []).filter(r => r && (r.isPremium === true || r.isPremium === "true") && r.premiumUntil && new Date(r.premiumUntil) >= today);
-  };
-
-  // 1) Deneme: uzak API
-  async function tryApi() {
-    try {
-      const res = await fetch("https://api.traderroute.com/requests", { cache: "no-store" });
-      // CORS veya 4xx/5xx gelirse res.ok false olabilir
-      if (!res.ok) {
-        console.warn("API returned non-ok:", res.status, res.statusText);
-        return null;
-      }
-      const data = await res.json();
-      if (!Array.isArray(data)) {
-        console.warn("API returned non-array payload.");
-        return null;
-      }
-      return data;
-    } catch (err) {
-      console.warn("API fetch failed:", err && err.message ? err.message : err);
-      return null;
-    }
-  }
-
-  // 2) Deneme: local data dosyası (data/requests.json)
-  async function tryLocalFile() {
-    try {
-      const res = await fetch("data/requests.json", { cache: "no-store" });
-      if (!res.ok) {
-        console.info("local data file not available:", res.status);
-        return null;
-      }
-      const data = await res.json();
-      if (!Array.isArray(data)) return null;
-      return data;
-    } catch (err) {
-      return null;
-    }
-  }
-
-  // 3) Deneme: localStorage
-  function tryLocalStorage() {
-    try {
-      const raw = localStorage.getItem("tr_requests") || "[]";
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (err) {
-      return [];
-    }
-  }
-
-  // Render fonksiyonu
-  function renderPremiumList(list) {
-    container.innerHTML = "";
-    if (!list || list.length === 0) {
-      renderEmpty("No active premium requests found.");
-      return;
-    }
-    list.forEach(r => {
-      const owner = r.ownerEmail || r.contactEmail || r.email || "";
-      const card = document.createElement("div");
-      card.className = "request-card";
-      card.style.border = "2px solid #FFD700";
-      card.style.background = "#fffbe6";
-      card.style.marginBottom = "15px";
-      card.style.cursor = "pointer";
-      card.onclick = () => window.location.href =
-        `request-detail.html?id=${encodeURIComponent(r.id || r.title || "")}&to=${encodeURIComponent(owner)}`;
-
-      const flagUrl = safeFlag(r.country, 20);
-      const flagImg = `<img src="${flagUrl}" alt="${r.country || ''}" onerror="this.src='assets/flag/default.png'" class="flag-icon-img" style="margin-right:6px;">`;
-
-      const dateStr = r.date ? (new Date(r.date)).toLocaleDateString('tr-TR') : "-";
-      const title = r.title || "Untitled";
-      const desc = r.description ? `<p>${r.description}</p>` : "";
-
-      card.innerHTML = `
-        <h4 style="margin:6px 0 8px 0;">${title}
-          <span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span>
-        </h4>
-        ${desc}
-        <small style="color:#555;">${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${dateStr}</small>
-      `;
-      container.appendChild(card);
-    });
-  }
-
-  // === MAIN: sıralı denemeler ===
-  // 1. API
-  let data = await tryApi();
-  let premium = data ? filterPremium(data) : [];
-
-  // 2. Eğer API yok veya premium yok -> local data file
-  if ((!data || data.length === 0) || premium.length === 0) {
-    const localFileData = await tryLocalFile();
-    if (localFileData && localFileData.length) {
-      if (!data) data = localFileData; // yalnızca api yoksa overwrite etme
-      premium = premium.concat(filterPremium(localFileData)).filter((v, i, a) => a.indexOf(v) === i);
-    }
-  }
-
-  // 3. localStorage fallback (son çare)
-  if (premium.length === 0) {
-    const ls = tryLocalStorage();
-    if (ls && ls.length) {
-      premium = filterPremium(ls);
-    }
-  }
-
-  // 4. Eğer hala yoksa -> kullanıcıyı bilgilendir ve console uyarısı göster
-  if (!premium || premium.length === 0) {
-    console.info("No premium entries found from API/local file/localStorage. If you expect premium items, check the API (Cloudflare Worker) and data format (isPremium/premiumUntil).");
-    renderEmpty("No active premium requests found. Eğer burada ilan olması gerekiyorsa API (https://api.traderroute.com/requests) veya data/requests.json dosyanızı kontrol edin.");
-    return;
-  }
-
-  // Son: render et
-  renderPremiumList(premium);
-});
-</script>
-  <!-- USER MENU -->
   <script>
-  (function () {
-    const header = document.querySelector("header");
-    const icon = document.getElementById("userIcon");
-    const dropdown = document.getElementById("userDropdown");
-    const loginBtn = header?.querySelector("button[onclick*='login.html']");
-    const joinBtn = header?.querySelector("button[onclick*='register.html']");
-    const currentUser = JSON.parse(localStorage.getItem("tr_user") || "null");
-    if (currentUser) {
-      if (icon) icon.style.display = "inline-block";
-      if (loginBtn) loginBtn.style.display = "none";
-      if (joinBtn) joinBtn.style.display = "none";
-    } else {
-      if (icon) icon.style.display = "none";
+    // requests.html’dekiyle aynı değişken seti (ID’ler birebir) :contentReference[oaicite:4]{index=4}
+    let categories=null, allCountries=null;
+
+    async function getRequests() {
+      try {
+        const res = await fetch("https://api.traderroute.com/requests?t=" + Date.now());
+        if (res.ok) {
+          const data = await res.json();
+          return Array.isArray(data) ? data : [];
+        }
+        return [];
+      } catch (e) { return []; }
+    } :contentReference[oaicite:5]{index=5}
+
+    const requestContainer=document.getElementById("requestItems"),
+          searchInput=document.getElementById("searchInput"),
+          categoryList=document.getElementById("categoryList"),
+          countryList=document.getElementById("countryList"),
+          categorySearch=document.getElementById("categorySearch"),
+          countrySearch=document.getElementById("countrySearch");
+
+    // Premium sayfası: varsayılan sekme "all", ama sadece premium gösterilecek
+    let activeTab="all", selectedCategory=null, selectedCountry=null;
+
+    // Countries & categories helper’ları (requests.html ile aynı mantık) :contentReference[oaicite:6]{index=6}
+    function toCode(name){ if(!name) return "unknown"; const key=Object.keys(countryCodeMap).find(k=>k.toLowerCase()===name.toLowerCase()); if(key) return countryCodeMap[key]; return (name.slice(0,2)||"unknown").toLowerCase(); }
+
+    async function ensureCategories(){ if(categories) return; try{ const r=await fetch("data/categories.json",{cache:"no-store"}); categories=await r.json(); }catch{ categories=[]; } }
+    async function ensureCountries(){ if(allCountries) return; try{ const r=await fetch("data/countries.json",{cache:"no-store"}); const a=await r.json(); allCountries=a.map(it=>({name:it.name||it,code:(it.code||countryCodeMap[it.name||it]||toCode(it.name||it)).toLowerCase()})); }catch{ allCountries=[]; } } :contentReference[oaicite:7]{index=7}
+
+    function renderCountries(reqs){
+      const t=(countrySearch.value||"").toLowerCase();
+      const d=(allCountries||[]).filter(c=>c.name.toLowerCase().includes(t));
+      countryList.innerHTML="";
+      d.forEach(c=>{
+        const n=reqs.filter(r=>r.country===c.name).length;
+        const flagImg=getFlagURL(c.name,20);
+        const li=document.createElement("li");
+        li.innerHTML=`<a href="#"><span style="display:flex;align-items:center;gap:6px;"><img class='flag' src='${flagImg}' alt='${c.name}' loading='lazy'>${c.name}</span><span class='count'>(${n})</span></a>`;
+        li.onclick=e=>{e.preventDefault(); selectedCountry=c.name; selectedCategory=null; renderRequests();};
+        countryList.appendChild(li);
+      });
+    } :contentReference[oaicite:8]{index=8}
+
+    function renderCategories(reqs){
+      const t=(categorySearch.value||"").toLowerCase();
+      const d=(categories||[]).filter(c=>c.toLowerCase().includes(t));
+      categoryList.innerHTML="";
+      d.forEach(cat=>{
+        const c=reqs.filter(r=>r.category===cat).length;
+        const li=document.createElement("li");
+        li.innerHTML=`<a href="#"><span>${cat}</span><span class="count">(${c})</span></a>`;
+        li.onclick=e=>{e.preventDefault(); selectedCategory=cat; selectedCountry=null; renderRequests();};
+        categoryList.appendChild(li);
+      });
+    } :contentReference[oaicite:9]{index=9}
+
+    let allRequestsData=[];
+
+    function renderRequests(allData){
+      if(allData) allRequestsData=allData;
+      const all=allRequestsData||[];
+
+      // Sidebar sayacı ve listeleri, sadece PREMIUM veri üzerinden hesaplıyoruz
+      const today=new Date();
+      const isPremiumOk = r => r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today;
+
+      // Sadece premium olanları baz al
+      const premiumAll = all.filter(r =>
+        isPremiumOk(r) &&
+        (activeTab==="all" || r.type===activeTab) &&
+        (!selectedCategory || r.category===selectedCategory) &&
+        (!selectedCountry || r.country===selectedCountry) &&
+        ((r.title||"").toLowerCase().includes((searchInput.value||"").toLowerCase()) ||
+         (r.description||"").toLowerCase().includes((searchInput.value||"").toLowerCase()))
+      ).sort((a,b)=>new Date(b.date)-new Date(a.date));
+
+      // Filtre listelerini premium datasına göre kur
+      renderCategories(premiumAll);
+      renderCountries(premiumAll);
+
+      // Listeyi bas
+      requestContainer.innerHTML="";
+      if(premiumAll.length===0){
+        const p=document.createElement("p");
+        p.style.cssText="text-align:center;color:#999;margin:20px 0";
+        p.textContent="No active premium requests found.";
+        requestContainer.appendChild(p);
+        return;
+      }
+
+      premiumAll.forEach(r=>{
+        const owner=r.ownerEmail||r.contactEmail||r.email||"";
+        const div=document.createElement("div");
+        div.className="request-card";
+        div.style.border="2px solid #FFD700";
+        div.style.background="#fffbe6";
+        div.style.cursor="pointer";
+        div.onclick=()=>window.location.href=`request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
+
+        const flagImg=`<img src="${getFlagURL(r.country,20)}" alt="${r.country}" class="flag-icon-img" onerror="this.onerror=null;this.src='assets/flag/default.png'">`;
+        div.innerHTML=`
+          <h5>${r.title || "Untitled Request"} <span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span></h5>
+          <p>${r.description || ""}</p>
+          <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
+        `;
+        requestContainer.appendChild(div);
+      });
+    } :contentReference[oaicite:10]{index=10}
+
+    // Sekmeler (type filtresi — yalnız premium içinde çalışır)
+    function setActive(id){
+      document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
     }
-    icon?.addEventListener("click", e => {
-      e.stopPropagation();
-      dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-    });
-    document.addEventListener("click", e => {
-      if (!e.target.closest("#userDropdown") && e.target.id !== "userIcon")
-        dropdown.style.display = "none";
-    });
-    window.logoutUser = function () {
-      localStorage.removeItem("tr_user");
-      location.href = "index.html";
-    };
-  })();
+    document.getElementById("tabAll").onclick = ()=>{activeTab='all'; setActive("tabAll"); renderRequests();};
+    document.getElementById("tabBuy").onclick = ()=>{activeTab='buy'; setActive("tabBuy"); renderRequests();};
+    document.getElementById("tabSell").onclick = ()=>{activeTab='sell'; setActive("tabSell"); renderRequests();};
+
+    // Arama alanı
+    searchInput.addEventListener("input", ()=>renderRequests());
+
+    // İlk yükleme
+    (async function init(){
+      await Promise.all([ensureCategories(), ensureCountries()]);
+      const data = await getRequests();
+      renderRequests(data);
+    })();
   </script>
 
-  <!-- MESSAGE BADGE -->
+  <!-- USER MENU & MESSAGE BADGE (mevcut sayfalarla aynı) -->
   <script>
-  (function () {
-    const badge = document.getElementById("messageBadge");
-    const user = JSON.parse(localStorage.getItem("tr_user") || "null");
-    if (!user || !badge) return;
-    const allMessages = JSON.parse(localStorage.getItem("tr_messages") || "[]");
-    const unread = allMessages.filter(m => m.to === user.email && !m.read);
-    if (unread.length > 0) {
-      badge.textContent = unread.length;
-      badge.style.display = "inline-block";
-    } else {
-      badge.style.display = "none";
-    }
-  })();
+    (function(){
+      const header=document.querySelector("header");
+      const icon=document.getElementById("userIcon");
+      const dropdown=document.getElementById("userDropdown");
+      const loginBtn=header?.querySelector("button[onclick*='login.html']");
+      const joinBtn=header?.querySelector("button[onclick*='register.html']");
+      const currentUser=JSON.parse(localStorage.getItem("tr_user")||"null");
+      if(currentUser){ if(icon) icon.style.display="inline-block"; if(loginBtn) loginBtn.style.display="none"; if(joinBtn) joinBtn.style.display="none"; }
+      else { if(icon) icon.style.display="none"; }
+      icon?.addEventListener("click", e=>{ e.stopPropagation(); dropdown.style.display=(dropdown.style.display==="block")?"none":"block"; });
+      document.addEventListener("click", e=>{ if(!e.target.closest("#userDropdown") && e.target.id!=="userIcon") dropdown.style.display="none"; });
+      window.logoutUser=function(){ localStorage.removeItem("tr_user"); location.href="index.html"; };
+    })();
+
+    (function(){
+      const badge=document.getElementById("messageBadge");
+      const user=JSON.parse(localStorage.getItem("tr_user")||"null");
+      if(!user || !badge) return;
+      const allMessages=JSON.parse(localStorage.getItem("tr_messages")||"[]");
+      const unread=allMessages.filter(m=>m.to===user.email && !m.read);
+      badge.textContent=unread.length||"";
+      badge.style.display=unread.length>0?"inline-block":"none";
+    })();
   </script>
 
 </body>
