@@ -4,95 +4,79 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>All Trade Requests | Trader Route</title>
-  <meta name="description" content="Browse all import and export trade requests, including premium and regular listings." />
+  <meta name="description" content="Browse all import and export trade requests, with premium listings shown first." />
   <link rel="icon" href="assets/logos.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    body { background: #f6f8fa; font-family: "Inter", Arial, sans-serif; margin: 0; color: #222; }
+    :root { --green:#008b6a; --green-dark:#006b52; --bg:#f6f8fa; }
+    body { background:var(--bg); font-family:"Inter", Arial, sans-serif; margin:0; color:#222; }
 
-    header {
-      display: flex; justify-content: space-between; align-items: center;
-      background: #fff; padding: 10px 40px; box-shadow: 0 2px 8px rgba(0,0,0,.1);
-      position: sticky; top: 0; z-index: 100;
+    /* HEADER — premium.html ile aynı yapı */
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      background:#fff; padding:10px 40px; box-shadow:0 2px 8px rgba(0,0,0,.1);
+      position:sticky; top:0; z-index:1000;
     }
-    .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-    .logo-container img { height: 45px; }
-    nav { display: flex; gap: 20px; }
-    nav a { text-decoration: none; color: #000; font-weight: 500; }
-    nav a:hover { color: #008b6a; }
+    .logo-container{display:flex;align-items:center;gap:10px;cursor:pointer}
+    .logo-container img{height:45px}
+    .logo-text{font-size:15px;color:#555;font-weight:500}
+    nav{flex:1;display:flex;justify-content:center;align-items:center;gap:20px}
+    nav a{text-decoration:none;color:#000;font-weight:500}
+    nav a:hover{color:var(--green)}
+    .header-right{flex:0 0 auto;display:flex;align-items:center;gap:10px;min-width:250px;justify-content:flex-end}
+    .search-box{display:flex;align-items:center}
+    .search-box input{padding:6px 8px;border:1px solid #ccc;border-radius:6px 0 0 6px;outline:none}
+    .search-box button{padding:6px 10px;border:none;background:var(--green);color:#fff;border-radius:0 6px 6px 0;cursor:pointer}
 
-    .tabs { display: flex; justify-content: center; gap: 10px; background: #fff; padding: 10px; }
-    .tabs button {
-      background: #eee; border: none; padding: 8px 16px;
-      border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s;
-    }
-    .tabs button.active, .tabs button:hover { background: #008b6a; color: #fff; }
+    /* Tabs */
+    .tabs{display:flex;justify-content:center;gap:10px;background:#fff;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+    .tabs button{background:#eee;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:700;transition:.2s}
+    .tabs button.active,.tabs button:hover{background:var(--green);color:#fff}
 
-    .container {
-      display: flex; gap: 20px; padding: 20px 40px; align-items: flex-start;
-    }
-    .sidebar {
-      width: 250px; background: #fff; padding: 15px; border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-    .sidebar h4 { margin-top: 0; color: #006b52; }
-    .sidebar input {
-      width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 10px;
-    }
-    .sidebar ul { list-style: none; padding: 0; margin: 0; max-height: 300px; overflow-y: auto; }
-    .sidebar li { margin: 4px 0; }
-    .sidebar a { text-decoration: none; color: #333; display: flex; justify-content: space-between; }
-    .sidebar a:hover { color: #008b6a; }
+    /* Layout */
+    .container{display:flex;gap:20px;padding:20px 40px;align-items:flex-start}
+    .sidebar{width:250px;background:#fff;padding:15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    .sidebar h4{margin-top:0;color:var(--green-dark);font-weight:800}
+    .sidebar input{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;margin-bottom:10px}
+    .sidebar ul{list-style:none;padding:0;margin:0;max-height:300px;overflow-y:auto}
+    .sidebar li{margin:4px 0}
+    .sidebar a{text-decoration:none;color:#333;display:flex;justify-content:space-between}
+    .sidebar a:hover{color:var(--green)}
 
-    .content {
-      flex: 1; background: #fff; border-radius: 8px; padding: 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
+    .content{flex:1;background:#fff;border-radius:8px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+    #searchInput{width:100%;max-width:420px;padding:10px;border-radius:6px;border:1px solid #ccc;font-size:14px;margin-bottom:20px}
 
-    .section-title {
-      font-size: 18px; font-weight: 700; color: #006b52;
-      margin: 10px 0; border-bottom: 2px solid #008b6a1a; padding-bottom: 5px;
-    }
+    /* Başlıklar daha kalın */
+    .section-title{font-size:18px;font-weight:800;color:var(--green-dark);margin:10px 0;border-bottom:2px solid #008b6a1a;padding-bottom:5px}
 
-    .request-card {
-      border-radius: 8px; padding: 15px; margin-bottom: 15px;
-      background: #fff; transition: 0.2s; cursor: pointer;
-      border: 1px solid #ddd;
-    }
-    .request-card:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.1); transform: translateY(-2px); }
-    .request-card h5 { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
-    .request-card p { margin: 0 0 4px; font-size: 14px; color: #444; }
-    .request-card small { color: #666; }
+    /* Kartlar */
+    .request-card{border-radius:8px;padding:15px;margin-bottom:15px;background:#fff;transition:.2s;cursor:pointer;border:1px solid #ddd}
+    .request-card:hover{box-shadow:0 3px 10px rgba(0,0,0,.1);transform:translateY(-2px)}
+    .request-card h5{margin:0 0 6px;font-size:16px;font-weight:700}
+    .request-card p{margin:0 0 4px;font-size:14px;color:#444}
+    .request-card small{color:#666}
+    .premium-card{border:2px solid #ffd700!important;background:#fffbe6!important}
+    .premium-badge{background:#ffd700;color:#000;padding:3px 6px;border-radius:4px;font-size:12px;margin-left:6px}
 
-    .premium-card {
-      border: 2px solid #ffd700 !important;
-      background: #fffbe6 !important;
-    }
-    .premium-badge {
-      background: #ffd700; color: #000; padding: 3px 6px;
-      border-radius: 4px; font-size: 12px; margin-left: 6px;
-    }
-
-    #searchInput {
-      width: 100%; max-width: 420px; padding: 10px; border-radius: 6px;
-      border: 1px solid #ccc; font-size: 14px; margin-bottom: 20px;
-    }
-
-    @media (max-width: 900px) {
-      .container { flex-direction: column; padding: 15px; }
-      .sidebar { width: 100%; order: 2; }
-      .content { order: 1; }
+    @media (max-width:900px){
+      .container{flex-direction:column;padding:15px;gap:15px}
+      .sidebar{width:100%;order:2}
+      .content{order:1;width:100%}
+      .tabs{flex-wrap:wrap}
+      .tabs button{flex:1 1 45%}
     }
   </style>
 </head>
 
 <body>
+  <!-- HEADER (profil + mesaj dahil) -->
   <header>
     <div class="logo-container" onclick="location.href='index.html'">
-      <img src="assets/logos.png" alt="Trader Route" />
-      <span style="font-size:14px;color:#555;">The Silk Road of E-Commerce</span>
+      <img src="assets/logos.png" alt="Trader Route Logo" />
+      <span class="logo-text">The Silk Road of E-Commerce</span>
     </div>
+
     <nav>
       <a href="index.html">Home</a>
       <a href="companies.html">Companies</a>
@@ -100,15 +84,43 @@
       <a href="contact.html">Contact</a>
       <a href="pricing.html">Pricing</a>
     </nav>
+
+    <div class="header-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search..." />
+        <button>🔍</button>
+      </div>
+
+      <div id="messageIconContainer" style="position:relative;margin-left:15px;">
+        <a href="messages.html" id="messageIconLink" style="text-decoration:none;color:inherit;">
+          <img src="assets/email.png" alt="Messages" style="width:25px;height:25px;cursor:pointer;">
+          <span id="messageBadge" style="position:absolute;top:-5px;right:-8px;background:red;color:white;font-size:11px;border-radius:50%;padding:2px 5px;display:none;"></span>
+        </a>
+      </div>
+
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+
+      <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
+           style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+      <div id="userDropdown"
+           style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+        <a href="profile.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+        <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+        <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+      </div>
+    </div>
   </header>
 
+  <!-- Sekmeler -->
   <div class="tabs">
-    <button class="active">All Requests</button>
-    <button onclick="filterType('buy')">Buy Requests</button>
-    <button onclick="filterType('sell')">Sell Requests</button>
-    <button onclick="location.href='request-form.html'">Free Request</button>
+    <button class="active" id="tabAll">All Requests</button>
+    <button id="tabBuy">Buy Requests</button>
+    <button id="tabSell">Sell Requests</button>
+    <button id="tabFree" onclick="location.href='request-form.html'">Free Request</button>
   </div>
 
+  <!-- Layout -->
   <div class="container">
     <div class="sidebar">
       <h4>Categories</h4>
@@ -122,127 +134,162 @@
 
     <div class="content">
       <input type="text" id="searchInput" placeholder="Search all requests...">
+
       <div id="premiumSection">
         <div class="section-title">⭐ Premium Requests</div>
         <div id="premiumRequests"></div>
       </div>
-      <div id="normalSection">
+
+      <div id="normalSection" style="margin-top:10px;">
         <div class="section-title">All Requests</div>
         <div id="normalRequests"></div>
       </div>
     </div>
   </div>
 
+  <!-- JS -->
   <script src="assets/flag.js"></script>
   <script>
-    let categories = [], allCountries = [];
-    let allRequestsData = [];
-    let selectedCategory = null, selectedCountry = null;
-    let activeType = null;
+    let categories=[], allCountries=[];
+    let allRequestsData=[];
+    let selectedCategory=null, selectedCountry=null;
+    let activeType="all";
 
-    async function getRequests() {
-      try {
-        const res = await fetch("https://api.traderroute.com/requests?t=" + Date.now());
-        const data = await res.json();
-        return Array.isArray(data) ? data : (data.record || data.data || []);
-      } catch { return []; }
+    async function getRequests(){
+      try{
+        const res=await fetch("https://api.traderroute.com/requests?t="+Date.now());
+        const data=await res.json();
+        return Array.isArray(data)?data:(data.record||data.data||[]);
+      }catch{return [];}
     }
 
-    async function ensureCategories() {
-      if (categories.length) return;
-      try {
-        const res = await fetch("data/categories.json");
-        categories = await res.json();
-      } catch {}
+    async function ensureCategories(){
+      if(categories.length) return;
+      try{ const r=await fetch("data/categories.json"); categories=await r.json(); }catch{}
+    }
+    async function ensureCountries(){
+      if(allCountries.length) return;
+      try{
+        const r=await fetch("data/countries.json");
+        const a=await r.json();
+        allCountries=a.map(it=>({name:it.name||it, code:(it.code||"").toLowerCase()}));
+      }catch{}
     }
 
-    async function ensureCountries() {
-      if (allCountries.length) return;
-      try {
-        const res = await fetch("data/countries.json");
-        const arr = await res.json();
-        allCountries = arr.map(it => ({ name: it.name || it, code: (it.code || "").toLowerCase() }));
-      } catch {}
-    }
-
-    function renderCategories(reqs) {
-      const t = (categorySearch.value || "").toLowerCase();
-      const d = categories.filter(c => c.toLowerCase().includes(t));
-      categoryList.innerHTML = "";
-      d.forEach(cat => {
-        const count = reqs.filter(r => r.category === cat).length;
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="#">${cat}<span>(${count})</span></a>`;
-        li.onclick = e => { e.preventDefault(); selectedCategory = cat; selectedCountry = null; renderRequests(); };
+    function renderCategories(reqs){
+      const t=(categorySearch.value||"").toLowerCase();
+      const d=(categories||[]).filter(c=>c.toLowerCase().includes(t));
+      categoryList.innerHTML="";
+      d.forEach(cat=>{
+        const c=reqs.filter(r=>r.category===cat).length;
+        const li=document.createElement("li");
+        li.innerHTML=`<a href="#">${cat}<span class='count'>(${c})</span></a>`;
+        li.onclick=e=>{e.preventDefault();selectedCategory=cat;selectedCountry=null;renderRequests();};
         categoryList.appendChild(li);
       });
     }
 
-    function renderCountries(reqs) {
-      const t = (countrySearch.value || "").toLowerCase();
-      const d = allCountries.filter(c => c.name.toLowerCase().includes(t));
-      countryList.innerHTML = "";
-      d.forEach(c => {
-        const count = reqs.filter(r => r.country === c.name).length;
-        const flagImg = getFlagURL(c.name, 20);
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="#"><span style="display:flex;align-items:center;gap:6px;"><img class='flag' src='${flagImg}' alt='${c.name}' loading='lazy'>${c.name}</span><span>(${count})</span></a>`;
-        li.onclick = e => { e.preventDefault(); selectedCountry = c.name; selectedCategory = null; renderRequests(); };
+    function renderCountries(reqs){
+      const t=(countrySearch.value||"").toLowerCase();
+      const d=(allCountries||[]).filter(c=>c.name.toLowerCase().includes(t));
+      countryList.innerHTML="";
+      d.forEach(c=>{
+        const n=reqs.filter(r=>r.country===c.name).length;
+        const flagImg=getFlagURL(c.name,20);
+        const li=document.createElement("li");
+        li.innerHTML=`<a href="#"><span style="display:flex;align-items:center;gap:6px;">
+          <img class='flag' src='${flagImg}' alt='${c.name}' loading='lazy'>${c.name}
+        </span><span class='count'>(${n})</span></a>`;
+        li.onclick=e=>{e.preventDefault();selectedCountry=c.name;selectedCategory=null;renderRequests();};
         countryList.appendChild(li);
       });
     }
 
-    function filterType(type) { activeType = type; renderRequests(); }
+    function renderRequests(data){
+      if(data) allRequestsData=data;
+      const all=allRequestsData||[];
+      const today=new Date();
 
-    function renderRequests(data) {
-      if (data) allRequestsData = data;
-      const all = allRequestsData || [];
-      const today = new Date();
-      const filtered = all.filter(r =>
-        (!selectedCategory || r.category === selectedCategory) &&
-        (!selectedCountry || r.country === selectedCountry) &&
-        ((r.title || "").toLowerCase().includes(searchInput.value.toLowerCase()) ||
-         (r.description || "").toLowerCase().includes(searchInput.value.toLowerCase())) &&
-        (!activeType || r.type === activeType)
+      const filtered=all.filter(r=>
+        (!selectedCategory || r.category===selectedCategory) &&
+        (!selectedCountry || r.country===selectedCountry) &&
+        ((r.title||"").toLowerCase().includes((searchInput.value||"").toLowerCase()) ||
+         (r.description||"").toLowerCase().includes((searchInput.value||"").toLowerCase())) &&
+        (activeType==="all" || r.type===activeType)
       );
 
-      const premium = filtered.filter(r => r.isPremium && new Date(r.premiumUntil) >= today);
-      const normal = filtered.filter(r => !r.isPremium || new Date(r.premiumUntil) < today);
+      const premium=filtered.filter(r=>r.isPremium && r.premiumUntil && new Date(r.premiumUntil)>=today);
+      const normal =filtered.filter(r=>!r.isPremium || !r.premiumUntil || new Date(r.premiumUntil)<today);
 
       renderCategories(filtered);
       renderCountries(filtered);
 
-      const premiumBox = document.getElementById("premiumRequests");
-      const normalBox = document.getElementById("normalRequests");
-      premiumBox.innerHTML = ""; normalBox.innerHTML = "";
+      const premiumBox=document.getElementById("premiumRequests");
+      const normalBox =document.getElementById("normalRequests");
+      premiumBox.innerHTML=""; normalBox.innerHTML="";
 
-      premium.forEach(r => premiumBox.appendChild(createCard(r, true)));
-      normal.forEach(r => normalBox.appendChild(createCard(r, false)));
+      premium.forEach(r=>premiumBox.appendChild(createCard(r,true)));
+      normal .forEach(r=>normalBox .appendChild(createCard(r,false)));
 
-      if (!premium.length) premiumBox.innerHTML = "<p style='color:#999;'>No active premium requests.</p>";
-      if (!normal.length) normalBox.innerHTML = "<p style='color:#999;'>No regular requests found.</p>";
+      if(!premium.length) premiumBox.innerHTML="<p style='color:#999;'>No active premium requests.</p>";
+      if(!normal .length) normalBox .innerHTML="<p style='color:#999;'>No regular requests found.</p>";
     }
 
-    function createCard(r, isPremium) {
-      const div = document.createElement("div");
-      div.className = "request-card" + (isPremium ? " premium-card" : "");
-      const flagImg = `<img src="${getFlagURL(r.country, 20)}" alt="${r.country}" style="margin-right:6px;">`;
-      const badge = isPremium ? `<span class="premium-badge">⭐ Premium</span>` : "";
-      div.innerHTML = `
-        <h5>${r.title || "Untitled"} ${badge}</h5>
-        <p>${r.description || ""}</p>
-        <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
+    function createCard(r,isPremium){
+      const div=document.createElement("div");
+      div.className="request-card"+(isPremium?" premium-card":"");
+      const flagImg=`<img src="${getFlagURL(r.country,20)}" alt="${r.country}" style="margin-right:6px;">`;
+      const badge=isPremium?`<span class="premium-badge">⭐ Premium</span>`:"";
+      div.innerHTML=`
+        <h5>${r.title||"Untitled"} ${badge}</h5>
+        <p>${r.description||""}</p>
+        <small>${flagImg}${r.country||"Unknown"} · ${r.category||""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
       `;
-      div.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(r.user || "")}`;
+      const owner=r.ownerEmail||r.contactEmail||r.email||"";
+      div.onclick=()=>window.location.href=`request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
       return div;
     }
 
-    document.getElementById("searchInput").addEventListener("input", () => renderRequests());
+    // Sekmeler
+    document.getElementById("tabAll").onclick = ()=>{activeType="all"; setActive("tabAll"); renderRequests();};
+    document.getElementById("tabBuy").onclick = ()=>{activeType="buy"; setActive("tabBuy"); renderRequests();};
+    document.getElementById("tabSell").onclick = ()=>{activeType="sell"; setActive("tabSell"); renderRequests();};
+    function setActive(id){ document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active")); document.getElementById(id).classList.add("active"); }
 
-    (async function init() {
+    // Arama
+    document.getElementById("searchInput").addEventListener("input", ()=>renderRequests());
+
+    // Init
+    (async function init(){
       await Promise.all([ensureCategories(), ensureCountries()]);
-      const data = await getRequests();
+      const data=await getRequests();
       renderRequests(data);
+    })();
+  </script>
+
+  <!-- USER MENU & MESSAGE BADGE (header-right için) -->
+  <script>
+    (function () {
+      const icon=document.getElementById("userIcon");
+      const dropdown=document.getElementById("userDropdown");
+      const loginBtn=document.querySelector("button[onclick*='login.html']");
+      const joinBtn=document.querySelector("button[onclick*='register.html']");
+      const currentUser=JSON.parse(localStorage.getItem("tr_user")||"null");
+      if(currentUser){ if(icon) icon.style.display="inline-block"; if(loginBtn) loginBtn.style.display="none"; if(joinBtn) joinBtn.style.display="none"; }
+      else { if(icon) icon.style.display="none"; }
+      icon?.addEventListener("click", e=>{ e.stopPropagation(); dropdown.style.display=(dropdown.style.display==="block")?"none":"block"; });
+      document.addEventListener("click", e=>{ if(!e.target.closest("#userDropdown") && e.target.id!=="userIcon") dropdown.style.display="none"; });
+      window.logoutUser=function(){ localStorage.removeItem("tr_user"); location.href="index.html"; };
+    })();
+
+    (function(){
+      const badge=document.getElementById("messageBadge");
+      const user=JSON.parse(localStorage.getItem("tr_user")||"null");
+      if(!user || !badge) return;
+      const allMessages=JSON.parse(localStorage.getItem("tr_messages")||"[]");
+      const unread=allMessages.filter(m=>m.to===user.email && !m.read);
+      badge.textContent=unread.length||"";
+      badge.style.display=unread.length>0?"inline-block":"none";
     })();
   </script>
 </body>
