@@ -73,94 +73,115 @@
     <div id="premiumList" class="request-list"></div>
   </section>
 
+
   <script src="assets/flag.js"></script>
-  <script>
-  document.addEventListener("DOMContentLoaded", async function() {
-    const container = document.getElementById("premiumList");
-    container.innerHTML = `<p style="text-align:center;color:#777;">Loading...</p>`;
-    try {
-      const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
-      const data = await res.json();
-      const today = new Date();
-      const descByDate = (a,b) => (new Date(b.date) - new Date(a.date));
-      const premium = data
-        .filter(r => r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today)
-        .sort(descByDate);
 
-      if (premium.length === 0) {
-        container.innerHTML = `<p style="text-align:center;color:#777;">No active premium requests found.</p>`;
-        return;
-      }
+<!-- 1) Premium listeyi yükleyen script -->
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+  const container = document.getElementById("premiumList");
+  container.innerHTML = `<p style="text-align:center;color:#777;">Loading...</p>`;
 
-      container.innerHTML = "";
-      premium.forEach(r => {
-        const owner = r.ownerEmail || r.contactEmail || r.email || "";
-        const div = document.createElement("div");
-        div.className = "request-card";
-        div.style.border = "2px solid #FFD700";
-        div.style.background = "#fffbe6";
-        div.style.marginBottom = "15px";
-        div.style.cursor = "pointer";
-        div.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
-        const flagImg = `<img src="${getFlagURL(r.country, 20)}"
-          alt="${r.country}" class="flag-icon-img"
-          onerror="this.onerror=null;this.src='assets/flag/default.png'">`;
-        div.innerHTML = `
-          <h4>${r.title || "Untitled"} <span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span></h4>
-          <p>${r.description || ""}</p>
-          <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
-        `;
-        container.appendChild(div);
-      });
-    } catch(err) {
-      container.innerHTML = `<p style="text-align:center;color:red;">Failed to load data.</p>`;
+  try {
+    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests");
+    const data = await res.json();
+
+    const today = new Date();
+    const descByDate = (a, b) => (new Date(b.date) - new Date(a.date));
+    const premium = data
+      .filter(r => r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today)
+      .sort(descByDate);
+
+    if (premium.length === 0) {
+      container.innerHTML = `<p style="text-align:center;color:#777;">No active premium requests found.</p>`;
+      return;
     }
-  });
 
-    <script>
-(function(){
+    container.innerHTML = "";
+    premium.forEach(r => {
+      const owner = r.ownerEmail || r.contactEmail || r.email || "";
+      const card = document.createElement("div");
+      card.className = "request-card";
+      card.style.border = "2px solid #FFD700";
+      card.style.background = "#fffbe6";
+      card.style.marginBottom = "15px";
+      card.style.cursor = "pointer";
+      card.onclick = () => window.location.href =
+        `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
+
+      const flagImg = `<img src="${getFlagURL(r.country, 20)}"
+                            alt="${r.country}" class="flag-icon-img"
+                            onerror="this.onerror=null;this.src='assets/flag/default.png'">`;
+
+      card.innerHTML = `
+        <h4>${r.title || "Untitled"}
+          <span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span>
+        </h4>
+        <p>${r.description || ""}</p>
+        <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} ·
+          ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
+      `;
+      container.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = `<p style="text-align:center;color:red;">Failed to load data.</p>`;
+  }
+});
+</script>
+
+<!-- 2) Kullanıcı menüsü (index.html ile aynı) -->
+<script>
+(function () {
   const header = document.querySelector('header');
   const icon = document.getElementById('userIcon');
   const dropdown = document.getElementById('userDropdown');
   const loginBtn = header?.querySelector("button[onclick*='login.html']");
-  const joinBtn = header?.querySelector("button[onclick*='register.html']");
+  const joinBtn  = header?.querySelector("button[onclick*='register.html']");
   const currentUser = JSON.parse(localStorage.getItem('tr_user') || 'null');
 
   if (currentUser) {
     if (icon) icon.style.display = 'inline-block';
     if (loginBtn) loginBtn.style.display = 'none';
-    if (joinBtn) joinBtn.style.display = 'none';
+    if (joinBtn)  joinBtn.style.display = 'none';
   } else {
     if (icon) icon.style.display = 'none';
   }
 
-  icon?.addEventListener('click', (e)=>{
+  icon?.addEventListener('click', (e) => {
     e.stopPropagation();
     dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
   });
-  document.addEventListener('click', (e)=>{
-    if (!e.target.closest('#userDropdown') && e.target.id !== 'userIcon')
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#userDropdown') && e.target.id !== 'userIcon') {
       dropdown.style.display = 'none';
+    }
   });
 
-  window.logoutUser = function(){
+  window.logoutUser = function () {
     localStorage.removeItem('tr_user');
     location.href = 'index.html';
   };
 })();
 </script>
 
+<!-- 3) Mesaj rozeti -->
 <script>
-(function(){
+(function () {
   const badge = document.getElementById("messageBadge");
   const user = JSON.parse(localStorage.getItem("tr_user") || "null");
-  if(!user || !badge) return;
+  if (!user || !badge) return;
+
   const allMessages = JSON.parse(localStorage.getItem("tr_messages") || "[]");
   const unread = allMessages.filter(m => m.to === user.email && !m.read);
-  if(unread.length > 0){
+
+  if (unread.length > 0) {
     badge.textContent = unread.length;
     badge.style.display = "inline-block";
-  } else badge.style.display = "none";
+  } else {
+    badge.style.display = "none";
+  }
 })();
 </script>
   
