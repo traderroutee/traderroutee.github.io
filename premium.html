@@ -7,15 +7,66 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <div class="logo"><a href="index.html">Trader Route</a></div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="requests.html" class="active">Requests</a>
-      <a href="contact.html">Contact</a>
-      <a href="pricing.html">Pricing</a>
-    </nav>
-  </header>
+
+  <!-- ✅ HEADER (index.html ile aynı) -->
+<header>
+  <div class="logo-container" onclick="location.href='index.html'">
+    <img src="assets/logos.png" alt="Trader Route Logo" loading="lazy">
+    <span class="logo-text">The Silk Road of E-Commerce</span>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="companies.html">Companies</a>
+    <a href="requests.html">Requests</a>
+    <a href="contact.html">Contact</a>
+    <a href="pricing.html">Pricing</a>
+  </nav>
+
+  <div class="header-right">
+    <div class="search-box">
+      <input type="text" placeholder="Search...">
+      <button>🔍</button>
+    </div>
+
+    <div id="messageIconContainer" style="position:relative;margin-left:15px;">
+      <a href="messages.html" id="messageIconLink" style="text-decoration:none;color:inherit;">
+        <img src="assets/email.png" alt="Messages" style="width:25px;height:25px;cursor:pointer;">
+        <span id="messageBadge"
+          style="position:absolute;top:-5px;right:-8px;background:red;color:white;font-size:11px;border-radius:50%;padding:2px 5px;display:none;">
+        </span>
+      </a>
+    </div>
+
+    <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+    <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+
+    <img id="userIcon" src="assets/user-icon.png" alt="User Icon"
+      style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+    <div id="userDropdown"
+      style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+      <a href="profile.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+      <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+      <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+    </div>
+  </div>
+</header>
+
+<!-- ✅ HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>⭐ Premium Trade Requests</h1>
+  </div>
+</section>
+
+<!-- ✅ MIDDLE BUTTONS -->
+<div class="middle-buttons">
+  <button onclick="location.href='requests.html'">All Requests</button>
+  <button onclick="location.href='requests.html?type=buy'">Buyer Requests</button>
+  <button onclick="location.href='requests.html?type=sell'">Seller Offers</button>
+  <button onclick="location.href='request-form.html'">Create Free Request</button>
+</div>
+  
 
   <section class="content" style="padding: 20px 10%; min-height:80vh;">
     <h2 style="color:#007157; margin-bottom: 20px;">⭐ Premium Requests</h2>
@@ -65,6 +116,54 @@
       container.innerHTML = `<p style="text-align:center;color:red;">Failed to load data.</p>`;
     }
   });
+
+    <script>
+(function(){
+  const header = document.querySelector('header');
+  const icon = document.getElementById('userIcon');
+  const dropdown = document.getElementById('userDropdown');
+  const loginBtn = header?.querySelector("button[onclick*='login.html']");
+  const joinBtn = header?.querySelector("button[onclick*='register.html']");
+  const currentUser = JSON.parse(localStorage.getItem('tr_user') || 'null');
+
+  if (currentUser) {
+    if (icon) icon.style.display = 'inline-block';
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (joinBtn) joinBtn.style.display = 'none';
+  } else {
+    if (icon) icon.style.display = 'none';
+  }
+
+  icon?.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+  });
+  document.addEventListener('click', (e)=>{
+    if (!e.target.closest('#userDropdown') && e.target.id !== 'userIcon')
+      dropdown.style.display = 'none';
+  });
+
+  window.logoutUser = function(){
+    localStorage.removeItem('tr_user');
+    location.href = 'index.html';
+  };
+})();
+</script>
+
+<script>
+(function(){
+  const badge = document.getElementById("messageBadge");
+  const user = JSON.parse(localStorage.getItem("tr_user") || "null");
+  if(!user || !badge) return;
+  const allMessages = JSON.parse(localStorage.getItem("tr_messages") || "[]");
+  const unread = allMessages.filter(m => m.to === user.email && !m.read);
+  if(unread.length > 0){
+    badge.textContent = unread.length;
+    badge.style.display = "inline-block";
+  } else badge.style.display = "none";
+})();
+</script>
+  
   </script>
 </body>
 </html>
