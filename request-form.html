@@ -167,7 +167,7 @@ setTimeout(()=>{
 // 🌍 Cloudflare Worker üzerinden güvenli kayıt (JSONBin bağlantılı)
 async function saveRequestToServer(newRequest) {
   try {
-   const response = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests", {
+   const response = await fetch("https://api.traderroute.com/requests", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(newRequest)
