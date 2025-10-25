@@ -167,7 +167,7 @@ async function loadRequestDetail() {
   if (!id) return;
 
   try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/requests?t=" + Date.now());
+    const res = await fetch("https://api.traderroute.com/r?t=" + Date.now());
     const all = await res.json();
     const req = all.find(r => String(r.id) === String(id));
     if (!req) return;
@@ -243,7 +243,7 @@ function openChat() {
   if (!id) return alert("Request not found.");
 
   // 2️⃣ Sunucudan tüm ilanları çek (Cloudflare Worker)
-  fetch("https://divine-hill-9557.traderroutee.workers.dev/requests")
+  fetch("https://api.traderroute.com/r")
     .then(res => res.json())
     .then(all => {
       // 3️⃣ Gelen veriler arasında bu sayfadaki id'ye ait ilanı bul
