@@ -203,13 +203,19 @@ async function loadRequestDetail() {
     await new Promise(r => setTimeout(r, 100)); // DOM yüklenmesini bekle
 const container = document.querySelector(".request-detail-container");
 if (req && (req.imageUrl || req.image || (req.images && req.images.length > 0))) {
-  const imgUrl = req.imageUrl || req.image || (Array.isArray(req.images) ? req.images[0] : null);
-  if (imgUrl && imgUrl.trim() !== "") {
-    const img = document.createElement("img");
-    img.id = "reqImage";
-    img.src = imgUrl;
-    img.alt = "Request Image";
-    img.style = "display:block;max-width:300px;margin:25px auto;border-radius:10px;cursor:pointer;transition:transform 0.2s;";
+  let imgUrl = req.imageUrl || req.image || (Array.isArray(req.images) ? req.images[0] : null);
+
+  // 🔹 Eğer URL http ile başlamıyorsa, otomatik olarak API adresi ekle
+  if (imgUrl && !imgUrl.startsWith("http")) {
+    imgUrl = "https://api.traderroute.com/" + imgUrl;
+  }
+
+  const img = document.createElement("img");
+  img.id = "reqImage";
+  img.src = imgUrl;
+  img.alt = "Request Image";
+  img.style = "display:block;max-width:380px;margin:25px auto;border-radius:10px;cursor:pointer;transition:transform 0.25s;";
+  container.appendChild(img);
     
     // 🔍 Tıklanınca büyüt
     img.addEventListener("click", () => {
