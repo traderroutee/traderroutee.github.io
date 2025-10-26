@@ -122,6 +122,16 @@ footer {
   margin-top: 40px;
 }
 
+<footer>
+  <p>
+    <a href="requests.html" title="Trade Requests">Trade Requests</a> ·
+    <a href="premium.html" title="Premium Trade Listings">Premium Listings</a> ·
+    <a href="contact.html" title="Contact Trader Route">Contact</a> ·
+    <a href="pricing.html" title="Trader Route Pricing">Pricing</a>
+  </p>
+  <small>© 2025 Trader Route | Global Import & Export Marketplace</small>
+</footer>
+
 /* SECTIONS AND CONTAINERS — hero/bannner hariç */
 section:not(.hero):not(.banner), .container {
   width: 100%;
