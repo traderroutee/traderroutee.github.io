@@ -202,40 +202,55 @@ async function loadRequestDetail() {
     document.getElementById("reqDescription").textContent = req.description || "No description provided.";
 
     // 🖼️ Resim (JSON'da tam URL geliyor)
-    if (Array.isArray(req.images) && req.images.length > 0) {
-      const imgUrl = req.images[0];
+if (Array.isArray(req.images) && req.images.length > 0) {
+  let imgUrl = req.images[0];
 
-      const img = document.createElement("img");
-      img.id   = "reqImage";
-      img.src  = imgUrl;
-      img.alt  = req.title || "Request Image";
-      img.style= "display:block;max-width:380px;margin:25px auto;border-radius:10px;cursor:pointer;transition:transform .25s;";
+  // Eğer URL https ile başlamıyorsa otomatik ekle
+  if (imgUrl && !/^https?:/i.test(imgUrl)) {
+    imgUrl = "https://api.traderroute.com/" + imgUrl.replace(/^\/+/, "");
+  }
 
-      const container = document.querySelector(".request-detail-container");
-      container.appendChild(img);
+  const img = document.createElement("img");
+  img.id = "reqImage";
+  img.src = imgUrl + "?raw=1";
+  img.alt = req.title || "Request Image";
+  img.crossOrigin = "anonymous";
+  img.referrerPolicy = "no-referrer";
+  img.style = `
+    display:block;
+    max-width:380px;
+    margin:25px auto;
+    border-radius:10px;
+    cursor:pointer;
+    transition:transform .25s;
+  `;
 
-      if (imgUrl && imgUrl.trim() !== "") {
-  img.src = imgUrl;
+  const container = document.querySelector(".request-detail-container");
   container.appendChild(img);
-}
 
-      // Tıklayınca büyüt
-      img.addEventListener("click", () => {
-        const overlay = document.createElement("div");
-        overlay.style = `
-          position: fixed; inset: 0;
-          background: rgba(0,0,0,.8);
-          display: flex; align-items: center; justify-content: center;
-          z-index: 9999;
-        `;
-        const big = document.createElement("img");
-        big.src = imgUrl;
-        big.style = "max-width:90%;max-height:90%;border-radius:10px;";
-        overlay.appendChild(big);
-        document.body.appendChild(overlay);
-        overlay.addEventListener("click", () => overlay.remove());
-      });
-    }
+  // Resim tıklanınca büyüt
+  img.addEventListener("click", () => {
+    const overlay = document.createElement("div");
+    overlay.style = `
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.8);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+    `;
+    const big = document.createElement("img");
+    big.src = imgUrl + "?raw=1";
+    big.style = "max-width:90%;max-height:90%;border-radius:10px;";
+    overlay.appendChild(big);
+    document.body.appendChild(overlay);
+    overlay.addEventListener("click", () => overlay.remove());
+  });
+
+  // Resim yüklenmezse gizle
+  img.onerror = () => img.remove();
+}
 
     // 🇹🇷 Bayrak
     const flagFile = getFlagURL(req.country, 60);
