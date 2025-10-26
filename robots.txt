@@ -2,6 +2,8 @@
 # UTF-8 encoded
 # Purpose: Control search engine crawling and indexing
 
+Sitemap: https://www.traderroute.com/sitemap.xml
+
 User-agent: *
 Disallow: /admin/
 Disallow: /private/
