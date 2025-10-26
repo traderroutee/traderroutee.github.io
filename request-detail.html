@@ -199,43 +199,45 @@ async function loadRequestDetail() {
     document.getElementById("reqDate").textContent = req.date ? new Date(req.date).toLocaleDateString() : "-";
     document.getElementById("reqDescription").textContent = req.description || "No description provided.";
    
-    // ✅ Resim varsa göster (küçük + tıklayınca büyür)
-    await new Promise(r => setTimeout(r, 100)); // DOM yüklenmesini bekle
-const container = document.querySelector(".request-detail-container");
-if (req && (req.imageUrl || req.image || (req.images && req.images.length > 0))) {
-  const imgUrl = req.imageUrl || req.image || (Array.isArray(req.images) ? req.images[0] : null);
-  console.log("imgUrl:", imgUrl);
-  const img = document.createElement("img");
-  img.id = "reqImage";
-  img.src = imgUrl;
-  img.alt = "Request Image";
-  img.style = "display:block;max-width:380px;margin:25px auto;border-radius:10px;cursor:pointer;transition:transform 0.25s;";
-  container.appendChild(img);
-    
-    // 🔍 Tıklanınca büyüt
+   // 🖼️ Resim varsa göster (küçük tıklayınca büyür)
+if (req && (req.images && req.images.length > 0)) {
+  const imgUrl = req.images[0]; // Direkt tam URL geliyor
+
+  if (imgUrl) {
+    const img = document.createElement("img");
+    img.id = "reqImage";
+    img.src = imgUrl;
+    img.alt = "Request Image";
+    img.style = "display:block;max-width:380px;margin:25px auto;border-radius:10px;cursor:pointer;transition:transform 0.25s;";
+
+    const container = document.querySelector(".request-detail-container");
+    container.appendChild(img);
+
     img.addEventListener("click", () => {
       const overlay = document.createElement("div");
       overlay.style = `
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         background: rgba(0,0,0,0.8);
         display: flex;
-        align-items: center;
         justify-content: center;
-        cursor: zoom-out;
+        align-items: center;
         z-index: 9999;
       `;
       const bigImg = document.createElement("img");
-      bigImg.src = img.src;
-      bigImg.style = "max-width:90%;max-height:90%;border-radius:10px;box-shadow:0 0 25px rgba(255,255,255,0.4)";
+      bigImg.src = imgUrl;
+      bigImg.style = "max-width:90%;max-height:90%;border-radius:10px;";
       overlay.appendChild(bigImg);
       document.body.appendChild(overlay);
       overlay.addEventListener("click", () => overlay.remove());
     });
+  }
+}
 
+    
     container.appendChild(img);
   }
 }
