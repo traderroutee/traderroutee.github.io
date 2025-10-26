@@ -214,6 +214,11 @@ async function loadRequestDetail() {
       const container = document.querySelector(".request-detail-container");
       container.appendChild(img);
 
+      if (imgUrl && imgUrl.trim() !== "") {
+  img.src = imgUrl;
+  container.appendChild(img);
+}
+
       // Tıklayınca büyüt
       img.addEventListener("click", () => {
         const overlay = document.createElement("div");
