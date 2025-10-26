@@ -1,28 +1,26 @@
+# ===========================================
 # Trader Route - robots.txt
-# UTF-8 encoded
+# Encoding: UTF-8
 # Purpose: Control search engine crawling and indexing
-
-Sitemap: https://www.traderroute.com/sitemap.xml
+# Last updated: 2025-10-26
+# ===========================================
 
 User-agent: *
 Disallow: /admin/
 Disallow: /private/
 Allow: /
 
-# Crawl delay (for non-Google bots)
-Crawl-delay: 5
-
-# Sitemap
-Sitemap: https://traderroute.com/sitemap.xml
-
-# Specific search engines
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
+# Only apply crawl delay for non-Google bots
 User-agent: Yandex
 Disallow: /private/
+Crawl-delay: 5
 
-# End of file
+# Sitemap (Canonical)
+Sitemap: https://traderroute.com/sitemap.xml
+
+# ===========================================
+# Notes:
+# - Googlebot and Bingbot automatically follow Allow: /
+# - /admin/ and /private/ directories are blocked for all crawlers
+# - Sitemap path points to the non-www canonical domain
+# ===========================================
