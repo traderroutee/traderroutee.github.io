@@ -2,6 +2,11 @@
    TRADER ROUTE GLOBAL STYLES
    ========================= */
 
+<meta name="theme-color" content="#008b6a">
+<img src="assets/hero.jpg" alt="Global trade" loading="lazy">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 /* BASE RESET */
 * {
   margin: 0;
