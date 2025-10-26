@@ -255,24 +255,6 @@ async function loadRequestDetail() {
 document.addEventListener("DOMContentLoaded", loadRequestDetail);
 </script>
 
-
-    
-    // ✅ Flag.js fonksiyonunu kullan
-    const flagFile = getFlagURL(req.country, 60);
-    const flagImg = document.getElementById("flagImage");
-    flagImg.src = flagFile;
-    flagImg.onerror = function () {
-      this.onerror = null;
-      this.src = "assets/flag/default.png";
-    };
-  } catch (err) {
-    console.error("Error loading request detail:", err);
-  }
-}
-
-loadRequestDetail();
-</script>
-
   <script>
 function openChat() {
   // 1️⃣ URL'deki id parametresini al (örnek: ?id=12345)
