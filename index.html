@@ -92,6 +92,14 @@
     font-size: 15px;
   }
 
+    @media (max-width: 900px) {
+  /* mobil için kategori, hero, body */
+  .cat-holder { position: static !important; ... }
+  .hero { position: relative; width: 100vw; height: 470px; ... }
+  html, body { overflow-x:hidden; }
+  /* ... sonra da masaüstü CSS başlıyor ama @media hala kapanmamış! */
+  }
+
     </style>
 
 
@@ -172,15 +180,10 @@ html, body{
   margin:0;
   padding:0;
   overflow-x:hidden;
+  }
 }
 
-    
-@media (max-width: 900px) {
-  /* mobil için kategori, hero, body */
-  .cat-holder { position: static !important; ... }
-  .hero { position: relative; width: 100vw; height: 470px; ... }
-  html, body { overflow-x:hidden; }
-  /* ... sonra da masaüstü CSS başlıyor ama @media hala kapanmamış! */
+
 
       </style>
     
