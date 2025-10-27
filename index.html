@@ -124,15 +124,7 @@
     .join-btn{background:#008b6a;color:#fff;padding:8px 15px}
     .join-btn:hover{background:#006b52}
 
-    @media (max-width: 900px) {
-  /* Kategori kutusunu mobilde ortala ve statik konumla */
-  .cat-holder {
-    position: static !important;
-    transform: none !important;
-    width: 92%;
-    margin: 10px auto;
-  }
-}
+    
 
 /* === HERO === */
 .hero{
@@ -181,6 +173,14 @@ html, body{
   padding:0;
   overflow-x:hidden;
 }
+
+    
+@media (max-width: 900px) {
+  /* mobil için kategori, hero, body */
+  .cat-holder { position: static !important; ... }
+  .hero { position: relative; width: 100vw; height: 470px; ... }
+  html, body { overflow-x:hidden; }
+  /* ... sonra da masaüstü CSS başlıyor ama @media hala kapanmamış! */
 
       </style>
     
