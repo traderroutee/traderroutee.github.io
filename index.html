@@ -413,6 +413,22 @@ html, body{
   transform: translateY(-2px);
 }
 
+    /* === 👁️ Görüntülenme Rozeti (liste satırı içinde) === */
+.view-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  background: rgba(0,0,0,.7);
+  color:#fff;
+  border-radius:10px;
+  padding: 1px 6px;
+  font-size:12px;
+  margin-left:8px;
+  vertical-align:baseline;
+}
+.view-chip b{font-weight:700;font-size:12px;}
+
+
    
   </style>
 
@@ -864,6 +880,8 @@ loadCategories();
     badge.style.display = "none";
   }
 })();
+
+  
 
   
 </script>
