@@ -724,56 +724,17 @@ if (premium.length > 0) {
 });
 </script>
 
-  <script>
-// 👁️ Ana sayfa listesinde her satır için viewCount + rozet
-async function updateViewsOnHome() {
-  // “Latest Trade Requests” içinde oluşan tabloların tüm satırlarını al
-  const rows = document.querySelectorAll(".latest-requests table tbody tr");
-  for (const row of rows) {
-    // request-detail yönlendirme id’sini onclick’ten çek
-    const onclick = row.getAttribute("onclick");
-    if (!onclick) continue;
-    const m = onclick.match(/id=([^']+)/);
-    if (!m) continue;
-    const id = m[1];
-
-    // Tarih hücresine 👁️ rozetini ekle
-    const lastTd = row.querySelector("td:last-child");
-    if (!lastTd) continue;
-
-    // Varsa tekrar eklemeyelim
-    if (!row.querySelector(".view-chip")) {
-      const chip = document.createElement("span");
-      chip.className = "view-chip";
-      chip.innerHTML = `👁️ <b>0</b>`;
-      lastTd.appendChild(chip);
-    }
-
-    // Görüntülenmeyi 1 artır ve sayı değerini yaz
-    try {
-      const res = await fetch("https://api.traderroute.com/view", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id })
-      });
-      const json = await res.json();
-      if (json?.ok) {
-        const chipNum = row.querySelector(".view-chip b");
-        if (chipNum) chipNum.textContent = json.views;
-      }
-    } catch (err) {
-      console.warn("View update failed:", err);
-    }
-  }
+ <script>
+function incrementViewAndOpen(id){
+  fetch("https://api.traderroute.com/view", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id })
+  }).finally(()=>{
+    location.href = `request-detail.html?id=${id}`;
+  });
 }
-
-// Sayfa yüklendikten biraz sonra çalıştır (liste HTML’i üretildikten sonra)
-window.addEventListener("load", () => {
-  setTimeout(updateViewsOnHome, 1200);
-});
 </script>
-
-
 
   
 <!-- /LATEST REQUESTS SECTION -->
