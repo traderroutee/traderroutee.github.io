@@ -452,6 +452,47 @@ section.hero, section.banner { max-width: none !important; }
   position: relative; /* gerekli */
 }
 
+/* === 👁️ TABLO SATIRLARI İÇİN ROZET (view-chip) === */
+/* Date sütununu bağlam yapalım ki rozet sağa sabitlensin */
+.latest-requests table td:last-child {
+  position: relative;
+}
+
+/* Tablodaki küçük rozet */
+.view-chip {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0,0,0,.75);
+  color: #fff;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Premium kutudaki rozet altın tonunda olsun */
+.premium-box .view-chip {
+  background: linear-gradient(90deg, #ffda00, #ffbb00);
+  color: #000;
+  font-weight: 600;
+}
+
+/* Mobilde tablo kart görünüme dönüyor; rozeti satır içinde gösterelim */
+@media (max-width: 900px) {
+  .view-chip {
+    position: static;
+    transform: none;
+    margin-left: 8px;
+  }
+}
+
+
 
 /* =========================
    === END OF STYLE.CSS FINAL
