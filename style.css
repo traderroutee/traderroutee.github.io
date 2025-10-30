@@ -501,6 +501,31 @@ section.hero, section.banner { max-width: none !important; }
 }
 
 
+/* Force card view for ALL listing tables on mobile */
+@media (max-width: 600px) {
+  .latest-requests table tr,
+  .premium-box table tr {
+    display: block !important;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 12px;
+    background: #fff;
+  }
+
+  .latest-requests table td,
+  .premium-box table td {
+    display: block !important;
+    width: 100% !important;
+    padding: 4px 0 !important;
+    text-align: left !important;
+  }
+
+  .latest-requests table th,
+  .premium-box table th {
+    display: none !important;
+  }
+}
 
 
 
