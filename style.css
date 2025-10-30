@@ -535,6 +535,36 @@ section.hero, section.banner { max-width: none !important; }
   }
 }
 
+/* --- MOBILE CARD - FULL INFO FIX --- */
+@media (max-width: 600px) {
+
+  .requests-table td {
+    display: block !important;
+    padding: 6px 0 !important;
+  }
+
+  .requests-table tr {
+    padding: 10px !important;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+
+  .requests-table td:first-child {
+    font-weight: 600;
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Premium badge alignment */
+  .premium-badge, .view-chip {
+    display: inline-block !important;
+    margin-top: 6px;
+  }
+}
+
+
 
 
 
