@@ -492,6 +492,50 @@ section.hero, section.banner { max-width: none !important; }
   }
 }
 
+/* === MOBILE TRADE LIST FIX (Yunus Bey Special) === */
+@media (max-width: 600px) {
+
+  html, body {
+    overflow-x: hidden !important;
+  }
+
+  .requests-table-wrapper {
+    width: 100% !important;
+    overflow-x: hidden !important;
+    padding: 0 8px;
+  }
+
+  .requests-table {
+    width: 100% !important;
+    table-layout: fixed;
+  }
+
+  .requests-table td, 
+  .requests-table th {
+    word-break: break-word;
+  }
+
+  .premium-box, 
+  .latest-requests table {
+    width: 100% !important;
+  }
+
+  .latest-requests {
+    padding: 0 10px;
+  }
+
+  /* Premium request kartlarının taşmasını engelle */
+  .premium-box table {
+    width: 100% !important;
+  }
+
+  /* Bayrak ve ülke kısmı hizalama */
+  td[style*="display:flex"] {
+    flex-wrap: wrap;
+  }
+}
+
+
 
 
 /* =========================
