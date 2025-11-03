@@ -6,50 +6,25 @@
   <title>Trade Request Detail | Trader Route</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- Structured Data for Trade Request Detail -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Article",
-      "headline": "Trade Request Detail | Trader Route",
-      "description": "Detailed information about an international trade request from global buyers or suppliers on Trader Route.",
-      "author": {
-        "@type": "Organization",
-        "name": "Trader Route"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Trader Route",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://www.traderroute.com/assets/logos.png"
-        }
-      },
-      "mainEntityOfPage": "https://www.traderroute.com/request-detail.html"
-    },
-    {
-      "@type": "Product",
-      "name": "Trade Request Listing",
-      "image": "https://www.traderroute.com/assets/logos.png",
-      "description": "Global trade request published on Trader Route — connect with verified buyers and suppliers worldwide.",
-      "brand": {
-        "@type": "Organization",
-        "name": "Trader Route"
-      },
-      "offers": {
-  "@type": "Offer",
-  "priceCurrency": "USD",
-  "price": 0.00,
-  "availability": "https://schema.org/InStock",
-  "url": "https://www.traderroute.com/requests.html"
-      }
-    }
-  ]
-}
-</script>
+  <!-- ✅ Dynamic SEO Meta -->
+<meta name="robots" content="index, follow">
 
+<link rel="canonical" id="canonicalLink" href="https://www.traderroute.com/request-detail.html">
+
+<meta property="og:site_name" content="Trader Route">
+<meta property="og:type" content="product">
+<meta property="og:url" id="ogUrl" content="">
+<meta property="og:title" id="ogTitle" content="Trade Request">
+<meta property="og:description" id="ogDesc" content="Trade request details on Trader Route">
+<meta property="og:image" id="ogImage" content="https://www.traderroute.com/assets/logos.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="twTitle" content="Trade Request">
+<meta name="twitter:description" id="twDesc" content="Trade request details on Trader Route">
+<meta name="twitter:image" id="twImage" content="https://www.traderroute.com/assets/logos.png">
+
+
+ 
 
   <!-- Google Analytics 4 | Trader Route -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVEKRWM5VB"></script>
@@ -229,7 +204,7 @@
  <script src="assets/flag.js"></script>
 
     <script>
-async function loadRequestDetail() {
+async function () {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
   if (!id) return;
@@ -246,6 +221,47 @@ async function loadRequestDetail() {
     document.getElementById("reqCategory").textContent= req.category|| "-";
     document.getElementById("reqDate").textContent    = req.date ? new Date(req.date).toLocaleDateString() : "-";
     document.getElementById("reqDescription").textContent = req.description || "No description provided.";
+
+    // ✅ Dynamic Meta + JSON-LD Schema
+document.title = `${req.title} | Trader Route`;
+
+document.querySelector("#canonicalLink").href = `https://www.traderroute.com/request-detail.html?id=${id}`;
+
+document.querySelector("#ogUrl").content = `https://www.traderroute.com/request-detail.html?id=${id}`;
+document.querySelector("#ogTitle").content = req.title;
+document.querySelector("#ogDesc").content = req.description;
+document.querySelector("#ogImage").content = imgUrl || "https://www.traderroute.com/assets/logos.png";
+
+document.querySelector("#twTitle").content = req.title;
+document.querySelector("#twDesc").content = req.description;
+document.querySelector("#twImage").content = imgUrl || "https://www.traderroute.com/assets/logos.png";
+
+// ✅ Create dynamic JSON-LD Product + Offer schema
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": req.title,
+  "image": imgUrl || "https://www.traderroute.com/assets/logos.png",
+  "description": req.description,
+  "brand": { "@type": "Organization", "name": "Trader Route" },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "InStock",
+    "url": `https://www.traderroute.com/request-detail.html?id=${id}`
+  }
+};
+
+// ✅ Remove old schema
+document.querySelectorAll('script[type="application/ld+json"]').forEach(e => e.remove());
+
+// ✅ Insert new schema
+const tag = document.createElement('script');
+tag.type = "application/ld+json";
+tag.textContent = JSON.stringify(schema);
+document.head.appendChild(tag);
+
 
     // 👁️ Bu ilan için görüntülenme sayacını artır ve ekranda göster
 try {
@@ -352,7 +368,7 @@ if (Array.isArray(req.images) && req.images.length > 0) {
 }
 
 // DOM hazır olunca çalıştır
-document.addEventListener("DOMContentLoaded", loadRequestDetail);
+document.addEventListener("DOMContentLoaded", );
 </script>
 
   <script>
