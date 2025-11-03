@@ -204,7 +204,7 @@
  <script src="assets/flag.js"></script>
 
     <script>
-async function () {
+async function loadRequestDetail() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
   if (!id) return;
@@ -368,7 +368,7 @@ if (Array.isArray(req.images) && req.images.length > 0) {
 }
 
 // DOM hazır olunca çalıştır
-document.addEventListener("DOMContentLoaded", );
+document.addEventListener("DOMContentLoaded", loadRequestDetail);
 </script>
 
   <script>
