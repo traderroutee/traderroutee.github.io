@@ -186,7 +186,7 @@ async function togglePremium(id, currentStatus) {
   if (currentStatus) {
     if (!confirm("Remove premium status for this request?")) return;
    const res = await fetch(
-  https://api.traderroute.com/premium?t=" + Date.now(),
+  "https://api.traderroute.com/premium?t=" + Date.now(),
   {
     cache: "no-store",
     method: "POST",
@@ -210,7 +210,7 @@ if (res.ok) {
   if (isNaN(until)) { alert("Invalid date format."); return; }
 
    const res = await fetch(
-  "https://divine-hill-9557.traderroutee.workers.dev/premium?t=" + Date.now(),
+  "https://api.traderroute.com/premium?t=" + Date.now(),
   {
     cache: "no-store",
     method: "POST",
