@@ -734,22 +734,23 @@ function incrementViewAndOpen(id){
     const list = document.getElementById("categoryList");
 
 async function loadCategories() {
-  try {
-    const res = await fetch("https://divine-hill-9557.traderroute.workers.dev/requests?t=" + Date.now());
-const all = await res.json();
+    try {
+        const res = await fetch("https://api.traderroute.com/requests?" + Date.now());
+        const all = await res.json();
 
-    categories.slice(0, 10).forEach(cat => {
-      const count = all.filter(r => r.category === cat).length;
-      const div = document.createElement("div");
-      div.className = "category-item";
-      div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
-      div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
-      list.appendChild(div);
-    });
-  } catch (e) {
-    console.error("Category load error:", e);
-  }
+        categories.slice(0, 20).forEach(cat => {
+            const count = all.filter(r => r.category === cat).length;
+            const div = document.createElement("div");
+            div.className = "category-item";
+            div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
+            div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
+            list.appendChild(div);
+        });
+    } catch (e) {
+        console.error("Category load error:", e);
+    }
 }
+
 loadCategories();
 
     (function(){
