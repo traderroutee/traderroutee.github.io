@@ -96,7 +96,7 @@
 
 async function showRequests() {
   try {
-    const res = await fetch("https://api.traderroute.com/requests", {
+    const res = await fetch("https://divine-hill-9557.traderroute.workers.dev/requests", {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
@@ -161,7 +161,7 @@ async function showRequests() {
 
   async function approveRequest(id){
     if(!confirm("Approve this request?"))return;
-    const res=await fetch("https://api.traderroute.com/approve",{
+    const res=await fetch("https://divine-hill-9557.traderroute.workers.dev/approve",{
       method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
       body:JSON.stringify({id})
     });
