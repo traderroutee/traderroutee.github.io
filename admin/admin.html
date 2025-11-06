@@ -186,7 +186,7 @@ async function togglePremium(id, currentStatus) {
   if (currentStatus) {
     if (!confirm("Remove premium status for this request?")) return;
    const res = await fetch(
-  "https://api.traderroute.com/premium?t=" + Date.now(),
+  "https://divine-hill-9557.traderroute.workers.dev/premium?t=" + Date.now(),
   {
     cache: "no-store",
     method: "POST",
