@@ -170,7 +170,7 @@
 
     async function getRequests(){
       try{
-        const res=await fetch("https://api.traderroute.com/requests?t="+Date.now());
+        const res=await fetch("https://divine-hill-9557.traderroute.workers.dev/requests?t="+Date.now());
         const data=await res.json();
         return Array.isArray(data)?data:(data.record||data.data||[]);
       }catch{return [];}
