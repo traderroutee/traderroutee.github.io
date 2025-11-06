@@ -687,7 +687,7 @@ if (premium.length > 0) {
 
  <script>
 function incrementViewAndOpen(id){
-  fetch("https://divine-hill-9557.traderroute.workers.dev/view", {
+  fetch("https://api.traderroute.com/view", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id })
