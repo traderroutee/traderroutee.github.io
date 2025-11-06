@@ -170,7 +170,7 @@ async function showRequests() {
 
   async function deleteRequest(id){
     if(!confirm("Delete this request?"))return;
-    const res=await fetch("https://api.traderroute.com/delete",{
+    const res=await fetch("https://divine-hill-9557.traderroute.workers.dev/delete",{
       method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
       body:JSON.stringify({id})
     });
