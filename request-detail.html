@@ -318,8 +318,6 @@ try {
    // 🖼️ Resim (JSON'da tam URL geliyor)
 if (Array.isArray(req.images) && req.images.length > 0) {
 
-   const img = document.createElement("img");
-  img.src = imgUrl + "?raw=1";
   
   const img = document.createElement("img");
   img.id = "reqImage";
