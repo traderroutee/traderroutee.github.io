@@ -268,7 +268,7 @@ async function doRegister(){
 
   // ✅ Cloudflare Worker (R2) üzerine gönder
   try {
-    const res = await fetch("https://divine-hill-9557.traderroutee.workers.dev/users", {
+    const res = await fetch("https://api.traderroute.com/users")", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user)
