@@ -26,7 +26,6 @@
 
   <!-- ✅ SEO Master Block (Requests) -->
 <title>Latest Import Export Requests – Global Trade Leads | Trader Route</title>
-<meta name="description" content="Browse verified import and export requests from global buyers and suppliers. Post your trade offers for free on Trader Route – the global B2B marketplace.">
 <meta name="robots" content="index, follow">
 
 <link rel="canonical" href="https://www.traderroute.com/requests.html">
@@ -66,7 +65,7 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-YVEKRWM5VB', {
-      'anonymize_ip': true,
+      'anonymize_ip': false,
       'send_page_view': true,
       'cookie_flags': 'SameSite=None;Secure'
     });
@@ -279,6 +278,13 @@
     </div>
 
     <div class="content">
+      <div class="asia-traffic card" id="asiaTrafficBox" 
+     style="border:1px solid #e3e3e3;border-radius:8px;padding:14px;margin-bottom:16px;background:#fff;display:none;">
+  <h2 class="section-title" style="margin:0 0 8px;font-size:18px;color:#007157;">
+    Asya Ülkeleri Trafiği
+  </h2>
+  <div id="asiaTrafficSummary" style="font-size:14px;color:#444;">Yükleniyor...</div>
+</div>
       <div class="search-bar">
         <input type="text" id="searchInput" placeholder="Search requests...">
       </div>
@@ -509,6 +515,7 @@ function renderRequests(allData) {
   await ensureCountries();
   const all = await getRequests();
   renderRequests(all);
+  buildAsiaTraffic(all);
 })();
     // 🔄 LocalStorage değiştiğinde otomatik yenile
 window.addEventListener("storage", renderRequests);
@@ -609,6 +616,36 @@ window.addEventListener('storage', e => {
   })();
   </script>
   <script src="assets/flag.js"></script>
+
+  <script>
+function buildAsiaTraffic(requests) {
+  if (!requests || requests.length === 0) return;
+
+  const asiaList = [
+    "India","Pakistan","Bangladesh","Indonesia","China",
+    "Vietnam","Philippines","Thailand","Malaysia","Nepal",
+    "Sri Lanka","Cambodia","Uzbekistan","Kazakhstan"
+  ];
+
+  let total = 0;
+
+  asiaList.forEach(country => {
+    total += requests.filter(r => r.country === country).length;
+  });
+
+  const box = document.getElementById("asiaTrafficBox");
+  const sum = document.getElementById("asiaTrafficSummary");
+
+  if (total > 0) {
+    box.style.display = "block";
+    sum.innerHTML = `Bu sayfada Asya ülkelerinden <b>${total}</b> adet ticaret isteği bulunmaktadır.`;
+  } else {
+    box.style.display = "block";
+    sum.innerHTML = "Bu sayfada Asya ülkelerinden henüz trafik bulunmuyor.";
+  }
+}
+</script>
+
 
   <script>
 // === Mesaj bildirimi kontrolü ===
