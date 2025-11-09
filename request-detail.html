@@ -6,6 +6,8 @@
   <title>Trade Request Detail | Trader Route</title>
   <link rel="stylesheet" href="style.css">
 
+  
+
   <!-- ✅ Dynamic SEO Meta -->
 <meta name="robots" content="index, follow">
 
@@ -222,6 +224,28 @@ async function loadRequestDetail() {
     document.getElementById("reqDate").textContent    = req.date ? new Date(req.date).toLocaleDateString() : "-";
     document.getElementById("reqDescription").textContent = req.description || "No description provided.";
 
+     // ✅ Görsel URL'sini tek seferde hesapla
+    let imgUrl = "";
+
+    if (Array.isArray(req.images) && req.images.length > 0) {
+      imgUrl = req.images[0];
+
+      // Tam URL değilse API domainini ekle
+      if (imgUrl && !/^https?:/i.test(imgUrl)) {
+        imgUrl = "https://divine-hill-9557.traderroutee.workers.dev/" + imgUrl.replace(/^\/+/, "");
+      }
+
+      // Worker adresini gerçek API domaini ile değiştir
+      if (imgUrl.includes("workers.dev")) {
+        imgUrl = imgUrl.replace("divine-hill-9557.traderroutee.workers.dev", "api.traderroute.com");
+      }
+    }
+
+    // Yedek resim
+    if (!imgUrl) {
+      imgUrl = "https://www.traderroute.com/assets/logos.png";
+    }
+
     // ✅ Dynamic Meta + JSON-LD Schema
 document.title = `${req.title} | Trader Route`;
 
@@ -293,18 +317,10 @@ try {
 
    // 🖼️ Resim (JSON'da tam URL geliyor)
 if (Array.isArray(req.images) && req.images.length > 0) {
-  let imgUrl = req.images[0];
 
-  // Eğer URL tam değilse otomatik olarak API domainini ekle
-  if (imgUrl && !/^https?:/i.test(imgUrl)) {
-    imgUrl = "https://divine-hill-9557.traderroutee.workers.dev/" + imgUrl.replace(/^\/+/, "");
-  }
-
-  // Eğer Worker CORS yüzünden engelliyorsa doğrudan API domainini kullan
-  if (imgUrl.includes("workers.dev")) {
-    imgUrl = imgUrl.replace("divine-hill-9557.traderroutee.workers.dev", "api.traderroute.com");
-  }
-
+   const img = document.createElement("img");
+  img.src = imgUrl + "?raw=1";
+  
   const img = document.createElement("img");
   img.id = "reqImage";
   img.src = imgUrl + "?raw=1"; // Cloudflare Worker'dan direkt dosya isteği
