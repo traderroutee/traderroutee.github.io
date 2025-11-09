@@ -209,27 +209,6 @@ document.getElementById("requestForm").addEventListener("submit", async (e) => {
       }[tag]));
     }
 
-    const form=document.getElementById("requestForm");
-    const status=document.getElementById("status");
-
-    form.addEventListener("submit", e=>{
-      e.preventDefault();
-      const title=sanitize(document.getElementById("title").value);
-      const type=document.getElementById("type").value;
-      const category=document.getElementById("category").value;
-      const country=document.getElementById("country").value;
-      const description=sanitize(document.getElementById("description").value);
-
-      if(!title||!type||!category||!country||!description){
-        status.textContent="Please fill out all fields.";
-        return;
-      }
-
-    
-
-      status.textContent="Your request has been submitted!";
-      setTimeout(()=>{ window.location.href="requests.html"; },1200);
-    });
   </script>
 
   <!-- === USER MENU CONTROL === -->
