@@ -189,6 +189,13 @@ document.getElementById("requestForm").addEventListener("submit", async (e) => {
         alert("✅ Your request has been submitted successfully!");
         window.location.href = "requests.html";
 
+      // ✅ Kullanıcıyı USERS listesine kaydet
+await fetch("https://api.traderroute.com/users", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user)
+});
+
     } catch (err) {
         console.error(err);
         alert("Error sending request. Check your internet connection.");
