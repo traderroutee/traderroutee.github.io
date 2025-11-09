@@ -212,7 +212,7 @@ async function loadRequestDetail() {
   if (!id) return;
 
   try {
-    const res = await fetch("https://divine-hill-9557.traderroute.workers.dev/requests?t=" + Date.now());
+    const res = await fetch("https://api.traderroute.com/requests?t=" + Date.now());
     const all = await res.json();
     const req = all.find(r => String(r.id) === String(id));
     if (!req) return;
@@ -232,8 +232,8 @@ async function loadRequestDetail() {
 
       // Tam URL değilse API domainini ekle
       if (imgUrl && !/^https?:/i.test(imgUrl)) {
-        imgUrl = "https://divine-hill-9557.traderroutee.workers.dev/" + imgUrl.replace(/^\/+/, "");
-      }
+    imgUrl = "https://api.traderroute.com/" + imgUrl.replace(/^\/+/, "");
+}
 
       // Worker adresini gerçek API domaini ile değiştir
       if (imgUrl.includes("workers.dev")) {
@@ -292,7 +292,7 @@ try {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
   if (id) {
-    const resView = await fetch("https://divine-hill-9557.traderroute.workers.dev/view", {
+    const resView = await fetch("https://api.traderroute.com/view", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id })
