@@ -268,21 +268,20 @@ async function doRegister(){
 
   // ✅ Cloudflare Worker (R2) üzerine gönder
   try {
-    const res = await fetch("https://api.traderroute.com/users")", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user)
-    });
+  const res = await fetch("https://api.traderroute.com/users", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user)
+  });
 
-    if (res.ok) {
-      console.log("User uploaded successfully.");
-    } else {
-      console.error("Upload failed:", res.status);
-    }
-  } catch (err) {
-    console.error("User upload failed:", err);
+  if (res.ok) {
+    console.log("User uploaded successfully.");
+  } else {
+    console.error("Upload failed:", res.status);
   }
-
+} catch (err) {
+  console.error("User upload failed:", err);
+}
   localStorage.setItem("welcome_name", name);
   alert("Registration successful ✅");
   window.location.href = "index.html";
