@@ -148,6 +148,55 @@
       <button type="submit">Submit Request</button>
       <div class="status" id="status"></div>
     </form>
+
+    <script>
+// ✅ FORM SUBMIT
+document.getElementById("requestForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // ✅ LOGIN KONTROLÜ
+    const user = JSON.parse(localStorage.getItem("tr_user"));
+    if (!user || !user.email) {
+        alert("You must log in to post a request.");
+        return;
+    }
+
+    // ✅ FORM VERİLERİ
+    const formData = {
+        title: document.getElementById("title").value.trim(),
+        type: document.getElementById("type").value,
+        category: document.getElementById("category").value,
+        country: document.getElementById("country").value,
+        description: document.getElementById("description").value.trim(),
+        user: user.email   // ✅ Sistem için zorunlu
+    };
+
+    try {
+        // ✅ API’YE POST
+        const res = await fetch("https://api.traderroute.com/requests", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+            alert(data.error || "Request failed. Please try again.");
+            return;
+        }
+
+        // ✅ BAŞARILI
+        alert("✅ Your request has been submitted successfully!");
+        window.location.href = "requests.html";
+
+    } catch (err) {
+        console.error(err);
+        alert("Error sending request. Check your internet connection.");
+    }
+});
+</script>
+
+    
   </section>
 
   <footer>© 2025 Trader Route — Free Global Requests</footer>
@@ -176,9 +225,7 @@
         return;
       }
 
-      const all=JSON.parse(localStorage.getItem("requests")||"[]");
-      all.push({title,type,category,country,description,date:new Date().toISOString()});
-      localStorage.setItem("requests", JSON.stringify(all));
+    
 
       status.textContent="Your request has been submitted!";
       setTimeout(()=>{ window.location.href="requests.html"; },1200);
