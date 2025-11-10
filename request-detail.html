@@ -341,6 +341,10 @@ if (Array.isArray(req.images) && req.images.length) {
   // b) api.traderroute.com/file/... → R2
   m = imgUrl.match(/api\.traderroute\.com\/file\/([^?#]+)/i);
   if (m) imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
+  
+  // c) /file/... (NEW FIX)
+  m = imgUrl.match(/file\/(.+)$/i);
+  if (m) imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
 
      }
 
