@@ -315,7 +315,7 @@ async function showUsers(){
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
-  <td>${index + 1}</td>
+  <td>${users.length - index}</td>
   <td>${first}</td>
   <td>${last}</td>
   <td>${u.company || ''}</td>
