@@ -331,20 +331,23 @@ async function loadRequestDetail() {
     document.getElementById("reqDate").textContent    = req.date ? new Date(req.date).toLocaleDateString() : "-";
     document.getElementById("reqDescription").textContent = req.description || "No description provided.";
 
-     // ✅ Görsel URL'sini tek seferde hesapla
-    let imgUrl = "";
+     // ✅ Görsel URL'sini tek seferde ve her formata göre düzelt
+let imgUrl = "";
+if (Array.isArray(req.images) && req.images.length) {
+  imgUrl = String(req.images[0]).trim();
 
-    if (Array.isArray(req.images) && req.images.length > 0) {
-  imgUrl = req.images[0];
+  // a) workers.dev/file/... → R2
+  let m = imgUrl.match(/workers\.dev\/file\/([^?#]+)/i);
+  if (m) imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
 
-  // 1) Eski format: /file/<dosya> → R2 formatına çevir
-  if (imgUrl && !/^https?:/i.test(imgUrl)) {
-    const m = imgUrl.match(/\/?file\/(.+)$/);
-    if (m) {
-      imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
-    } else {
-      imgUrl = "https://api.traderroute.com/" + imgUrl.replace(/^\/+/, "");
-    }
+  // b) api.traderroute.com/file/... → R2
+  m = imgUrl.match(/api\.traderroute\.com\/file\/([^?#]+)/i);
+  if (m) imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
+
+  // c) /file/... (relative) → R2
+  m = imgUrl.match(/\/file\/([^?#]+)/i);
+  if (m) imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
+     }
   }
 
 }
