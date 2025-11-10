@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <style>
+table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+</style>
+  
   <meta charset="UTF-8">
   <title>Admin Panel — Trader Route</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,10 +78,10 @@
       <h2>Registered Users</h2>
       <table>
         <thead>
-          <tr>
-            <th>Name</th><th>Surname</th><th>Company</th><th>Email</th><th>Phone</th><th>Country</th>
-          </tr>
-        </thead>
+  <tr>
+    <th>No</th><th>Name</th><th>Surname</th><th>Company</th><th>Email</th><th>Phone</th><th>Country</th>
+  </tr>
+</thead>
         <tbody id="usersTable"></tbody>
       </table>
     </section>
@@ -287,23 +296,28 @@ async function showUsers(){
     }
 
     tbody.innerHTML = '';
-    users.forEach(u => {
-      const name = (u.name || '').trim();
-      const parts = name.split(' ');
-      const first = parts[0] || '';
-      const last  = parts.slice(1).join(' ') || '';
+    users
+  .slice()
+  .reverse()
+  .forEach((u, index) => {
 
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${first}</td>
-        <td>${last}</td>
-        <td>${u.company || ''}</td>
-        <td>${u.email || ''}</td>
-        <td>${u.phone || ''}</td>
-        <td>${u.country || ''}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+    const name = (u.name || '').trim();
+    const parts = name.split(' ');
+    const first = parts[0] || '';
+    const last  = parts.slice(1).join(' ') || '';
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${first}</td>
+      <td>${last}</td>
+      <td>${u.company || ''}</td>
+      <td>${u.email || ''}</td>
+      <td>${u.phone || ''}</td>
+      <td>${u.country || ''}</td>
+    `;
+    tbody.appendChild(tr);
+  });
   } catch (err) {
     console.error('Users load failed:', err);
   }
