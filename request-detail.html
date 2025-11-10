@@ -335,18 +335,24 @@ async function loadRequestDetail() {
     let imgUrl = "";
 
     if (Array.isArray(req.images) && req.images.length > 0) {
-      imgUrl = req.images[0];
+  imgUrl = req.images[0];
 
-      // Tam URL değilse API domainini ekle
-      if (imgUrl && !/^https?:/i.test(imgUrl)) {
-    imgUrl = "https://api.traderroute.com/" + imgUrl.replace(/^\/+/, "");
-}
-
-      // Worker adresini gerçek API domaini ile değiştir
-      if (imgUrl.includes("workers.dev")) {
-        imgUrl = imgUrl.replace("divine-hill-9557.traderroutee.workers.dev", "api.traderroute.com");
-      }
+  // 1) Eski format: /file/<dosya>  -> R2 public URL'e çevir
+  if (imgUrl && !/^https?:/i.test(imgUrl)) {
+    const m = imgUrl.match(/\/?file\/(.+)$/);
+    if (m) {
+      imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
+    } else {
+      imgUrl = "https://api.traderroute.com/" + imgUrl.replace(/^\/+/, "");
     }
+  }
+
+  // 2) Eski workers.dev adresini düzelt
+  imgUrl = imgUrl.replace(
+    "divine-hill-9557.traderroutee.workers.dev",
+    "api.traderroute.com"
+  );
+}
 
     // Yedek resim
     if (!imgUrl) {
