@@ -310,8 +310,6 @@ async function sendMessageToUser() {
 </script>
 
 
- <script src="assets/flag.js"></script>
-
     <script>
 async function loadRequestDetail() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -349,10 +347,6 @@ if (Array.isArray(req.images) && req.images.length) {
   if (m) imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
      }
   }
-
-}
-
-  
 
     // Yedek resim
     if (!imgUrl) {
@@ -548,6 +542,8 @@ document.addEventListener("DOMContentLoaded", loadRequestDetail);
 })();
 </script>
 
+  <script src="assets/flag.js"></script>
+  
 </body>
 </html>
 
