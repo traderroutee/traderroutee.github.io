@@ -337,7 +337,7 @@ async function loadRequestDetail() {
     if (Array.isArray(req.images) && req.images.length > 0) {
   imgUrl = req.images[0];
 
-  // 1) Eski format: /file/<dosya>  -> R2 public URL'e çevir
+  // 1) Eski format: /file/<dosya> → R2 formatına çevir
   if (imgUrl && !/^https?:/i.test(imgUrl)) {
     const m = imgUrl.match(/\/?file\/(.+)$/);
     if (m) {
@@ -346,6 +346,8 @@ async function loadRequestDetail() {
       imgUrl = "https://api.traderroute.com/" + imgUrl.replace(/^\/+/, "");
     }
   }
+
+}
 
   
 
