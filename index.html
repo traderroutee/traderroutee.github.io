@@ -171,11 +171,7 @@
   overflow:hidden;         /* ← margin-left/right satırları silindi */
 }
 
-  /* ✅ her iki kenarı sıfırlar */
-  margin-left:calc(50% - 50vw);
-  margin-right:calc(50% - 50vw);
-  overflow:hidden;
-}
+  
 
 .hero::after{
   content:"";
@@ -271,11 +267,13 @@ html, body{
 }
 
 .requests-table-wrapper {
-  overflow-x: auto;
-  max-width: 1150px;
-  margin: 0 auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    overflow-x: auto;
+    max-width: 1150px;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .requests-table {
