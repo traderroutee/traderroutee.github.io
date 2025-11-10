@@ -347,12 +347,7 @@ async function loadRequestDetail() {
     }
   }
 
-  // 2) Eski workers.dev adresini düzelt
-  imgUrl = imgUrl.replace(
-    "divine-hill-9557.traderroutee.workers.dev",
-    "api.traderroute.com"
-  );
-}
+  
 
     // Yedek resim
     if (!imgUrl) {
@@ -434,7 +429,7 @@ if (Array.isArray(req.images) && req.images.length > 0) {
   
   const img = document.createElement("img");
   img.id = "reqImage";
-  img.src = imgUrl.includes("r2.dev") ? imgUrl : (imgUrl + "?raw=1"); // Cloudflare Worker'dan direkt dosya isteği
+  img.src = imgUrl; // Cloudflare Worker'dan direkt dosya isteği
   img.alt = req.title || "Request Image";
   img.crossOrigin = "anonymous";
   img.referrerPolicy = "no-referrer";
@@ -465,7 +460,7 @@ if (Array.isArray(req.images) && req.images.length > 0) {
       z-index:9999;
     `;
     const big = document.createElement("img");
-    big.src = imgUrl + "?raw=1";
+    big.src = imgUrl;
     big.style = "max-width:90%;max-height:90%;border-radius:12px;";
     overlay.appendChild(big);
     document.body.appendChild(overlay);
