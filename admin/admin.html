@@ -322,7 +322,7 @@ async function showUsers(){
   <td>${u.email || ''}</td>
   <td>${u.phone || ''}</td>
   <td>${u.country || ''}</td>
-  <td>${date}</td>
+  <td>${u.date || "-"}</td>
 `;
     tbody.appendChild(tr);
   });
