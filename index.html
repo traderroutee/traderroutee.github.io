@@ -159,16 +159,17 @@
     
 
 /* === HERO === */
-.hero{
-  position:relative;
-  width:100%;
-  height:470px;
-  background:url('assets/ihracat-haritasi.png') center center/115% no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  overflow:hidden;
+.hero {
+    position: relative;
+    width: 100%;
+    min-height: 480px;         /* YENİ — içeriğe göre genişler */
+    padding: 40px 20px;        /* YENİ — yazılar nefes alsın */
+    background: url("assets/ihracat-haritasi.png") center center/cover no-repeat;  /* Tam otursun */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
 }
 
 @media (max-width: 900px) {
