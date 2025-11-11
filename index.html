@@ -155,9 +155,9 @@
 .hero {
     position: relative;
     width: 100%;
-    min-height: 480px;         /* YENİ — içeriğe göre genişler */
-    padding: 40px 20px;        /* YENİ — yazılar nefes alsın */
-    background: url("assets/ihracat-haritasi.png") center center/cover no-repeat;  /* Tam otursun */
+    min-height: 380px;   /* ✅ 480px → 380px yapıyoruz */
+    padding: 40px 20px;
+    background: url("assets/ihracat-haritasi.png") center center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -167,7 +167,9 @@
 
 @media (max-width: 900px) {
   .hero {
-    background-size: 100% !important;
+    background-size: cover !important;   /* ✅ 100% → cover */
+    padding: 30px 15px;                   /* ✅ Yazıya daha fazla alan */
+    min-height: 420px;                    /* ✅ Mobilde genişlik artsın */
   }
 }
 
