@@ -4,12 +4,20 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- 🏠 Ana Sayfa -->
+
+   <xhtml:link rel="alternate" hreflang="en" href="https://traderroute.com/"/>
+  <xhtml:link rel="alternate" hreflang="en-in" href="https://traderroute.com/"/>
+  <xhtml:link rel="alternate" hreflang="en-pk" href="https://traderroute.com/"/>
+  <xhtml:link rel="alternate" hreflang="en-bd" href="https://traderroute.com/"/>
+  <xhtml:link rel="alternate" hreflang="tr" href="https://traderroute.com/"/>
+  
   <url>
     <loc>https://traderroute.com/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  
 
   <!-- 📋 Requests Sayfası -->
   <url>
