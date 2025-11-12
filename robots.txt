@@ -10,6 +10,17 @@ Disallow: /admin/
 Disallow: /private/
 Allow: /
 
+# --- Görsel indeksleme için ---
+User-agent: Googlebot-Image
+Allow: /assets/
+
+# --- Yapısal veri (schema) taramasına izin ver ---
+Allow: /*.json$
+
+# --- Gereksiz parametreleri engelle ---
+Disallow: /*?session=
+Disallow: /*?t=
+
 # Only apply crawl delay for non-Google bots
 User-agent: Yandex
 Disallow: /private/
