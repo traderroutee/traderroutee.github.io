@@ -693,5 +693,17 @@ function buildAsiaTraffic(requests) {
   }
 })();
 </script>
+
+  <script>
+fetch("https://ipapi.co/json/")
+  .then(res => res.json())
+  .then(data => {
+    gtag('event', 'user_location', {
+      user_country: data.country_name,
+      user_city: data.city
+    });
+  });
+</script>
+  
 </body>
 </html>
