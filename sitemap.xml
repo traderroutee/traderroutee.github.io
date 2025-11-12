@@ -83,4 +83,21 @@
     <priority>0.75</priority>
   </url>
 
+   <!-- 🧾 Dynamic Request Detail Pages (örnekler) -->
+  <url>
+    <loc>https://traderroute.com/request-detail.html?id=1001</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://traderroute.com/request-detail.html?id=1002</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://traderroute.com/request-detail.html?id=1003</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>
