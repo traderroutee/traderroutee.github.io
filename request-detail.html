@@ -446,32 +446,42 @@ if (Array.isArray(req.images) && req.images.length > 0) {
   const container = document.querySelector(".request-detail-container");
   container.appendChild(img);
 
-  // 🔍 Resim tıklanınca büyütme efekti
-  img.addEventListener("click", () => {
-    const overlay = document.createElement("div");
-    overlay.style = `
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.85);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:9999;
-    `;
-    const big = document.createElement("img");
-    big.src = imgUrl;
-    big.style = "max-width:90%;max-height:90%;border-radius:12px;";
-    overlay.appendChild(big);
-    document.body.appendChild(overlay);
-    overlay.addEventListener("click", () => overlay.remove());
-  });
+ // 🔍 Resim tıklanınca büyütme efekti
+img.addEventListener("click", () => {
+  const overlay = document.createElement("div");
+  overlay.style = `
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+  `;
 
-  // 🧩 Resim yüklenmezse hata mesajı yerine gizle
-  img.onerror = () => {
-    console.warn("Image not found:", imgUrl);
-    img.remove();
+  const big = document.createElement("img");
+  big.src = imgUrl;                      // aynı url
+  big.style = "max-width:90%;max-height:90%;border-radius:12px;";
+  big.referrerPolicy = "no-referrer";    // 🔑 R2'de görüntüleme için gerekli
+  big.crossOrigin = "anonymous";         // CORS sorunlarını önler
+  big.loading = "eager";                 // hemen yükle
+  big.onerror = () => {                  // yüklenmezse küçük görsele düş
+    big.src = img.src || "https://www.traderroute.com/assets/logos.png";
   };
-}
+
+  overlay.appendChild(big);
+  document.body.appendChild(overlay);
+
+  // İsteğe bağlı: ESC ile kapatma
+  const close = (e) => { if (e.key === "Escape") { overlay.remove(); document.removeEventListener("keydown", close); } };
+  document.addEventListener("keydown", close);
+
+  overlay.addEventListener("click", () => {
+    overlay.remove();
+    document.removeEventListener("keydown", close);
+  });
+});
+
 
 
     // 🇹🇷 Bayrak
