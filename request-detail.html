@@ -543,6 +543,33 @@ document.addEventListener("DOMContentLoaded", loadRequestDetail);
 </script>
 
   <script src="assets/flag.js"></script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const img = document.querySelector("#reqImage");
+  if (img) {
+    img.addEventListener("click", () => {
+      const overlay = document.createElement("div");
+      overlay.style = `
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.85);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        z-index:9999;
+      `;
+      const big = document.createElement("img");
+      big.src = img.src;
+      big.style = "max-width:90%;max-height:90%;border-radius:12px;";
+      overlay.appendChild(big);
+      document.body.appendChild(overlay);
+      overlay.addEventListener("click", () => overlay.remove());
+    });
+  }
+});
+</script>
+
   
 </body>
 </html>
