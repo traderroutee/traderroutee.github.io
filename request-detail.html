@@ -484,7 +484,7 @@ img.addEventListener("click", () => {
 
 
 
-    // 🇹🇷 Bayrak
+   // 🇹🇷 Bayrak
     const flagFile = getFlagURL(req.country, 60);
     const flagImg  = document.getElementById("flagImage");
     flagImg.src = flagFile;
@@ -493,10 +493,12 @@ img.addEventListener("click", () => {
       this.src = "assets/flag/default.png";
     };
 
-  } catch (err) {
+  } // ✅ try burada biter
+
+  catch (err) {
     console.error("Error loading request detail:", err);
   }
-}
+} // ✅ fonksiyon burada biter
 
 // DOM hazır olunca çalıştır
 document.addEventListener("DOMContentLoaded", loadRequestDetail);
