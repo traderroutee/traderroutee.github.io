@@ -429,6 +429,41 @@ html, body{
   transform: translateY(-2px);
 }
 
+     /* === MOBILE ALIGN FIX === */
+@media (max-width: 600px) {
+  /* Ana sayfa her şey tam ortalansın, kayma olmasın */
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .latest-requests {
+    margin: 40px auto 20px;
+    padding: 0 10px;
+    max-width: 100%;
+  }
+
+  .requests-table-wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .premium-box {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .premium-box table,
+  .premium-box td,
+  .premium-box th {
+    box-sizing: border-box;
+  }
+}
+
+
     /* === 👁️ Görüntülenme Rozeti (liste satırı içinde) === */
 .view-chip{
   display:inline-flex;
