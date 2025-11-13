@@ -231,15 +231,16 @@ html, body{
   background: #008b6a;
   color: #fff;
   border: none;
-  padding: 8px 0;           /* buton yüksekliğini azalttık */
-  width: 320px;             /* sabit genişlik */
+  padding: 8px 0;
+  width: 90%;              /* ✅ her telefonda taşmaz */
+  max-width: 320px;        /* ❗ büyük ekranda 320px olur */
   border-radius: 20px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
 }
-
+    
 .middle-buttons button:hover {
   background: #006b52;
 }
