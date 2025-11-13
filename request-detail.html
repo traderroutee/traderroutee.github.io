@@ -334,19 +334,20 @@ let imgUrl = "";
 if (Array.isArray(req.images) && req.images.length) {
   imgUrl = String(req.images[0]).trim();
 
-  // a) workers.dev/file/... → R2
-  let m = imgUrl.match(/workers\.dev\/file\/([^?#]+)/i);
-  if (m) imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
+ // === UNIVERSAL FIX FOR ALL IMAGE URL FORMATS ===
+let imgUrl = "";
+if (Array.isArray(req.images) && req.images.length) {
+  imgUrl = String(req.images[0]).trim();
 
-  // b) api.traderroute.com/file/... → R2
-  m = imgUrl.match(/api\.traderroute\.com\/file\/([^?#]+)/i);
-  if (m) imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
-  
-  // c) /file/... (NEW FIX)
-  m = imgUrl.match(/file\/(.+)$/i);
-  if (m) imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + m[1];
+  // Tüm URL parametrelerini temizle (token, alt, query vb.)
+  imgUrl = imgUrl.split("?")[0];
 
-     }
+  // Yalnızca dosya adını al
+  const fileName = imgUrl.split("/").pop();
+
+  // R2 URL'ini tek formatta oluştur
+  imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + fileName;
+}
 
     // Yedek resim
     if (!imgUrl) {
