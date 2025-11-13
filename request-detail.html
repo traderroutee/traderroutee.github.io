@@ -329,30 +329,26 @@ async function loadRequestDetail() {
     document.getElementById("reqDate").textContent    = req.date ? new Date(req.date).toLocaleDateString() : "-";
     document.getElementById("reqDescription").textContent = req.description || "No description provided.";
 
-     // ✅ Görsel URL'sini tek seferde ve her formata göre düzelt
+     // === UNIVERSAL FIX FOR ALL IMAGE URL FORMATS ===
 let imgUrl = "";
+
 if (Array.isArray(req.images) && req.images.length) {
   imgUrl = String(req.images[0]).trim();
 
- // === UNIVERSAL FIX FOR ALL IMAGE URL FORMATS ===
-let imgUrl = "";
-if (Array.isArray(req.images) && req.images.length) {
-  imgUrl = String(req.images[0]).trim();
-
-  // Tüm URL parametrelerini temizle (token, alt, query vb.)
+  // URL parametrelerini temizle
   imgUrl = imgUrl.split("?")[0];
 
-  // Yalnızca dosya adını al
+  // Sadece dosya adını al
   const fileName = imgUrl.split("/").pop();
 
-  // R2 URL'ini tek formatta oluştur
+  // R2 URL'ini oluştur
   imgUrl = "https://pub-9d95183d55a44dcdba5ffffc32614556.r2.dev/" + fileName;
 }
 
-    // Yedek resim
-    if (!imgUrl) {
-      imgUrl = "https://www.traderroute.com/assets/logos.png";
-    }
+// Yedek resim
+if (!imgUrl) {
+  imgUrl = "https://www.traderroute.com/assets/logos.png";
+}
 
     // ✅ Dynamic Meta + JSON-LD Schema
 document.title = `${req.title} | Trader Route`;
