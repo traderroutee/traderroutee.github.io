@@ -159,27 +159,51 @@
 @media (max-width: 600px) {
 
   .hero {
-    min-height:260px !important;
-    padding:18px 12px !important;
+    min-height: 330px !important;
+    padding: 25px 18px !important;
+    background-size: cover !important;
   }
 
   .hero-content h1 {
-    font-size:26px !important;
-    line-height:1.25 !important;
-    margin-bottom:8px !important;
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+    margin-bottom: 10px !important;
+    text-shadow: 0 3px 10px rgba(0,0,0,.5);
   }
 
   .hero-content p {
-    font-size:13px !important;
-    max-width:300px !important;
+    font-size: 14px !important;
+    max-width: 360px !important;
+    line-height: 1.5 !important;
+  }
+
+  .middle-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .middle-buttons button {
+    width: 100% !important;
   }
 }
+
 
 /* ✅ yatay kayma veya scrollbar oluşmasın diye */
 html, body{
   margin:0;
   padding:0;
   overflow-x:hidden;
+}
+
+     /* Mobilde yan kaymayı %100 engeller */
+html, body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    margin: 0;
+    padding: 0;
 }
 
     
