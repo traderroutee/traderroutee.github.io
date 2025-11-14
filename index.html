@@ -173,22 +173,43 @@
   }
 }
 
-/* Küçük telefonlar – yazıyı küçült, tamamen sığsın */
+
+/* Küçük telefonlar – index header + hero ayarı */
 @media (max-width: 600px) {
+
+  /* Header daha ince olsun */
+  header {
+    padding: 6px 14px !important;
+  }
+
+  .logo-container img {
+    height: 30px !important;
+  }
+
+  .logo-text {
+    font-size: 12px !important;
+  }
+
+  nav a {
+    font-size: 13px !important;
+  }
+
+  /* Hero daha küçük olsun, yazılar sığsın */
   .hero {
-    min-height: 310px;
-    padding: 22px 12px;
+    min-height: 260px !important;
+    padding: 18px 12px !important;
   }
 
   .hero-content h1 {
-    font-size: 30px;
-    line-height: 1.2;
-    margin-bottom: 8px;
+    font-size: 24px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 6px !important;
   }
 
   .hero-content p {
-    font-size: 14px;
-    max-width: 340px;
+    font-size: 13px !important;
+    max-width: 280px !important;
+    margin-top: 4px !important;
   }
 }
 
@@ -214,7 +235,7 @@
 }
 
 .hero-content h1{
-  font-size:44px;
+  font-size:44px !important;
   font-weight:800;
   margin:0;
   text-shadow:0 3px 10px rgba(0,0,0,.5);
@@ -226,6 +247,9 @@ html, body{
   padding:0;
   overflow-x:hidden;
 }
+
+   
+
 
     
     /* === CATEGORY BOX === */
