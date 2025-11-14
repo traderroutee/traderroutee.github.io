@@ -155,8 +155,8 @@
 .hero {
     position: relative;
     width: 100%;
-    min-height: 380px;   /* ✅ 480px → 380px yapıyoruz */
-    padding: 40px 20px;
+    min-height: 380px;              /* masaüstü için aynı dursun */
+    padding: 32px 18px;
     background: url("assets/ihracat-haritasi.png") center center/cover no-repeat;
     display: flex;
     justify-content: center;
@@ -165,13 +165,33 @@
     overflow: hidden;
 }
 
+/* Tablet ve mobil – kahraman alanını biraz kısalt */
 @media (max-width: 900px) {
   .hero {
-    background-size: cover !important;   /* ✅ 100% → cover */
-    padding: 30px 15px;                   /* ✅ Yazıya daha fazla alan */
-    min-height: 420px;                    /* ✅ Mobilde genişlik artsın */
+    min-height: 340px;
+    padding: 26px 14px;
   }
 }
+
+/* Küçük telefonlar – yazıyı küçült, tamamen sığsın */
+@media (max-width: 600px) {
+  .hero {
+    min-height: 310px;
+    padding: 22px 12px;
+  }
+
+  .hero-content h1 {
+    font-size: 30px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+    max-width: 340px;
+  }
+}
+
 
 
   
