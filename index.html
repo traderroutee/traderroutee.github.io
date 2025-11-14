@@ -149,6 +149,14 @@
     .join-btn{background:#008b6a;color:#fff;padding:8px 15px}
     .join-btn:hover{background:#006b52}
 
+     .hero-content h1{
+  font-size:44px;
+  font-weight:800;
+  margin:0;
+  color:#fff;
+  text-shadow:0 3px 10px rgba(0,0,0,.5);
+}
+
     
 
 /* === HERO === */
@@ -164,92 +172,6 @@
     text-align: center;
     overflow: hidden;
 }
-
-/* Tablet ve mobil – kahraman alanını biraz kısalt */
-@media (max-width: 900px) {
-  .hero {
-    min-height: 340px;
-    padding: 26px 14px;
-  }
-}
-
-
-/* Küçük telefonlar – index header + hero ayarı */
-@media (max-width: 600px) {
-
-  /* Header daha ince olsun */
-  header {
-    padding: 6px 14px !important;
-  }
-
-  .logo-container img {
-    height: 30px !important;
-  }
-
-  .logo-text {
-    font-size: 12px !important;
-  }
-
-  nav a {
-    font-size: 13px !important;
-  }
-
-  /* Hero daha küçük olsun, yazılar sığsın */
-  .hero {
-    min-height: 260px !important;
-    padding: 18px 12px !important;
-  }
-
-  .hero-content h1 {
-    font-size: 24px !important;
-    line-height: 1.2 !important;
-    margin-bottom: 6px !important;
-  }
-
-  .hero-content p {
-    font-size: 13px !important;
-    max-width: 280px !important;
-    margin-top: 4px !important;
-  }
-}
-
-
-
-  
-
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.35);
-  z-index:1;
-  border-radius:6px;
-}
-
-.hero-content{
-  position:relative;
-  z-index:2;
-  max-width:800px;
-  color:#fff;
-  text-align:center;
-}
-
-.hero-content h1{
-  font-size:44px !important;
-  font-weight:800;
-  margin:0;
-  text-shadow:0 3px 10px rgba(0,0,0,.5);
-}
-
-/* ✅ yatay kayma veya scrollbar oluşmasın diye */
-html, body{
-  margin:0;
-  padding:0;
-  overflow-x:hidden;
-}
-
-   
-
 
     
     /* === CATEGORY BOX === */
