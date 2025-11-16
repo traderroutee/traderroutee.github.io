@@ -86,29 +86,7 @@
 }
 </script>
 
-    <style>
-
-
-  /* Ana sayfadaki orta butonlar (varsa) dik hizalansın */
-  .middle-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-  }
-  .middle-buttons button {
-    width: 90%;
-    font-size: 15px;
-  }
-
-   @media (max-width: 900px) {
-  .cat-holder { position: static !important; margin: 10px auto; width: 90%; }
-  /* .hero satırını komple kaldırdık */
-  html, body { overflow-x: hidden; }
-}
-
-    </style>
-
+  
 
    <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVEKRWM5VB"></script>
@@ -494,6 +472,32 @@ html, body {
     display: none !important;
   }
 }
+
+     /* Mobil genişlik 600px fix */
+@media (max-width: 600px) {
+
+  .cat-holder {
+    position: static !important;
+    margin: 10px auto;
+    width: 90%;
+  }
+
+  html, body {
+    overflow-x: hidden !important;
+  }
+
+  .middle-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .middle-buttons button {
+    width: 100% !important;
+  }
+}
+
 
    
   </style>
