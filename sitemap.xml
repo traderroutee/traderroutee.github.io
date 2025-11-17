@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
+<urlset 
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- 🏠 Ana Sayfa -->
-
-   <xhtml:link rel="alternate" hreflang="en" href="https://traderroute.com/"/>
-  <xhtml:link rel="alternate" hreflang="en-in" href="https://traderroute.com/"/>
-  <xhtml:link rel="alternate" hreflang="en-pk" href="https://traderroute.com/"/>
-  <xhtml:link rel="alternate" hreflang="en-bd" href="https://traderroute.com/"/>
-  <xhtml:link rel="alternate" hreflang="tr" href="https://traderroute.com/"/>
-  
   <url>
     <loc>https://traderroute.com/</loc>
     <lastmod>2025-10-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  
 
   <!-- 📋 Requests Sayfası -->
   <url>
@@ -35,7 +27,7 @@
     <priority>0.85</priority>
   </url>
 
-  <!-- 📦 Tüm İlanlar Sayfası -->
+  <!-- 📦 Tüm İlanlar -->
   <url>
     <loc>https://traderroute.com/all-requests.html</loc>
     <lastmod>2025-10-26</lastmod>
@@ -43,7 +35,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- 🧭 Kayıt Ol Sayfası -->
+  <!-- 🧭 Kayıt Ol -->
   <url>
     <loc>https://traderroute.com/register.html</loc>
     <lastmod>2025-10-26</lastmod>
@@ -51,7 +43,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- 🔐 Giriş Sayfası -->
+  <!-- 🔐 Giriş -->
   <url>
     <loc>https://traderroute.com/login.html</loc>
     <lastmod>2025-10-26</lastmod>
@@ -59,7 +51,7 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- 📞 İletişim Sayfası -->
+  <!-- 📞 İletişim -->
   <url>
     <loc>https://traderroute.com/contact.html</loc>
     <lastmod>2025-10-26</lastmod>
@@ -67,7 +59,7 @@
     <priority>0.5</priority>
   </url>
 
-  <!-- 💼 Companies Sayfası -->
+  <!-- 💼 Companies -->
   <url>
     <loc>https://traderroute.com/companies.html</loc>
     <lastmod>2025-10-26</lastmod>
@@ -75,7 +67,7 @@
     <priority>0.75</priority>
   </url>
 
-  <!-- 💬 Messages Sayfası -->
+  <!-- 💬 Messages -->
   <url>
     <loc>https://traderroute.com/messages.html</loc>
     <lastmod>2025-10-26</lastmod>
@@ -83,7 +75,7 @@
     <priority>0.65</priority>
   </url>
 
-  <!-- 📃 Request Form Sayfası -->
+  <!-- 📃 Request Form -->
   <url>
     <loc>https://traderroute.com/request-form.html</loc>
     <lastmod>2025-10-26</lastmod>
@@ -91,17 +83,19 @@
     <priority>0.75</priority>
   </url>
 
-   <!-- 🧾 Dynamic Request Detail Pages (örnekler) -->
+  <!-- 🧾 Örnek Request Detail -->
   <url>
     <loc>https://traderroute.com/request-detail.html?id=1001</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
+
   <url>
     <loc>https://traderroute.com/request-detail.html?id=1002</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
+
   <url>
     <loc>https://traderroute.com/request-detail.html?id=1003</loc>
     <changefreq>weekly</changefreq>
