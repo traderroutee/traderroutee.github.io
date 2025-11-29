@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trade Request Detail | Trader Route</title>
+  <meta id="dynamicDesc" name="description" content="Loading trade request...">
+
 
   <meta name="keywords" content="
 trade request,
@@ -24,8 +26,6 @@ global trade marketplace
 
   <!-- ✅ Dynamic SEO Meta -->
 <meta name="robots" content="index, follow">
-
-<link rel="canonical" id="canonicalLink" href="https://www.traderroute.com/request-detail.html">
 
 <meta property="og:site_name" content="Trader Route">
 <meta property="og:type" content="product">
@@ -351,7 +351,8 @@ if (!imgUrl) {
 }
 
     // ✅ Dynamic Meta + JSON-LD Schema
-document.title = `${req.title} | Trader Route`;
+document.title = `${req.title} | ${req.country} Buyer Request | Trader Route`;
+document.querySelector("#dynamicDesc").content = req.description || "Global trade request on Trader Route";
 
 document.querySelector("#canonicalLink").href = `https://www.traderroute.com/request-detail.html?id=${id}`;
 
