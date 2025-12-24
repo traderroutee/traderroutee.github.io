@@ -515,7 +515,6 @@ function renderRequests(allData) {
   await ensureCountries();
   const all = await getRequests();
   renderRequests(all);
-  buildAsiaTraffic(all);
 })();
     // 🔄 LocalStorage değiştiğinde otomatik yenile
 window.addEventListener("storage", renderRequests);
@@ -616,36 +615,6 @@ window.addEventListener('storage', e => {
   })();
   </script>
   <script src="assets/flag.js"></script>
-
-  <script>
-function buildAsiaTraffic(requests) {
-  if (!requests || requests.length === 0) return;
-
-  const asiaList = [
-    "India","Pakistan","Bangladesh","Indonesia","China",
-    "Vietnam","Philippines","Thailand","Malaysia","Nepal",
-    "Sri Lanka","Cambodia","Uzbekistan","Kazakhstan"
-  ];
-
-  let total = 0;
-
-  asiaList.forEach(country => {
-    total += requests.filter(r => r.country === country).length;
-  });
-
-  const box = document.getElementById("asiaTrafficBox");
-  const sum = document.getElementById("asiaTrafficSummary");
-
-  if (total > 0) {
-    box.style.display = "block";
-    sum.innerHTML = `Bu sayfada Asya ülkelerinden <b>${total}</b> adet ticaret isteği bulunmaktadır.`;
-  } else {
-    box.style.display = "block";
-    sum.innerHTML = "Bu sayfada Asya ülkelerinden henüz trafik bulunmuyor.";
-  }
-}
-</script>
-
 
   <script>
 // === Mesaj bildirimi kontrolü ===
