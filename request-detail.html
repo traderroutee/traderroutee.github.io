@@ -354,9 +354,8 @@ if (!imgUrl) {
 document.title = `${req.title} | ${req.country} Buyer Request | Trader Route`;
 document.querySelector("#dynamicDesc").content = req.description || "Global trade request on Trader Route";
 
-document.querySelector("#canonicalLink").href = `https://www.traderroute.com/request-detail.html?id=${id}`;
-
-document.querySelector("#ogUrl").content = `https://www.traderroute.com/request-detail.html?id=${id}`;
+document.querySelector("#canonicalLink").href = `https://traderroute.com/request-detail.html?id=${id}`;
+document.querySelector("#ogUrl").content = `https://traderroute.com/request-detail.html?id=${id}`;
 document.querySelector("#ogTitle").content = req.title;
 document.querySelector("#ogDesc").content = req.description;
 document.querySelector("#ogImage").content = imgUrl || "https://www.traderroute.com/assets/logos.png";
@@ -370,7 +369,7 @@ const schema = {
   "@context": "https://schema.org",
   "@type": "Product",
   "name": req.title,
-  "image": imgUrl || "https://www.traderroute.com/assets/logos.png",
+  "image": imgUrl || "https://traderroute.com/assets/logos.png",
   "description": req.description,
   "brand": { "@type": "Organization", "name": "Trader Route" },
   "offers": {
@@ -378,7 +377,7 @@ const schema = {
     "price": "0",
     "priceCurrency": "USD",
     "availability": "InStock",
-    "url": `https://www.traderroute.com/request-detail.html?id=${id}`
+    "url": `https://traderroute.com/request-detail.html?id=${id}`
   }
 };
 
