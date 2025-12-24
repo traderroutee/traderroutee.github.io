@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="View the latest import and export requests from global buyers and suppliers across Turkey, India, Pakistan, Bangladesh, China and more. Find trade leads, buy leads, and connect with international partners instantly on Trader Route.">
   <meta name="keywords" content="import export requests, trade leads, global buyers, suppliers, India buyers, Pakistan suppliers, Bangladesh exporters, Turkey wholesale, B2B marketplace">
+  <link rel="canonical" href="https://traderroute.com/requests.html">
+  <meta name="robots" content="index, follow">
 
   <meta property="og:site_name" content="Trader Route">
 
@@ -37,6 +39,18 @@
       'cookie_flags': 'SameSite=None;Secure'
     });
   </script>
+
+  <script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('search') || params.toString().length > 0) {
+    const meta = document.createElement('meta');
+    meta.name = "robots";
+    meta.content = "noindex, follow";
+    document.head.appendChild(meta);
+  }
+})();
+</script>
 
   
 
@@ -537,7 +551,7 @@ function generateRequestSchema(request) {
       "priceCurrency": "USD",
       "price": request.price || "Negotiable",
       "availability": "https://schema.org/InStock",
-      "url": `https://www.traderroute.com/request-detail.html?id=${request.id}`,
+      "url": `https://traderroute.com/request-detail.html?id=${request.id}`,
       "seller": {
         "@type": "Organization",
         "name": request.company || "Trader Route Member",
@@ -590,8 +604,8 @@ window.addEventListener('storage', e => {
 window.addEventListener('storage', e => {
   if (e.key === 'new_request_added') {
     fetch(`https://www.google.com/ping?sitemap=https://traderroute.com/sitemap.xml`)
-      .then(()=>console.log("🔔 Google notified about new content."))
-      .catch(err => console.error("Ping error:", err));
+  .then(()=>console.log("🔔 Google notified about new content."))
+  .catch(err => console.error("Ping error:", err));
   }
 });
 </script>
