@@ -6,8 +6,7 @@
 # ===========================================
 
 User-agent: *
-Disallow: /admin/
-Disallow: /private/
+Disallow: /*?
 Allow: /
 
 # --- Görsel indeksleme için ---
