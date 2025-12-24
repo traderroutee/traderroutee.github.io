@@ -39,6 +39,19 @@ global trade marketplace
 <meta name="twitter:description" id="twDesc" content="Trade request details on Trader Route">
 <meta name="twitter:image" id="twImage" content="https://www.traderroute.com/assets/logos.png">
 
+  <script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  if (id) {
+    const link = document.createElement("link");
+    link.rel = "canonical";
+    link.href = "https://traderroute.com/request-detail.html?id=" + id;
+    document.head.appendChild(link);
+  }
+})();
+</script>
+
 
  
 
