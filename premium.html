@@ -243,11 +243,19 @@
       font-size: 17px;
       font-weight: 600;
     }
-    .request-card p {
-      margin: 0 0 4px;
-      font-size: 14px;
-      color: #444;
-    }
+    .request-card p{
+  margin:0 0 4px;
+  font-size:14px;
+  color:#444;
+
+  line-height:1.35;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+  overflow:hidden;
+
+  min-height:calc(1.35em * 3);
+}
     .request-card small {
       color: #666;
     }
