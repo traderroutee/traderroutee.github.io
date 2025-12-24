@@ -52,6 +52,18 @@ global trade marketplace
 })();
 </script>
 
+  <script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  if (!params.has("id")) {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, follow";
+    document.head.appendChild(meta);
+  }
+})();
+</script>
+
 
  
 
