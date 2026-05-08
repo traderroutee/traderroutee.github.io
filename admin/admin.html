@@ -181,9 +181,17 @@ async function showRequests() {
       method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
       body: JSON.stringify({ id })
     });
-    if(res.ok){alert("Approved ✅");showRequests();}else alert("Approval failed ❌");
-  }
+    if(res.ok){
+  alert("Approved ✅");
 
+  // sadece butonu kaldır + status değiştir
+  const row = document.querySelector(`button[onclick="approveRequest(${id})"]`)?.closest("tr");
+  if(row){
+    row.querySelector("td:nth-child(5)").innerHTML = "✅ Approved";
+    const btn = row.querySelector(".approve");
+    if(btn) btn.remove();
+  }
+}
   async function deleteRequest(id){
     if(!confirm("Delete this request?"))return;
     const res=await fetch("https://api.traderroute.com/delete",{
