@@ -22,18 +22,31 @@
 <body>
 
   <script>
-let password = sessionStorage.getItem("adminPass");
+let token = sessionStorage.getItem("adminToken");
 
-if (!password) {
-  password = prompt("Enter Admin Password");
-  sessionStorage.setItem("adminPass", password);
+async function checkLogin() {
+  if (!token) {
+    const password = prompt("Enter Admin Password");
+
+    const res = await fetch("https://api.traderroute.com/admin-login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ password })
+    });
+
+    if (!res.ok) {
+      alert("Wrong password");
+      window.location.href = "/";
+      return;
+    }
+
+    sessionStorage.setItem("adminToken", "ok");
+  }
 }
 
-if (password !== "TRADER2025") {
-  alert("Wrong password");
-  sessionStorage.removeItem("adminPass");
-  window.location.href = "/";
-}
+checkLogin();
 </script>
   
   <div class="container">
