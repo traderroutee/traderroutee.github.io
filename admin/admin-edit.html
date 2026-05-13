@@ -22,8 +22,18 @@
 <body>
 
   <script>
-const password = prompt("Enter Admin Password");
+let password = sessionStorage.getItem("adminPass");
 
+if (!password) {
+  password = prompt("Enter Admin Password");
+  sessionStorage.setItem("adminPass", password);
+}
+
+if (password !== "TRADER2025") {
+  alert("Wrong password");
+  sessionStorage.removeItem("adminPass");
+  window.location.href = "/";
+}
 if (password !== "TRADER2025") {
   alert("Wrong password");
   window.location.href = "/";
