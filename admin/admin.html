@@ -206,7 +206,7 @@ async function showRequests() {
   async function approveRequest(id){
     if(!confirm("Approve this request?"))return;
     const res=await fetch("https://api.traderroute.com/approve",{
-      method:"POST",headers:{"Content-Type":"application/json","x-api-key": password},
+      method:"POST",headers:{"Content-Type":"application/json","x-api-key": "TRADER2025"},
       body: JSON.stringify({ id })
     });
     if(res.ok){
@@ -224,7 +224,7 @@ async function showRequests() {
   async function deleteRequest(id){
     if(!confirm("Delete this request?"))return;
     const res=await fetch("https://api.traderroute.com/delete",{
-      method:"POST",headers:{"Content-Type":"application/json","x-api-key": password},
+      method:"POST",headers:{"Content-Type":"application/json","x-api-key": "TRADER2025"},
       body:JSON.stringify({id})
     });
     if(res.ok){alert("Deleted 🗑️");showRequests();}else alert("Delete failed ❌");
@@ -243,7 +243,7 @@ async function togglePremium(id, currentStatus) {
   {
     cache: "no-store",
     method: "POST",
-    headers: { "Content-Type": "application/json", "x-api-key": password },
+    headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
     body: JSON.stringify({ id, isPremium: false, premiumUntil: null })
   }
 );
@@ -267,7 +267,7 @@ if (res.ok) {
   {
     cache: "no-store",
     method: "POST",
-    headers: { "Content-Type": "application/json", "x-api-key": password },
+    headers: { "Content-Type": "application/json", "x-api-key": "TRADER2025" },
     body: JSON.stringify({ id, isPremium: true, premiumUntil: until.toISOString() })
   }
 );
