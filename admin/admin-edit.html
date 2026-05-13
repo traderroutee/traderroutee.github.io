@@ -20,6 +20,16 @@
   </style>
 </head>
 <body>
+
+  <script>
+const password = prompt("Enter Admin Password");
+
+if (password !== "TRADER2025") {
+  alert("Wrong password");
+  window.location.href = "/";
+}
+</script>
+  
   <div class="container">
     <h2>Edit Request</h2>
     <form id="editForm">
@@ -84,7 +94,7 @@
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": "TRADER2025"
+          "x-api-key": password
         },
         body: JSON.stringify({ id: Number(id), updated })
       });
