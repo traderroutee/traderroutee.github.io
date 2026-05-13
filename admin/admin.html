@@ -52,6 +52,15 @@ table {
     <a href="#" id="tabUsers">Registered Users</a>
   </div>
 
+  <script>
+const password = prompt("Enter Admin Password:");
+
+if (password !== "TRADER2025") {
+  alert("Wrong password!");
+  window.location.href = "/";
+}
+</script>
+  
   <main>
     <!-- Requests -->
     <section id="requestsSection" class="container">
@@ -178,7 +187,7 @@ async function showRequests() {
   async function approveRequest(id){
     if(!confirm("Approve this request?"))return;
     const res=await fetch("https://api.traderroute.com/approve",{
-      method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
+      method:"POST",headers:{"Content-Type":"application/json","x-api-key": password"},
       body: JSON.stringify({ id })
     });
     if(res.ok){
@@ -196,7 +205,7 @@ async function showRequests() {
   async function deleteRequest(id){
     if(!confirm("Delete this request?"))return;
     const res=await fetch("https://api.traderroute.com/delete",{
-      method:"POST",headers:{"Content-Type":"application/json","x-api-key":"TRADER2025"},
+      method:"POST",headers:{"Content-Type":"application/json","x-api-key": password"},
       body:JSON.stringify({id})
     });
     if(res.ok){alert("Deleted 🗑️");showRequests();}else alert("Delete failed ❌");
