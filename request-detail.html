@@ -164,8 +164,6 @@ global trade marketplace
       background-color: #008c4a;
     }
   </style>
-
-  <script src="assets/flag.js"></script>
   
 </head>
 
@@ -595,6 +593,14 @@ window.addEventListener("load", function() {
   }
 })();
 </script>
+
+  <script src="assets/flag.js"></script>
+  <script>
+    // Sayfa ve flag.js tamamen yüklendikten sonra çalıştır
+    window.addEventListener("load", function() {
+      loadRequestDetail();
+    });
+  </script>
 
 
   
