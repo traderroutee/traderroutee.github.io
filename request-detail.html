@@ -511,14 +511,27 @@ try {
       }); // click listener biter
     } // 🔴 Eksik olan if parantezini burada kapatıyoruz
 
-    // 🇹🇷 Bayrak
-    const flagFile = getFlagURL(req.country, 60);
-    const flagImg  = document.getElementById("flagImage");
-    flagImg.src = flagFile;
-    flagImg.onerror = function () {
-      this.onerror = null;
-      this.src = "assets/flag/default.png";
-    };
+     // 🇹🇷 Bayrak (GÜVENLİ SÜRÜM)
+    try {
+      console.log("Ülke:", req.country);
+      var flagFile = "assets/flag/default.png";
+      if (typeof getFlagURL === "function") {
+        flagFile = getFlagURL(req.country, 60);
+        console.log("Bayrak URL:", flagFile);
+      } else {
+        console.log("getFlagURL fonksiyonu bulunamadı!");
+      }
+      var flagImg = document.getElementById("flagImage");
+      if (flagImg) {
+        flagImg.src = flagFile;
+        flagImg.onerror = function() {
+          this.onerror = null;
+          this.src = "assets/flag/default.png";
+        };
+      }
+    } catch(e) {
+      console.error("Bayrak hatası:", e);
+    }
 
   } catch (err) {
     console.error("Error loading request detail:", err);
