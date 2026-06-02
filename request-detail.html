@@ -540,8 +540,10 @@ try {
 
  
 
-// DOM hazır olunca çalıştır
-document.addEventListener("DOMContentLoaded", loadRequestDetail);
+// Sayfa tamamen yüklendikten ve flag.js yüklendikten SONRA çalıştır
+window.addEventListener("load", function() {
+  loadRequestDetail();
+});
 </script>
 
  
