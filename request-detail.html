@@ -509,24 +509,20 @@ try {
       }); // click listener biter
     } // 🔴 Eksik olan if parantezini burada kapatıyoruz
 
-    // 🇹🇷 Bayrak Yükleme (Sabit ve Tek Seferlik)
-    const flagImg = document.getElementById("flagImage");
-    if (flagImg) {
-        // Ülke kodu oluştur (örn: "Turkey" -> "tr")
-        const code = req.country ? req.country.toLowerCase().substring(0, 2) : "default";
-        const targetUrl = `assets/flag/${code}.png`;
-
-        // Sadece src boşsa veya yanlışsa yükle (yanıp sönmeyi engeller)
-        if (!flagImg.src.includes(targetUrl)) {
-            flagImg.src = targetUrl;
-        }
-
-        // Resim hata verirse default göster
-        flagImg.onerror = function() {
-            this.src = "assets/flag/default.png";
-            this.onerror = null; // Sonsuz döngüyü kes
-        };
-    }
+    // === Bayrağı Güncelle ===
+  const flagImg = document.getElementById("flagImage");
+  if (flagImg && req.country) {
+      const code = req.country.toLowerCase().substring(0, 2);
+      const flagUrl = `assets/flag/${code}.png`;
+      
+      // Resim zaten aynı değilse değiştir (Yanıp sönmeyi keser)
+      if (flagImg.getAttribute('src') !== flagUrl) {
+          flagImg.src = flagUrl;
+          flagImg.onerror = function() {
+              this.src = 'assets/flag/default.png';
+          };
+      }
+  }
     
   } catch (err) {
     console.error("Error loading request detail:", err);
