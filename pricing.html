@@ -92,7 +92,7 @@
       font-size:15px;
     }
     .features li { margin:8px 0; }
-    .card button {
+    .card button, .gumroad-button {
       background:var(--green);
       color:#fff;
       border:none;
@@ -101,8 +101,10 @@
       font-weight:600;
       cursor:pointer;
       transition:background 0.25s;
+      text-decoration: none;
+      display: inline-block;
     }
-    .card button:hover { background:var(--green-dark); }
+    .card button:hover, .gumroad-button:hover { background:var(--green-dark); }
 
     footer {
       background:#fff;
@@ -141,6 +143,8 @@
   }
 }
 </script>
+
+  <script src="https://gumroad.com/js/gumroad.js"></script>
   
 </head>
 
@@ -216,7 +220,7 @@
          <li>Automatic email notifications</li>
         <li>Contact via 24/7 support form</li>
       </ul>
-      <button>Upgrade</button>
+      <a href="https://traderroute.com/l/vkuri" class="gumroad-button" data-gumroad-overlay-iframe="true">Upgrade</a>
     </div>
 
     <div class="card">
@@ -231,7 +235,7 @@
         <li>Automatic email notifications</li>
         <li>Contact via 24/7 support form</li>
       </ul>
-      <button>Contact Sales</button>
+      <a href="https://traderroute.com/l/dfmkgp" class="gumroad-button" data-gumroad-overlay-iframe="true">Upgrade</a>
     </div>
   </section>
 
