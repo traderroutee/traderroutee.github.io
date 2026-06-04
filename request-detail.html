@@ -588,14 +588,12 @@ window.addEventListener("load", function() {
 </script>
 
   <script src="assets/flag.js"></script>
-  <script>
-    window.addEventListener("load", function() {
-      // Fonksiyonun hazır olduğundan emin ol ve bir kez çalıştır
-      if (typeof loadRequestDetail === 'function') {
-        loadRequestDetail();
-      }
-    });
-  </script>
+<script>
+  // Fonksiyonu sayfa yüklendiğinde bir kez çağırıyoruz
+  window.addEventListener("load", function() {
+    loadRequestDetail();
+  });
+</script>
 
   
 </body>
