@@ -589,12 +589,13 @@ window.addEventListener("load", function() {
 
   <script src="assets/flag.js"></script>
   <script>
-    // Sayfa ve flag.js tamamen yüklendikten sonra çalıştır
     window.addEventListener("load", function() {
-      loadRequestDetail();
+      // Fonksiyonun hazır olduğundan emin ol ve bir kez çalıştır
+      if (typeof loadRequestDetail === 'function') {
+        loadRequestDetail();
+      }
     });
   </script>
-
 
   
 </body>
