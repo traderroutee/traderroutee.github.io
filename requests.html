@@ -352,12 +352,22 @@ async function getRequests() {
 
 function renderCountries(reqs) {
   const t = (countrySearch.value || "").toLowerCase();
-  const d = (allCountries || []).filter(c => c.name.toLowerCase().includes(t));
+  
+  let countryData = (allCountries || []).map(c => {
+    const count = reqs.filter(r => r.country === c.name).length;
+    return { ...c, count: count };
+  });
+
+  if (t) {
+    countryData = countryData.filter(c => c.name.toLowerCase().includes(t));
+  } else {
+    countryData.sort((a, b) => b.count - a.count);
+  }
 
   countryList.innerHTML = "";
-  d.forEach(c => {
-    const n = reqs.filter(r => r.country === c.name).length;
-    const flagImg = getFlagURL(c.name, 20); // ✅ Yeni bayrak sistemi
+  
+  countryData.forEach(c => {
+    const flagImg = getFlagURL(c.name, 20);
     const li = document.createElement("li");
     li.innerHTML = `
       <a href="#">
@@ -365,7 +375,7 @@ function renderCountries(reqs) {
           <img class='flag' src='${flagImg}' alt='${c.name}' loading='lazy'>
           ${c.name}
         </span>
-        <span class='count'>(${n})</span>
+        <span class='count'>(${c.count})</span>
       </a>`;
     li.onclick = e => {
       e.preventDefault();
@@ -377,28 +387,64 @@ function renderCountries(reqs) {
   });
 }
 
-    function renderCategories(reqs) {
+    let visibleCategoryCount = 10; 
+
+function renderCategories(reqs) {
   const t = (categorySearch.value || "").toLowerCase();
-  const d = (categories || []).filter(c => c.toLowerCase().includes(t));
+  
+  let categoryData = (categories || []).map(cat => {
+    const count = reqs.filter(r => r.category === cat).length;
+    return { name: cat, count: count };
+  });
+
+  if (t) {
+    categoryData = categoryData.filter(c => c.name.toLowerCase().includes(t));
+  } else {
+    categoryData.sort((a, b) => b.count - a.count);
+  }
 
   categoryList.innerHTML = "";
-  d.forEach(cat => {
-    const c = reqs.filter(r => r.category === cat).length;
+  const itemsToRender = t ? categoryData : categoryData.slice(0, visibleCategoryCount);
+
+  itemsToRender.forEach(cat => {
     const li = document.createElement("li");
     li.innerHTML = `
       <a href="#">
-        <span>${cat}</span>
-        <span class="count">(${c})</span>
+        <span>${cat.name}</span>
+        <span class="count">(${cat.count})</span>
       </a>`;
     li.onclick = e => {
       e.preventDefault();
-      selectedCategory = cat;
+      selectedCategory = cat.name;
       selectedCountry = null;
       renderRequests();
     };
     categoryList.appendChild(li);
   });
+
+  if (!t && categoryData.length > visibleCategoryCount) {
+    const moreLi = document.createElement("li");
+    moreLi.style.textAlign = "center";
+    moreLi.style.marginTop = "8px";
+    
+    const moreBtn = document.createElement("a");
+    moreBtn.href = "#";
+    moreBtn.style.color = "var(--green)";
+    moreBtn.style.fontWeight = "700";
+    moreBtn.style.justifyContent = "center";
+    moreBtn.innerHTML = "➕ View More Categories";
+    
+    moreBtn.onclick = e => {
+      e.preventDefault();
+      visibleCategoryCount += 10;
+      renderCategories(reqs);
+    };
+    
+    moreLi.appendChild(moreBtn);
+    categoryList.appendChild(moreLi);
+  }
 }
+    
     let allRequestsData = [];
 
 function renderRequests(allData) {
