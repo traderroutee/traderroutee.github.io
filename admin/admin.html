@@ -50,6 +50,7 @@ table {
     <h2>Admin Panel</h2>
     <a href="#" id="tabRequests" class="active">All Requests</a>
     <a href="#" id="tabUsers">Registered Users</a>
+    <a href="#" id="tabPayments">Payments Log</a>
   </div>
 
   <script>
@@ -120,19 +121,81 @@ checkLogin();
         <tbody id="usersTable"></tbody>
       </table>
     </section>
+
+    <section id="paymentsSection" class="container" style="display:none;">
+      <h2>Gumroad Payments & Package Upgrades</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>User Email</th>
+            <th>Package Name</th>
+            <th>Price</th>
+            <th>Currency</th>
+            <th>Status</th>
+            <th>Purchase Date</th>
+          </tr>
+        </thead>
+        <tbody id="paymentsTable"></tbody>
+      </table>
+    </section>
   </main>
 
   <script>
+  // --- TAB switching ---
   const tabRequests=document.getElementById("tabRequests");
   const tabUsers=document.getElementById("tabUsers");
+  const tabPayments=document.getElementById("tabPayments");
   const reqSec=document.getElementById("requestsSection");
   const usrSec=document.getElementById("usersSection");
+  const paySec=document.getElementById("paymentsSection");
 
-  // --- TAB switching ---
-  tabRequests.onclick=()=>{tabRequests.classList.add("active");tabUsers.classList.remove("active");
-    reqSec.style.display="block";usrSec.style.display="none";showRequests();}
-  tabUsers.onclick=()=>{tabUsers.classList.add("active");tabRequests.classList.remove("active");
-    reqSec.style.display="none";usrSec.style.display="block";showUsers();}
+  tabRequests.onclick=()=>{
+    tabRequests.classList.add("active"); tabUsers.classList.remove("active"); tabPayments.classList.remove("active");
+    reqSec.style.display="block"; usrSec.style.display="none"; paySec.style.display="none"; showRequests();
+  }
+  tabUsers.onclick=()=>{
+    tabUsers.classList.add("active"); tabRequests.classList.remove("active"); tabPayments.classList.remove("active");
+    reqSec.style.display="none"; usrSec.style.display="block"; paySec.style.display="none"; showUsers();
+  }
+  tabPayments.onclick=()=>{
+    tabPayments.classList.add("active"); tabRequests.classList.remove("active"); tabUsers.classList.remove("active");
+    reqSec.style.display="none"; usrSec.style.display="none"; paySec.style.display="block"; loadGumroadPayments();
+  }
+
+  // Gumroad'dan gelen satışları API üzerinden çekip basan fonksiyon
+  async function loadGumroadPayments() {
+    const tbody = document.getElementById('paymentsTable');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#777;">Loading payments...</td></tr>';
+    try {
+      const res = await fetch("https://api.traderroute.com/payments", { cache: "no-store" });
+      const sales = res.ok ? await res.json() : [];
+      if (sales.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#777;">No payments found.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = '';
+      sales.slice().reverse().forEach((sale, index) => {
+        const tr = document.createElement('tr');
+        const date = sale.created_at ? new Date(sale.created_at).toLocaleDateString() : 'N/A';
+        const productName = sale.product_name || 'Premium Package';
+        tr.innerHTML = `
+          <td>${sales.length - index}</td>
+          <td style="font-weight:600; color:#008b6a;">${sale.email || 'N/A'}</td>
+          <td><span style="background:#e6f4ea; color:#006b52; padding:3px 8px; border-radius:4px; font-size:12px; font-weight:600;">${productName}</span></td>
+          <td>$${(sale.price / 100).toFixed(2)}</td>
+          <td>${(sale.currency || 'USD').toUpperCase()}</td>
+          <td><span style="color:green; font-weight:600;">✅ Success</span></td>
+          <td>${date}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    } catch (error) {
+      console.error("Error loading payments:", error);
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:red;">Failed to load data</td></tr>';
+    }
+  }
 
   // --- REQUESTS ---
   const tableBody=document.getElementById("requestsTable");
