@@ -225,7 +225,7 @@ global trade marketplace
   <!-- ✅ Request Detail -->
   <div class="request-detail-container">
     <div class="request-header">
-      <img id="flagImage" class="flag" src="https://flagcdn.com/w60/xx.png" alt="Flag">
+      <img id="flagImage" src="assets/flag/default.png" alt="Flag" style="width:70px; height:50px; border-radius:6px;" onerror="this.src='assets/flag/default.png';">
       <div>
         <h2 id="reqTitle" class="request-title">Loading...</h2>
         <div class="request-meta">
@@ -509,22 +509,21 @@ try {
       }); // click listener biter
     } // 🔴 Eksik olan if parantezini burada kapatıyoruz
 
-     // 🇹🇷 Bayrak (GÜVENLİ SÜRÜM)
-    try {
-      var flagImg = document.getElementById("flagImage");
-      if (flagImg) {
-        // Doğrudan flag.js içindeki fonksiyonu kullanarak URL'i al
-        var flagFile = (typeof getFlagURL === "function") ? getFlagURL(req.country, 64) : "assets/flag/default.png";
+     // 🇹🇷 Bayrak Güncelleme (Yeni)
+    const flagImg = document.getElementById("flagImage");
+    if (flagImg) {
+        // req.country verisinden ülke kodunu oluştur (Örn: "Turkey" -> "tr")
+        const code = req.country ? req.country.toLowerCase().substring(0, 2) : "default";
         
-        flagImg.src = flagFile;
+        // Klasördeki dosyayı çağır
+        flagImg.src = `assets/flag/${code}.png`;
+        
+        // Hata olursa (dosya yoksa) default resmi göster
         flagImg.onerror = function() {
-          this.onerror = null;
-          this.src = "assets/flag/default.png";
+            this.src = 'assets/flag/default.png';
         };
-      }
-    } catch(e) {
-      console.error("Bayrak hatası:", e);
     }
+    
   } catch (err) {
     console.error("Error loading request detail:", err);
   }
