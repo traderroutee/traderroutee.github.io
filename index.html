@@ -868,47 +868,21 @@ async function loadCategories() {
         const res = await fetch("https://api.traderroute.com/requests?" + Date.now());
         const all = await res.json();
 
-        // 1. Tüm kategorileri ekle, 10'dan sonrasına gizleme sınıfı (hidden-cat) koy
-        categories.forEach((cat, index) => {
+        // 1. Kategorileri ilan adetlerine göre hazırla ve ilan sayısına göre BÜYÜKTEN KÜÇÜĞE doğru sırala
+        let categoryData = (categories || []).map(cat => {
             const count = all.filter(r => r.category === cat).length;
+            return { name: cat, count: count };
+        });
+        categoryData.sort((a, b) => b.count - a.count);
+
+        // 2. İlk bakışta sadece en yüksek ilana sahip ilk 10 kategoriyi bas (View More butonu KALDIRILDI)
+        categoryData.slice(0, 10).forEach(cat => {
             const div = document.createElement("div");
             div.className = "category-item";
-            
-            if (index >= 10) {
-                div.classList.add("hidden-cat");
-            }
-            
-            div.innerHTML = `<span>${cat}</span><span>(${count})</span>`;
-            div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat)}`;
+            div.innerHTML = `<span>${cat.name}</span><span>(${cat.count})</span>`;
+            div.onclick = () => window.location.href = `requests.html?category=${encodeURIComponent(cat.name)}`;
             list.appendChild(div);
         });
-
-        // 2. Dinamik "View More" butonu oluştur
-        const toggleBtn = document.createElement("button");
-        toggleBtn.className = "view-more-toggle";
-        toggleBtn.innerText = "➕ View More Categories";
-        
-        toggleBtn.onclick = function() {
-            const hiddenItems = list.querySelectorAll(".category-item");
-            const isHidden = hiddenItems[10].classList.contains("hidden-cat");
-            
-            hiddenItems.forEach((item, index) => {
-                if (index >= 10) {
-                    if (isHidden) {
-                        item.classList.remove("hidden-cat");
-                    } else {
-                        item.classList.add("hidden-cat");
-                    }
-                }
-            });
-            
-            toggleBtn.innerText = isHidden ? "➖ View Less Categories" : "➕ View More Categories";
-            
-            // Kutu genişleyip daraldığında harita üstündeki konumu yeniden hesaplatır
-            if (typeof placeBox === "function") placeBox();
-        };
-
-        list.after(toggleBtn);
 
     } catch (e) {
         console.error("Category load error:", e);
