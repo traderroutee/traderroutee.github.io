@@ -404,7 +404,10 @@ document.addEventListener("DOMContentLoaded", showRequests);
 async function showUsers(){
   try {
     const res = await fetch("https://api.traderroute.com/users", {
-  cache: "no-store"
+  cache: "no-store",
+  headers: {
+    "x-api-key": sessionStorage.getItem("adminToken")
+  }
 });
     const users = res.ok ? await res.json() : [];
 
