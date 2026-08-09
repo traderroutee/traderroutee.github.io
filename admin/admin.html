@@ -74,7 +74,16 @@ async function checkLogin() {
       return;
     }
 
-    sessionStorage.setItem("adminToken", "ok");
+    const data = await res.json();
+
+    if (!data.token) {
+      alert("Login failed");
+      window.location.href = "/";
+      return;
+    }
+
+    token = data.token;
+    sessionStorage.setItem("adminToken", token);
   }
 }
 
