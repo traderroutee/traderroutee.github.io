@@ -1,1 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="View the latest import and export requests from global buyers and suppliers across Turkey, India, Pakistan, Bangladesh, China and more. Find trade leads, buy leads, and connect with international partners instantly on Trader Route.">
+  <meta name="keywords" content="import export requests, trade leads, global buyers, suppliers, India buyers, Pakistan suppliers, Bangladesh exporters, Turkey wholesale, B2B marketplace">
+  <link id="canonicalLink" rel="canonical" href="https://www.traderroute.com/requests.html">
+  <meta name="robots" content="index, follow">
 
+  <meta property="og:site_name" content="Trader Route">
+
+  <!-- ✅ SEO Master Block (Requests) -->
+
+
+<!-- Minimal, page-level JSON-LD: ItemList (liste sayfası) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Global Trade Requests",
+  "description": "Latest international import and export requests from buyers and suppliers on Trader Route.",
+  "url": "https://www.traderroute.com/requests.html",
+  "itemListOrder": "Descending"
+}
+</script>
+
+
+ 
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVEKRWM5VB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YVEKRWM5VB', {
+      'anonymize_ip': false,
+      'send_page_view': true,
+      'cookie_flags': 'SameSite=None;Secure'
+    });
+  </script>
+
+  <script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('search') || params.toString().length > 0) {
+    const meta = document.createElement('meta');
+    meta.name = "robots";
+    meta.content = "noindex, follow";
+    document.head.appendChild(meta);
+  }
+})();
+</script>
+
+  
+
+   <link rel="icon" href="assets/logos.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+  :root{--green:#008b6a;--green-dark:#006b52;--bg:#f6f8fa;}
+  body{font-family:"Inter","Segoe UI",Arial,sans-serif;margin:0;background:var(--bg);color:#222;}
+
+  /* === HEADER === */
+  header{display:flex;align-items:center;justify-content:space-between;background:#fff;
+         padding:10px 40px;box-shadow:0 2px 8px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000;}
+  .logo-container{display:flex;align-items:center;gap:10px;cursor:pointer;}
+  .logo-container img{height:45px;}
+  .logo-text{font-size:15px;color:#555;font-weight:500;}
+  nav{flex:1;display:flex;justify-content:center;align-items:center;gap:20px;}
+  nav a{text-decoration:none;color:#000;font-weight:500;}
+  nav a:hover{color:#008b6a;}
+  .header-right{flex:0 0 auto;display:flex;align-items:center;gap:10px;min-width:250px;justify-content:flex-end;}
+  .search-box{display:flex;align-items:center;background:#f1f1f1;border-radius:20px;padding:5px 10px;}
+  .search-box input{border:none;background:none;outline:none;padding:5px;font-size:14px;width:150px;}
+  .login-btn,.join-btn{border:none;cursor:pointer;border-radius:6px;font-weight:500;transition:.3s;}
+  .login-btn{background:#f1f1f1;padding:7px 14px;}
+  .login-btn:hover{background:#e0e0e0;}
+  .join-btn{background:#008b6a;color:#fff;padding:8px 15px;}
+  .join-btn:hover{background:#006b52;}
+
+  /* === TABS === */
+  .tabs{display:flex;justify-content:center;background:#fff;border-bottom:1px solid #ddd;gap:10px;padding:14px 0;}
+  .tabs button{background:none;border:none;font-weight:600;font-size:17px;padding:10px 24px;border-radius:25px;cursor:pointer;color:#333;}
+  .tabs button.active{background:var(--green);color:#fff;}
+  .tabs button:hover{background:#f0f0f0;}
+
+  /* === LAYOUT (FULL WIDTH) === */
+  .container{
+  width:100%;
+  max-width:1350px; /* ekranın ortasında sabitle */
+  margin:40px auto;
+  padding:20px 30px;
+  display:flex;
+  gap:25px;
+  box-sizing:border-box;
+}
+  .sidebar{
+    width:300px;
+    background:#fff;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,.06);
+  }
+  .sidebar h4{font-size:19px;font-weight:700;color:#111;margin-bottom:10px;border-bottom:1px solid #eee;padding-bottom:4px;}
+  .category-search,.country-search{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;margin-bottom:10px;font-size:14px;}
+  .category-list,.country-list{list-style:none;padding:0;margin:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#ccc transparent;}
+  .category-list{max-height:260px;margin-bottom:20px;}
+  .country-list{max-height:320px;}
+  .category-list a,.country-list a{display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:#333;font-size:14px;gap:6px;padding:4px 3px;border-radius:5px;transition:.15s;}
+  .category-list a:hover,.country-list a:hover{background:#f1f6ff;color:#007bff;}
+  .count{color:#888;font-size:13px;}
+  .flag{width:20px;height:14px;border:1px solid #ccc;border-radius:2px;margin-right:6px;object-fit:cover;}
+
+  .content{
+    flex:1;
+    background:#fff;
+    border-radius:12px;
+    padding:30px;
+    box-shadow:0 2px 6px rgba(0,0,0,.06);
+    min-height:80vh;
+  }
+  .search-bar{margin-bottom:20px;}
+  #searchInput{width:100%;max-width:420px;padding:10px;border-radius:6px;border:1px solid #ccc;font-size:14px;}
+
+  .request-card{border:1px solid #e3e3e3;border-radius:8px;padding:15px;margin-bottom:15px;background:#fff;transition:.2s;cursor:pointer;}
+  .request-card:hover{box-shadow:0 3px 10px rgba(0,0,0,.08);transform:translateY(-2px);}
+  .request-card h5{margin:0 0 6px;font-size:17px;font-weight:600;}
+  .request-card p{
+  margin:0 0 4px;
+  font-size:14px;
+  color:#444;
+
+  /* ✅ açıklamayı kısalt: tüm kartlar aynı yükseklik */
+  line-height:1.35;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;   /* kaç satır gözüksün istiyorsan 3/4 yap */
+  overflow:hidden;
+
+  /* Kartların boyu tam eşitlensin diye */
+  min-height:calc(1.35em * 3);
+}
+  .request-card small{color:#666;}
+  .msg-btn{background:var(--green);color:#fff;border:none;border-radius:5px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px;}
+  .msg-btn:hover{background:var(--green-dark);}
+  #showMoreRequests{background:var(--green);color:#fff;border:none;border-radius:6px;padding:10px 15px;cursor:pointer;font-weight:600;margin:20px auto;display:block;}
+  #showMoreRequests:hover{background:var(--green-dark);}
+
+ @media(max-width:900px){
+  /* Ana yerleşim: side-bar alta, içerik üste */
+  .container{
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+  }
+  .content{
+    order: 1;
+    width: 100%;
+  }
+  .sidebar{
+    order: 2;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  /* İlan kartları tam genişlik ve daha rahat satır */
+  .request-card{
+    width: 100%;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+
+  /* Kategori/ülke listelerinde uzun metin sarılsın */
+  .category-list li,
+  .country-list li {
+    word-wrap: break-word;
+    line-height: 1.4;
+  }
+
+  /* Sekmeler (All / Buy / Sell / Free) taşmasın */
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tabs button {
+    flex: 1 1 45%;
+    font-size: 14px;
+  }
+
+  /* Arama barı biraz nefes alsın */
+  .search-bar input {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+    
+</style>
+</head>
+
+<body>
+  <!-- ✅ TEK HEADER -->
+  <header>
+    <div class="logo-container" onclick="location.href='index.html'">
+      <img src="assets/logos.png" alt="Trader Route Logo">
+      <span class="logo-text">The Silk Road of E-Commerce</span>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="companies.html">Companies</a>
+      <a href="requests.html" style="color:var(--green);font-weight:700;">Requests</a>
+      <a href="contact.html">Contact</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+
+    <div class="header-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+         <button>🔍</button>
+      </div>
+
+        <!-- 📩 Messages Button -->
+<div id="messageIconContainer" style="position:relative;margin-left:15px;">
+  <a href="messages.html" id="messageIconLink" style="text-decoration:none;color:inherit;">
+    <img src="assets/email.png" alt="Messages" style="width:25px;height:25px;cursor:pointer;">
+    <span id="messageBadge"
+          style="position:absolute;top:-5px;right:-8px;
+          background:red;color:white;font-size:11px;
+          border-radius:50%;padding:2px 5px;display:none;">
+    </span>
+  </a>
+</div>
+      
+      <button class="login-btn" onclick="location.href='login.html'">Sign In</button>
+      <button class="join-btn" onclick="location.href='register.html'">Join Now</button>
+
+      <!-- 👤 Kullanıcı İkonu -->
+      <div id="userMenuContainer" style="position:relative;display:inline-block;margin-left:8px;">
+        <img id="userIcon" src="assets/user-icon.png" alt="User"
+             style="width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;">
+        <div id="userDropdown"
+             style="display:none;position:absolute;right:0;top:45px;background:#fff;border:1px solid #ddd;border-radius:8px;
+                    box-shadow:0 6px 18px rgba(0,0,0,.12);width:180px;z-index:999;overflow:hidden;">
+          <a href="profile.html"  style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Profile</a>
+          <a href="messages.html" style="display:block;padding:10px 12px;color:#333;text-decoration:none;border-bottom:1px solid #eee;">Messages</a>
+          <a href="#" onclick="logoutUser()" style="display:block;padding:10px 12px;color:#d9534f;text-decoration:none;">Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- === TABS === -->
+  <div class="tabs">
+    <button class="active" id="tabAll">All Requests</button>
+    <button id="tabBuy">Buy Requests</button>
+    <button id="tabSell">Sell Requests</button>
+    <button id="tabFree" onclick="location.href='request-form.html'">Free Request</button>
+  </div>
+
+  <section style="background:#ffffff;border:1px solid #e3e3e3;
+border-radius:10px;padding:18px;margin-bottom:20px;line-height:1.7;">
+  <h2 style="color:#007157;font-size:22px;margin:0 0 8px;">
+    Global Import & Export Requests
+  </h2>
+  <p style="font-size:15px;color:#444;">
+    Explore the latest <strong>import and export requests</strong> from international buyers and 
+    suppliers across India, Pakistan, Bangladesh, Indonesia, China and more. 
+    Trader Route is a global <strong>B2B import export marketplace</strong> where companies 
+    connect, post trade leads, and build new partnerships.
+  </p>
+  <p style="font-size:15px;color:#444;">
+    Whether you are searching for <strong>export buyers</strong>, 
+    <strong>verified suppliers</strong>, 
+    <strong>wholesale distributors</strong> or 
+    <strong>free buy leads</strong>, this page lists real-time opportunities posted by global businesses.
+  </p>
+  <p style="font-size:15px;color:#444;">
+    Start browsing trade requests, filter by country or category, and connect with global partners 
+    instantly.
+  </p>
+</section>
+
+
+  <!-- === LAYOUT === -->
+  <div class="container">
+    <div class="sidebar">
+      <h4>Categories</h4>
+      <input type="text" class="category-search" id="categorySearch" placeholder="Search category...">
+      <ul class="category-list" id="categoryList"></ul>
+
+      <h4>Countries</h4>
+      <input type="text" class="country-search" id="countrySearch" placeholder="Search country...">
+      <ul class="country-list" id="countryList"></ul>
+    </div>
+
+    <div class="content">
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search requests...">
+  </div>
+
+  <div id="requestItems"></div>
+  <button id="showMoreRequests">Show more requests</button>
+    </div>
+  </div>
+
+  <!-- === JS === -->
+  <script>
+    let categories=null, allCountries=null;
+
+// 🌍 Verileri hem localStorage'dan hem sunucudan oku
+async function getRequests() {
+  try {
+    const res = await fetch("https://api.traderroute.com/requests?t=" + Date.now());
+
+
+    if (res.ok) {
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
+    } else {
+      console.warn("⚠️ Server data load failed");
+      return [];
+    }
+  } catch (err) {
+    console.error("⚠️ Server connection error:", err);
+    return [];
+  }
+}
+    
+    const requestContainer=document.getElementById("requestItems"),
+          searchInput=document.getElementById("searchInput"),
+          categoryList=document.getElementById("categoryList"),
+          countryList=document.getElementById("countryList"),
+          categorySearch=document.getElementById("categorySearch"),
+          countrySearch=document.getElementById("countrySearch");
+    let visibleRequests=15, activeTab="all", selectedCategory=null, selectedCountry=null;
+
+
+// 🇺🇳 Eğer bulunamazsa, ülke adını normalize eder (örneğin “Czechia” → “cz”)
+  function toCode(name) {
+  if (!name) return "unknown";
+  const key = Object.keys(countryCodeMap).find(k => k.toLowerCase() === name.toLowerCase());
+  if (key) return countryCodeMap[key];
+  return (name.slice(0,2) || "unknown").toLowerCase();
+}
+
+    async function ensureCategories(){if(categories)return;try{const r=await fetch("data/categories.json",{cache:"no-store"});categories=await r.json();}catch{categories=[];}}
+    async function ensureCountries(){if(allCountries)return;try{const r=await fetch("data/countries.json",{cache:"no-store"});const a=await r.json();allCountries=a.map(it=>({name:it.name||it,code:(it.code||countryCodeMap[it.name||it]||toCode(it.name||it)).toLowerCase()}));}catch{allCountries=[];}}
+
+function renderCountries(reqs) {
+  const t = (countrySearch.value || "").toLowerCase();
+  
+  let countryData = (allCountries || []).map(c => {
+    const count = reqs.filter(r => r.country === c.name).length;
+    return { ...c, count: count };
+  });
+
+  if (t) {
+    countryData = countryData.filter(c => c.name.toLowerCase().includes(t));
+  } else {
+    countryData.sort((a, b) => b.count - a.count);
+  }
+
+  countryList.innerHTML = "";
+  
+  countryData.forEach(c => {
+    const flagImg = getFlagURL(c.name, 20);
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <a href="#">
+        <span style="display:flex;align-items:center;gap:6px;">
+          <img class='flag' src='${flagImg}' alt='${c.name}' loading='lazy'>
+          ${c.name}
+        </span>
+        <span class='count'>(${c.count})</span>
+      </a>`;
+    li.onclick = e => {
+      e.preventDefault();
+      selectedCountry = c.name;
+      selectedCategory = null;
+      renderRequests();
+    };
+    countryList.appendChild(li);
+  });
+}
+
+    let visibleCategoryCount = 10; 
+
+function renderCategories(reqs) {
+  const t = (categorySearch.value || "").toLowerCase();
+  
+  let categoryData = (categories || []).map(cat => {
+    const count = reqs.filter(r => r.category === cat).length;
+    return { name: cat, count: count };
+  });
+
+  if (t) {
+    categoryData = categoryData.filter(c => c.name.toLowerCase().includes(t));
+  } else {
+    categoryData.sort((a, b) => b.count - a.count);
+  }
+
+  categoryList.innerHTML = "";
+  const itemsToRender = t ? categoryData : categoryData.slice(0, visibleCategoryCount);
+
+  itemsToRender.forEach(cat => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <a href="#">
+        <span>${cat.name}</span>
+        <span class="count">(${cat.count})</span>
+      </a>`;
+    li.onclick = e => {
+      e.preventDefault();
+      selectedCategory = cat.name;
+      selectedCountry = null;
+      renderRequests();
+    };
+    categoryList.appendChild(li);
+  });
+
+  if (!t && categoryData.length > visibleCategoryCount) {
+    const moreLi = document.createElement("li");
+    moreLi.style.textAlign = "center";
+    moreLi.style.marginTop = "8px";
+    
+    const moreBtn = document.createElement("a");
+    moreBtn.href = "#";
+    moreBtn.style.color = "var(--green)";
+    moreBtn.style.fontWeight = "700";
+    moreBtn.style.justifyContent = "center";
+    moreBtn.innerHTML = "➕ View More Categories";
+    
+    moreBtn.onclick = e => {
+      e.preventDefault();
+      visibleCategoryCount += 10;
+      renderCategories(reqs);
+    };
+    
+    moreLi.appendChild(moreBtn);
+    categoryList.appendChild(moreLi);
+  }
+}
+    
+    let allRequestsData = [];
+
+function renderRequests(allData) {
+  if (allData) allRequestsData = allData;
+  const all = allRequestsData || [];
+
+  renderCategories(all);
+  renderCountries(all);
+
+  const term = (searchInput.value || "").toLowerCase();
+  const filtered = all.filter(r =>
+    (r.approved === true || r.approved === "true" || r.approved === undefined) &&
+    (activeTab === "all" || r.type === activeTab) &&
+    (!selectedCategory || r.category === selectedCategory) &&
+    (!selectedCountry || r.country === selectedCountry) &&
+    ((r.title || "").toLowerCase().includes(term) || (r.description || "").toLowerCase().includes(term))
+  );
+
+  const today = new Date();
+  const descByDate = (a, b) => (new Date(b.date) - new Date(a.date));
+
+  // === Premium ve normal ilanları ayır
+  const premium = filtered
+    .filter(r => r.isPremium && r.premiumUntil && new Date(r.premiumUntil) >= today)
+    .sort(descByDate);
+  const normal = filtered
+    .filter(r => !r.isPremium || !r.premiumUntil || new Date(r.premiumUntil) < today)
+    .sort(descByDate);
+
+  // === Konteynerleri temizle
+  requestContainer.innerHTML = "";
+
+  // === 1) Premium alanı oluştur
+  if (premium.length > 0) {
+    const premiumBox = document.createElement("div");
+    premiumBox.className = "premium-box";
+    premiumBox.innerHTML = `<h3 style="margin-bottom:10px;color:#007157;">⭐ Premium Requests</h3>`;
+    
+    premium.slice(0, 5).forEach(r => {
+      const owner = r.ownerEmail || r.contactEmail || r.email || "";
+      const div = document.createElement("div");
+      div.className = "request-card";
+      div.style.border = "2px solid #FFD700";
+      div.style.background = "#fffbe6";
+      div.style.cursor = "pointer";
+      div.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
+
+      const flagImg = `<img src="${getFlagURL(r.country, 20)}"
+        alt="${r.country}" class="flag-icon-img"
+        onerror="this.onerror=null;this.src='assets/flag/default.png'">`;
+
+      div.innerHTML = `
+        <h5>${r.title || "Untitled Request"} <span style="background:#FFD700;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:700;margin-left:8px;">⭐ Premium</span></h5>
+        <p>${r.description || ""}</p>
+        <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
+      `;
+      premiumBox.appendChild(div);
+    });
+
+    // View all premium button
+    const premiumBtn = document.createElement("button");
+    premiumBtn.textContent = "View All Premium Requests";
+    premiumBtn.style.display = "block";
+    premiumBtn.style.margin = "15px auto";
+    premiumBtn.style.background = "#007157";
+    premiumBtn.style.color = "#fff";
+    premiumBtn.style.border = "none";
+    premiumBtn.style.padding = "10px 20px";
+    premiumBtn.style.borderRadius = "6px";
+    premiumBtn.style.cursor = "pointer";
+    premiumBtn.onclick = () => window.location.href = "premium.html";
+    premiumBox.appendChild(premiumBtn);
+
+    requestContainer.appendChild(premiumBox);
+  }
+
+  // === 2) Normal ilanları listele
+  const normalBox = document.createElement("div");
+  normalBox.className = "normal-box";
+  normal.slice(0, 10).forEach(r => {
+    const owner = r.ownerEmail || r.contactEmail || r.email || "";
+    const div = document.createElement("div");
+    div.className = "request-card";
+    div.style.border = "1px solid #e3e3e3";
+    div.style.background = "#fff";
+    div.style.cursor = "pointer";
+    div.onclick = () => window.location.href = `request-detail.html?id=${encodeURIComponent(r.id)}&to=${encodeURIComponent(owner)}`;
+
+    const flagImg = `<img src="${getFlagURL(r.country, 20)}"
+      alt="${r.country}" class="flag-icon-img"
+      onerror="this.onerror=null;this.src='assets/flag/default.png'">`;
+
+    div.innerHTML = `
+      <h5>${r.title || "Untitled Request"}</h5>
+      <p>${r.description || ""}</p>
+      <small>${flagImg}${r.country || "Unknown"} · ${r.category || ""} · ${new Date(r.date).toLocaleDateString('tr-TR')}</small>
+    `;
+    normalBox.appendChild(div);
+  });
+
+  // View all requests button
+  const allBtn = document.createElement("button");
+  allBtn.textContent = "View All Requests";
+  allBtn.style.display = "block";
+  allBtn.style.margin = "15px auto";
+  allBtn.style.background = "#007157";
+  allBtn.style.color = "#fff";
+  allBtn.style.border = "none";
+  allBtn.style.padding = "10px 20px";
+  allBtn.style.borderRadius = "6px";
+  allBtn.style.cursor = "pointer";
+  allBtn.onclick = () => window.location.href = "all-requests.html";
+  normalBox.appendChild(allBtn);
+
+  requestContainer.appendChild(normalBox);
+}
+    
+    document.getElementById("tabAll").onclick=()=>{activeTab="all";setActive("tabAll");renderRequests();};
+    document.getElementById("tabBuy").onclick=()=>{activeTab="buy";setActive("tabBuy");renderRequests();};
+    document.getElementById("tabSell").onclick=()=>{activeTab="sell";setActive("tabSell");renderRequests();};
+    function setActive(id){document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));document.getElementById(id).classList.add("active");}
+    document.getElementById("showMoreRequests").onclick=()=>{visibleRequests+=10;renderRequests();};
+    searchInput.addEventListener("input",renderRequests);
+    categorySearch.addEventListener("input",renderRequests);
+    countrySearch.addEventListener("input",renderRequests);
+    (async function(){
+  await ensureCategories();
+  await ensureCountries();
+  const all = await getRequests();
+  renderRequests(all);
+})();
+    // 🔄 LocalStorage değiştiğinde otomatik yenile
+window.addEventListener("storage", renderRequests);
+  </script>
+
+ <!-- Dynamic Product/Offer Schema for Trader Route -->
+<script>
+function generateRequestSchema(request) {
+  return {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": request.title || "Trade Request",
+    "description": request.description || "International trade request on Trader Route platform.",
+    "brand": {
+      "@type": "Organization",
+      "name": "Trader Route"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "price": request.price || "Negotiable",
+      "availability": "https://schema.org/InStock",
+      "url": `https://traderroute.com/request-detail.html?id=${request.id}`,
+      "seller": {
+        "@type": "Organization",
+        "name": request.company || "Trader Route Member",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": request.country || "Unknown"
+        }
+      }
+    }
+  };
+}
+
+function updateSchema() {
+  fetch("https://api.traderroute.com/requests")
+
+
+    .then(res => res.json())
+    .then(data => {
+      const approved = data.filter(r => r.approved);
+      const schemas = approved.map(r => generateRequestSchema(r));
+      
+      // Remove old schema
+      document.querySelectorAll('script[type="application/ld+json"]').forEach(el => {
+        if (el.textContent.includes('"@type": "Product"')) el.remove();
+      });
+
+      // Insert new schema
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(schemas, null, 2);
+      document.head.appendChild(script);
+    })
+    .catch(err => console.error("Schema update error:", err));
+}
+
+// Run on page load
+updateSchema();
+
+// Re-run automatically when a new request is added
+window.addEventListener('storage', e => {
+  if (e.key === 'new_request_added') {
+    console.log("New request detected, updating schema...");
+    updateSchema();
+  }
+});
+</script>
+
+  <!-- Auto notify Google when new requests are added -->
+<script>
+window.addEventListener('storage', e => {
+  if (e.key === 'new_request_added') {
+    fetch(`https://www.google.com/ping?sitemap=https://traderroute.com/sitemap.xml`)
+  .then(()=>console.log("🔔 Google notified about new content."))
+  .catch(err => console.error("Ping error:", err));
+  }
+});
+</script>
+  
+
+
+  <!-- 👤 Kullanıcı menü kontrolü -->
+  <script>
+  (function(){
+    const header=document.querySelector('header');
+    const icon=document.getElementById('userIcon');
+    const dropdown=document.getElementById('userDropdown');
+    const loginBtn=header?.querySelector("button[onclick*='login.html']");
+    const joinBtn=header?.querySelector("button[onclick*='register.html']");
+    const currentUser=JSON.parse(localStorage.getItem('tr_user')||'null');
+    if(currentUser){if(icon)icon.style.display='inline-block';if(loginBtn)loginBtn.style.display='none';if(joinBtn)joinBtn.style.display='none';}
+    else{if(icon)icon.style.display='none';if(loginBtn)loginBtn.style.display='';if(joinBtn)joinBtn.style.display='';}
+    icon?.addEventListener('click',e=>{e.stopPropagation();dropdown.style.display=(dropdown.style.display==='block')?'none':'block';});
+    document.addEventListener('click',e=>{if(!e.target.closest('#userMenuContainer'))dropdown.style.display='none';});
+    window.logoutUser=function(){localStorage.removeItem('tr_user');location.href='index.html';};
+  })();
+  </script>
+  <script src="assets/flag.js"></script>
+
+  <script>
+// === Mesaj bildirimi kontrolü ===
+(function(){
+  const badge = document.getElementById("messageBadge");
+  const user = JSON.parse(localStorage.getItem("tr_user") || "null");
+  if(!user || !badge) return;
+
+  // Tüm mesajları localStorage’dan al
+  const allMessages = JSON.parse(localStorage.getItem("tr_messages") || "[]");
+
+  // Kullanıcıya ait okunmamış mesajları filtrele
+  const unread = allMessages.filter(m => m.to === user.email && !m.read);
+
+  // Sayı > 0 ise göster
+  if(unread.length > 0){
+    badge.textContent = unread.length;
+    badge.style.display = "inline-block";
+  } else {
+    badge.style.display = "none";
+  }
+})();
+</script>
+
+  <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6a21481b6d77da1c401dcf2b/1jq903b0n';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+  
+
+  <script>
+fetch("https://ipapi.co/json/")
+  .then(res => res.json())
+  .then(data => {
+    gtag('event', 'user_location', {
+      user_country: data.country_name,
+      user_city: data.city
+    });
+  });
+</script>
+  
+</body>
+</html>
