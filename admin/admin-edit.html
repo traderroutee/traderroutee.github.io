@@ -122,7 +122,7 @@ checkLogin();
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-         "x-api-key": "TRADER2025"
+         "x-api-key": sessionStorage.getItem("adminToken")
         },
         body: JSON.stringify({ id: Number(id), updated })
       });
