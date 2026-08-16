@@ -406,14 +406,22 @@ document.addEventListener("DOMContentLoaded", showRequests);
    <script>
 async function showUsers(){
   try {
-    const res = await fetch("https://api.traderroute.com/users", {
-      method: "GET",
-      headers: {
-        "x-api-key": sessionStorage.getItem("adminToken")
-      },
-      cache: "no-store"
-    });
-    const users = res.ok ? await res.json() : [];
+    const res = await fetch("https://api.traderroute.com/api/admin/users", {
+  method: "GET",
+  cache: "no-store",
+  headers: {
+    "x-admin-key": sessionStorage.getItem("adminToken")
+  }
+});
+
+const data = await res.json();
+
+if (!res.ok) {
+  console.error("Users API error:", data);
+  return;
+}
+
+const users = data.users || [];
 
     const tbody = document.getElementById('usersTable');
     if (!tbody) return;
