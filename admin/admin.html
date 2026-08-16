@@ -56,6 +56,10 @@ table {
   <script>
 let token = sessionStorage.getItem("adminToken");
 
+    if (token === "ok") {
+  sessionStorage.removeItem("adminToken");
+  token
+
 async function checkLogin() {
   if (!token) {
     const password = prompt("Enter Admin Password");
