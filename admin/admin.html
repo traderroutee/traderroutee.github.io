@@ -57,11 +57,21 @@ table {
 let token = sessionStorage.getItem("adminToken");
 
 async function checkLogin() {
-  if (token && token.includes(".")) return true;
+  if (token && token.includes(".")) {
+    try {
+      const payload = JSON.parse(atob(token.split(".")[0]));
+
+      if (payload.exp && Date.now() < payload.exp) {
+        return true;
+      }
+    } catch (e) {}
+  }
 
   sessionStorage.removeItem("adminToken");
+  token = null;
 
   const password = prompt("Enter Admin Password");
+  if (!password) return false;
 
   const res = await fetch("https://api.traderroute.com/admin-login", {
     method: "POST",
@@ -73,7 +83,6 @@ async function checkLogin() {
 
   if (!res.ok) {
     alert("Wrong password");
-    window.location.href = "/";
     return false;
   }
 
@@ -81,15 +90,14 @@ async function checkLogin() {
 
   if (!data.token) {
     alert("Login failed");
-    window.location.href = "/";
     return false;
   }
 
   token = data.token;
   sessionStorage.setItem("adminToken", token);
+
   return true;
 }
-
 checkLogin();
 </script>
   
