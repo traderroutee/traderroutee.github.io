@@ -422,14 +422,12 @@ async function showUsers(){
   }
 });
 
-const data = await res.json();
+const users = await res.json();
 
-if (!res.ok) {
-  console.error("Users API error:", data);
+if (!res.ok || !Array.isArray(users)) {
+  console.error("Users API error:", users);
   return;
 }
-
-const users = data.users || [];
 
     const tbody = document.getElementById('usersTable');
     if (!tbody) return;
