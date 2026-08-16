@@ -56,41 +56,38 @@ table {
   <script>
 let token = sessionStorage.getItem("adminToken");
 
-    if (token === "ok") {
-  sessionStorage.removeItem("adminToken");
-  token
-
 async function checkLogin() {
-  if (!token) {
-    const password = prompt("Enter Admin Password");
+  if (token && token.includes(".")) return true;
 
-    const res = await fetch("https://api.traderroute.com/admin-login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ password })
-    });
+  sessionStorage.removeItem("adminToken");
 
-    if (!res.ok) {
-      alert("Wrong password");
-      window.location.href = "/";
-      return;
-    }
+  const password = prompt("Enter Admin Password");
 
-    const data = await res.json();
+  const res = await fetch("https://api.traderroute.com/admin-login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ password })
+  });
 
-    if (!data.token) {
-      alert("Login failed");
-      window.location.href = "/";
-      return;
-    }
-
-    token = data.token;
-    const data = await res.json();
-sessionStorage.setItem("adminToken", data.token);
-token = data.token;
+  if (!res.ok) {
+    alert("Wrong password");
+    window.location.href = "/";
+    return false;
   }
+
+  const data = await res.json();
+
+  if (!data.token) {
+    alert("Login failed");
+    window.location.href = "/";
+    return false;
+  }
+
+  token = data.token;
+  sessionStorage.setItem("adminToken", token);
+  return true;
 }
 
 checkLogin();
