@@ -418,8 +418,8 @@ async function showUsers(){
   method: "GET",
   cache: "no-store",
   headers: {
-    "x-admin-key": sessionStorage.getItem("adminToken")
-  }
+  "x-api-key": sessionStorage.getItem("adminToken")
+}
 });
 
 const data = await res.json();
