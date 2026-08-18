@@ -412,57 +412,132 @@ document.addEventListener("DOMContentLoaded", showRequests);
     </script>
 
    <script>
-async function showUsers(){
+async function showUsers() {
+  const tbody = document.getElementById("usersTable");
+
+  if (!tbody) return;
+
+  tbody.innerHTML = `
+    <tr>
+      <td colspan="8" style="text-align:center;color:#777;">
+        Loading users...
+      </td>
+    </tr>
+  `;
+
   try {
-    const res = await fetch("https://api.traderroute.com/users", {
-  method: "GET",
-  cache: "no-store",
-  headers: {
-    "x-api-key": sessionStorage.getItem("adminToken")
-  }
-});
+    const token = sessionStorage.getItem("adminToken");
 
-const users = await res.json();
-
-if (!res.ok || !Array.isArray(users)) {
-  console.error("Users API error:", users);
-  return;
-}
-
-    const tbody = document.getElementById('usersTable');
-    if (!tbody) return;
-
-    if (users.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#777;">No users found.</td></tr>';
+    if (!token) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align:center;color:red;">
+            Admin session expired.
+          </td>
+        </tr>
+      `;
       return;
     }
 
-    tbody.innerHTML = '';
-    users
-  .slice()
-  .reverse()
-  .forEach((u, index) => {
+    const res = await fetch(
+      "https://api.traderroute.com/users?t=" + Date.now(),
+      {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+          "x-api-key": token,
+          "Accept": "application/json"
+        }
+      }
+    );
 
-    const name = (u.name || '').trim();
-    const parts = name.split(' ');
-    const first = parts[0] || '';
-    const last  = parts.slice(1).join(' ') || '';
+    const data = await res.json().catch(() => null);
 
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-  <td>${users.length - index}</td>
-  <td>${first}</td>
-  <td>${last}</td>
-  <td>${u.company || ''}</td>
-  <td>${u.email || ''}</td>
-  <td>${u.phone || ''}</td>
-  <td>${u.country || ''}</td>
-  <td>${u.date || "-"}</td>
-`;
-    tbody.appendChild(tr);
-  });
+    console.log("USERS API STATUS:", res.status);
+    console.log("USERS API RESPONSE:", data);
+
+    if (!res.ok) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align:center;color:red;">
+            Users API Error: ${res.status}
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    if (!Array.isArray(data)) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align:center;color:red;">
+            Invalid users response.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    if (data.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align:center;color:#777;">
+            No users found.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = "";
+
+    data.forEach((u, index) => {
+
+      const fullName = String(u.name || "").trim();
+      const parts = fullName.split(/\s+/);
+
+      const firstName = parts.shift() || "";
+      const surname = parts.join(" ");
+
+      const dateValue = u.date || u.created || "";
+
+      let dateText = "-";
+
+      if (dateValue) {
+        const d = new Date(dateValue);
+
+        if (!isNaN(d.getTime())) {
+          dateText = d.toLocaleString();
+        }
+      }
+
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${data.length - index}</td>
+        <td>${firstName}</td>
+        <td>${surname}</td>
+        <td>${u.company || ""}</td>
+        <td>${u.email || ""}</td>
+        <td>${u.phone || ""}</td>
+        <td>${u.country || ""}</td>
+        <td>${dateText}</td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+
   } catch (err) {
-    console.error('Users load failed:', err);
+
+    console.error("Users load failed:", err);
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" style="text-align:center;color:red;">
+          Users could not be loaded.
+        </td>
+      </tr>
+    `;
   }
 }
 </script>
