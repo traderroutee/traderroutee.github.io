@@ -513,8 +513,15 @@ try {
     // === Bayrağı Güncelle ===
   const flagImg = document.getElementById("flagImage");
   if (flagImg && req.country) {
-      const code = req.country.toLowerCase().substring(0, 2);
-      const flagUrl = `assets/flag/${code}.png`;
+      const country = String(req.country).trim();
+
+const code = country
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "")
+  .toLowerCase()
+  .replace(/[^a-z0-9]+(.)/g, (_, c) => c.toUpperCase());
+
+const flagUrl = `assets/flag/${code}.png`;
       
       // Resim zaten aynı değilse değiştir (Yanıp sönmeyi keser)
       if (flagImg.getAttribute('src') !== flagUrl) {
