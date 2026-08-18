@@ -232,7 +232,7 @@ countrySelect.addEventListener("change",()=>{
    // ... (üstte ülkeler, kategoriler ve telefon kodlarını dolduran kodlar aynı kalsın)
 
   // === Register logic ===
-async function doRegister() {
+async function doRegister(){
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim().toLowerCase();
   const company = document.getElementById("company").value.trim();
@@ -249,13 +249,6 @@ async function doRegister() {
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("tr_users") || "[]");
-
-  if (users.find(u => u.email === email)) {
-    alert("This email is already registered.");
-    return;
-  }
-
   const user = {
     name,
     email,
@@ -269,6 +262,7 @@ async function doRegister() {
   };
 
   try {
+
     const res = await fetch("https://api.traderroute.com/users", {
       method: "POST",
       headers: {
@@ -282,14 +276,19 @@ async function doRegister() {
     const result = await res.json().catch(() => ({}));
 
     if (!res.ok || result.ok !== true) {
-      console.error("User registration API error:", res.status, result);
+      console.error("User upload failed:", res.status, result);
       alert("Registration failed. Please try again.");
       return;
     }
 
-    // Only save locally AFTER Cloudflare confirms success
-    users.push(user);
-    localStorage.setItem("tr_users", JSON.stringify(users));
+    // Cloudflare başarılı olduktan sonra localStorage'a kaydet
+    let users = JSON.parse(localStorage.getItem("tr_users") || "[]");
+
+    if (!users.find(u => u.email === email)) {
+      users.push(user);
+      localStorage.setItem("tr_users", JSON.stringify(users));
+    }
+
     localStorage.setItem("tr_user", JSON.stringify(user));
     localStorage.setItem("welcome_name", name);
 
@@ -297,8 +296,9 @@ async function doRegister() {
     window.location.href = "index.html";
 
   } catch (err) {
-    console.error("User registration failed:", err);
-    alert("Registration failed. Please check your connection and try again.");
+
+    console.error("User upload failed:", err);
+    alert("Registration failed. Please check your connection.");
   }
 }
     
