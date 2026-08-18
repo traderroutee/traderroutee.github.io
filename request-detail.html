@@ -426,11 +426,9 @@ try {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
   if (id) {
-    const resView = await fetch("https://api.traderroute.com/view", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id })
-    });
+    const resView = await fetch(
+  "https://api.traderroute.com/view?id=" + encodeURIComponent(id) + "&t=" + Date.now()
+);
     const dataView = await resView.json();
 
     // Başarılıysa ekrana yaz
