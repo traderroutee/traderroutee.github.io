@@ -491,7 +491,7 @@ async function showUsers() {
 
     tbody.innerHTML = "";
 
-    data.forEach((u, index) => {
+    data.slice().reverse().forEach((u, index) => {
 
       const fullName = String(u.name || "").trim();
       const parts = fullName.split(/\s+/);
