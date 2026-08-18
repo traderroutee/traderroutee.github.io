@@ -232,15 +232,16 @@ countrySelect.addEventListener("change",()=>{
    // ... (üstte ülkeler, kategoriler ve telefon kodlarını dolduran kodlar aynı kalsın)
 
   // === Register logic ===
-async function doRegister(){
+async function doRegister() {
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim().toLowerCase();
   const company = document.getElementById("company").value.trim();
   const country = document.getElementById("country").value;
   const category = document.getElementById("category").value;
   const password = document.getElementById("password").value.trim();
-  const code  = document.getElementById("countryCode").value;
+  const code = document.getElementById("countryCode").value;
   const phone = document.getElementById("phoneNumber").value.trim();
+
   const phoneFull = (code && phone) ? `${code} ${phone}` : "";
 
   if (!name || !email || !password || !country || !category) {
@@ -248,43 +249,57 @@ async function doRegister(){
     return;
   }
 
-  // localStorage'a kaydet (offline destek)
   let users = JSON.parse(localStorage.getItem("tr_users") || "[]");
+
   if (users.find(u => u.email === email)) {
     alert("This email is already registered.");
     return;
   }
 
   const user = {
-    name, email, company, country, category, password,
+    name,
+    email,
+    company,
+    country,
+    category,
+    password,
     phone: phoneFull,
     approved: false,
     created: new Date().toISOString()
   };
 
-  users.push(user);
-  localStorage.setItem("tr_users", JSON.stringify(users));
-  localStorage.setItem("tr_user", JSON.stringify(user));
-
-  // ✅ Cloudflare Worker (R2) üzerine gönder
   try {
-  const res = await fetch("https://api.traderroute.com/users", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
-  });
+    const res = await fetch("https://api.traderroute.com/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(user),
+      cache: "no-store"
+    });
 
-  if (res.ok) {
-    console.log("User uploaded successfully.");
-  } else {
-    console.error("Upload failed:", res.status);
+    const result = await res.json().catch(() => ({}));
+
+    if (!res.ok || result.ok !== true) {
+      console.error("User registration API error:", res.status, result);
+      alert("Registration failed. Please try again.");
+      return;
+    }
+
+    // Only save locally AFTER Cloudflare confirms success
+    users.push(user);
+    localStorage.setItem("tr_users", JSON.stringify(users));
+    localStorage.setItem("tr_user", JSON.stringify(user));
+    localStorage.setItem("welcome_name", name);
+
+    alert("Registration successful ✅");
+    window.location.href = "index.html";
+
+  } catch (err) {
+    console.error("User registration failed:", err);
+    alert("Registration failed. Please check your connection and try again.");
   }
-} catch (err) {
-  console.error("User upload failed:", err);
-}
-  localStorage.setItem("welcome_name", name);
-  alert("Registration successful ✅");
-  window.location.href = "index.html";
 }
     
   </script>
