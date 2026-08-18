@@ -510,27 +510,20 @@ try {
       }); // click listener biter
     } // 🔴 Eksik olan if parantezini burada kapatıyoruz
 
-    // === Bayrağı Güncelle ===
-  const flagImg = document.getElementById("flagImage");
-  if (flagImg && req.country) {
-      const country = String(req.country).trim();
+   // === Bayrağı Güncelle ===
+const flagImg = document.getElementById("flagImage");
 
-const code = country
-  .normalize("NFD")
-  .replace(/[\u0300-\u036f]/g, "")
-  .toLowerCase()
-  .replace(/[^a-z0-9]+(.)/g, (_, c) => c.toUpperCase());
+if (flagImg && req.country) {
+    const flagUrl = getFlagURL(req.country, 70);
 
-const flagUrl = `assets/flag/${code}.png`;
-      
-      // Resim zaten aynı değilse değiştir (Yanıp sönmeyi keser)
-      if (flagImg.getAttribute('src') !== flagUrl) {
-          flagImg.src = flagUrl;
-          flagImg.onerror = function() {
-              this.src = 'assets/flag/default.png';
-          };
-      }
-  }
+    if (flagImg.getAttribute("src") !== flagUrl) {
+        flagImg.src = flagUrl;
+        flagImg.onerror = function() {
+            this.onerror = null;
+            this.src = "assets/flag/default.png";
+        };
+    }
+}
     
   } catch (err) {
     console.error("Error loading request detail:", err);
