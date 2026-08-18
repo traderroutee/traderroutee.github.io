@@ -27,7 +27,7 @@ Disallow: /private/
 Crawl-delay: 5
 
 # Sitemap (Canonical)
-Sitemap: https://traderroute.com/sitemap.xml
+Sitemap: https://www.traderroute.com/sitemap.xml
 
 # ===========================================
 # Notes:
