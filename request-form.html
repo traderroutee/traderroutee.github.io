@@ -109,8 +109,8 @@
   form.addEventListener("submit", async function(e){
   e.preventDefault();
 
-  // Eğer yükleme hala sürüyorsa beklet
-  if (document.querySelectorAll("#imagePreview img").length !== uploadedImageUrls.length) {
+   // Eğer yükleme hala sürüyorsa beklet
+  if (isUploadingImages) {
     alert("⏳ Lütfen resimlerin yüklenmesini bekleyin...");
     return;
   }
@@ -269,40 +269,52 @@ async function saveRequestToServer(newRequest) {
 const imageInput = document.getElementById("imageUpload");
 const preview = document.getElementById("imagePreview");
 let uploadedImageUrls = [];
+let isUploadingImages = false;
 
 imageInput?.addEventListener("change", async (e) => {
   const files = Array.from(e.target.files).slice(0, 3); // max 3 image
   preview.innerHTML = "";
   uploadedImageUrls = [];
+  isUploadingImages = true;
 
-  for (const file of files) {
-    // Önizleme
-    const reader = new FileReader();
-    reader.onload = ev => {
-      const img = document.createElement("img");
-      img.src = ev.target.result;
-      img.style.width = "80px";
-      img.style.height = "80px";
-      img.style.objectFit = "cover";
-      img.style.border = "1px solid #ccc";
-      img.style.borderRadius = "6px";
-      preview.appendChild(img);
-    };
-    reader.readAsDataURL(file);
+  try {
+    for (const file of files) {
+      // Önizleme
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = document.createElement("img");
+        img.src = ev.target.result;
+        img.style.width = "80px";
+        img.style.height = "80px";
+        img.style.objectFit = "cover";
+        img.style.border = "1px solid #ccc";
+        img.style.borderRadius = "6px";
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
 
-    // Cloudflare Worker'a yükleme
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const res = await fetch("https://api.traderroute.com/upload", {
-  method: "POST",
-  body: formData
-});
-      const data = await res.json();
-      if (data.url) uploadedImageUrls.push(data.url);
-    } catch (err) {
-      console.error("Upload failed:", err);
+      // Cloudflare Worker'a yükleme
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const res = await fetch("https://api.traderroute.com/upload", {
+          method: "POST",
+          body: formData
+        });
+         const data = await res.json();
+        if (data.url) {
+          uploadedImageUrls.push(data.url);
+        } else {
+          console.error("Upload response has no url:", data);
+          alert("⚠️ \"" + file.name + "\" adlı resim yüklenemedi: " + (data.error || "Bilinmeyen hata"));
+        }
+      } catch (err) {
+        console.error("Upload failed:", err);
+        alert("⚠️ \"" + file.name + "\" adlı resim yüklenemedi. İnternet bağlantınızı kontrol edin.");
+      }
     }
+  } finally {
+    isUploadingImages = false;
   }
 });
 </script>
